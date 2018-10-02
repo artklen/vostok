@@ -1,0 +1,43 @@
+<form method="post" style="float:left">
+	<fieldset>
+		<legend>Выберите категорию</legend>
+		<select name="category_id">
+		@ d()->categories = d()->Category->where('`id` not in (select `category_id` from `categories` where `category_id` is not null)');
+		<foreach categories>
+			<option value="{.id|h}" {{selected_if isset($_POST['category_id']) && $_POST['category_id'] === d()->this->id}}>{.title|h}</option>
+		</foreach>
+		</select>
+	</fieldset>
+	<fieldset>
+		<legend>Загрузите таблицу с товарами (Excel)</legend>
+		<input type="text" name="excel_file" id="file_input_<?= ++d()->file_input_index ?>" value="<?= isset($_POST['excel_file']) ? $_POST['excel_file'] : '' ?>">
+		<iframe style="overflow:hidden;height:20px;width:80px;border:none;border:0;vertical-align:middle;" frameborder="0" border="0" src="/cms/mod_admin/imanager/upload.htm?element=file_input_<?= d()->file_input_index ?>&amp;folder=import"></iframe>
+	</fieldset>
+	<fieldset>
+		<legend>Загрузите архив изображений (Zip)</legend>
+		<input type="text" name="images_zip_file" id="file_input_<?= ++d()->file_input_index ?>" value="<?= isset($_POST['images_zip_file']) ? $_POST['images_zip_file'] : '' ?>">
+		<iframe style="overflow:hidden;height:20px;width:80px;border:none;border:0;vertical-align:middle;" frameborder="0" border="0" src="/cms/mod_admin/imanager/upload.htm?element=file_input_<?= d()->file_input_index ?>&amp;folder=import"></iframe>
+	</fieldset>
+	<br><input type="submit" value="Импортировать">
+</form>
+<br clear="all" />
+@ if (d()->is_imported) {
+	<h2>Результаты импорта</h2>
+	<ul>
+		<li>Товаров добавлено: <?= 1 * d()->created_products_list->count ?></li>
+		<li>Товаров обновлено: <?= 1 * d()->updated_products_list->count ?></li>
+	@ if (d()->created_producers_list->ne) {
+		<li>Добавлены бренды:
+		<foreach created_producers_list>
+			<a href="{this|h_url_for}">{.title|h}</a><?= d()->key < d()->created_producers_list - 1 ? ',' : '' ?>
+		</foreach>
+	@ }
+	@ if (d()->created_products_types_list->ne) {
+		<li>Добавлены типы товаров:
+		<foreach created_products_types_list>
+			{.title|h}<?= d()->key < d()->created_products_types_list - 1 ? ',' : '' ?>
+		</foreach>
+	@ }
+		</li>
+	</ul>
+@ }

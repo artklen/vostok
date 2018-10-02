@@ -1,0 +1,11 @@
+<form style="float:left">
+	<fieldset>
+		<legend>Выберите категорию</legend>
+		<select name="category_id">
+		<foreach Product->_categories>
+			<option value="{.id|h}">{.title|h}</option>
+		</foreach>
+		</select>
+		<input type="submit" value="Скачать">
+	</fieldset>
+</form>

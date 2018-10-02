@@ -1,0 +1,47 @@
+<div class="control-group">
+ 
+  <label class="control-label"  >{title}</label>
+  <div class="controls">
+	<?php 
+	if(count(d()->field_params)>3){
+		$_table_name = d()->field_params[3];
+	
+	}else{
+		$_table_name = ActiveRecord::one_to_plural( substr(d()->field_params[1],0,-3));
+	}
+	$_modelname=ActiveRecord::plural_to_one(strtolower($_table_name));
+	$_first_letter=strtoupper(substr($_modelname,0,1));
+	$_modelname = $_first_letter.substr($_modelname,1);
+
+	d()->list_of_rows =  new $_modelname ();
+	 
+	?>
+	<select   name="{name}"  class="input-xlarge">
+	
+	<foreach list_of_rows>
+	
+			<?php
+				$_id = d()->this->id;
+				$_title = d()->this->title;
+			?>
+			<option <?php 
+
+			if(!isset($_GET['$_field'])){
+				if(d()->value==$_id) {
+					print 'selected';
+				}
+			}else{
+				if($_GET['$_field']==$_id) {
+					print 'selected';
+				}
+			}
+			
+			?> value="<?php print $_id; ?>"><?php print $_title; ?></option>
+		
+		
+	</foreach>
+	</select>
+	 
+  </div>
+</div>
+

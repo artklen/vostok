@@ -1,0 +1,92 @@
+ 
+
+<h1>Обновление системы</h1>
+
+<?php if(d()->message){ ?>
+
+
+<div class="modal" id="message_modal">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Результаты</h3>
+  </div>
+  <div class="modal-body">
+    <p>{message}</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+    
+  </div>
+</div>
+<script>
+$(function(){
+	$('#message_modal').modal()
+})
+</script>
+<?php } ?>
+
+<div class="row">
+<div class="span12" >
+<div class="row"> 
+ 
+
+	<div class="span6" >
+	<div class="well">
+		{{form 'admin_update_system'}}
+			Установленная версия системы: <b><?php
+if(iam('developer')){
+	print  file_get_contents($_SERVER['DOCUMENT_ROOT'].'/cms/VERSION.txt');
+}
+?></b><br>
+			Последняя доступная версия системы: <b><?php
+				if($ver = @file_get_contents('https://raw.github.com/ramainen/doit-cms/master/cms/VERSION.txt')){
+					print $ver;
+				}else{
+					print 'неизвестно';
+				}
+			?></b><br>
+			
+			Последняя версия ядра будет загружена с репозитория, папка <b>cms</b> будет переименована и заменена на новую.<br>
+			Возможные изменения в остальных директориях и файлах затронуты не будут. Для информации о изменениях в новых версиях читайте новости на сайте системы.<br>
+			<!-- <label class="checkbox">{{input 'leave_old_cms', 'value'=>'yes', 'type'=>'checkbox'}} Оставить резервную копию папки <b>cms</b></label> -->
+			<hr>
+			Вы уверены в том, что делаете?<br>
+			
+			<label class="checkbox">{{input 'i_am_sure', 'value'=>'yes', 'type'=>'checkbox'}} Да, я уверен в том, что я делаю</label><br>
+			
+			<input type="submit" value="Продолжить" class="btn btn-primary">
+			
+		{{/form}}
+		
+	</div>
+	</div>
+	<?php if(isset($_SESSION['renamed_cms']) && $_SESSION['renamed_cms']!=''){ ?>
+	
+
+		<div class="clear"></div>
+	 
+		 <div class="span6" >
+			<div class="well">
+				{{form 'admin_update_system_delete_backup'}}
+					
+					
+					После установки обновления осталась резервная копия старой папки (<?php print $_SESSION['renamed_cms'] ?>). Удалить её?
+					<br>
+					
+					До выхода из системы или закрытия брауазера Вы ещё сможете вернуться сюда и удалить эту папку. Либо Вы можете удалить её вручную.
+					<hr>
+					
+					<input type="submit" value="Да, удалить эту папку" class="btn btn-primary">
+					
+				{{/form}}
+				
+			</div>
+			</div>
+ 
+		<div class="clear"></div>
+	 
+	<?php } ?>
+
+	</div>
+</div>
+</div>

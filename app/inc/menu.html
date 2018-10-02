@@ -1,0 +1,111 @@
+<ul class="menu-2">
+	<foreach Collection->where('show_header = ?', true)>
+	<li class="arrow">
+		<a href="/catalog" {{if ~url_path === '/catalog', 'class="active"'}}>{.title}</a>
+		<div class="last-1">
+			<ul class="last-2">
+				<li>
+					<ul class="last-3">
+						<foreach Product->where('collection_id = ?', d()->this->id)>
+						<li>
+							<a href="/product/{.url}">
+								<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+								<span class="sub-2">{.title}<span class="sub-3">4</span></span>
+							</a>
+						</li>
+						</foreach>
+					</ul>
+					<ul class="last-3">
+
+					</ul>
+					<ul class="last-3">
+
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</li>
+	</foreach>
+
+	<li><a href="/products-4" {{if ~url_path === '/products-4', 'class="active"'}}>С символикой</a></li>
+	<li class="arrow"><a href="/products-5" {{if ~url_path === '/products-5', 'class="active"'}}>Другие</a>
+		<div class="last-1">
+			<ul class="last-2">
+				<li>
+					<ul class="last-3">
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+								<span class="sub-2">Алмаз в две строки три строки <span class="sub-3">4</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Анчар <span class="sub-3">6</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">ГАЗ-14 Лимузин <span class="sub-3">17</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Луноход-2 <span class="sub-3">3</span></span>
+							</a>
+						</li>
+					</ul>
+					<ul class="last-3">
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Мария 2 <span class="sub-3">5</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Ракета N1 <span class="sub-3">6</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Ундина <span class="sub-3">2</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Экраноплан <span class="sub-3">5</span></span>
+							</a>
+						</li>
+					</ul>
+					<ul class="last-3">
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Алмаз <span class="sub-3">4</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">Анчар <span class="sub-3">6</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="/product">
+								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
+								<span class="sub-2">ГАЗ-14 Лимузин <span class="sub-3">17</span></span>
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</li>
+</ul>

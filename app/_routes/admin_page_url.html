@@ -1,0 +1,26 @@
+<?php
+$value = d()->value;
+if ($value === '' || $value{0} !== '/') {
+	$value = "/$value";
+} ?>
+<div class="control-group">
+	<label class="control-label">{title}</label>
+	<div class="controls">
+		<input type="text" name="{name}" value="<?= h($value) ?>" class="input-xlarge js-admin-page-url">
+		<span class="help-inline"><?php print d()->field_params[3]; ?></span>
+	</div>
+</div>
+<script>
+if (typeof(ADMIN_PAGE_URL_INITIATED) === 'undefined' || !ADMIN_PAGE_URL_INITIATED) {
+	ADMIN_PAGE_URL_INITIATED = true;
+	$(function() {
+		$(document).on('change', '.js-admin-page-url', function() {
+			var t = $(this);
+			var v = t.val();
+			if (v.substr(0, 1) !== '/') {
+				t.val('/' + v);
+			}
+		});
+	});
+}
+</script>

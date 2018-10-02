@@ -1,0 +1,51 @@
+ 
+
+<h1>Скаффолдинг: Установка плагина</h1>
+
+<?php if(d()->message){ ?>
+
+
+<div class="modal" id="message_modal">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Результаты</h3>
+  </div>
+  <div class="modal-body">
+    <p>{message}</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+    
+  </div>
+</div>
+<script>
+$(function(){
+	$('#message_modal').modal()
+})
+</script>
+<?php } ?>
+
+<div class="row">
+<div class="span12" >
+<div class="row"> 
+<foreach plugins_list>
+
+	<div class="span3" >
+	<div class="well">
+		{{form 'admin_scaffold_install_plugin'}}
+			<input type="hidden" name='data[plugin]' value="{.file|h}">
+			<b>{.name}</b><hr>{.description}<hr>
+			<input type="submit" value="Установить" class="btn btn-primary">
+			
+		{{/form}}
+		
+	</div>
+	</div>
+	<?php if ($key%4==3){ ?>
+		<div class="clear"></div>
+	<?php  } ?>
+</foreach>
+
+	</div>
+</div>
+</div>

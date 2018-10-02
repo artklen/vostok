@@ -1,0 +1,61 @@
+<?php if(d()->field_not_found=='yes') { ?>
+	<h2 class="admin_h2">Ошибка</h2>
+
+		
+	<div class="alert alert-info"  >
+		Запрашиваемый шаблон не найден<hr>
+		<input type="button" class="btn btn-primary" onclick=" show_field_editor();return false;" value="Создать" role="button">
+
+		<input type="button" class="btn" onclick="window.open('','_self','');window.close();return false;" value="Отменить" role="button">
+
+	</div>
+		 
+
+<?php } else { ?>
+	{{form 'admin_save_data', 'class'=>"form-horizontal admin_edit_form"}}
+	<fieldset class="input_elements">
+	<?php /*  Страница НЕ закрывается в случаях: 1. отсуствие реферера  */ ?>
+		 
+		<?php  if(! isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'],'/admin/')===false || (strpos($_SERVER['HTTP_REFERER'],$_SERVER['REQUEST_URI'])!==false)) { ?>
+			<?php if( strpos($_SERVER['HTTP_REFERER'],'/admin/')===false  ||  $_SERVER['REQUEST_URI'] != $_SERVER['HTTP_REFERER'] )  { ?>
+				<input type="hidden" name="admin_command_redirect_close" value="yes">
+			<?php } ?>
+		<?php } ?>
+
+			<input type="hidden" name="_enable_multiple" value="0">
+			
+		<?php if(!empty($_SERVER['HTTP_REFERER'])){?>
+			<input type="hidden" name="_http_referer" value="<?php print h($_SERVER['HTTP_REFERER']);?>">
+		<?php } ?>
+
+
+		<input type="hidden" name="element_id" value="<?php print htmlspecialchars(url(4)); ?>">
+
+		<legend>{tabletitle}</legend>
+
+		<foreach tablerow>
+
+			<div class="control-group">
+				<label class="control-label"  >{.title}</label>
+				<div class="controls">
+					<input type="text"  name="{.name}" value="{.value|h}" class="input-xlarge"  >
+
+				</div>
+			</div>
+
+		</foreach>
+		
+		<div class="flyer js-iframe-flyer"><div class="alert alert-success"><i class="icon icon-ok"></i> <b>Готово!</b> Элемент добавлен.</div></div>
+		
+		<div class="form-actions">
+			<input type="submit"   value="Сохранить" class="btn btn-primary" > 
+			<?php if(url(4)=='add'){ ?>
+				<input type="submit" name="_save_and_add"  value="Сохранить и добавить ещё" class="btn js-ajax-submit" > 
+			<?php } ?>
+			<a href="#" onclick="window_cancel();return false;" class="btn">Отмена</a>
+		</div>
+		<iframe name="save_target" id="save_target" style="display:none;"></iframe>
+
+	</fieldset>
+	{{/form}}
+<?php } ?>

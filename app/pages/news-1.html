@@ -1,0 +1,52 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			{{crumbs}}
+		</div>
+	</div>
+</div>
+<div class="inside-1">
+	<h1>{{edit}}{seo.h1|h}</h1>		
+</div>
+<div class="news-2">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+				<div class="left js-open-2">
+					<a href="javascript:void(0);" class="close js-close visible-xs"></a>
+					{{add 'rubrics'}}
+					<ul class="menu">
+						<li><a href="/news" class="active">Все публикации</a></li>
+						<foreach Rubric>
+							{{edit}}{{delete}}
+							<li><a href="/rubrics/{.url}" class="active">{.title}</a></li>
+						</foreach>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 visible-xs">
+				<a href="javascript:void(0);" class="open-1 js-open-1">Показать категории</a>
+			</div>
+			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+				{{add 'news'}}
+				<div class="right">
+					<foreach ~this_news>
+					<div class="item">
+						<div class="side-1">
+							{{edit}}
+							<a href="/news/{.url}">
+								<img src="{this.image|preview '80', '80'}" alt=""/>
+							</a>
+						</div>
+						<div class="side-2 side-3">
+							<a href="/news/{.url}" class="title">{.title}</a>
+							<div class="text">{.text}</div>
+							<a href="/news/{.url}" class="link">Читать полностью</a>
+						</div>
+					</div>
+					</foreach>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

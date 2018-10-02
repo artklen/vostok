@@ -1,0 +1,16 @@
+@ if (!empty(~fields_data[~name])) {
+	<div class="filter-list js-number-slider" data-slider-values="<?php
+	$result = [];
+	foreach (~fields_data[~name] as $key => $data) {
+		$result[] = $data['value'];
+	}
+	sort($result, SORT_NUMERIC);
+	print h(json_encode($result, JSON_UNESCAPED_UNICODE));
+	?>" data-slider-value="<?= !empty(~get[~name]) && is_array(~get[~name]) ? reset(~get[~name]) : '' ?>" data-unit="{field.unit|h}">
+		<span>{{edit ~field}}{field.title|h} </span>
+		<div style="padding: 0 0 24px 0;"></div>
+		<div class="js-slider-bar"></div> 
+		&nbsp;
+		<input type="hidden" name="{name|h}[]" value="" />
+	</div>
+@ }

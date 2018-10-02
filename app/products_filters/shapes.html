@@ -1,0 +1,53 @@
+@ if (!empty(~fields_filtered_data[~name])) {
+	<div class="f-block-1">
+		<a href="javascript:void(0);" class="title-1 js-facets">{field.title|h}</a>
+		<div class="f-block-2 js-hidden">
+			<div class="row no-padding">
+	@ foreach (~fields_filtered_data[~name] as ~data) {
+		@ ~filter_products_shape = ~Products_shape->find_by('id', ~data['value']);
+		@ if (~data['count'] > 0) {
+			@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<div class="f-block-3">
+						<label class="box">
+							<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list-1 list-2" />
+							<span></span><img src="{filter_products_shape.image|h}" alt="" class="list-3" />
+						</label>
+					</div>
+				</div>
+			@ } else {
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<div class="f-block-3">
+						<label class="box">
+							<input type="checkbox" name="{name|h}[]" value="{data.value|h}" class="list-1 list-2" />
+							<span></span><img src="{filter_products_shape.image|h}" alt="" class="list-3" />
+						</label>
+					</div>
+				</div>
+			@ }
+		@ } else {
+			@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<div class="f-block-3">
+						<label class="box disabled">
+							<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list-1 list-2" />
+							<span></span><img src="{filter_products_shape.image|h}" alt="" class="list-3" />
+						</label>
+					</div>
+				</div>
+			@ } else {
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<div class="f-block-3">
+						<label class="box disabled">
+							<input type="checkbox" name="{name|h}[]" value="{data.value|h}" disabled="disabled" class="list-1 list-2" />
+							<span></span><img src="{filter_products_shape.image|h}" alt="" class="list-3" />
+						</label>
+					</div>
+				</div>
+			@ }
+		@ }
+	@ }
+			</div>
+		</div>
+	</div>
+@ }

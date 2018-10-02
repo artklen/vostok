@@ -1,0 +1,11 @@
+@ if (isset(~fields_data[~name], ~fields_data[~name]['max'], ~fields_data[~name]['min']) && ~fields_data[~name]['max'] - ~fields_data[~name]['min'] > 1e-7) {
+<div class="f-block-1 js-interval-slider">
+	<a href="javascript:void(0);" class="title-1 js-facets">{field.title|h}</a>
+	<div class="f-block-2 js-hidden">
+		<label class="box col-1">от<input type="text" name="{name|h}[min]" class="left js-slider-input-min" value="<?= h(isset(~get[~name], ~get[~name]['min']) ? ~get[~name]['min'] : ~fields_data[~name]['min']) ?>" data-value-limit="<?= h(~fields_data[~name]['min']) ?>"></label>
+		<label class="box col-2 right">до<input type="text" name="{name|h}[max]" class="right js-slider-input-max" value="<?= h(isset(~get[~name], ~get[~name]['max']) ? ~get[~name]['max'] : ~fields_data[~name]['max']) ?>" data-value-limit="<?= h(~fields_data[~name]['max']) ?>"></label>
+		<div class="clear"></div>
+		<div class="js-slider-bar"></div>
+	</div>	
+</div>
+@ }

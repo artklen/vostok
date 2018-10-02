@@ -1,0 +1,140 @@
+<div class="slider-1 js-slider-1">
+	<foreach Slider>
+		<div class="slide" style="background: url({this.image}) no-repeat center">
+			<div class="container">
+				{{edit}}{{delete}}{{add 'sliders'}}
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="offer-wrapper">
+							<div class="offer">
+								<!--<div class="title-1">Часы <span class="orange">«Восток»</span></div>-->
+								<div class="title-1">{.title}</span></div>
+								<div class="title-2">{.text}</div>
+								<a href="{.url}" class="send-1">Перейти в каталог</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</foreach>
+</div>
+<div class="catalog-1">
+	<div class="container">
+		<div class="row">
+			<foreach Collection ->where('show_main = ?', true)>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					{{edit}}{{delete}}
+					<div class="product-1" style="background-image: url({this.image|preview 'in244', 'in400'}), url(/images/main-clock-bg.png)">
+						<div class="title">
+							<a href="/catalog?collection={.url}" class="link-1">{.title}</a>
+							<a href="/catalog?collection={.url}" class="link-2">Перейти в каталог</a>
+						</div>
+					</div>
+				</div>
+			</foreach>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<a href="/catalog" class="send-2">Смотреть все модели</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="main-title">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="center-1">
+					<div class="title-1">Успейте купить</div>
+					<span class="title-2">Хиты продаж</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="catalog-2">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="slider-2 js-slider-2">
+					<foreach Product->where('is_top = ?', 1)>
+						<div class="slide">
+							{{/inc/product.html}}
+						</div>
+					</foreach>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="action-1">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+				<div class="watch-1"><img src="{Option.image_new|preview 'in360', 'in278'}" alt=""/></div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+				<div class="watch-2">
+					<div class="title-1">Новинка</div>
+					<div class="title-2"><span>Часы</span> {Option.product.title}</div>
+					<ul class="text">
+						<foreach Product->where('id = ?', d()->Option->product['id'])->limit(1)->props >
+							<li>{.title}</li>
+						</foreach>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-sm-offset-6 col-md-offset-0">
+				<a href="/product/{Option.product.url}" class="send-4">Подробнее</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="main-title">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="center-1">
+					<div class="title-1">Будьте в курсе</div>
+					<span class="title-2">Последние новости</span>
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+<div class="news-1">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+				<div class="left">
+					<foreach News->sort_by('dt_at', 'desc')->limit(1)>
+						{{edit}}{{delete}}
+						<?php d()->last_news = d()->this ?>
+						<a href="/news/{.url}"><img src="{this.image_full|preview 'in555', 'in330'}" alt=""/></a>
+						<a href="/news/{.url}" class="title">{.title}</a>
+						<div class="text">{.text}</div>
+						<a href="/news/{.url}" class="link">Читать полностью</a>
+					</foreach>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+				<div class="right">
+					<foreach News->where('id <> ?', d()->last_news['_data'][0]['id'])->sort_by('dt_at', 'desc')->limit(4)>
+						<div class="item">
+							<div class="row">
+								{{edit}}{{delete}}
+								<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+									<a href="/news/{.url}"><img src="{this.image|preview 'in80', 'in80'}" alt=""/></a>
+								</div>
+								<div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+									<a href="/news/{.url}" class="title">{.title}</a>
+									<div class="text">{.text}</div>
+									<a href="/news/{.url}" class="link">Читать полностью</a>
+								</div>
+							</div>
+						</div>
+					</foreach>
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>

@@ -1,0 +1,98 @@
+<h1>{curr_title}</h1>
+{curr_content}
+<table class="table table-striped table-bordered table-condensed"  width=100%>
+<thead>
+	<tr>
+		<th width=50><a href="?sort_field=id<?php
+			if(!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+				print '&sort_direction=desc';
+			}
+		?>">ID </a><?php
+
+			if(isset($_GET['sort_field']) && $_GET['sort_field'] == 'id'){
+				if (!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+					print ' ▲';
+				}else{
+					print ' ▼';
+				}
+
+			}
+		?></th>
+		<?php foreach(d()->datapool['admin']['columns'] as $col_name => $col_title){
+
+			print '<th>';
+			
+			$as_substr= strpos($col_name,'_as_');
+			if($as_substr!==false) {
+				$col_name = substr($col_name,0,$as_substr);
+				
+			}
+			if(in_array($col_name,d()->available_columns)){
+				print  '<a href="?sort_field=' . h($col_name);
+				if(!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+					print '&sort_direction=desc';
+				}
+				print '">';
+
+			 	print $col_title;
+				
+				print '</a>';
+
+				if(isset($_GET['sort_field']) && $_GET['sort_field'] == $col_name){
+					if (!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+						print ' ▲';
+					}else{
+						print ' ▼';
+					}
+
+				}
+			}else{
+				print $col_title;
+			}
+			print  '</th>';
+		} ?>
+		
+		
+		 
+		<th>Действие</th>
+	</tr>
+</thead>
+	<foreach objectrow>
+	<tr>
+		<td>{.id}</td>
+		
+		<?php foreach(d()->datapool['admin']['columns'] as $col_name => $col_title){
+			print '<td>';
+			if(d()->_list_safe_data){
+				print h(d()->this[$col_name]);
+			}else{
+				print d()->this[$col_name];
+			}
+			print '</td>';
+		} ?>
+		 
+		 
+		<td><a href="/admin/edit/{curr_table}/{.id}" class="btn btn-mini">Править</a> {.addbuttons}
+		<a href="/admin/delete/{curr_table}/{.id}" target="_blank"   class="btn btn-danger btn-mini"   ><i class="icon-remove icon-white"></i></a>
+		 
+		</td>
+	</tr>
+	</foreach>
+
+	 
+			
+		 	
+</table>
+
+<?php if(d()->paginator){ ?>
+{paginator}
+<?php } ?>
+<div class="form-actions">
+{list_addbutton}
+<?php if(!isset(d()->admin['use_model']['source'])){ ?>
+			<a href="?sort=yes<?php if(isset($_GET['page'])){ print '&page='.h($_GET['page']); } ?>" class="btn"><i class=" icon-random"></i> Сортировать порядок</a>
+
+<?php } ?>
+          </div>
+		  
+		  

@@ -1,0 +1,21 @@
+<?php
+
+// Данный модуль предназначен для вывода всех полей
+
+$_table_name = strtolower(d()->url(3)) . '__fields';
+$_model = ucfirst(ActiveRecord::plural_to_one($_table_name));
+$user_fields = new $_model();
+
+foreach($user_fields as $value){
+	d()->title = $value['title'];
+	d()->value = !empty(d()->row_data) ? d()->row_data->get($value['field_name']) : '';
+	d()->name = "data[{$value['field_name']}]";
+	d()->field_params = null;
+	if ($value['type'] === 'boolean') {
+		print d()->admin_checkbox();
+	} else {
+		print d()->admin_small();
+	}
+}
+	
+?>

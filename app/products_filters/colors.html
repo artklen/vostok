@@ -1,0 +1,35 @@
+@ if (!empty(~fields_filtered_data[~name])) {
+<div class="f-block-1">
+	<a href="javascript:void(0);" class="title-1 js-facets">{field.title|h}</a>
+	<div class="f-block-2 js-hidden wrap-3">
+@ foreach (~fields_filtered_data[~name] as ~data) {
+	@ ~filter_products_color = ~Products_color->find_by('id', ~data['value']);
+	@ if (~data['count'] > 0) {
+		@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
+			<label class="item">
+				<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" />
+				<span style="background-color: {filter_products_color.color|h};"></span>
+			</label>
+		@ } else {
+			<label class="item">
+				<input type="checkbox" name="{name|h}[]" value="{data.value|h}" />
+				<span style="background-color: {filter_products_color.color|h};"></span>
+			</label>
+		@ }
+	@ } else {
+		@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
+			<label class="item disabled">
+				<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" />
+				<span style="background-color: {filter_products_color.color|h};"></span>
+			</label>
+		@ } else {
+			<div class="item disabled">
+				<span style="background-color: {filter_products_color.color|h};"></span>
+			</div>
+		@ }
+	@ }
+@ }
+		<div class="clear"></div>
+	</div>
+</div>
+@ }

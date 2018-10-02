@@ -1,0 +1,54 @@
+@ if (!empty(~fields_filtered_data[~name])) {
+<div class="item js-unfolding-container">
+	@ if (iam()) {
+	<div style="position: absolute; margin-left: -10px;">{{edit ~field}}</div>
+	@ }
+	<a href="javascript:void(0);" class="name js-unfolding-button">
+			<span>
+				{field.title|h}{{if ~field['unit'] !== '', ', ' . h(~field['unit'])}}
+			</span>
+	</a>
+	<div class="wrap-5 js-unfolding-block">
+		@ ~i = 0;
+		@ foreach (~fields_filtered_data[~name] as ~data) {
+		@ if (~i === 3) {
+		<div class="js-unfolding-container-2">
+			<div class="js-unfolding-block-2">
+				@ }
+
+				@ if (~data['count'] > 0) {
+				<div class="box">
+					<label>
+						<input
+							type="checkbox"
+							name="{name|h}[]"
+							value="{data.value|h}"
+							{{checked_if !empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])}}
+							class="list"
+						/>
+						<span></span>{{if ~data['value'], 'Да', 'Нет'}}<span class="sub"> {data.count|h}</span>
+					</label>
+				</div>
+				@ } else {
+				<div class="f-block-3">
+					<label class="box disabled">
+						@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
+						<input type="checkbox" class="list" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list-1" />
+						<span></span><span class="sub">{{if ~data['value'], 'Да', 'Нет'}}</span>
+						@ } else {
+						<input type="checkbox" class="list" name="{name|h}[]" value="{data.value|h}" disabled="disabled" class="list-1" />
+						<span></span><span class="sub">{{if ~data['value'], 'Да', 'Нет'}}</span>
+						@ }
+					</label>
+				</div>
+				@ }
+				@ ~i++;
+				@ }
+				@ if (~i > 3) {
+			</div>
+			<a href="javascript:void(0);" class="more js-unfolding-button-2">показать еще</a>
+		</div>
+		@ }
+	</div>
+</div>
+@ }

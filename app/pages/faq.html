@@ -1,0 +1,48 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			{{crumbs}}
+		</div>
+	</div>
+</div>
+<div class="inside-1">
+	<h1>{{edit}}{seo.h1|h}</h1>
+</div>
+<div class="faq">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+				<div class="left js-open-2">
+					<a href="javascript:void(0);" class="close js-close visible-xs"></a>
+					{{add 'faqs'}}
+					<ul class="menu">
+						<li><a href="/faq" class="active">Все категории</a></li>
+						<foreach Faq_category>
+							{{edit}}{{delete}}
+							<li><a href="/faq/{.url}" class="active">{.title}</a></li>
+						</foreach>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 visible-xs">
+				<a href="javascript:void(0);" class="open-1 js-open-1">Показать категории</a>
+			</div>
+			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+				<div class="right">
+					<ol class="list">
+						<foreach this_faq>
+						<span>
+							{{edit}}
+							<li class="js-unfolding-container">
+								<a href="javascript:void(0);" class="js-unfolding-button">{.title}</a>
+								<a href="javascript:void(0);" class="plus"></a>
+								<div class="text js-unfolding-block">{.text}</div>
+							</li>
+						</span>
+						</foreach>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

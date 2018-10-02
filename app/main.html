@@ -1,0 +1,387 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+@ if (d()->seo->title !== '') {
+	<title>{seo.title|h}</title>
+@ }
+@ if (d()->seo->description !== '') {
+	<meta name="description" content="{seo.description|h}">
+@ }
+@ if (d()->seo->keywords !== '') {
+	<meta name="keywords" content="{seo.keywords|h}">
+@ }
+@ if (d()->canonical !== '') {
+	<link rel="canonical" href="{canonical|h}" />
+@ }
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/js/fancybox/jquery.fancybox.css" rel="stylesheet">
+	<link href="/js/slick/slick.css" rel="stylesheet">
+	<link href="/css/nouislider.min.css" rel="stylesheet" type="text/css"/>
+	<script src="/js/nouislider.min.js" type="text/javascript"></script>
+	<link href="/css/sumoselect.min.css" rel="stylesheet">
+	<link href="/css/select.css" rel="stylesheet">
+	<link href="/css/color-fixes.css" rel="stylesheet" type="text/css"/>
+	{{stylesheets '/css/style.scss', '/css/media.scss'}}
+</head>
+<body> 
+
+{{admin_panel}}
+<div class="bg-1 js-bg-1 hidden-lg"></div>
+<div class="bg-2 js-bg-2 hidden-sm hidden-md hidden-lg"></div>
+<div class="menu-2-xs js-menu-2-xs hidden-lg">
+	<a href="javascript:void(0);" class="close js-close"></a>
+	
+	<ul class="menu-3 visible-xs">
+		<li class="js-unfolding-container-menu"><a href="javascript:void(0);" class="arrow js-unfolding-button-menu">Амфибия</a>
+			<ul class="last-1 js-unfolding-block-menu">
+				<li>
+					<a href="/product">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">Алмаз в две строки три строки четыре строки пять строк <span class="sub-3">4</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="/products">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">Анчар <span class="sub-3">6</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="/product">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">ГАЗ-14 Лимузин <span class="sub-3">17</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="/product">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">Луноход-2 <span class="sub-3">3</span></span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li><a href="/catalog">Восток-европа</a></li>
+		<li class="js-unfolding-container-menu"><a href="javascript:void(0);" class="arrow js-unfolding-button-menu">Командирские</a>
+			<ul class="last-1 js-unfolding-block-menu">
+				<li>
+					<a href="/product">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">Алмаз в две строки три строки <span class="sub-3">4</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="/product">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">Анчар <span class="sub-3">6</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="/product">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">ГАЗ-14 Лимузин <span class="sub-3">17</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="/product">
+						<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
+						<span class="sub-2">Луноход-2 <span class="sub-3">3</span></span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li><a href="/catalog">С символикой</a></li>
+		<li><a href="/catalog">Другие</a></li>
+	</ul>
+	
+	<ul class="menu-4">
+		<li><a href="/payment">Оплата и доставка</a></li>
+		<li><a href="/news">Новости</a></li>
+		<li><a href="/about">О нас</a></li>
+		<li><a href="/faq">Вопрос-ответ</a></li>
+		<li><a href="/contacts">Контакты</a></li>
+	</ul>
+</div>
+
+<div class="header-top">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-10 col-sm-6 col-md-6 col-lg-3">
+				<div class="phone">{Option.number}</div>
+				<a href="/feedback/call" class="call js-feedback">Заказать звонок</a>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 visible-lg">
+				<ul class="menu-1">
+					<li><a href="/payment" {{if ~url_path === '/payment', 'class="active"'}}>Оплата и доставка</a></li>
+					<li><a href="/news" {{if ~url_path === '/news', 'class="active"'}}>Новости</a></li>
+					<li><a href="/about" {{if ~url_path === '/about', 'class="active"'}}>О нас</a></li>
+					<li><a href="/faq" {{if ~url_path === '/faq', 'class="active"'}}>Вопрос-ответ</a></li>
+					<li><a href="/contacts" {{if ~url_path === '/contacts', 'class="active"'}}>Контакты</a></li>
+				</ul>
+			</div>
+			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 hidden-xs">
+				<div class="search">
+					<input type="text" placeholder="Поиск по каталогу"/>
+					<button type="submit"></button>
+				</div>
+			</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-3 hidden-lg">
+				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs"></a>	
+			</div>
+		</div>
+	</div>
+</div>
+<div class="header-bottom">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-10 col-sm-2 col-md-3 col-lg-3">
+				<a href="/" class="logo">
+					<img src="/images/logo.png" alt=""/>
+				</a>
+				<span class="slogan hidden-sm hidden-md">
+					Оптовая и розничная продажа часов
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7 hidden-xs">
+				{{/inc/menu.html}}
+			</div>
+			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-2">
+				<div class="basket-1">
+					<ul class="menu-2">
+						<li class="arrow">
+							<a href="/basket">
+							
+								<?/* full basket */?>
+								
+								<span style="display:none;">
+									<span class="left">
+										<span class="num">5</span>
+									</span>
+									<span class="right hidden-xs hidden-sm hidden-md">
+										<span class="title">Сумма</span>
+										<span class="sum">35 000 &#8381;</span>
+									</span>
+								</span>
+								
+								<?/* empty basket */?>
+								
+								<span style="">
+									<span class="left empty"></span>
+									<span class="right empty hidden-xs hidden-sm hidden-md">
+										<span class="title">Корзина</span>
+										<span class="sum">Товаров нет</span>
+									</span>
+								</span>
+								
+							</a>
+							<div class="last-1">
+								<ul class="last-2">
+									<li>
+										<ul class="last-3">
+											<li>
+												<div class="row">
+													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+														<img src="/images/mini-2.jpg" alt=""/>
+													</div>	
+													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">	
+														<span class="title">Командирские</span>
+														<span class="price-1">1320 ₽ <span class="price-2">х 2 шт</span></span>
+													</div>
+													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+														<a href="#" class="close"></a>
+													</div>	
+												</div>
+												<a href="/product" class="inner"></a>
+											</li>
+											<li>
+												<div class="row">
+													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+														<img src="/images/mini-2.jpg" alt=""/>
+													</div>	
+													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">	
+														<span class="title">Амфибия женская 2409/051227</span>
+														<span class="price-1">22320 ₽ <span class="price-2">х 2 шт</span></span>
+													</div>
+													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+														<a href="#" class="close"></a>
+													</div>	
+												</div>
+												<a href="/product" class="inner"></a>
+											</li>
+											<li><a href="/basket">Перейти в корзину</a></li>
+										</ul>
+									</li>
+								</ul>		
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{content}
+
+<div class="advantages">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				<div class="item">
+					<div class="picture"><img src="/images/icon-01.svg" class="icon-1" alt=""/></div>
+					<div class="title">Широкий ассортимент</div>
+					<div class="text">Большой выбор качественных наручных часов</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				<div class="item">
+					<div class="picture"><img src="/images/icon-02.svg" class="icon-2" alt=""/></div>
+					<div class="title">Бесплатная доставка</div>
+					<div class="text">При заказе от 2 000 руб.</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				<div class="item">
+					<div class="picture"><img src="/images/icon-09.svg" class="icon-3" alt=""/></div>
+					<div class="title">Гарантия на все</div>
+					<div class="text">Поддерживаем заводскую гарантию на часы</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				<div class="item">
+					<div class="picture"><img src="/images/icon-10.svg" class="icon-4" alt=""/></div>
+					<div class="title">Знаем о часах "Восток" все</div>
+					<div class="text">Находимся на площадке завода, имеем многолетний опыт продажи часов</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="action-2">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-5">
+				<div class="title">Будьте в курсе</div>
+				<div class="text">Подпишитесь на последние обновления и узнавайте о новинках и специальных предложениях первыми</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+				<div class="sub">
+					<input type="text" placeholder="Ваш e-mail"/>
+					<span>Нажимая на кнопку "Подписаться" вы даете согласие на обработку своих данных</span>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				<a href="#" class="send-3">Подписаться</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="footer-1">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+				<div class="item">
+					<div class="title">Каталог</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<ul class="left-1 left-1-xs">
+								{{add 'custom_catalog_rows', 'row' => 1}}
+								<br>
+								<foreach d()->Custom_catalog_row->where('row = ?', 1)>
+									{{edit}}{{delete}}
+									<li><a href="/{.url}">{.title}</a></li>
+								</foreach>
+							</ul>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<ul class="left-1 left-2-xs">
+								{{add 'custom_catalog_rows', 'row' => 2}}
+								<br>
+								<foreach d()->Custom_catalog_row->where('row = ?', 2)>
+									{{edit}}{{delete}}
+									<li><a href="/{.url}">{.title}</a></li>
+								</foreach>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4 col-sm-offset-2 col-md-offset-0">
+				<div class="item">
+					<div class="title">Информация</div>
+					<ul class="left-2 left-2-xs">
+						{{add 'custom_info_rows', 'row' => 1}}
+						<br>
+						<foreach d()->Custom_info_row->where('row = ?', 1)>
+							{{edit}}{{delete}}
+							<li><a href="/{.url}">{.title}</a></li>
+						</foreach>
+					</ul>
+				</div>	
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">		
+				<div class="item last">
+					<div class="title">Контакты</div>
+					<ul class="right">
+						<li>{Option.address}</li>
+						<li>{Option.number}</li>
+						<li>{Option.feedback_email|h}</li>
+					</ul>
+					<ul class="social">
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="footer-2">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="text" id="footer-text">
+					{Option.footer_description}
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+<div class="footer-3">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+				<div class="left">
+					© 2018 ООО "Восток" <a href="/privacy-policy">Политика конфиденциальности</a>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+				<div class="right">
+					Сайт разработан в компании «<a href="https://artklen.ru" target="blank"/>ARTKLEN</a>»
+				</div>
+				<div class="logo">
+					<a href="https://artklen.ru" class="hidden-xs" target="blank"><img src="/images/copyright.png" alt=""/></a>
+					<a href="https://artklen.ru" class="visible-xs" target="blank"><img src="/images/copyright-xs.png" alt=""/></a>
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript" async></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/fancybox/jquery.fancybox.pack.js"></script>
+<script src="/js/slick/slick.min.js"></script>
+<script src="/js/jquery.sumoselect.min.js"></script>
+<script src="/js/commons.js"></script>
+<script src="/js/main.js"></script>
+
+<script type="text/javascript">
+window.site_main_domain = "<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>";
+window.cookie_lifetime = <?= (int) ini_get('session.cookie_lifetime') ?>;
+</script>
+</body>
+</html>

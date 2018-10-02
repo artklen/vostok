@@ -1,0 +1,38 @@
+<?php $suffix = rand(1111,9999); ?>
+<div class="control-group multiple_mode drag-n-drop-target">
+<div class="droplabel">
+Перетащите файл сюда.
+</div>
+  <label class="control-label"  >{title}</label>
+  <div class="controls">
+	<input type="text"  name="{name}" value="{value|h}"   id="element_{name}_<?php print $suffix ?>" class="input-xlarge str_input"  >
+ 
+ 
+
+    <span class="btn  style-fileinput-button hidden_on_old_browsers" data-loading-text="Загрузка...">
+        <span>Обзор...</span>
+ 
+
+ 		<input class="fileupload maybe_multiple" type="file" accept="*/*"   name="files[]" data-url="/cms/mod_admin/imanager/upload/file.php">
+
+		
+    </span>
+ 
+	<div class="progress progress-striped   js-progress-bar" style="display:none;width:600px; ">
+	  <div class="bar" style="width: 0;transition:none;"></div>
+	</div>
+
+		
+		
+ 
+  </div>
+</div>
+
+ 
+ 
+ 
+ 
+
+ 
+		
+ 

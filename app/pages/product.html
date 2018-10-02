@@ -1,0 +1,253 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			{{crumbs}}
+		</div>
+	</div>
+</div>
+<div class="inside-1">
+	<h1>{{edit}}{{delete}}{seo.h1|h}</h1>
+</div>
+<div class="tovar">
+	<div class="container">
+		<div class="wrap-3">
+			<div class="row">
+				<div class="col-xs-12 col-sm-7 col-md-5 col-lg-5">
+					{{add 'products_images', 'product_id'=>d()->this->id}}{{edit}}
+					<div class="slider-3">
+						<div class="slider-for js-slider-for">
+							<div><a href="{this.image|preview '389', '387'}" class="js-fancybox"><img
+								src="{this.image|preview '389', '387'}" alt=""
+							/></a></div>
+							<foreach this->products_images>
+								<div><a href="{this.image|preview '389', '387'}" class="js-fancybox"><img
+									src="{this.image|preview '389', '387'}" alt=""
+								/></a></div>
+							</foreach>
+						</div>
+						<div class="slider-nav js-slider-nav">
+							<div><img src="{this.image|preview 'in64', 'in64'}" alt=""/></div>
+							<foreach this->products_images>
+
+								<div>{{edit}}{{delete}}<img src="{this.image|preview 'in64', 'in64'}" alt=""/></div>
+							</foreach>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 hidden-xs">
+					<div class="title-1">Артикул: {.code}</div>
+					<ul class="type-1">
+						<foreach ~props>
+							<li>{.title}</li>
+						</foreach>
+					</ul>
+					<div class="title-1">Краткое описание</div>
+					<div class="text-1">
+						{text}
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					<div class="price">
+						<div class="left">
+							<span>{price_origin_format} &#8381;</span> {calc_price_format} &#8381;
+						</div>
+						<div class="right">
+							<button class="top"></button>
+							<input type="text" class="middle" value="1"/>
+							<button class="bottom"></button>
+						</div>
+					</div>
+					<div class="title-1">Выберите упаковку</div>
+
+					<div class="js-unfolding-container">
+
+						<div class="box-1 box-2">
+							<input type="radio" id="list-s" class="list-1" name="material" checked/>
+							<label for="list-s" class="active">
+								<table class="choice-1">
+									<tr>
+										<td class="text">
+											<span></span>
+											<div class="part">Стандартная</div>
+										</td>
+									</tr>
+								</table>
+							</label>
+						</div>
+
+						<foreach Pack>
+							<?php $max = 2; if (d()->key > $max) break; ?>
+							{{edit}}{{delete}}
+							<div class="box-2">
+								<input
+									type="radio"
+									id="list-<?=d()->key?>"
+									class="list-1"
+									name="material"
+								/>
+								<label for="list-<?=d()->key?>" class="active">
+									<table class="choice-1">
+										<tr>
+											<td class="text">
+												<span></span>
+												<div class="part">{.title}</div>
+											</td>
+											<td class="price">{.price} &#8381;</td>
+											<td>
+												<a href="{this.image|preview 'in500', 'in500'}" class="js-fancybox">
+													<img
+														src="{this.image|preview 'in46', 'in46'}"
+														alt=""
+													>
+												</a>
+											</td>
+										</tr>
+									</table>
+								</label>
+							</div>
+						</foreach>
+
+						<?php if (d()->Pack->count > 2) { ?>
+							<div class="js-unfolding-block">
+								<foreach Pack>
+									<?php if (d()->key <= $max) break; ?>
+									<div class="box-2">
+										<input
+											type="radio"
+											id="list-<?=d()->key?>"
+											class="list-1"
+											name="material"
+										/>
+										<label for="list-<?=d()->key?>" class="active">
+											<table class="choice-1">
+												<tr>
+													<td class="text">
+														<span></span>
+														<div class="part">{.title}</div>
+													</td>
+													<td class="price">{.price} &#8381;</td>
+													<td>
+														<a href="{this.image|preview 'in500', 'in500'}" class="js-fancybox">
+															<img
+																src="{this.image|preview 'in46', 'in46'}"
+																alt=""
+															>
+														</a>
+													</td>
+												</tr>
+											</table>
+										</label>
+									</div>
+								</foreach>
+							</div>
+							<a
+								href="javascript:void(0);"
+								class="link js-unfolding-button"
+							>
+								<span>Показать все упаковки</span>
+							</a>
+						<?php } ?>
+					</div>
+
+					<a href="#" class="send-6">Добавить в корзину</a>
+				</div>
+				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 visible-xs">
+					<div class="title-1">Артикул: 055050</div>
+					<ul class="type-1">
+						<li>Точный ход</li>
+						<li>Выдерживают сильный удар или погружения в воду</li>
+						<li>Длительное применение в автономном режиме</li>
+						<li>Стекло не царапается</li>
+						<li>Надежные и долговечные</li>
+					</ul>
+					<div class="title-1">Краткое описание</div>
+					<div class="text-1">
+						{text}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+				<div class="type-2">
+
+					<input type="radio" id="tab-1" class="tab-1" name="tabs" checked/>
+					<label for="tab-1" class="active">Характеристики</label>
+
+					<input type="radio" id="tab-2" class="tab-2" name="tabs"/>
+					<label for="tab-2" class="active">Описание</label>
+
+					<section class="content-tab-1">
+						@ if (d()->this->collection ) {
+						<div class="item">
+							<div class="left"><span>Коллекция</span></div>
+							<div class="right"><span>{.collection.title}</span></div>
+						</div>
+						@ }
+						<?php d()->this_product = d()->this ?>
+						<foreach Products__field>
+							@ ~value = ~this->value_of(~this_product);
+							@ if (~value !== '') {
+							<div class="item">
+								<div class="left">
+									<span>{.title|h}{{if ~this->unit !== '', ', ' . h(~this->unit)}}</span></div>
+								<div class="right"><span>
+									@ if (d()->this->type == 'boolean') {
+										<?=d()->value ? 'Да' : 'Нет'?>
+									@ } else {
+										{value|h}
+									@ }
+								</span></div>
+							</div>
+							@ }
+						</foreach>
+					</section>
+					<section class="content-tab-2">
+						{text_full}
+					</section>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<div class="text-2">
+					<div class="row">
+						<div class="col-xs-12 col-sm-7 col-md-12 col-lg-12">
+							<div class="title-2">Есть вопросы?</div>
+							<div class="title-3">Оставьте заявку или позвоните нам</div>
+							<div class="phone">{Option.number}</div>
+						</div>
+						<div class="col-xs-12 col-sm-5 col-md-12 col-lg-12">
+							<a href="/feedback/consultation" class="send-7 js-feedback">Получить консультацию</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="main-title">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
+				<div class="center-1 wrap-5">
+					<div class="title-1">Интересные предложения</div>
+					<span class="title-2">Возможно, вас заинтересуют</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="catalog-2">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="slider-2 js-slider-2">
+					<foreach Product->where('is_interesting = ?', 1)>
+						<div class="slide">
+							{{/inc/product.html}}
+						</div>
+					</foreach>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

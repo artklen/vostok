@@ -1,0 +1,15 @@
+@ if (isset(d()->params['name']) && (d()->params['name'] !== '')) {
+	Имя: {params.name|h}<br>
+@ }
+@ if (isset(d()->params['phone']) && (d()->params['phone'] !== '')) {
+	Телефон: {params.phone|h}<br>
+@ }
+@ if (isset(d()->params['email']) && (d()->params['email'] !== '')) {
+	E-mail: {params.email|h}<br>
+@ }
+@ if (isset(d()->params['message']) && (d()->params['message'] !== '')) {
+	Сообщение: <br>{params.message|hnl2br}<br><br>
+@ }
+@ if (isset(d()->params['url']) && (d()->params['url'] !== '')) {
+	Страница сайта: <a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN'] . d()->params['url']) ?>"><?= h(d()->params['url']) ?></a>
+@ }

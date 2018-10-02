@@ -1,0 +1,27 @@
+{{edit}}{{delete}}
+<div class="wrap-6">
+	@ if (d()->this->discount) {
+	<span class="sale">Скидка</span>
+	@ } else {
+	@ }
+</div>
+<div class="top">
+	<a href="/product/{url}" class="main-item">
+		<img src="{this.image|preview '200', '200'}" alt=""/></a>
+
+	<!--<div class="middle">
+		<a href="#" class="mini"><img src="/images/mini-1.jpg" alt=""/></a>
+		<a href="#" class="mini"><img src="/images/mini-1.jpg" alt=""/></a>
+		<a href="#" class="mini"><img src="/images/mini-1.jpg" alt=""/></a>
+	</div>-->
+</div>
+<div class="bottom">
+	<a href="/product/{url}" class="title">
+		{.title}
+	</a>
+	<div class="price">{.calc_price_format}
+		@ if (d()->this->discount) {
+		&#8381; <span>{price_origin_format} &#8381;</span>
+		@ }
+	</div>
+</div>

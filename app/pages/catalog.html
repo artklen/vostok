@@ -1,0 +1,107 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			{{crumbs}}
+		</div>
+	</div>
+</div>
+<div class="inside-3">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">	
+				<div class="left">
+					<h1>{{edit}}{seo.h1|h}</h1>
+					<div class="text">Для истинных ценителей неординарного стиля и надежности выпущена целая серия наручных мужских и женских часов Восток-Европа. Механизмы отличаются швейцарским качеством.</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 visible-lg">
+				<div class="right">
+					<img src="/images/banner-01.jpg" alt=""/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="catalog-3">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="title">
+					Наручные часы Амфибия Классика корпус 060 автоподзавод противоударные водонепроницаемые 30 м 
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-xs">
+				<div class="banner-1">
+					<div class="row">
+						<div class="col-xs-12 col-sm-8 col-md-7 col-lg-12">
+							<div class="banner-2">
+								<div class="title-1">
+									Женские часы Восток-Европа коллекции Ундина
+								</div>
+								<div class="title-2">
+									Часы-хронограф в корпусе из нержавеющей стали с водозащитой 20АТМ!!!
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+						{{/inc/facets.html}}
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-lg">
+						<a href="javascript:void(0);" class="facets-2 js-facets-2">Показать фильтр</a>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+						<div class="wrap-2">
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<div class="sort">
+										{{add 'products'}}
+										<div class="left">Товаров: <span>&nbsp;{Product.count}</span></div>
+
+										<?php if ($_REQUEST['order'] == 'price_to_min') {
+											$link = '/catalog';
+										?>
+											<style>
+												.sort .right a:after {transform: rotate(180deg);}
+											</style>
+										<?php } else { $link = '?order=price_to_min'; }?>
+										<div class="right">Сортировка по: &nbsp;<a href="<?=$link?>">Цене</a></div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<!-- <div class="center-2">{{/components/pagination.html}}</div> -->
+									<div class="center-2">
+										{this_products|custom_pagination "/components/pagination.html"}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="wrap-2">
+							<div class="row grid-row">
+								<foreach this_products>
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+										<div class="product">
+											{{/inc/product.html}}
+										</div>
+									</div>
+								</foreach>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<!-- <div class="center-3">{{/components/pagination.html}}</div> -->
+								<div class="center-3">
+									{this_products|custom_pagination "/components/pagination.html"}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

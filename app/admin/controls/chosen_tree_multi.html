@@ -1,0 +1,108 @@
+<?php
+if (!function_exists('postorder_traversal_tree')) {
+	function postorder_traversal_tree($tree, $params = array()) {
+		static $defaults = array(
+			'root' => 0,
+			'function' => null,
+			'func_after' => null,
+			'args' => array(),
+		);
+		$result = '';
+		foreach ($defaults as $key => $value) {
+			if (!array_key_exists($key, $params)) {
+				$params[$key] = $value;
+			}
+		}
+		if (!array_key_exists('root_item', $params)) {
+			$params['root_item'] = (array_key_exists($params['root'], $tree['byid']) ? $tree['byid'][$params['root']] : array('id' => $params['root']));
+		}
+		$k = 0;
+		$stack = array();
+		$stack[0] = $params['root'];
+		$st2 = array();
+		$st2[0] = -1;
+		if (isset($params['function'])) {
+			$result .= call_user_func($params['function'], $params['root_item'], 0, $tree, $params['args']);
+		}
+		//$result .= $params['func_before']($params['root_item'], 0, $tree);
+		while ($k >= 0) {
+			$up = true;
+			while (++$st2[$k] < count($tree['children'][$stack[$k]])) {
+				if (isset($params['function'])) {
+					$result .= call_user_func($params['function'], $tree['byid'][$tree['children'][$stack[$k]][$st2[$k]]], $k + 1, $tree, $params['args']);
+				}
+				//$result .= $params['func_before']($tree['byid'][$tree['children'][$stack[$k]][$st2[$k]]], $k + 1, $tree);
+				$stack[$k + 1] = $tree['children'][$stack[$k]][$st2[$k]];
+				$st2[++$k] = -1;
+				$up = false;
+				break;
+			}
+			if ($up) {
+				$st2[$k] = -1;
+				$k--;
+				if (isset($params['func_after'])) {
+					$result .= call_user_func($params['func_after'], $tree['byid'][$tree['children'][$stack[$k]][$st2[$k]]], $k + 1, $tree, $params['args']);
+				}
+			}
+		}
+		//$result .= call_user_func($params['func_after'], $params['root_item'], 0, $tree, $params['args']);
+		return $result;
+	}
+} ?>
+{{/admin/chosen/chosen_inc.html}}
+<div class="control-group">
+ 
+  <label class="control-label">{title}</label>
+  <div class="controls">
+	<?php 
+	if (count(d()->field_params) > 3){
+		$_table_name = d()->field_params[3];
+	} else {
+		$_table_name = ActiveRecord::one_to_plural( substr(d()->field_params[1],0,-3));
+	}
+	$_modelname = ActiveRecord::plural_to_one(strtolower($_table_name));
+	$_first_letter = strtoupper(substr($_modelname, 0, 1));
+	$parent_id = $_modelname . '_id';
+	$_modelname = $_first_letter.substr($_modelname, 1);
+	
+	d()->list_of_rows =  new $_modelname();
+	
+	$tree = array(
+		'byid' => array(),
+		'children' => array(),
+	);
+	$to_array = d()->list_of_rows->to_array;
+	foreach ($to_array as $row) {
+		$row_id = $row['id'];
+		$tree['byid'][$row_id] = $row;
+		$tree['children'][(int) $row[$parent_id]][] = $row_id;
+		if (!isset($tree['children'][$row_id])) {
+			$tree['children'][$row_id] = array();
+		}
+	}
+	
+	 
+	?>
+	
+	<select data-placeholder="Выберите варианты..." class="input-xlarge chosen-select" multiple="multiple"><?php
+postorder_traversal_tree($tree, array(
+	'function' => function($item, $lvl, $tree, $args) use ($_field) {
+		if (!$lvl) {
+			return;
+		}
+		$id = $item['id'];
+		$title = $item['title'];
+		?><option <?php
+		if (!isset($_GET["{$_field}"]) && (d()->value == $id) || ($_GET["{$_field}"] == $id)) {
+			?>selected <?php
+		} /*else if (!empty($tree['children'][$id])) {
+			?>disabled <?php
+		}*/
+		?>value="<?php print $id; ?>"><?php print str_repeat('&nbsp', ($lvl - 1) << 2) . h($item['title']); ?></option><?php
+	}
+));
+	?></select>
+	 <input type="hidden"  name="{name}" value="{value|h}" class="chosen_checkboxes_result"  >
+  </div>
+</div>
+

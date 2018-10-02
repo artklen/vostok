@@ -1,0 +1,26 @@
+@ if (!d()->is_admin_chosen_declared) {
+	@ d()->is_admin_chosen_declared = true;
+	<link rel="stylesheet" type="text/css" href="/app/admin/chosen/chosen.min.css" />
+	<script src="/app/admin/chosen/chosen.jquery.min.js"></script>
+<script>
+if (!CHOSEN_TABLE_INITIALIZED) {
+	var CHOSEN_TABLE_INITIALIZED = true;
+	$(function() {
+		$('.chosen_checkboxes_result').each(function() {
+			var t = $(this);
+			var p = t.parent().find('.chosen-select');
+			var ar = t.val().split(',');
+			var i = ar.length;
+			while (i--) {
+				p.find('option[value="' + ar[i] + '"]').prop('selected', true).prop('disabled', false);
+			}
+		});
+		$('.chosen-select').chosen();
+		$('.chosen-select').on('change', function(){
+			var t = $(this);
+			t.parent().find('.chosen_checkboxes_result').val($.map(t.find('option:selected'), function(o) { return o.value; }).join(',')).change();
+		});
+	});
+}
+</script>
+@ }

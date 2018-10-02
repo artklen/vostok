@@ -1,0 +1,28 @@
+@ if (url(4) !== 'add') {
+<form method="POST" class="form-horizontal admin_edit_form">
+	<fieldset class="input_elements">
+		<legend>Экспорт и импорт товаров</legend>
+		<div class="control-group">
+			<label class="control-label"></label>
+			<div class="controls">
+				<a href="/exchange/export_products">
+					Скачать текущую выгрузку (excel)
+				</a>
+			</div>
+		</div>
+<?php
+		d()->title = 'Файл (excel)';
+		d()->value = '';
+		d()->name = 'exchange[excel_file]';
+		d()->field_params = null;
+		print d()->admin_file();
+		
+		d()->title = 'Архив изображений (zip)';
+		d()->value = '';
+		d()->name = 'exchange[images_zip_file]';
+		d()->field_params = null;
+		print d()->admin_file(); ?>
+		
+	</fieldset>
+</form>
+@ }
