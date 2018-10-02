@@ -30,13 +30,13 @@
 				</label>
 			</div>
 		@ } else {
-			<div class="f-block-3">
-				<label class="box disabled">
+			<div class="box">
+				<label class="disabled">
 				@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
-					<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list-1" />
+					<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list" />
 					<span></span>{data.value|h}
 				@ } else {
-					<input type="checkbox" name="{name|h}[]" value="{data.value|h}" disabled="disabled" class="list-1" />
+					<input type="checkbox" name="{name|h}[]" value="{data.value|h}" disabled="disabled" class="list" />
 					<span></span>{data.value|h}
 				@ }
 				</label>

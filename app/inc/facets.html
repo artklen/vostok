@@ -1,23 +1,10 @@
 <div class="facets-1 js-facets-1">
-	<form action="/catalog" method="get">
+	<form action="/catalog" method="get" class="jasdas-filter-form">
 		@ foreach (~products__fields as ~field) {
 			@ if (!empty(~fields_data[~field['field_name']]) || ~field['field_name'] === 'all_links') {
 				{{render_field ~field['field_name'], ~field, '/products_filters/'}}
 			@ }
 		@ }
-
-		<div class="item js-unfolding-container">
-			<a href="javascript:void(0);" class="name js-unfolding-button"><span>Цена &#8381;</span></a>
-			<div class="js-unfolding-block">
-				<label class="box col-1">
-					<input type="text" min="0" max="255" step="1" id="num-1" class="left"/>
-				</label>
-				<label class="box col-2 right">
-					<input type="text" min="0" max="465" step="1" id="num-2" class="right"/>
-				</label>
-				<div id="js-interval-slider"></div>
-			</div>
-		</div>
 
 		<button type="submit" class="send-8">Показать</button>
 		<a href="/catalog" class="send-9">Сбросить фильтр</a>

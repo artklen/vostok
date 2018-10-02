@@ -31,20 +31,22 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-xs">
-				<div class="banner-1">
-					<div class="row">
-						<div class="col-xs-12 col-sm-8 col-md-7 col-lg-12">
-							<div class="banner-2">
-								<div class="title-1">
-									Женские часы Восток-Европа коллекции Ундина
-								</div>
-								<div class="title-2">
-									Часы-хронограф в корпусе из нержавеющей стали с водозащитой 20АТМ!!!
+				@ if (d()->Option.image_catalog_banner) {
+					<div class="banner-1" style="background: url({Option.image_catalog_banner}) no-repeat top center;">
+						<div class="row">
+							<div class="col-xs-12 col-sm-8 col-md-7 col-lg-12">
+								<div class="banner-2">
+									<div class="title-1">
+										{Option.title_catalog_banner}
+									</div>
+									<div class="title-2">
+										{Option.description_catalog_banner}
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				@ }
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
@@ -60,7 +62,7 @@
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 									<div class="sort">
 										{{add 'products'}}
-										<div class="left">Товаров: <span>&nbsp;{Product.count}</span></div>
+										<div class="left">Товаров: <span>&nbsp;{this_products.count}</span></div>
 
 										<?php if ($_REQUEST['order'] == 'price_to_min') {
 											$link = '/catalog';

@@ -6,8 +6,9 @@ class Products__field extends ActiveRecord
 	function filter_instance()
 	{
 		$class = substr(__CLASS__, 0, -7) . '_filter';
-		if ("$type" !== '' && class_exists("{$class}_{$field['type']}")) {
-			$class .= '_' . $field['type'];
+		$type = $this->type;
+		if ("$type" !== '' && class_exists("{$class}_{$type}")) {
+			$class .= '_' . $type;
 		}
 		return new $class($this->field_name);	
 	}

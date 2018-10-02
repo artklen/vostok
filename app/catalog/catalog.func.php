@@ -13,7 +13,24 @@ d()->route('/catalog', function ()
 		'field_name'      => 'price',
 		'type'            => 'interval',
 		'filter_instance' => new Products_filter_interval('price'),
-	] /*,[
+	],
+	/*[
+		'title'           => 'Количество камней',
+		'field_name'      => 'stones_count',
+		'type'            => 'interval',
+		'filter_instance' => new Products_filter_interval('stones_count'),
+	],*/
+	[
+		'title'           => 'Коллекция',
+		'field_name'      => 'collection_id',
+		'type'            => 'default',
+		'filter_instance' => new Products_filter_relation([
+			'table'      => 'collections',
+			'field_from' => 'collection_id',
+			'field_to'   => 'collection_id',
+		]),
+	]
+	/*,[
 		'title'           => 'Форма',
 		'field_name'      => 'products_shapes',
 		'type'            => 'shapes',
