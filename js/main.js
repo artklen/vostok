@@ -230,28 +230,35 @@ $(function(){
 
 $(function(){
 	var uislider = document.getElementById('js-interval-slider');
-	noUiSlider.create(uislider,{
-		start: [ $('#num-1').val() || 0, $('#num-2').val() || 100000 ],
-		step: 10,
-		connect: true,
-		range: {
-			'min': 0,
-			'max': 105500
-		}
-	});
-	
-	var inputNumber1 = document.getElementById('num-1');
-	var inputNumber2 = document.getElementById('num-2');
-	uislider.noUiSlider.on('update', function( values, handle ){
-		inputNumber1.value = values[0];
-		inputNumber2.value = values[1];	
-	});
-	inputNumber1.addEventListener('change', function(){
-		uislider.noUiSlider.set([inputNumber1.value, inputNumber2.value]);
-	});
-	inputNumber2.addEventListener('change', function(){
-		uislider.noUiSlider.set([inputNumber1.value, inputNumber2.value]);
-	});
+
+	if (uislider)
+	{
+		noUiSlider.create(uislider, {
+			start: [$('#num-1').val() || 0, $('#num-2').val() || 100000],
+			step: 10,
+			connect: true,
+			range: {
+				'min': 0,
+				'max': 105500
+			}
+		});
+
+		var inputNumber1 = document.getElementById('num-1');
+		var inputNumber2 = document.getElementById('num-2');
+		uislider.noUiSlider.on('update', function (values, handle)
+		{
+			inputNumber1.value = values[0];
+			inputNumber2.value = values[1];
+		});
+		inputNumber1.addEventListener('change', function ()
+		{
+			uislider.noUiSlider.set([inputNumber1.value, inputNumber2.value]);
+		});
+		inputNumber2.addEventListener('change', function ()
+		{
+			uislider.noUiSlider.set([inputNumber1.value, inputNumber2.value]);
+		});
+	}
 });
 
 

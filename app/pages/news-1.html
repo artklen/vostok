@@ -16,10 +16,10 @@
 					<a href="javascript:void(0);" class="close js-close visible-xs"></a>
 					{{add 'rubrics'}}
 					<ul class="menu">
-						<li><a href="/news" class="active">Все публикации</a></li>
+						<li><a href="/news" <?= d()->this_rubric ? '' : 'class="active"'?>>Все публикации</a></li>
 						<foreach Rubric>
 							{{edit}}{{delete}}
-							<li><a href="/rubrics/{.url}" class="active">{.title}</a></li>
+							<li><a href="/rubrics/{.url}"  <?= d()->this_rubric->url == d()->this->url ? 'class="active"' : '' ?>>{.title}</a></li>
 						</foreach>
 					</ul>
 				</div>
@@ -33,7 +33,7 @@
 					<foreach ~this_news>
 					<div class="item">
 						<div class="side-1">
-							{{edit}}
+							{{edit}}{{delete}}
 							<a href="/news/{.url}">
 								<img src="{this.image|preview '80', '80'}" alt=""/>
 							</a>

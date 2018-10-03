@@ -7,7 +7,9 @@ d()->route('/faq', function (){
 });
 
 d()->route('/faq/:url', function ($url) {
-	d()->this_faq_category = d()->Faq_category->where('url = ?', $url);
+	#d()->use_page_model('/faq');
+	d()->this = d()->this_faq_category = d()->Faq_category->where('url = ?', $url);
 	d()->this_faq = d()->Faq->where('faq_category_id = ?', d()->this_faq_category->id);
+	d()->crumbs_list = [d()->page_crumb('/faq'), d()->crumb_for(d()->this, false)];
 	d()->view->render('/pages/faq.html');
 });

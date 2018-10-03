@@ -63,8 +63,9 @@ Basket = (function() {
 		$('.js-basket-item-not-exists').show();
 		$('.js-basket-item-not-enough').show();
 		$('input[data-basket-input]').each(function() {
-			$(this).val('')
+			$(this).val('');
 		});
+
 		$('[data-basket-number]').text('');
 		
 		/* суммы */

@@ -16,10 +16,10 @@
 					<a href="javascript:void(0);" class="close js-close visible-xs"></a>
 					{{add 'faqs'}}
 					<ul class="menu">
-						<li><a href="/faq" class="active">Все категории</a></li>
+						<li><a href="/faq" <?= d()->this_faq_category ? '' : 'class="active"'?>>Все категории</a></li>
 						<foreach Faq_category>
 							{{edit}}{{delete}}
-							<li><a href="/faq/{.url}" class="active">{.title}</a></li>
+							<li><a href="/faq/{.url}" <?= d()->this_faq_category->url == d()->this->url ? 'class="active"' : ''?>>{.title}</a></li>
 						</foreach>
 					</ul>
 				</div>
@@ -30,9 +30,10 @@
 			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
 				<div class="right">
 					<ol class="list">
+						{{add 'faqs'}}
 						<foreach this_faq>
 						<span>
-							{{edit}}
+							{{edit}}{{delete}}
 							<li class="js-unfolding-container">
 								<a href="javascript:void(0);" class="js-unfolding-button">{.title}</a>
 								<a href="javascript:void(0);" class="plus"></a>

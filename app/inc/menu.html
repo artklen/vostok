@@ -9,8 +9,8 @@
 						<foreach Product->where('collection_id = ?', d()->this->id)>
 						<li>
 							<a href="/product/{.url}">
-								<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
-								<span class="sub-2">{.title}<span class="sub-3">4</span></span>
+								<span class="sub-1"><img src="{this.image|preview '33', '33'}" alt=""/></span>
+								<span class="sub-2">{.title} <span class="sub-3">4</span></span>
 							</a>
 						</li>
 						</foreach>
