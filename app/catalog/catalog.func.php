@@ -2,7 +2,7 @@
 
 d()->route('/catalog', function ()
 {
-	$per_page = 9;
+	$per_page = 18;
 
 	d()->get = new Get();
 	//$this_products = d()->this->subtree->_products;

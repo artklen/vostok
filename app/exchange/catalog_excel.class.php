@@ -132,11 +132,12 @@ class Catalog_excel {
 											$images_real[$image] = '/storage/import/' . md5($image) . strrchr($image, '.');
 										}
 									}
-									/*if (!empty($images_real)) {
+
+									if (!empty($images_real)) {
 										$values[$ownColumns[$column]] = reset($images_real);
 										$values[$ownColumns[$column] . '_import_value'] = $value;
 										array_shift($images_real);
-									}*/
+									}
 								} else {
 									$values[$ownColumns[$column]] = '';
 									// $values[$ownColumns[$column] . '_import_value'] = '';
@@ -175,11 +176,13 @@ class Catalog_excel {
 					foreach ($query_array as $key => $value) {
 						$query_strs[] = '`' . et($key) . '`=binary ' . e($value);
 					}
+					#var_dump($query_strs);die;
 					$query_strs[] = '`updated_at`=now()';
 					$q = 'update `products` set ' . implode(',', $query_strs) . ' where `id`=' . e($product_orm->id);
 					d()->db->exec($q);
 					$updated_products_ids[] = $last_id = $product_id = $product_orm->id;
 				} else {
+					#var_dump($query_array);die;
 					$product_orm = d()->Product;
 					$product_orm->create($query_array);
 					$created_products_ids[] = $last_id = $product_id = $product_orm->insert_id;

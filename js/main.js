@@ -228,7 +228,73 @@ $('.js-interval-slider').each(function() {
 		}, 100);
 	});
 });
-
+$('.js-number-slider').each(function() {
+	var t = $(this);
+	var input = t.find('.js-number-input');
+	var bar = t.find('.js-slider-bar')[0];
+	var data_values = t.data('slider-values');
+	var start_value = t.data('slider-value');
+	var l = data_values.unshift('');
+	var unit = t.data('unit');
+	/*var pips_values = new Array(l - 1);
+	for (var i in pips_values) {
+		pips_values[i] = i + 1;
+	}*/
+	noUiSlider.create(bar, {
+		start: start_value,
+		step: 1,
+		tooltips: {
+			to: function(value) {
+				if (!value) {
+					return 'Все';
+				}
+				return data_values[Math.round(value)] + ' ' + unit;
+			}
+		},
+		range: {
+			min: 0,
+			max: l - 1
+		},
+		/*pips: {
+			mode: 'values',
+			values: pips_values,
+			density: 100.0 / (l - 1)
+		},*/
+		format: {
+			to: function (value) {
+				return data_values[Math.round(value)];
+			},
+			from: function (value) {
+				return data_values.indexOf(value);
+			}
+		}
+	});
+	bar.noUiSlider.on('update', function (values, handle) {
+		input.val(values[handle]);
+		$(bar).find('.active-delenie').width(100.0 * data_values.indexOf(values[handle]) / (l - 1) + '%');
+		//t.find('.js-slider-value').html(values[handle]);
+	});
+	bar.noUiSlider.on('set', function() {
+		setTimeout(function() {
+			/*if (input.val() === '') {
+				input.removeAttr('name');
+			}*/
+			$('.js-filter-form').submit();
+		}, 100);
+	});
+	
+	$(bar).find('.noUi-base').append('<div class="delenie-container"><div class="active-delenie"></div>');
+	for (var i = 0; i < data_values.length; i++) {
+		$(bar).find('.delenie-container').append('<div class="sz-delenie"><span>' + data_values[i] + '</span></div>');
+	}
+	var left_sz = 0;
+	var procent = 100 / (data_values.length - 1);
+	$(bar).find('.sz-delenie').each(function(i) {
+		$(this).css('left', left_sz + '%');
+		left_sz += procent;
+	});
+	$(bar).find('.active-delenie').width(100.0 * data_values.indexOf('' + start_value) / (l - 1) + '%');
+});
 
 $(document).ready(function () {
 	$('.js-sumoselect').SumoSelect({
@@ -264,7 +330,8 @@ if (maps.length) {
 			}
 			var map = new ymaps.Map(t.attr('id'), {
 				center: coords,
-				zoom: 16
+				zoom: 16,
+				controls: ['zoomControl', 'typeSelector',  'fullscreenControl', 'routeButtonControl']
 			});
 			map.geoObjects.add(new ymaps.Placemark(coords, {
 				balloonContent: '<b>' + title + '</b><br>' + address
