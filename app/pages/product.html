@@ -16,11 +16,11 @@
 					{{add 'products_images', 'product_id'=>d()->this->id}}{{edit}}
 					<div class="slider-3">
 						<div class="slider-for js-slider-for">
-							<div><a href="{this.image|preview '389', '387'}" class="js-fancybox"><img
+							<div><a href="{this.image|preview '1000', 'auto'}" class="js-fancybox"><img
 								src="{this.image|preview '389', '387'}" alt=""
 							/></a></div>
 							<foreach this->products_images>
-								<div><a href="{this.image|preview '389', '387'}" class="js-fancybox"><img
+								<div><a href="{this.image|preview '1000', 'auto'}" class="js-fancybox"><img
 									src="{this.image|preview '389', '387'}" alt=""
 								/></a></div>
 							</foreach>
@@ -28,7 +28,6 @@
 						<div class="slider-nav js-slider-nav">
 							<div><img src="{this.image|preview 'in64', 'in64'}" alt=""/></div>
 							<foreach this->products_images>
-
 								<div>{{edit}}{{delete}}<img src="{this.image|preview 'in64', 'in64'}" alt=""/></div>
 							</foreach>
 						</div>

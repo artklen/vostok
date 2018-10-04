@@ -1794,11 +1794,12 @@ input.list[type="checkbox"]:disabled:hover + span {
 		left: 0;
 		height: 100%;
 		background: #fff;
-		> div {
+		div {
 			width: 68px;
 			height: 68px;
 			img {
-				width: 100%;	
+				max-width: 100%;
+				margin: auto;				
 			}
 		}
 		.slick-slide {
@@ -1899,8 +1900,8 @@ input.list[type="checkbox"]:disabled:hover + span {
 			}
 		}
 		&:hover {
-			background-size: 214px, auto;
-			background-position: left 40px center, right -110px bottom -20px;
+			background-size: 228px, auto;
+			background-position: left 36px center, right -110px bottom -20px;
 		}
 	}
 	.product-2 {
@@ -2259,7 +2260,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 		input.right {
 			color: #292928;
 			float: right;
-			margin-right: 10px;
+			margin-right: 0;
 		}
 		&:after {
 			content: '';
@@ -2270,7 +2271,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 			height: 8px;
 			border-right: 1px solid #efece4;
 		}
-		&:last-of-type {
+		&:nth-last-of-type(2) {
 			margin: 0 0 20px 0;
 			&:after {
 				content: none;
@@ -2325,6 +2326,14 @@ input.list[type="checkbox"]:disabled:hover + span {
 			}
 		}
 		
+	}
+	.item-ui-interval {
+		padding: 10px 10px 0 10px;
+		min-height: 168px;
+	}
+	.item-ui-number {
+		padding: 40px 10px 0 10px;
+		min-height: 168px;
 	}
 }
 .facets-2, .open-1 {
@@ -3597,7 +3606,75 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     height: 4px;
 	margin-top: -1px;
 }
+.delenie-container {
+	height: 4px; 
+	top: -4px;
+	background: #efece4;
+	position: relative;
+	.sz-delenie {
+		position: absolute;
+		top: -7px;
+		width: 1px;
+		height: 11px;
+		z-index: -1;
+		background: #efece4;
+		&+.sz-delenie {
+			width: 1px;
+		}
+		&:last-child {
+			width: 1px;
+			
+		}
+		span {
+			position: relative;
+			width: 40px;
+			top: -20px;
+			left: -6px;
+			font-size: 11px;
+			font-weight: 300;
+			color: #5f5f5e;
+			text-align: center;
+			letter-spacing: -0.05em;
+			display: none;
+			
+		}
+		&:last-child {
+			span {
+				display: inline;
+			}
+		}
+	}
+	.active-delenie {
+		width: 0;
+		position: absolute;
+		height: 3px;
+		background: #292928;
+	}
+}
 
+
+.noUi-tooltip {
+	position: absolute;
+	height: 26px;
+	background: #efece4;
+	font-size: 12px;
+	text-align: center;
+	top: -42px;
+	border: none;
+	box-shadow: -0.14px 1.995px 2px 0px rgba(41, 41, 40, 0.05);
+	&:after {
+		content: '';
+		width: 10px;
+		height: 5px;
+		position: absolute;
+		right: 0;
+		bottom: -5px;
+		left: 0;
+		margin: auto;
+		background: url(/images/tooltip.png) no-repeat center;
+	}
+}
+	
 /* grid row */
 
 .row.grid-row {

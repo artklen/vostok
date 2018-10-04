@@ -1,7 +1,7 @@
 @ if (isset(~fields_data[~name], ~fields_data[~name]['max'], ~fields_data[~name]['min']) && ~fields_data[~name]['max'] - ~fields_data[~name]['min'] > 1e-7) {
 <div class="item js-unfolding-container">
-	<a href="javascript:void(0);" class="name js-unfolding-button">{field.title|h}</a>
-	<div class="js-unfolding-block" style="margin-left: 10px; margin-right: 8px">
+	<a href="javascript:void(0);" class="name js-unfolding-button"><span>{field.title|h}</span></a>
+	<div class="item-ui-interval js-unfolding-block">
 		<label class="col-1">
 			<input
 				type="text"

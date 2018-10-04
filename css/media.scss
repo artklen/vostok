@@ -629,6 +629,9 @@
 		.product-1, .product-2, .product-3, .product-4 {
 			background-position: left -95px center, right -140px bottom -20px;
 			padding: 0px 15px 50px 0;
+			&:hover {
+				background-position: left -95px center, right -140px bottom -20px;
+			}
 		}
 	}
 	.catalog-2 {

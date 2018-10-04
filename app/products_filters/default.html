@@ -31,7 +31,7 @@
 				</label>
 			</div>
 		@ } else {
-			<div class="box <?=$inWrap ? 'box-side' : ''?>">
+			<div class="box empty <?=$inWrap ? 'box-side' : ''?>">
 				<label class="disabled">
 				@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
 					<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list" />

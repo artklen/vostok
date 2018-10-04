@@ -414,6 +414,8 @@
   .catalog-1 .product-1, .catalog-1 .product-2, .catalog-1 .product-3, .catalog-1 .product-4 {
     background-position: left -95px center, right -140px bottom -20px;
     padding: 0px 15px 50px 0; }
+    .catalog-1 .product-1:hover, .catalog-1 .product-2:hover, .catalog-1 .product-3:hover, .catalog-1 .product-4:hover {
+      background-position: left -95px center, right -140px bottom -20px; }
 
   .catalog-2 {
     padding: 60px 0 90px 0; }
@@ -447,9 +449,9 @@
       width: 100%; }
     .action-1 .watch-2 {
       margin: 35px 0 15px 0; }
-      .action-1 .watch-2 .title-2 {
-        padding: 0 0 15px 0;
-        line-height: 24px; }
+    .action-1 .watch-2 .title-2 {
+      padding: 0 0 15px 0;
+      line-height: 24px; }
 
   .news-1 .left {
     padding: 0 0 50px 0; }
