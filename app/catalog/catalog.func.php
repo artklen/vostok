@@ -23,12 +23,8 @@ d()->route('/catalog', function ()
 	[
 		'title'           => 'Коллекция',
 		'field_name'      => 'collection_id',
-		'type'            => 'default',
-		'filter_instance' => new Products_filter_relation([
-			'table'      => 'collections',
-			'field_from' => 'collection_id',
-			'field_to'   => 'collection_id',
-		]),
+		'type'            => 'table',
+		'filter_instance' => new Products_filter('collection_id'),
 	]
 	/*,[
 		'title'           => 'Форма',

@@ -8,7 +8,7 @@
 				{field.title|h}{{if ~field['unit'] !== '', ', ' . h(~field['unit'])}}
 			</span>
 	</a>
-	<div class="wrap-5 js-unfolding-block">
+	<div class="js-unfolding-block">
 		@ ~i = 0;
 		@ foreach (~fields_filtered_data[~name] as ~data) {
 		@ if (~i === 3) {

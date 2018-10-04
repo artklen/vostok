@@ -2,8 +2,10 @@
 
 d()->pages_url_base = '/';
 
-d()->use_page_model = function() {
-	$url = d()->url_path;
+d()->use_page_model = function($url = null) {
+	if (!isset($url)) {
+		$url = d()->url_path;
+	}
 	d()->this = d()->Page->find_by('url', ltrim($url, '/'));
 	if (d()->this->is_empty) {
 		return d()->page_not_found(d()->add(['pages', 'url' => $url]) . 'Страница не существует');

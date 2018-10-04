@@ -1,7 +1,7 @@
 <ul class="menu-2">
 	<foreach Collection->where('show_header = ?', true)>
 	<li class="arrow">
-		<a href="/catalog" {{if ~url_path === '/catalog', 'class="active"'}}>{.title}</a>
+		<a href="/catalog" {{if ~url_path === '/catalog/'.~url, 'class="active"'}}>{.title}</a>
 		<div class="last-1">
 			<ul class="last-2">
 				<li>
