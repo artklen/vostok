@@ -7,13 +7,33 @@
 			<ul class="last-2">
 				<li>
 					<ul class="last-3">
-						<foreach Product->where('collection_id = ?', d()->this->id)>
+						<!--foreach Product->where('collection_id = ?', d()->this->id)>
 						<li>
 							<a href="/product/{.url}">
 								<span class="sub-1"><img src="{this.image|preview '33', '33'}" alt=""/></span>
 								<span class="sub-2">{.title} <span class="sub-3">4</span></span>
 							</a>
 						</li>
+						foreach>-->
+
+						<foreach Product->select('count(id) cnt, series')->where('collection_id = ?', d()->this->id)->group_by('series')>
+							<li>
+								<a href="/catalog?series%5B%5D={.series|urlencode}">
+									<span class="sub-1">
+										<img src="{this.image|preview '33', '33'}" alt=""/></span>
+									<span class="sub-2">{.series} <span class="sub-3">{.cnt}</span></span>
+								</a>
+							</li>
+						</foreach>
+
+						<foreach Product->select('count(id) cnt, carcas')->where('collection_id = ?', d()->this->id)->group_by('carcas')>
+							<li>
+								<a href="/catalog?carcas%5B%5D={.carcas|urlencode}">
+									<span class="sub-1">
+										<img src="{this.image|preview '33', '33'}" alt=""/></span>
+									<span class="sub-2">{.carcas} <span class="sub-3">{.cnt}</span></span>
+								</a>
+							</li>
 						</foreach>
 					</ul>
 					<ul class="last-3">
@@ -28,82 +48,35 @@
 	</li>
 	</foreach>
 
-	<li><a href="/products-4" {{if ~url_path === '/products-4', 'class="active"'}}>С символикой</a></li>
-	<li class="arrow"><a href="/catalog" {{if ~url_path === '/products-5', 'class="active"'}}>Другие</a>
+	<li><a href="/products-4" {{if ~url_path === '/catalog', 'class="active"'}}>С символикой</a></li>
+	<li class="arrow"><a href="/catalog">Другие</a>
 		<div class="last-1">
 			<ul class="last-2">
 				<li>
 					<ul class="last-3">
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-2.jpg" alt=""/></span>
-								<span class="sub-2">Алмаз в две строки три строки <span class="sub-3">4</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Анчар <span class="sub-3">6</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">ГАЗ-14 Лимузин <span class="sub-3">17</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Луноход-2 <span class="sub-3">3</span></span>
-							</a>
-						</li>
+						<foreach Product->select('count(id) cnt, series')->group_by('series')->limit(7)>
+							<li>
+								<a href="/catalog?series%5B%5D={.series|urlencode}">
+									<span class="sub-1"></span>
+									<span class="sub-2">{.series} <span class="sub-3">4</span></span>
+								</a>
+							</li>
+						</foreach>
 					</ul>
+
 					<ul class="last-3">
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Мария 2 <span class="sub-3">5</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Ракета N1 <span class="sub-3">6</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Ундина <span class="sub-3">2</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Экраноплан <span class="sub-3">5</span></span>
-							</a>
-						</li>
+						<foreach Product->select('count(id) cnt, carcas')->group_by('carcas')->limit(7)>
+							<li>
+								<a href="/catalog?carcas%5B%5D={.carcas|urlencode}">
+									<span class="sub-1"></span>
+									<span class="sub-2">{.carcas} <span class="sub-3">{.cnt}</span></span>
+								</a>
+							</li>
+						</foreach>
 					</ul>
+
 					<ul class="last-3">
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Алмаз <span class="sub-3">4</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">Анчар <span class="sub-3">6</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="/product">
-								<span class="sub-1"><img src="/images/mini-3.jpg" alt=""/></span>
-								<span class="sub-2">ГАЗ-14 Лимузин <span class="sub-3">17</span></span>
-							</a>
-						</li>
+
 					</ul>
 				</li>
 			</ul>

@@ -1456,7 +1456,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     padding: 0 50px 50px 0;
-    transition: background-size 0.1s, background-position 0.1s; }
+    transition: background-size 0.2s, background-position 0.2s; }
   .catalog-1 .product-1 .title, .catalog-1 .product-2 .title, .catalog-1 .product-3 .title, .catalog-1 .product-4 .title {
     width: 170px;
     font-weight: 300; }
