@@ -1,6 +1,7 @@
 <ul class="menu-2">
 	<foreach Collection->where('show_header = ?', true)>
 	<li class="arrow">
+		{{edit}}{{delete}}
 		<a href="/catalog?collection_id%5B%5D={.id}" {{if ~id === $_REQUEST['collection_id'][0], 'class="active"'}}>{.title}</a>
 		<div class="last-1">
 			<ul class="last-2">

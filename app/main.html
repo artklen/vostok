@@ -122,10 +122,12 @@
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 hidden-xs">
-				<div class="search">
-					<input type="text" placeholder="Поиск по каталогу"/>
-					<button type="submit"></button>
-				</div>
+				<form method="get" action="/catalog">
+					<div class="search">
+						<input name="search" type="text" placeholder="Поиск по каталогу"/>
+						<button type="submit"></button>
+					</div>
+				</form>
 			</div>
 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-3 hidden-lg">
 				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs"></a>	

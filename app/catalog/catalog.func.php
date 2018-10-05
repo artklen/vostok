@@ -6,7 +6,16 @@ d()->route('/catalog', function ()
 
 	d()->get = new Get();
 	//$this_products = d()->this->subtree->_products;
-	$this_products = d()->Product;
+
+	if ($str = $_REQUEST['search'])
+	{
+		$this_products = d()->Product->where('title like ?', "%$str%");
+	}
+	else
+	{
+		$this_products = d()->Product;
+	}
+
 	$products__fields = d()->Products__field->only('filter')->all;
 	array_unshift($products__fields, [
 		'title'           => 'Цена, руб.',
