@@ -1846,7 +1846,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 		min-height: 321px;
 		margin: 0 0 30px 0;
 		background-image: url(/images/main-clock-01.png),
-					url(/images/main-clock-bg.png);
+						  url(/images/main-clock-bg.png);
 		background-repeat: no-repeat, no-repeat;
 		background-position: left 30px center, right -110px bottom -20px;
 		background-size: 244px, auto;
@@ -1865,8 +1865,8 @@ input.list[type="checkbox"]:disabled:hover + span {
 			-webkit-justify-content: flex-end;
 			-ms-flex-pack: end;
 		padding: 0 50px 50px 0;
-		transition: background-size 0.2s, 
-					background-position 0.2s;
+		transition: background-size 0.1s, 
+					background-position 0.1s;
 		.title {
 			width: 170px;
 			font-weight: 300;	
@@ -1901,7 +1901,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 		}
 		&:hover {
 			background-size: 228px, auto;
-			background-position: left 36px center, right -110px bottom -20px;
+			background-position: left 38px center, right -110px bottom -20px;
 		}
 	}
 	.product-2 {
@@ -1911,13 +1911,13 @@ input.list[type="checkbox"]:disabled:hover + span {
 	}
 	.product-3 {
 		background-image: url(/images/main-clock-03.png),
-					url(/images/main-clock-bg.png);
-					background-size: 234px, auto;		
+						  url(/images/main-clock-bg.png);
+		background-size: 234px, auto;		
 	}
 	.product-4 {
 		background-image: url(/images/main-clock-04.png),
-					url(/images/main-clock-bg.png);
-					background-size: 244px, auto;		
+						  url(/images/main-clock-bg.png);
+		background-size: 244px, auto;		
 	}
 }
 .catalog-2 {
@@ -2329,11 +2329,11 @@ input.list[type="checkbox"]:disabled:hover + span {
 	}
 	.item-ui-interval {
 		padding: 10px 10px 0 10px;
-		min-height: 168px;
+		height: 100px;
 	}
 	.item-ui-number {
 		padding: 40px 10px 0 10px;
-		min-height: 168px;
+		height: 100px;
 	}
 }
 .facets-2, .open-1 {

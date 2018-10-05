@@ -1456,7 +1456,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     padding: 0 50px 50px 0;
-    transition: background-size 0.2s, background-position 0.2s; }
+    transition: background-size 0.1s, background-position 0.1s; }
   .catalog-1 .product-1 .title, .catalog-1 .product-2 .title, .catalog-1 .product-3 .title, .catalog-1 .product-4 .title {
     width: 170px;
     font-weight: 300; }
@@ -1486,7 +1486,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     left: 0; }
   .catalog-1 .product-1:hover, .catalog-1 .product-2:hover, .catalog-1 .product-3:hover, .catalog-1 .product-4:hover {
     background-size: 228px, auto;
-    background-position: left 36px center, right -110px bottom -20px; }
+    background-position: left 38px center, right -110px bottom -20px; }
   .catalog-1 .product-2 {
     background-image: url(/images/main-clock-02.png), url(/images/main-clock-bg.png);
     background-size: 234px, auto; }
@@ -1819,10 +1819,10 @@ input.list[type="checkbox"]:disabled:hover + span {
     background-size: 11px 22px; }
   .facets-1 .item-ui-interval {
     padding: 10px 10px 0 10px;
-    min-height: 168px; }
+    height: 100px; }
   .facets-1 .item-ui-number {
     padding: 40px 10px 0 10px;
-    min-height: 168px; }
+    height: 100px; }
 
 .facets-2, .open-1 {
   font-family: 'Roboto Condensed', sans-serif;
