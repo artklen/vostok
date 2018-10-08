@@ -1,0 +1,59 @@
+<?php
+$class = mb_strtoupper(mb_substr(~name, 0, 1)) . mb_substr(~name, 1, -3); ?>
+
+@ if (!empty(~fields_filtered_data[~name])) {
+	<div class="item js-unfolding-container">
+	@ if (iam()) {
+		<div style="position: absolute; margin-left: -10px;">{{edit ~field}}</div>
+	@ }
+		<a href="javascript:void(0);" class="name js-unfolding-button">
+			<span>
+				{field.title|h}{{if ~field['unit'] !== '', ', ' . h(~field['unit'])}}
+			</span>
+		</a>
+		<div class="<?php if( count(d()->fields_filtered_data[d()->name]) > 3){ ?>wrap-5<?php } ?> js-unfolding-block">
+	@ ~i = 0;
+	@ foreach (~fields_filtered_data[~name] as ~data) {
+		@ if (~i === 3) {
+			<div class="js-unfolding-container-2">
+				<div class="js-unfolding-block-2" style="display:none">
+					<?php $inWrap = true;?>
+		@ }
+		
+		<?php ~table_title = d()->$class->find_by('id', ~data['value'])->title; ?>
+		@ if (~data['count'] > 0) {
+			<div class="box <?=$inWrap ? 'box-side' : ''?>">
+				<label>
+					<input
+						type="checkbox"
+						name="{name|h}[]"
+						value="{data.value|h}"
+						{{checked_if !empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])}}
+						class="list"
+					/>
+					<span></span>{table_title|h}<span class="sub"> {data.count|h}</span>
+				</label>
+			</div>
+		@ } else {
+			<div class="box empty<?=$inWrap ? 'box-side' : ''?>">
+				<label class="disabled">
+				@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
+					<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list" />
+					<span></span>{table_title|h}
+				@ } else {
+					<input type="checkbox" name="{name|h}[]" value="{data.value|h}" disabled="disabled" class="list" />
+					<span></span>{table_title|h}
+				@ }
+				</label>
+			</div>
+		@ }
+		@ ~i++;
+	@ }
+		@ if (~i > 3) {
+					</div>
+				<a href="javascript:void(0);" class="more js-unfolding-button-2">показать еще</a>
+			</div>
+			@ }
+		</div>
+	</div>
+@ }

@@ -1,0 +1,171 @@
+
+
+
+
+
+
+
+
+<div class="popup popup-1">
+
+	<div class="popup_head">
+
+		<a href="" class="close_popup">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+
+		<div class="ttl">Вход в личный кабинет</div>
+		
+	</div>
+
+	{{form 'login', 'action'=>'/login', 'ajax'=>true, 'simple_names'=>true}}
+
+		<div class="popup_body">
+
+			<input type="text" name="email" placeholder="E-mail">
+
+			<input type="password" name="password" placeholder="Пароль">
+
+			<div class="forg_pass_wrp">
+
+				<a href="" class="forg_pass popup_btn-3">Забыли пароль?</a>
+
+			</div>
+			
+		</div>
+		<div class="js-notice">
+		</div>
+		<div class="popup_footer">
+
+			<button class="green_btn">Войти</button>
+			<a href="#" class="green_btn_v2 popup_btn-2">Регистрация</a>
+			
+		</div>
+
+	{{/form}}
+	
+</div>
+
+<div class="popup popup-2">
+
+	<div class="popup_head">
+		<a href="" class="close_popup">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+		<div class="ttl">Регистрация</div>
+		
+	</div>
+
+	{{form 'registration_natural_person', 'action'=>'/registration', 'ajax'=>true, 'simple_names'=>true}}
+
+		<div class="popup_body">
+			<input type="text" name="name" placeholder="Ваше имя">
+			<input type="text" name="phone" placeholder="Телефон">
+			<input type="text" name="email" placeholder="E-mail">
+			<input type="password" name="password" placeholder="Пароль">
+			<input type="password" name="password_confirmation" placeholder="Подтверждение пароля">
+			<div class="agreement_wrp">
+				<label>
+					<input type="checkbox" checked required name="agreement" class="main_chb">
+					<div class="txt">Даю согласие ООО “Зуко Казань” на хранение и обработку персональных данных и соглашаюсь с <a href="/politika">условиями</a> их обработки</div>
+				</label>
+			</div>
+			
+		</div>
+		<div class="js-notice">
+		</div>
+		<div class="popup_btn_wrp">
+
+			<button type="submit" name="submit" class="green_btn">Зарегистирироваться</button>
+			
+		</div>
+
+	</form>
+
+	<div class="popup_body">
+
+		<div class="ttl">Для чего нужна регистрация?</div>
+
+		<div class="txt">Регистрация на сайте позволяет Вам первыми получать информацию о новых акциях, спецпредложениях а также отслеживать статус своих заказов, оплачивать заказы баллами.</div>
+		
+	</div>
+
+	<div class="popup_btn_wrp">
+
+		<a href="" class="green_btn_v2 popup_btn-1">Войти по логину и паролю</a>
+		
+	</div>
+
+</div>
+
+<div class="popup popup-3">
+	<div class="popup_head">
+		<a href="" class="close_popup">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+		<div class="ttl">Восстановление пароля</div>
+	</div>
+
+	{{form 'restore', 'action'=>'/restore', 'ajax'=>true, 'simple_names'=>true}}
+		<div class="popup_body">
+			<div class="txt">После нажатия кнопки “восстановить пароль” вы получите письмо на указанную электронную почту, в котором содержатся инструкции по восстановлению</div>
+			<input type="text" name="email" placeholder="E-mail">
+		</div>
+		<div class="popup_footer">
+			<a href="" class="green_btn_v2 popup_btn-2">Регистрация</a>
+			<button type="submit" name="submit" class="green_btn">Восстановить пароль</button>
+		</div>
+		<div class="popup_cont_v1">
+			<a href="" class="green_btn_v2 popup_btn-1">Войти по логину и паролю</a>
+		</div>
+	{{/form}}
+</div>
+
+<div class="popup popup-4">
+
+	<div class="popup_head">
+
+		<a href="" class="close_popup">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+
+		<div class="ttl">Заказ звонка</div>
+		
+	</div>
+
+		{{feedback_form '/feedback/call', 'action'=> '/feedback/call'	  , 'class' => 'form'}}
+
+		<div class="popup_body">
+			<span ><span>
+			<input type="text" name="name" placeholder="Ваше имя">
+			</span></span>
+			<span><span>
+			<input type="text" name="phone" placeholder="Телефон">
+			</span></span>
+			<div class="agreement_wrp">
+
+				<label>
+
+					<input type="checkbox" checked onclick="$(this).closest('form').find('button[type=submit]').attr('disabled',$(this).is(':checked'));" name="agreement" class="main_chb">
+
+					<div class="txt">Даю согласие ООО “Зуко Казань” на хранение и обработку персональных данных и соглашаюсь с <a href="/politika">условиями</a> их обработки</div>
+					
+				</label>
+				
+			</div>
+			
+		</div>
+
+		<div class="popup_btn_wrp">
+
+			<button type="submit" name="submit" class="green_btn">Перезвоните мне!</button>
+			
+		</div>
+
+		{{/form}}
+
+</div>
+
+<div class="popup popup-5">
+ 
+</div>

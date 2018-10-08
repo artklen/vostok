@@ -1,0 +1,32 @@
+<?php
+if (!empty($_COOKIE['watched_products'])) {
+	$products_ids = explode('i', $_COOKIE['watched_products']);
+	$products_ids = array_map('intval', $products_ids);
+	d()->watched_products_list = d()->Product->where('`id` in (?)', $products_ids);
+	if (count($products_ids)>0){
+		d()->watched_products_list->order_by('FIELD(id, '. implode(',', $products_ids) .')');
+	}
+	if (d()->watched_products_list->ne) { ?>
+		<div class="recently_w">
+
+		<div class="recently_w_ttl">
+
+			<div class="ttl">Вы смотрели</div>
+
+		</div>
+
+		<div class="recently_w_list clearfix">
+			<foreach watched_products_list>
+						<a href="{this|url_for|h}" class="recently_w_item">
+							<img src="{.image|preview 'in104', 'in104'}" title="{.title|h}" alt="">
+						</a>
+			</foreach>
+			 
+			
+		</div>
+		
+	</div>
+<?php
+	}
+} ?>
+

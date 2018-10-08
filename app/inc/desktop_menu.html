@@ -1,0 +1,69 @@
+ <div class="prod_nav_wrp">
+
+					<div class="main_wrp prod_nav_cont">
+
+						<ul class="prod_nav clearfix">
+
+						<foreach Category->where('category_id is NULL')->limit(5)>
+							<li>
+
+								<div class="prod_nav_trigger">
+
+									<div class="prod_nav_ttl"><a href="">{.title}</a></div>
+
+									<div class="prod_nav_submenu_wrp">
+										{{edit}}{{add 'categories', 'category_id'=>d()->this->id }}
+										<ul class="prod_nav_submenu">
+										<?php 
+										d()->cats = d()->this->categories;
+										if(!iam()){
+											d()->cats->where('is_hidden = 0');
+										}
+										?>
+										<foreach cats>
+											<li><a href="/catalog/{.url}">{.title}</a> {{edit}}{{delete}}</li>
+										</foreach>
+										</ul>
+
+									</div>
+									
+								</div>
+
+								<div class="prod_nav_dd">
+
+									<ul class="manuf_list">
+									@ ~cat_base_url = ~this->url;
+										<foreach cats->_products->_brands->limit(9)>
+											<li><a href="/catalog/{cat_base_url}?brand_id={.id}"><img src="{.image|preview 'in85', 'in50'}" alt=""></a></li>
+										</foreach>
+										
+ 
+
+									</ul>
+
+									<ul class="prod_type_list">
+									<foreach cats->subtree->_superlinks->limit(3)>
+										<li><a href="{.link}">{.title}</a></li>
+										</foreach>
+									 
+
+									</ul>
+									
+								</div>
+								
+							</li>
+							
+							</foreach>
+							
+				 
+							<li class="sellout_btn">
+
+								<a href="">Распродажа</a>
+								
+							</li>
+
+						</ul>
+						
+					</div>
+					
+				</div>

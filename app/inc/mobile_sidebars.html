@@ -1,0 +1,621 @@
+
+
+<!-- Мобильные сайдбары -->
+
+<div class="mob_sidebar mob_sidebar-1">
+
+	<div class="mob_sidebar_head">
+
+		<div class="ttl">Информация</div>
+
+		<a href="" class="close_sidebar">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+		
+	</div>
+
+	<div class="text_page_nav_wrp">
+
+		<ul class="text_page_nav">
+			<foreach Page->only('left_menu')>
+				<li class="<?php if(~url_for(  ~this  )==$_SERVER['REQUEST_URI']){print 'active';} ?>"><a href="{this|url_for}">{.title|h}</a></li>
+			</foreach>
+		</ul>
+		
+	</div>
+	
+</div>
+{* Фильтр  *}
+<div class="mob_sidebar mob_sidebar-2">
+
+	<div class="mob_sidebar_head">
+
+		<div class="ttl">Фильтр</div>
+
+		<a href="" class="close_sidebar">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+		
+	</div>
+
+	<div class="prod_filter_wrp">
+
+		<form action="">
+
+			<div class="prod_filter_block">
+
+				<div class="ttl">Цена</div>
+
+				<div class="range_slider price-range"></div>
+
+				<div class="clearfix">
+
+					<input type="text" class="range_slider_amount range_slider_min price-min">
+
+					<input type="text" class="range_slider_amount range_slider_max price-max">
+
+				</div>
+				
+			</div>
+
+			<div class="prod_filter_block">
+
+				<div class="ttl">Производитель</div>
+
+				<ul class="prod_filter_block_items">
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" class="main_chb">
+
+							<span class="main_chb_label">Whiskas (12)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" checked class="main_chb">
+
+							<span class="main_chb_label">Proplan (11)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" class="main_chb">
+
+							<span class="main_chb_label">Kitecat (12)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" class="main_chb">
+
+							<span class="main_chb_label">Royal Kanin (12)</span>
+							
+						</label>
+						
+					</li>
+
+				</ul>
+
+				<a href="" class="prod_filter_show_btn">Показать все</a>
+				
+			</div>
+
+			<div class="prod_filter_block">
+
+				<div class="ttl">Вид</div>
+
+				<ul class="prod_filter_block_items">
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" class="main_chb">
+
+							<span class="main_chb_label">Влажный (12)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" checked name="name1" checked class="main_chb">
+
+							<span class="main_chb_label">Сухой (11)</span>
+							
+						</label>
+						
+					</li>
+
+				</ul>
+
+			</div>
+
+			<div class="prod_filter_block">
+
+				<div class="ttl">Возраст</div>
+
+				<ul class="prod_filter_block_items">
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" checked class="main_chb">
+
+							<span class="main_chb_label">Для котят (12)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" checked class="main_chb">
+
+							<span class="main_chb_label">Для взрослых кошек (11)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" checked class="main_chb">
+
+							<span class="main_chb_label">Для кошек от 7 лет (11)</span>
+							
+						</label>
+						
+					</li>
+
+				</ul>
+
+			</div>
+
+			<div class="prod_filter_block">
+
+				<div class="ttl">Порода</div>
+
+				<ul class="prod_filter_block_items">
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" class="main_chb">
+
+							<span class="main_chb_label">Бенгал (12)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" checked class="main_chb">
+
+							<span class="main_chb_label">Мейнкун (11)</span>
+							
+						</label>
+						
+					</li>
+
+				</ul>
+
+				<a href="" class="prod_filter_show_btn">Показать все</a>
+				
+			</div>
+
+			<div class="prod_filter_block">
+
+				<div class="ttl">Вес</div>
+
+				<ul class="prod_filter_block_items">
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" class="main_chb">
+
+							<span class="main_chb_label">До 1 кг (12)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" checked class="main_chb">
+
+							<span class="main_chb_label">1-2 кг (11)</span>
+							
+						</label>
+						
+					</li>
+
+					<li>
+
+						<label>
+
+							<input type="checkbox" name="name1" class="main_chb">
+
+							<span class="main_chb_label">3-4 кг (11)</span>
+							
+						</label>
+						
+					</li>
+
+				</ul>
+
+			</div>
+
+			<div class="prod_filter_block">
+
+				<div class="ttl">Нетто</div>
+
+				<div class="range_slider weight-range"></div>
+
+				<div class="clearfix">
+
+					<input type="text" class="range_slider_amount range_slider_min weight-min">
+
+					<input type="text" class="range_slider_amount range_slider_max weight-max">
+
+				</div>
+
+				<div class="weight_btns">
+
+					<a href="">Маленькие</a>
+					<a href="">Средние</a>
+					<a href="">Большие</a>
+					
+				</div>
+				
+			</div>
+
+			<div class="prod_filter_btn_wrp">
+
+				<a href="" class="green_btn">Показать</a>
+				
+			</div>
+			
+		</form>
+		
+	</div>
+	
+</div>
+
+
+{* Фильтр  *}
+<div class="mob_sidebar mob_sidebar-3">
+
+	<div class="mob_sidebar_head">
+
+		<div class="ttl">Наши бренды</div>
+
+		<a href="" class="close_sidebar">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+		
+	</div>
+
+	<div class="prod_filter_wrp brand_list_wrp">
+
+		<div class="brand_list_groups">
+
+			<a href="">ВСЕ</a>
+			<a href="">Собаки</a>
+			<a href="">Кошки</a>
+			<a href="">Грызуны</a>
+			
+		</div>
+
+		<ul class="brand_list">
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-1.png" alt="">
+
+					</span>
+
+					<span class="txt">Friskies</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-2.png" alt="">
+						
+					</span>
+
+					<span class="txt">Royal Canin</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-3.png" alt="">
+						
+					</span>
+
+					<span class="txt">Pro Plan</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-4.png" alt="">
+						
+					</span>
+
+					<span class="txt">Felix</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-5.png" alt="">
+						
+					</span>
+
+					<span class="txt">Darling</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-6.png" alt="">
+						
+					</span>
+
+					<span class="txt">Dog Chow</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-1.png" alt="">
+
+					</span>
+
+					<span class="txt">Friskies</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-2.png" alt="">
+						
+					</span>
+
+					<span class="txt">Royal Canin</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-3.png" alt="">
+						
+					</span>
+
+					<span class="txt">Pro Plan</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-4.png" alt="">
+						
+					</span>
+
+					<span class="txt">Felix</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-5.png" alt="">
+						
+					</span>
+
+					<span class="txt">Darling</span>
+					
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="">
+
+					<span class="img">
+
+						<img src="/images/manuf_ph-6.png" alt="">
+						
+					</span>
+
+					<span class="txt">Dog Chow</span>
+					
+				</a>
+
+			</li>
+
+		</ul>
+		
+	</div>
+	
+</div>
+
+
+{{/inc/mobile_header.html}}
+
+
+{* Не используется *}
+<?php /*
+
+
+<div class="mob_sidebar mob_sidebar-5">
+
+	<div class="mob_sidebar_head">
+
+		<a href="" class="points_link">У вас <span>{Ball.allcount}</span> баллов</a>
+
+		<a href="" class="close_sidebar">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+		
+	</div>
+
+	
+	{*
+	<div class="mob_sidebar_city_select">
+
+		<div class="ms_city_trigger">
+
+			<span>Ваш город:</span>
+
+			<a href="">Казань</a>
+
+		</div>
+		
+	</div>
+	*}
+	
+	<ul class="mob_sidebar_nav">
+		<li><a href="">Кошки1</a></li>
+		<li><a href="">Собаки</a></li>
+		<li><a href="">Рыбы</a></li>
+		<li><a href="">Грызуны</a></li>
+		<li><a href="">Птицы</a></li>
+		<li><a href="">Птицы</a></li>
+	</ul>
+
+	<a href="" class="mob_sidebar_sellout">Распродажа</a>
+
+	<ul class="mob_sidebar_nav_2">
+		<li><a href="">Доставка и оплата</a></li>
+		<li><a href="">Акции</a></li>
+		<li><a href="">Балльная система</a></li>
+		<li><a href="">Контакты</a></li>
+	</ul>
+
+	<a href="tel:+78432510130" class="mob_sidebar_phone">+7 (843) 251-01-30</a>
+	
+</div>
+*/ ?>
+
+<div class="mob_sidebar mob_sidebar-6">
+
+	<div class="mob_sidebar_head">
+
+		<a href="" class="back_btn">Назад</a>
+
+		<a href="" class="close_sidebar">
+			<img src="/images/close_icon-orange.png" alt="">
+		</a>
+		
+	</div>
+
+	<ul class="mob_sidebar_nav_2">
+		<li><a href="">Мои баллы</a></li>
+		<li><a href="">Мои заказы</a></li>
+		<li><a href="">Выход</a></li>
+	</ul>
+
+</div>
+
