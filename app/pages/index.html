@@ -25,12 +25,25 @@
 			<foreach Collection ->where('show_main = ?', true)>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					{{edit}}{{delete}}
-					<div class="product-1" style="background-image: url({this.image|preview 'in244', 'in400'}), url(/images/main-clock-bg.png)">
+					<!--<div class="product-1" style="background-image: url({this.image|preview 'in244', 'in400'}), url(/images/main-clock-bg.png)">
 						<div class="title">
 							<a href="/catalog?collection={.url}" class="link-1">{.title}</a>
 							<a href="/catalog?collection={.url}" class="link-2">Перейти в каталог</a>
 						</div>
+					</div>-->
+					
+					<div class="product-wrapper">
+						<div class="product-right"></div>
+						<div class="product-middle">
+							<div class="title">
+								<a href="/catalog?collection={.url}" class="link-1">{.title}</a>
+								<a href="/catalog?collection={.url}" class="link-2">Перейти в каталог</a>
+							</div>
+						</div>
+						<div class="product-left" style="background-image: url({this.image|preview 'in240', 'in370'})"></div>
 					</div>
+					
+					
 				</div>
 			</foreach>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -625,13 +625,12 @@
 		text-align: center;
 		/*margin: 0 0 0 5px;*/
 	}
-	.catalog-1 { 
-		.product-1, .product-2, .product-3, .product-4 {
-			background-position: left -95px center, right -140px bottom -20px;
-			padding: 0px 15px 50px 0;
-			&:hover {
-				background-position: left -95px center, right -140px bottom -20px;
-			}
+	.catalog-1 {
+		.product-middle {
+			padding: 0 20px 50px 0;
+		}
+		.product-left {
+			background-position: left -80px center;
 		}
 	}
 	.catalog-2 {
@@ -887,6 +886,13 @@
 	.slider-1 {
 		.slide {
 			background: url(/images/main-3.jpg) no-repeat center top;
+		}
+	}
+}
+@media (min-width: 360px) and (max-width: 767px) {
+	.catalog-1 {
+		.product-middle {
+			padding: 0 50px 50px 0;
 		}
 	}
 }

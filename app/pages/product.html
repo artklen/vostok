@@ -45,23 +45,35 @@
 						{text}
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" data-product_id="{.id}">
 					<div class="price">
 						<div class="left">
-							<span>{price_origin_format} &#8381;</span> {calc_price_format} &#8381;
+						<?php if (d()->this->discount) { ?>
+						<span>{price_origin_format} &#8381;</span>
+						<?php } ?> {calc_price_format} &#8381;
 						</div>
-						<div class="right">
-							<button class="top"></button>
-							<input type="text" class="middle" value="1"/>
-							<button class="bottom"></button>
+						<div class="right js-basket-add-container">
+							<button class="top js-basket-add-plus"></button>
+							<input type="text" class="middle js-basket-add-input" value="1"/>
+							<button class="bottom js-basket-add-minus"></button>
 						</div>
 					</div>
+					
 					<div class="title-1">Выберите упаковку</div>
 
 					<div class="js-unfolding-container">
 
 						<div class="box-1 box-2">
-							<input type="radio" id="list-s" class="list-1" name="material" checked/>
+							<input
+								type="radio"
+								id="list-s"
+								class="list-1"
+								name="material"
+								data-products_variant_id="0"
+								checked
+							/>
+
 							<label for="list-s" class="active">
 								<table class="choice-1">
 									<tr>
@@ -74,8 +86,9 @@
 							</label>
 						</div>
 
-						<foreach Pack>
-							<?php $max = 2; if (d()->key > $max) break; ?>
+						<?php $max = 2; ?>
+						<foreach Products_variant>
+							<?php if (d()->key >= $max) break; ?>
 							{{edit}}{{delete}}
 							<div class="box-2">
 								<input
@@ -83,6 +96,7 @@
 									id="list-<?=d()->key?>"
 									class="list-1"
 									name="material"
+									data-products_variant_id="{.id}"
 								/>
 								<label for="list-<?=d()->key?>" class="active">
 									<table class="choice-1">
@@ -106,16 +120,17 @@
 							</div>
 						</foreach>
 
-						<?php if (d()->Pack->count > 2) { ?>
-							<div class="js-unfolding-block">
-								<foreach Pack>
-									<?php if (d()->key <= $max) break; ?>
+						<?php if (d()->Products_variant->count > $max) { ?>
+							<div class="js-unfolding-block-product">
+								<foreach Products_variant>
+									<?php if (d()->key < $max) continue; ?>
 									<div class="box-2">
 										<input
 											type="radio"
 											id="list-<?=d()->key?>"
 											class="list-1"
 											name="material"
+											data-products_variant_id="{.id}"
 										/>
 										<label for="list-<?=d()->key?>" class="active">
 											<table class="choice-1">
@@ -148,7 +163,7 @@
 						<?php } ?>
 					</div>
 
-					<a href="#" class="send-6">Добавить в корзину</a>
+					<a href="javascript:void(0);" class="send-6 js-basket-add">Добавить в корзину</a>
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 visible-xs">
 					<div class="title-1">Артикул: 055050</div>

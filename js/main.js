@@ -348,11 +348,13 @@ if (maps.length) {
 $(document).on('click', '.js-unfolding-button, .js-unfolding-button-menu', function() {
 	var t = $(this);
 	t.parent().toggleClass('arrow');
-	$('.js-unfolding-block, .js-unfolding-block-menu, .js-unfolding-block-faq', t.closest('.js-unfolding-container, .js-unfolding-container-menu')).stop(true, false).slideToggle(300);
+	$('.js-unfolding-block, .js-unfolding-block-menu, .js-unfolding-block-faq, .js-unfolding-block-product', t.closest('.js-unfolding-container, .js-unfolding-container-menu')).stop(true, false).slideToggle(300);
 });
+
 
 $('.js-unfolding-block-faq').hide();
 $('.js-unfolding-block-menu').hide();
+$('.js-unfolding-block-product').hide();
 
 $(document).on('click', '.js-unfolding-button-2', function() {
 	var t = $(this);

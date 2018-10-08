@@ -143,15 +143,29 @@ $(function() {
 		if (p.length) {
 			data.product_id = p.data('product_id');
 		}
+
 		p = t.closest('[data-products_variant_id]');
+
+		if (!p.length)
+		{
+			console.log('closest not found, trying another way');
+			p = $('.list-1:checked[data-products_variant_id]');
+		}
+
 		if (p.length) {
 			data.products_variant_id = p.data('products_variant_id');
 		}
+		console.log('basket data:', data);
 		return data;
 	};
 	
 	$(document).on('click', '.js-basket-add', function() {
-		Basket.add(get_basket_data($(this)));
+		var data = get_basket_data($(this));
+		var input = $('.js-basket-add-input');
+		if (input.length) {
+			data.number = input.val();
+		}
+		Basket.add(data);
 	});
 	
 	$(document).on('click', '.js-basket-update', function() {
@@ -162,22 +176,22 @@ $(function() {
 		Basket.delete(get_basket_data($(this)));
 	});
 	
-	var basket_add_input_callbacks = {};
-	var basket_add_input_update = function(t) {
-		var item_key = t.closest('[data-basket-item-key]').data('basket-item-key');
-		var data = get_basket_data(t);
-		data.number = t.val();
-		clearTimeout(basket_add_input_callbacks[item_key]);
-		basket_add_input_callbacks[item_key] = setTimeout(function(arg) {
-			var t = arg;
-			return function() {
-				Basket.add(data, t);
-			};
-		}(t), 100);
-	};
-	$(document).on('change keyup', '.js-basket-add-input', function() {
-		basket_add_input_update($(this));
-	});
+	//var basket_add_input_callbacks = {};
+	//var basket_add_input_update = function(t) {
+	//	var item_key = t.closest('[data-basket-item-key]').data('basket-item-key');
+	//	var data = get_basket_data(t);
+	//	data.number = t.val();
+	//	clearTimeout(basket_add_input_callbacks[item_key]);
+	//	basket_add_input_callbacks[item_key] = setTimeout(function(arg) {
+	//		var t = arg;
+	//		return function() {
+	//			Basket.add(data, t);
+	//		};
+	//	}(t), 100);
+	//};
+	//$(document).on('change keyup', '.js-basket-add-input', function() {
+	//	basket_add_input_update($(this));
+	//});
 	$(document).on('click', '.js-basket-add-minus', function() {
 		var t = $(this).closest('.js-basket-add-container').find('.js-basket-add-input');
 		var v = t.val();

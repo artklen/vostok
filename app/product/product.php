@@ -4,13 +4,17 @@ class Product extends ActiveRecord
 {
 	function calc_price_format()
 	{
-		$res = $this->price * (1 - ($this->discount/100));
-		return d()->price_format($res);
+		return d()->price_format($this->price);
+	}
+
+	function price()
+	{
+		return $res = $this->get('price') * (1 - ($this->discount/100));
 	}
 
 	function price_origin_format()
 	{
-		return d()->price_format($this->price);
+		return d()->price_format($this->get('price'));
 	}
 
 	function props()

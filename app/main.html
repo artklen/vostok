@@ -153,70 +153,59 @@
 				<div class="basket-1">
 					<ul class="menu-2">
 						<li class="arrow">
-							<a href="/basket">
-							
-								<?/* full basket */?>
-								
-								<span style="display:none;">
-									<span class="left">
-										<span class="num">5</span>
+							<a href="/basket" class="js-basket-not-empty" {{if_basket_not_empty}}>
+
+									<span>
+										<span class="left">
+											<span class="num"><?=count(d()->basket->items)?></span>
+										</span>
+										<span class="right hidden-xs hidden-sm hidden-md">
+											<span class="title">Сумма</span>
+											<span class="sum"><?=d()->price_format(d()->basket->order_price)?> &#8381;</span>
+										</span>
 									</span>
-									<span class="right hidden-xs hidden-sm hidden-md">
-										<span class="title">Сумма</span>
-										<span class="sum">35 000 &#8381;</span>
-									</span>
-								</span>
-								
-								<?/* empty basket */?>
-								
-								<span style="">
-									<span class="left empty"></span>
-									<span class="right empty hidden-xs hidden-sm hidden-md">
-										<span class="title">Корзина</span>
-										<span class="sum">Товаров нет</span>
-									</span>
-								</span>
-								
+
+
+
 							</a>
-							<div class="last-1">
+							<div  class="last-1 js-basket-not-empty" {{if_basket_not_empty}}>
 								<ul class="last-2">
 									<li>
 										<ul class="last-3">
-											<li>
-												<div class="row">
-													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-														<img src="/images/mini-2.jpg" alt=""/>
-													</div>	
-													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">	
-														<span class="title">Командирские</span>
-														<span class="price-1">1320 ₽ <span class="price-2">х 2 шт</span></span>
+											<foreach d()->basket->items as basket_item>
+												<?php d()->product = d()->basket_item->product?>
+
+												<li class="js-basket-item-exists" data-product_id="<?=d()->product->id?>"
+													data-basket-item-key="{basket_item.item_key|h}"
+												>
+													<div class="row">
+														<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+															<img src="<?=preview(d()->product->image, '33', '33')?>" alt=""/>
+														</div>
+														<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+															<span class="title"><?=d()->product->title?></span>
+															<span class="price-1"><?=d()->price_format(d()->product->price)?> ₽ <span class="price-2">х {basket_item.number|h} шт</span></span>
+														</div>
+														<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+															<a href="#" class="close"></a>
+														</div>
 													</div>
-													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-														<a href="#" class="close"></a>
-													</div>	
-												</div>
-												<a href="/product" class="inner"></a>
-											</li>
-											<li>
-												<div class="row">
-													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-														<img src="/images/mini-2.jpg" alt=""/>
-													</div>	
-													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">	
-														<span class="title">Амфибия женская 2409/051227</span>
-														<span class="price-1">22320 ₽ <span class="price-2">х 2 шт</span></span>
-													</div>
-													<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-														<a href="#" class="close"></a>
-													</div>	
-												</div>
-												<a href="/product" class="inner"></a>
-											</li>
+													<a href="/product" class="inner"></a>
+												</li>
+											</foreach>
 											<li><a href="/basket">Перейти в корзину</a></li>
 										</ul>
 									</li>
-								</ul>		
+								</ul>
 							</div>
+							<span class="js-basket-empty" {{if_basket_empty}}>
+								<span class="left empty"></span>
+								<span class="right empty hidden-xs hidden-sm hidden-md">
+									<span class="title">Корзина</span>
+									<span class="sum">Товаров: <?= d()->basket->items ? count(d()->basket->items) : 'нет'?></span>
+								</span>
+							</span>
+
 						</li>
 					</ul>
 				</div>

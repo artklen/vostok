@@ -23,7 +23,8 @@
 							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
 						</div>
 					</div>
-					
+
+
 					<!-- small item basket -->
 					
 					<div class="item last-1 visible-xs">
@@ -122,65 +123,60 @@
 					</div>
 					
 					<!-- big item basket -->
-					
-					<div class="item last-2 hidden-xs">
-						<div class="row">
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<a href="/product" class="picture-1"><img src="/images/product-slide-01.jpg" alt=""/></a>
-							</div>
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-								<a href="/product" class="title-2">Командирские 211275 в две строки</a>
-								<div class="price-1">1320 &#8381; <span>1712 &#8381;</span></div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<a href="#" class="picture-2 js-fancybox"><img src="/images/mini-7.jpg" alt=""/></a>
-								<div class="material">Из дизайнерского картона (ремень, браслет)</div>
-								<div class="price-2">100 &#8381;</div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<div class="count">
-									<button class="top"></button>
-										<input type="text" class="middle" value="1"/>
-									<button class="bottom"></button>
+
+					<foreach basket->items as basket_item>
+						<?php d()->product = d()->basket_item->product?>
+						<?php d()->products_variant = d()->basket_item->products_variant?>
+						<div class="item last-2 hidden-xs js-basket-item-exists"
+							 data-product_id="<?=d()->product->id?>"
+							 data-basket-item-key="{basket_item.item_key|h}"
+						>
+							{{edit d()->product}}{{delete d()->product}}
+							<div class="row" data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+									<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in150', 'in150');?>" alt=""/></a>
+								</div>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<a href="/product/<?=d()->product->url?>" class="title-2">
+										<?=d()->product->title?>
+									</a>
+
+									<div class="price-1"><?=d()->product->calc_price_format?> &#8381;
+										@ if (d()->product->discount) {
+											<span><?=d()->product->price_origin_format?> &#8381;</span>
+										@ }
+									</div>
+								</div>
+
+								@ if (d()->products_variant->id) {
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										{{edit d()->products_variant}}{{delete d()->products_variant}}
+										<a href="#" class="picture-2 js-fancybox"><img src="<?=preview(d()->products_variant->image, 'in46', 'in46')?>" alt=""/></a>
+										<div class="material"><?=d()->products_variant->title?></div>
+										<div class="price-2"><?=d()->products_variant->price?> &#8381;</div>
+									</div>
+								@ } else {
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										<div class="material">Стандартная</div>
+									</div>
+								@ }
+
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 js-basket-change">
+									<div class="count">
+										<button class="top js-basket-change-plus"></button>
+										<input type="text" class="middle js-basket-change-input" value="{basket_item.number|h}"/>
+										<button class="bottom js-basket-change-minus"></button>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+									<div class="price-3 js-basket-item-total-price">{basket_item.total_price|price_format} &#8381;</div>
+								</div>
+								<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+									<a href="#" class="close js-basket-delete"></a>
 								</div>
 							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<div class="price-3">132 000 &#8381;</div>
-							</div>
-							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
-								<a href="#" class="close"></a>
-							</div>
 						</div>
-					</div>
-					<div class="item last-2 hidden-xs">
-						<div class="row">
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<a href="/product" class="picture-1"><img src="/images/product-slide-01.jpg" alt=""/></a>
-							</div>
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-								<a href="/product" class="title-2">Командирские 211275 в две строки</a>
-								<div class="price-1">1320 &#8381; <span>1712 &#8381;</span></div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<a href="#" class="picture-2 js-fancybox"><img src="/images/mini-7.jpg" alt=""/></a>
-								<div class="material">Из дизайнерского картона (ремень, браслет)</div>
-								<div class="price-2">100 &#8381;</div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<div class="count">
-									<button class="top"></button>
-										<input type="text" class="middle" value="1"/>
-									<button class="bottom"></button>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<div class="price-3">132 000 &#8381;</div>
-							</div>
-							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
-								<a href="#" class="close"></a>
-							</div>
-						</div>
-					</div>
+					</foreach>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
@@ -190,13 +186,13 @@
 							<div class="title-1">Итого</div>
 						</div>
 						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-							<div class="price">235 500 &#8381;</div>
+							<div class="price js-basket-total-price">{basket.total_price|price_format} &#8381;</div>
 						</div>
 						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 							<div class="title-2">Количество</div>
 						</div>
 						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-							<div class="quantity">120 шт.</div>
+							<div class="quantity">{basket.total_number} шт.</div>
 						</div>
 					</div>
 					<div class="row">

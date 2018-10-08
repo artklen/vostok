@@ -1015,7 +1015,9 @@ input.list[type="checkbox"]:disabled:hover + span {
       font-family: 'Roboto', sans-serif;
       font-size: 12px;
       color: #292928;
-      display: block; }
+      font-weight: 400;
+      display: block;
+      text-transform: none; }
     .basket-1 .right .sum {
       font-family: 'Roboto', sans-serif;
       font-size: 14px;
@@ -1433,16 +1435,119 @@ input.list[type="checkbox"]:disabled:hover + span {
     background: #959591; }
 /* catalog */
 .catalog-1 {
-  margin: 0 0 90px 0; }
-  .catalog-1 .product-1, .catalog-1 .product-2, .catalog-1 .product-3, .catalog-1 .product-4 {
-    min-height: 321px;
-    margin: 0 0 30px 0;
-    background-image: url(/images/main-clock-01.png), url(/images/main-clock-bg.png);
-    background-repeat: no-repeat, no-repeat;
-    background-position: left 30px center, right -110px bottom -20px;
-    background-size: 244px, auto;
-    background-color: #292928;
+  margin: 0 0 90px 0;
+  /*.product-1, .product-2, .product-3, .product-4 {
+   min-height: 321px;
+   margin: 0 0 30px 0;
+   background-image: url(/images/main-clock-01.png),
+   url(/images/main-clock-bg.png);
+   background-repeat: no-repeat, no-repeat;
+   background-position: left 30px center, right -110px bottom -20px;
+   background-size: 244px, auto;
+   background-color: #292928;
+   position: relative;
+   display: flex;
+   display: -ms-flexbox;
+   display: -webkit-flex;
+   flex-direction: column;
+   align-items: flex-end;
+   justify-content: flex-end;
+   -webkit-flex-direction: column;
+   -ms-flex-direction: column;
+   -webkit-align-items: flex-end;
+   -ms-flex-align: end;
+   -webkit-justify-content: flex-end;
+   -ms-flex-pack: end;
+   padding: 0 50px 50px 0;
+   transition: background-size 0.2s, 
+   background-position 0.2s;
+   .title {
+   width: 170px;
+   font-weight: 300;	
+   .link-1, .link-2 {
+   text-decoration: none;
+   }
+   .link-1 {
+   font-family: 'Roboto Condensed', sans-serif;
+   font-size: 24px;
+   color: #d39a6e;
+   display: block;
+   margin: 0 0 5px 0;
+   text-transform: uppercase;
+   }
+   .link-2 {
+   font-family: 'Roboto', sans-serif;
+   font-size: 12px;
+   color: #fff;
+   display: inline-block;
+   padding: 0 30px 0 0;
+   background: url(/images/arrow-02.svg) no-repeat right center;
+   background-size: 22px 7px;
+   &:before {
+   content: '';
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   }
+   }
+   }
+   &:hover {
+   background-size: 228px, auto;
+   background-position: left 38px center, right -110px bottom -20px;
+   }
+   }
+   .product-2 {
+   background-image: 	url(/images/main-clock-02.png),
+   url(/images/main-clock-bg.png);
+   background-size: 234px, auto;			
+   }
+   .product-3 {
+   background-image: url(/images/main-clock-03.png),
+   url(/images/main-clock-bg.png);
+   background-size: 234px, auto;		
+   }
+   .product-4 {
+   background-image: url(/images/main-clock-04.png),
+   url(/images/main-clock-bg.png);
+   background-size: 244px, auto;		
+   }*/ }
+  .catalog-1 .product-wrapper {
+    width: 100%;
+    height: 321px;
+    background: #292928;
+    overflow: hidden;
     position: relative;
+    margin: 0 0 30px 0; }
+  .catalog-1 .product-left {
+    width: 100%;
+    height: 100%;
+    background-image: url(/images/main-clock-01.png);
+    background-repeat: no-repeat;
+    background-position: left 60px center;
+    background-size: contain;
+    transform: scale(1.1, 1.1);
+    transition: transform 0.2s;
+    position: relative;
+    z-index: 14; }
+  .catalog-1 .product-right {
+    width: 100%;
+    height: 100%;
+    background-image: url(/images/main-clock-bg.png);
+    background-repeat: no-repeat;
+    background-position: right -110px bottom -20px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 13; }
+  .catalog-1 .product-middle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 15;
     display: flex;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -1455,21 +1560,18 @@ input.list[type="checkbox"]:disabled:hover + span {
     -ms-flex-align: end;
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
-    padding: 0 50px 50px 0;
-    transition: background-size 0.2s, background-position 0.2s; }
-  .catalog-1 .product-1 .title, .catalog-1 .product-2 .title, .catalog-1 .product-3 .title, .catalog-1 .product-4 .title {
+    padding: 0 50px 50px 0; }
+  .catalog-1 .product-middle .title {
     width: 170px;
     font-weight: 300; }
-  .catalog-1 .product-1 .title .link-1, .catalog-1 .product-2 .title .link-1, .catalog-1 .product-3 .title .link-1, .catalog-1 .product-4 .title .link-1, .catalog-1 .product-1 .title .link-2, .catalog-1 .product-2 .title .link-2, .catalog-1 .product-3 .title .link-2, .catalog-1 .product-4 .title .link-2 {
-    text-decoration: none; }
-  .catalog-1 .product-1 .title .link-1, .catalog-1 .product-2 .title .link-1, .catalog-1 .product-3 .title .link-1, .catalog-1 .product-4 .title .link-1 {
+  .catalog-1 .product-middle .title .link-1 {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 24px;
     color: #d39a6e;
     display: block;
     margin: 0 0 5px 0;
     text-transform: uppercase; }
-  .catalog-1 .product-1 .title .link-2, .catalog-1 .product-2 .title .link-2, .catalog-1 .product-3 .title .link-2, .catalog-1 .product-4 .title .link-2 {
+  .catalog-1 .product-middle .title .link-2 {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     color: #fff;
@@ -1477,25 +1579,19 @@ input.list[type="checkbox"]:disabled:hover + span {
     padding: 0 30px 0 0;
     background: url(/images/arrow-02.svg) no-repeat right center;
     background-size: 22px 7px; }
-  .catalog-1 .product-1 .title .link-2:before, .catalog-1 .product-2 .title .link-2:before, .catalog-1 .product-3 .title .link-2:before, .catalog-1 .product-4 .title .link-2:before {
+  .catalog-1 .product-middle .title .link-2:hover {
+    text-decoration: none;
+    color: #fff; }
+  .catalog-1 .product-middle .title .link-2:before {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0; }
-  .catalog-1 .product-1:hover, .catalog-1 .product-2:hover, .catalog-1 .product-3:hover, .catalog-1 .product-4:hover {
-    background-size: 228px, auto;
-    background-position: left 38px center, right -110px bottom -20px; }
-  .catalog-1 .product-2 {
-    background-image: url(/images/main-clock-02.png), url(/images/main-clock-bg.png);
-    background-size: 234px, auto; }
-  .catalog-1 .product-3 {
-    background-image: url(/images/main-clock-03.png), url(/images/main-clock-bg.png);
-    background-size: 234px, auto; }
-  .catalog-1 .product-4 {
-    background-image: url(/images/main-clock-04.png), url(/images/main-clock-bg.png);
-    background-size: 244px, auto; }
+    left: 0;
+    z-index: 150; }
+  .catalog-1 .product-middle:hover + .product-left {
+    transform: scale(1.05, 1.05) translateX(-6px); }
 
 .catalog-2 {
   padding: 80px 0 125px 0; }
