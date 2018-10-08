@@ -1,0 +1,51 @@
+<div class="popup_head">
+	<a href="javascript:void(0);" class="close_popup">
+		<img src="/images/close_icon-orange.png" alt="" />
+	</a>
+	<div class="ttl">Товар добавлен в корзину</div>
+</div>
+
+<div class="popup_body js-basket-item-exists" data-basket-item-key="{basket_item.item_key|h}"
+{{if ~basket_item->product_id !== '', 'data-product_id="' . h(~basket_item->product_id) . '"'}}
+{{if ~basket_item->products_variant_id !== '', 'data-products_variant_id="' . h(~basket_item->products_variant_id) . '"'}}
+>
+	<div class="add_prod_wrp">
+		<div class="add_prod_left">
+		@ if (~basket_item->image !== '') {
+			<div class="add_prod_img">
+				<img src="{basket_item.image|preview 98, 'auto'}" alt="" />
+			</div>
+		@ }
+			<div class="add_prod_txt">
+				<div class="add_prod_art">{basket_item.sku|h}</div>
+				<div class="add_prod_name">{basket_item.title|h}</div>
+				<div class="add_prod_cost">
+					{basket_item.price|price_format} р.
+				@ if (~basket_item->unit !== '') {
+					/ {basket_item.unit|h}
+				@ }
+				</div>
+			</div>
+		</div>
+		<div class="add_prod_right">
+			<div class="order_detail_counter js-basket-change">
+				<button class="count_ctrl js-basket-change-minus">-</button>
+				<input type="text" name="prod_counter" value="{basket_item|basket_number_of}" class="count_input js-basket-change-input">
+				<button class="count_ctrl js-basket-change-plus">+</button>
+				
+			</div>
+			<div class="add_prod_summ_wrp">
+				<div class="add_prod_summ_cost">Итого: <span><span class="js-basket-item-total-price">{basket_item|basket_total_price}</span> р.-</span></div>
+			{*	<div class="add_prod_summ_weight">Суммарный вес : <span><span class="js-basket-item-total-weight">{basket_item|basket_total_weight}</span> кг</span></div> *}
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="popup_footer">
+	<a href="javascript:void(0)" class="green_btn_v2 popup_btn-2 js-close_popup">Продолжить покупки</a>
+	<a href="/basket/" class="green_btn">Перейти в корзину</a>
+	<a href="/basket/order" class="red_btn">Оформить заказ</a>
+	{* <!-- <button class="red_btn">Оформить заказ</button> --> *}
+</div>

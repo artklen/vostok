@@ -1,0 +1,83 @@
+<div class="main_wrp">
+	{{crumbs}}
+	<div class="w_block">
+		<h1 class="lc_title">{Seo.h1|h}</h1>
+		<div class="order_detail_wrp cart_list">
+			
+			<foreach basket->items as basket_item>
+				<div class="order_detail_block js-basket-item-exists" data-basket-item-key="{.item_key|h}" 
+{{if ~basket_item->product_id !== '', 'data-product_id="' . h(~basket_item->product_id) . '"'}}
+{{if ~basket_item->products_variant_id !== '', 'data-products_variant_id="' . h(~basket_item->products_variant_id) . '"'}}
+				>
+					<div class="order_detail_left">
+					@ if (~basket_item->image !== '') {
+						<div class="order_detail_img">
+							<img src="{basket_item.image|preview 98, 'auto'}" alt="" />
+						</div>
+					@ }
+						<div class="order_detail_txt">
+							<div class="od_name">{basket_item.product_title|h}</div>
+							<div class="od_weight">{basket_item.products_variant_title|h}</div>
+							
+						</div>
+					</div>
+					<div class="order_detail_right">
+						<div class="order_detail_cost">{basket_item.price|price_format} р.-</div>
+						<div class="order_detail_counter js-basket-change">
+							<button class="count_ctrl js-basket-change-minus">-</button>
+							<input type="text" name="prod_counter" value="{basket_item|basket_number_of}" class="count_input js-basket-change-input">
+							<button class="count_ctrl js-basket-change-plus">+</button>
+							
+						</div>
+						<div class="order_detail_summ"><span class="js-basket-item-total-price">{basket_item|basket_total_price}</span> р.-</div>
+						<a href="javascript:void(0);" class="prod_remove js-basket-delete">
+							<img src="/images/close_icon-orange.png" alt="">
+						</a>
+					</div>
+				</div>
+			</foreach>
+				<div class="cart_btm_block clearfix">
+					<div class="cart_b_r">
+						<div class="cart_summ">Итого: <span class="js-basket-total-price">{{basket_total_price}}</span> р.-</div>
+						 
+						<a class="green_btn" href="/basket/order">Оформить заказ</a>
+						
+					</div>
+					<div class="cart_b_l">
+						<div class="ttl">Вы получите {Ball.will_recieve_show} на свой счет</div>
+						@ if(~Auth->is_guest) {
+						<div class="sub_ttl">Войдите в систему, чтобы посмотреть количество баллов</div>
+						<a href="" class="green_btn_v2 popup_btn-1">Войти в личный кабинет</a>
+						@ }
+					</div>
+					
+				</div>
+			
+		</div>
+		
+	</div>
+	
+	@ if(count(~basket->items)){
+	<div class="product_list_wrp">
+		<div class="product_list_ttl">
+			<div class="ttl">Также рекомендуем к заказу</div>
+		</div>
+		<div class="product_list clearfix">
+		
+	 
+			 <foreach ~basket->items->_products->_categories->suptree->subtree->_products->only('basket_recommendation')->order_by('RAND()')->limit(5)>
+			 
+				{{/products/small.html}} 
+			 </foreach>
+			
+		</div>
+		
+	</div>
+	@ }
+	{{/inc/youwatched.html}}
+	
+</div>
+
+
+
+ 

@@ -1,0 +1,53 @@
+<div class="js-basket-empty" {{if_basket_empty}}>
+	<div class="cart_trigger">
+		<div class="cart_icon">
+			<img src="/images/cart_icon-gray.png" alt="">
+		</div>
+		<div class="cart_txt">
+			<div class="ttl">Моя корзина</div>
+			<div class="txt">корзина пуста</div>
+		</div>
+	</div>
+
+</div>
+<div class="js-basket-not-empty" {{if_basket_not_empty}}>
+	<div class="cart_trigger">
+		<a href="/basket/">
+			<div class="cart_icon">
+				<img src="/images/cart_icon.png" alt="">
+				<div class="cart_counter">{basket_total_number}</div>
+			</div>
+			<div class="cart_txt">
+				<div class="ttl">Моя корзина</div>
+				<div class="txt">{basket_total_number} {basket_total_number|declofnum 'товар', 'товара', 'товаров'}</div>
+			</div>
+		</a>
+	</div>
+	<div class="cart_dropdown">
+		<div class="cart_dd_item_list">
+		<foreach basket->items>
+			<div class="cart_dd_item clearfix">
+				<a href="{this.product|h_url_for}">	
+				@ if (~this->image !== '') {
+					<div class="cart_dd_item_img">
+						<img src="{.image|preview 58, 'auto'}" alt="">
+					</div>
+				@ }
+					<div class="cart_dd_item_txt">
+						<div class="cart_dd_item_name">{.product_title|h}</div>
+						<div class="cart_dd_item_info">
+							<div class="cart_dd_item_info_weight">{.products_variant_title|h}</div>
+							<div class="cart_dd_item_info_count">{this.price|price_format} р. x {.number|h} шт</div>
+							
+						</div>
+						
+					</div>
+				</a>
+			</div>
+		</foreach>
+		</div>
+		<div class="cart_dd_link_wrp">
+			<a href="/basket/" class="green_btn">Перейти в корзину</a>
+		</div>
+	</div>
+</div>
