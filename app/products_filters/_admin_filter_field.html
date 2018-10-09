@@ -1,0 +1,52 @@
+<div class="js-admin-filter-field" style="padding: 0 0 0 24px; margin: 15px 0;">
+	<input type="hidden" data-name="ids" value="<?= implode(',', ~unfiltered_products_list->fast_all_of('id')) ?>" />
+	<input type="hidden" data-name="field_name" value="<?= h(~name) ?>" />
+	<input type="hidden" data-name="old_value" value="<?= h(implode('', ~get[~name])) ?>" />
+	<input type="text" data-name="new_value" style="width: 160px; height: 20px; line-height: 1; border: 1px solid; vertical-align: top;" value="<?= h(implode('', ~get[~name])) ?>" />
+	<img style="cursor: pointer;" src="/cms/internal/gfx/edit2.png">
+</div>
+@ if (!~is_admin_filter_script_printed) {
+@ ~is_admin_filter_script_printed = true;
+<script>
+	(function() {
+		var timer_callback = function() {
+			if (window.$ === void(0)) {
+				setTimeout(timer_callback, 100);
+			} else {
+				$(function() {
+					$('.js-admin-filter-field img').click(function() {
+						var t = $(this).closest('.js-admin-filter-field');
+						var old_value = t.find('input[data-name="old_value"]').val();
+						var new_value = t.find('input[data-name="new_value"]').val();
+						$.ajax({
+							type: 'post',
+							url: '/admin/change_products_property',
+							data: {
+								ids: t.find('input[data-name="ids"]').val(),
+								field_name: t.find('input[data-name="field_name"]').val(),
+								old_value: old_value,
+								new_value: new_value
+							},
+							success: function(data) {
+								document.location.href = document.location.href
+									.split(t.find('input[data-name="field_name"]').val() + '%5B%5D=' + encodeURIComponent(old_value).split('%20').join('+'))
+									.join(t.find('input[data-name="field_name"]').val() + '%5B%5D=' + encodeURIComponent(new_value).split('%20').join('+'));
+							}
+						});
+					});
+					$('.js-admin-filter-field input[data-name="new_value"]').keypress(function(e) {
+						if ((e.keyCode || e.which) == 13) {
+							e.stopPropagation();
+							$(this).closest('.js-admin-filter-field').find('img').click();
+						}
+					});
+					$('.js-admin-filter-field input[data-name="new_value"]').change(function(e) {
+						e.stopPropagation();
+					});
+				});
+			}
+		};
+		timer_callback();
+	}())
+</script>
+@ }

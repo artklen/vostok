@@ -51,6 +51,7 @@ d()->route('/catalog', function ()
 		'type'       => 'all_links',
 	];
 
+	d()->unfiltered_products_list = $this_products;
 	list(
 		d()->this_products,
 		$fields_data,

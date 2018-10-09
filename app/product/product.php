@@ -2,6 +2,8 @@
 
 class Product extends ActiveRecord
 {
+	use SmartImage;
+
 	function calc_price_format()
 	{
 		return d()->price_format($this->price);

@@ -25,7 +25,7 @@
 			<foreach Collection ->where('show_main = ?', true)>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					{{edit}}{{delete}}
-					<!--<div class="product-1" style="background-image: url({this.image|preview 'in244', 'in400'}), url(/images/main-clock-bg.png)">
+					<!--<div class="product-1" style="background-image: url({this.required_image|preview 'in244', 'in400'}), url(/images/main-clock-bg.png)">
 						<div class="title">
 							<a href="/catalog?collection={.url}" class="link-1">{.title}</a>
 							<a href="/catalog?collection={.url}" class="link-2">Перейти в каталог</a>
@@ -40,7 +40,7 @@
 								<a href="/catalog?collection={.url}" class="link-2">Перейти в каталог</a>
 							</div>
 						</div>
-						<div class="product-left" style="background-image: url({this.image|preview 'in240', 'in370'})"></div>
+						<div class="product-left" style="background-image: url({this.required_image|preview 'in240', 'in370'})"></div>
 					</div>
 					
 					
@@ -122,7 +122,7 @@
 					<foreach News->sort_by('dt_at', 'desc')->limit(1)>
 						{{edit}}{{delete}}
 						<?php d()->last_news = d()->this ?>
-						<a href="/news/{.url}"><img src="{this.image_full|preview 'in555', 'in330'}" alt=""/></a>
+						<a href="/news/{.url}"><img src="{this.required_image_full|preview 'in555', 'in330'}" alt=""/></a>
 						<a href="/news/{.url}" class="title">{.title}</a>
 						<div class="text">{.text}</div>
 						<a href="/news/{.url}" class="link">Читать полностью</a>
@@ -136,7 +136,7 @@
 							<div class="row">
 								{{edit}}{{delete}}
 								<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-									<a href="/news/{.url}"><img src="{this.image|preview 'in80', 'in80'}" alt=""/></a>
+									<a href="/news/{.url}"><img src="{this.required_image|preview 'in80', 'in80'}" alt=""/></a>
 								</div>
 								<div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
 									<a href="/news/{.url}" class="title">{.title}</a>

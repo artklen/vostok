@@ -8,7 +8,7 @@ d()->route('/news', function ($url) {
 
 d()->route('/news/:url', function ($url) {
 	d()->this = d()->News->where('url = ?', $url);
-
+	d()->crumbs_list = [d()->page_crumb('/news'), d()->crumb_for(d()->this, false)];
 	d()->view->render('/pages/news-2.html');
 });
 

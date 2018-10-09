@@ -196,22 +196,23 @@
 						</div>
 					</div>
 					<div class="row">
+						{{simple_ajax_form '/basket/finish'}}
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="fosv-2">
 								<input type="text" placeholder="Ваш телефон"/>
 								<select name="delivery" class="js-sumoselect">
 									<option value="">Вариант доставки</option>
-									<option value="">1</option>
-									<option value="">2</option>
-									<option value="">3</option>
-									<option value="">4</option>
-									<option value="">5</option>
+
+									<foreach Delivery_variant>
+										<option value="{.id}">{.title}</option>
+									</foreach>
 								</select>
 								<textarea placeholder="Ваш комментарий"></textarea>
 								<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку ваших персональных данных</span>
 								<input type="submit" class="send-10" value="Отправить заявку"/>
 							</div>
 						</div>
+						{{/form}}
 					</div>
 				</div>
 			</div>

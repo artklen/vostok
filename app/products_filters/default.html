@@ -43,6 +43,11 @@
 				</label>
 			</div>
 		@ }
+
+		@ if (iam() && !empty(~get[~name]) && (count(~get[~name]) === 1) && (~get[~name] === [~data['value']])) {
+		{{/products_filters/_admin_filter_field.html}}
+		@ }
+
 		@ ~i++;
 	@ }
 		@ if (~i > 3) {

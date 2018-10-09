@@ -10,7 +10,7 @@
 						<!--foreach Product->where('collection_id = ?', d()->this->id)>
 						<li>
 							<a href="/product/{.url}">
-								<span class="sub-1"><img src="{this.image|preview '33', '33'}" alt=""/></span>
+								<span class="sub-1"><img src="{this.required_image|preview '33', '33'}" alt=""/></span>
 								<span class="sub-2">{.title} <span class="sub-3">4</span></span>
 							</a>
 						</li>
@@ -20,7 +20,7 @@
 							<li>
 								<a href="/catalog?series%5B%5D={.series|urlencode}">
 									<span class="sub-1">
-										<img src="{this.image|preview '33', '33'}" alt=""/></span>
+										<img src="{this.required_image|preview '33', '33'}" alt=""/></span>
 									<span class="sub-2">{.series} <span class="sub-3">{.cnt}</span></span>
 								</a>
 							</li>
@@ -30,7 +30,7 @@
 							<li>
 								<a href="/catalog?carcas%5B%5D={.carcas|urlencode}">
 									<span class="sub-1">
-										<img src="{this.image|preview '33', '33'}" alt=""/></span>
+										<img src="{this.required_image|preview '33', '33'}" alt=""/></span>
 									<span class="sub-2">{.carcas} <span class="sub-3">{.cnt}</span></span>
 								</a>
 							</li>

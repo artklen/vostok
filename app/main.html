@@ -15,7 +15,7 @@
 	<link rel="canonical" href="{canonical|h}" />
 @ }
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/js/fancybox/jquery.fancybox.css" rel="stylesheet">
 	<link href="/js/slick/slick.css" rel="stylesheet">
@@ -26,14 +26,14 @@
 	<link href="/css/color-fixes.css" rel="stylesheet" type="text/css"/>
 	{{stylesheets '/css/style.scss', '/css/media.scss'}}
 </head>
-<body> 
+<body>
 
 {{admin_panel}}
 <div class="bg-1 js-bg-1 hidden-lg"></div>
 <div class="bg-2 js-bg-2 hidden-sm hidden-md hidden-lg"></div>
 <div class="menu-2-xs js-menu-2-xs hidden-lg">
 	<a href="javascript:void(0);" class="close js-close"></a>
-	
+
 	<ul class="menu-3 visible-xs">
 		<li class="js-unfolding-container-menu"><a href="javascript:void(0);" class="arrow js-unfolding-button-menu">Амфибия</a>
 			<ul class="last-1 js-unfolding-block-menu">
@@ -95,7 +95,7 @@
 		<li><a href="/catalog">С символикой</a></li>
 		<li><a href="/catalog">Другие</a></li>
 	</ul>
-	
+
 	<ul class="menu-4">
 		<li><a href="/payment">Оплата и доставка</a></li>
 		<li><a href="/news">Новости</a></li>
@@ -130,7 +130,7 @@
 				</form>
 			</div>
 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-3 hidden-lg">
-				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs"></a>	
+				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs"></a>
 			</div>
 		</div>
 	</div>
@@ -150,64 +150,8 @@
 				{{/inc/menu.html}}
 			</div>
 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-2">
-				<div class="basket-1">
-					<ul class="menu-2">
-						<li class="arrow">
-							<a href="/basket" class="js-basket-not-empty" {{if_basket_not_empty}}>
-
-									<span>
-										<span class="left">
-											<span class="num"><?=count(d()->basket->items)?></span>
-										</span>
-										<span class="right hidden-xs hidden-sm hidden-md">
-											<span class="title">Сумма</span>
-											<span class="sum"><?=d()->price_format(d()->basket->order_price)?> &#8381;</span>
-										</span>
-									</span>
-
-
-
-							</a>
-							<div  class="last-1 js-basket-not-empty" {{if_basket_not_empty}}>
-								<ul class="last-2">
-									<li>
-										<ul class="last-3">
-											<foreach d()->basket->items as basket_item>
-												<?php d()->product = d()->basket_item->product?>
-
-												<li class="js-basket-item-exists" data-product_id="<?=d()->product->id?>"
-													data-basket-item-key="{basket_item.item_key|h}"
-												>
-													<div class="row">
-														<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-															<img src="<?=preview(d()->product->image, '33', '33')?>" alt=""/>
-														</div>
-														<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-															<span class="title"><?=d()->product->title?></span>
-															<span class="price-1"><?=d()->price_format(d()->product->price)?> ₽ <span class="price-2">х {basket_item.number|h} шт</span></span>
-														</div>
-														<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-															<a href="#" class="close"></a>
-														</div>
-													</div>
-													<a href="/product" class="inner"></a>
-												</li>
-											</foreach>
-											<li><a href="/basket">Перейти в корзину</a></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<span class="js-basket-empty" {{if_basket_empty}}>
-								<span class="left empty"></span>
-								<span class="right empty hidden-xs hidden-sm hidden-md">
-									<span class="title">Корзина</span>
-									<span class="sum">Товаров: <?= d()->basket->items ? count(d()->basket->items) : 'нет'?></span>
-								</span>
-							</span>
-
-						</li>
-					</ul>
+				<div class="js-basket-widget" data-basket-widget-type="header">
+					{{/basket/widgets/header.html}}
 				</div>
 			</div>
 		</div>
@@ -250,7 +194,7 @@
 		</div>
 	</div>
 </div>
-<div class="action-2">
+<!--<div class="action-2">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-5">
@@ -268,7 +212,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div>-->
 <div class="footer-1">
 	<div class="container">
 		<div class="row">
@@ -310,9 +254,9 @@
 							<li><a href="/{.url}">{.title}</a></li>
 						</foreach>
 					</ul>
-				</div>	
+				</div>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">		
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
 				<div class="item last">
 					<div class="title">Контакты</div>
 					<ul class="right">
@@ -338,7 +282,7 @@
 					{Option.footer_description}
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 <div class="footer-3">
@@ -358,7 +302,7 @@
 					<a href="https://artklen.ru" class="visible-xs" target="blank"><img src="/images/copyright-xs.png" alt=""/></a>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
