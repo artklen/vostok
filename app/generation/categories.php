@@ -26,7 +26,8 @@ d()->singleton('categories_seo_data', function() {
 	$get = (d()->get !== '') ? d()->get : new Get();
 	$canonical_get = new Get($category_url);
 	$crumbs_get = new Get($category_url);
-	$crumbs_list = d()->tree_crumbs(d()->this_category);
+	//$crumbs_list = d()->tree_crumbs(d()->this_category);
+	$crumbs_list = d()->page_crumb('/catalog');
 	$title_arr = [];
 	$special_title_arr = [];
 	$flag_strs = [];

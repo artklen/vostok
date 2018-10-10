@@ -9,7 +9,7 @@
 										<span class="right hidden-xs hidden-sm hidden-md">
 											<span class="title">Сумма</span>
 											<span class="sum js-basket-total-price"><?=d()->
-												price_format(d()->basket->order_price)?> &#8381;</span>
+											price_format(d()->basket->order_price)?></span> <span class="sum">&#8381;</span>
 										</span>
 									</span>
 			</a>
@@ -19,9 +19,11 @@
 						<ul class="last-3">
 							<foreach d()->basket->items as basket_item>
 								<?php d()->product = d()->basket_item->product?>
-
+								<?php d()->products_variant = d()->basket_item->products_variant?>
 								<li
 									class="js-basket-item-exists" data-product_id="<?=d()->product->id?>"
+
+									data-products_variant_id="<?=d()->products_variant->id ? d()->products_variant->id : 0?>"
 									data-basket-item-key="{basket_item.item_key|h}"
 								>
 									<div class="row">
@@ -30,15 +32,15 @@
 										</div>
 										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 											<span class="title"><?=d()->product->title?></span>
-											<span class="price-1"><?=d()->price_format(d()->product->price)?> ₽ <span
+											<span class="price-1"><?=d()->price_format(d()->product->price)?>  <span
 												class="price-2"
-											>х {basket_item.number|h} шт</span></span>
+											>&#8381; х {basket_item.number|h} шт</span></span>
 										</div>
 										<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-											<a href="#" class="close"></a>
+											<a href="#" class="close js-basket-delete"></a>
 										</div>
 									</div>
-									<a href="/product" class="inner"></a>
+									<a href="/product/<?=d()->product->url?>" class="inner"></a>
 								</li>
 							</foreach>
 							<li><a href="/basket">Перейти в корзину</a></li>

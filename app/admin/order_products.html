@@ -1,0 +1,42 @@
+<h1>Заказ №{order.id}</h1>
+<p><a href="/admin/list/orders">&larr; Вернуться к списку заказов</a></p>
+<table class="table table-striped table-bordered table-condensed">
+	<thead>
+		<th>№</th>
+		<th>Товар</th>
+		<th>Цена</th>
+		<th>Вариант товара</th>
+		<th>Количество</th>
+		<th>Стоимость</th>
+<?php/*	<th></th> */?>
+	</thead>
+	<tbody>
+	<foreach orders_items>
+<?php
+	$product = d()->this->product; ?>
+		<tr>
+			<td><?php print $key + 1; ?></td>
+			<td><?php
+			if ($product->ne) {
+				?><a href="/products/<?= h($product->url) ?>" target="_blank">{.title|h}</a><?php
+			} else {
+				?>{.title|h}<?php
+			} ?></td>
+			<td>{.price|h} р.</td>
+			<td><?= ~this->products_variant->ne ? h(~this->products_variant->title) : '-' ?></td>
+			<td>{.number|h}</td>
+			<td><?= d()->this->price * d()->this->number ?> р.</td>
+<?php/*		<td>
+				<a href="/admin/edit/orders_products/{.id}" target="_blank" class="btn btn-mini">Править</a>
+				<a href="/admin/delete/orders_products/{.id}" target="_blank" class="btn btn-mini btn-danger">Удалить</a>
+			</td> */?>
+		</tr>
+	</foreach>
+	</tbody>
+</table>
+<?php/*
+<div class="form-actions">
+	<a class="btn" href="/admin/orders/add_product/{order.id}" target="_blank"><i class="icon-plus"></i> Добавить</a>	
+	<a class="btn" href="/admin/orders/history/{order.id}" target="_blank"> История изменений</a>	
+</div>
+*/?>

@@ -100,12 +100,12 @@ d()->post('/basket/:method', function($method) {
 	if (AJAX) {
 		if ($method === 'add_item') {
 			d()->basket_item = d()->basket->items(d()->params);
-			print <<<h
+			/*print <<<h
 var jb = $('.js-basket-add');
 jb.html('Товар добавлен в корзину');
 jb.attr('href', '/basket');
-h;
-			/*print 'Basket.popup(' . json_encode('' . d()->view->partial('/basket/add_popup.html')) . ');';*/
+h;*/
+			print 'Basket.popup(' . json_encode('' . d()->view->partial('/basket/add_popup.html')) . ');';
 		}
 		print d()->basket_ajax_refresh();
 		exit;

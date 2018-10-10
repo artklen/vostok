@@ -1,4 +1,5 @@
 <div class="facets-1 js-facets-1">
+	<a href="javascript:void(0);" class="close js-close hidden-lg"></a>
 	<form action="/catalog" method="get" class="js-filter-form">
 		@ foreach (~products__fields as ~field) {
 			@ if (!empty(~fields_data[~field['field_name']]) || ~field['field_name'] === 'all_links') {

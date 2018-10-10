@@ -17,20 +17,24 @@
 						foreach>-->
 
 						<foreach Product->select('count(id) cnt, series')->where('collection_id = ?', d()->this->id)->group_by('series')>
+							<?php if (!~this->series) continue; ?>
 							<li>
 								<a href="/catalog?series%5B%5D={.series|urlencode}">
 									<span class="sub-1">
-										<img src="{this.required_image|preview '33', '33'}" alt=""/></span>
+										<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
+									</span>
 									<span class="sub-2">{.series} <span class="sub-3">{.cnt}</span></span>
 								</a>
 							</li>
 						</foreach>
 
 						<foreach Product->select('count(id) cnt, carcas')->where('collection_id = ?', d()->this->id)->group_by('carcas')>
+							<?php if (!~this->carcas) continue; ?>
 							<li>
 								<a href="/catalog?carcas%5B%5D={.carcas|urlencode}">
 									<span class="sub-1">
-										<img src="{this.required_image|preview '33', '33'}" alt=""/></span>
+										<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
+									</span>
 									<span class="sub-2">{.carcas} <span class="sub-3">{.cnt}</span></span>
 								</a>
 							</li>

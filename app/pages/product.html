@@ -16,13 +16,9 @@
 					{{add 'products_images', 'product_id'=>d()->this->id}}{{edit}}
 					<div class="slider-3">
 						<div class="slider-for js-slider-for">
-							<div><a href="{this.required_image|preview '1000', 'auto'}" class="js-fancybox"><img
-								src="{this.required_image|preview '389', '387'}" alt=""
-							/></a></div>
+							<div><a href="{this.required_image|preview '1000', 'auto'}" class="js-fancybox"><img src="{this.required_image|preview '389', '387'}" alt=""/></a></div>
 							<foreach this->products_images>
-								<div><a href="{this.required_image|preview '1000', 'auto'}" class="js-fancybox"><img
-									src="{this.required_image|preview '389', '387'}" alt=""
-								/></a></div>
+								<div><a href="{this.required_image|preview '1000', 'auto'}" class="js-fancybox"><img src="{this.required_image|preview '389', '387'}" alt=""/></a></div>
 							</foreach>
 						</div>
 						<div class="slider-nav js-slider-nav">
@@ -65,15 +61,7 @@
 					<div class="js-unfolding-container">
 
 						<div class="box-1 box-2">
-							<input
-								type="radio"
-								id="list-s"
-								class="list-1"
-								name="material"
-								data-products_variant_id="0"
-								checked
-							/>
-
+							<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked />
 							<label for="list-s" class="active">
 								<table class="choice-1">
 									<tr>
@@ -91,13 +79,7 @@
 							<?php if (d()->key >= $max) break; ?>
 							{{edit}}{{delete}}
 							<div class="box-2">
-								<input
-									type="radio"
-									id="list-<?=d()->key?>"
-									class="list-1"
-									name="material"
-									data-products_variant_id="{.id}"
-								/>
+								<input type="radio" id="list-<?=d()->key?>" class="list-1" name="material" data-products_variant_id="{.id}" />
 								<label for="list-<?=d()->key?>" class="active">
 									<table class="choice-1">
 										<tr>
@@ -108,10 +90,7 @@
 											<td class="price">{.price} &#8381;</td>
 											<td>
 												<a href="{this.required_image|preview 'in500', 'in500'}" class="js-fancybox">
-													<img
-														src="{this.required_image|preview 'in46', 'in46'}"
-														alt=""
-													>
+													<img src="{this.required_image|preview 'in46', 'in46'}" alt="" />
 												</a>
 											</td>
 										</tr>
@@ -125,13 +104,7 @@
 								<foreach Products_variant>
 									<?php if (d()->key < $max) continue; ?>
 									<div class="box-2">
-										<input
-											type="radio"
-											id="list-<?=d()->key?>"
-											class="list-1"
-											name="material"
-											data-products_variant_id="{.id}"
-										/>
+										<input type="radio" id="list-<?=d()->key?>" class="list-1" name="material" data-products_variant_id="{.id}" />
 										<label for="list-<?=d()->key?>" class="active">
 											<table class="choice-1">
 												<tr>
@@ -142,10 +115,7 @@
 													<td class="price">{.price} &#8381;</td>
 													<td>
 														<a href="{this.required_image|preview 'in500', 'in500'}" class="js-fancybox">
-															<img
-																src="{this.required_image|preview 'in46', 'in46'}"
-																alt=""
-															>
+															<img src="{this.required_image|preview 'in46', 'in46'}" alt="" />
 														</a>
 													</td>
 												</tr>
@@ -154,10 +124,7 @@
 									</div>
 								</foreach>
 							</div>
-							<a
-								href="javascript:void(0);"
-								class="link js-unfolding-button"
-							>
+							<a href="javascript:void(0);" class="link js-unfolding-button">
 								<span>Показать все упаковки</span>
 							</a>
 						<?php } ?>
