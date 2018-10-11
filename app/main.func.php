@@ -2,6 +2,7 @@
 
 function main()
 {
+	d()->current_city = d()->city_of_subdomain;
 	$content = d()->content();
 	d()->check_if_seo_prepared();
 	d()->content = "$content";

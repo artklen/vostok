@@ -7,19 +7,21 @@
 		</div>
 	</div>
 </div>
-<div class="inside-2">
+<div class="inside-2 inside-news-2">
 	<h1>{{edit}}{seo.h1|h}</h1>
-	<div class="date">{.dt}</div>
+	<div class="date"><?=substr(d()->this->dt_at, 0, 10)?></div>
 </div>
 <div class="news-3">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<img src="{.image_full}" alt=""/>
-			</div>	
+			@ if (~this->image_full) {
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<img src="{.image_full}" alt=""/>
+				</div>
+			@ }
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1">
 				<div class="content">
-					<p>{.text_full}</p>
+					{.text_full}
 				</div>	
 			</div>
 		</div>

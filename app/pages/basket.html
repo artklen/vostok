@@ -6,9 +6,22 @@
 	</div>
 </div>
 <div class="inside-1">
-	<h1>{{edit}}{seo.h1|h}</h1>		
+	<h1>{{edit}}{seo.h1|h}</h1>
 </div>
-<div class="basket-2">
+
+<div class="basket-2 js-basket-empty" {{if_basket_empty}}>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1">
+				<div class="content">
+					<p>	Корзина пуста
+					</p>			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="basket-2 js-basket-not-empty" {{if_basket_not_empty}}>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
@@ -29,7 +42,8 @@
 						<?php d()->products_variant = d()->basket_item->products_variant?>
 
 						<!-- small item basket -->
-						<div class="item last-1 visible-xs" data-product_id="<?=d()->product->id?>" data-basket-item-key="{basket_item.item_key|h}" data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
+						<div class="visible-xs">
+						<div class="item last-1 js-basket-item-exists" data-product_id="<?=d()->product->id?>" data-basket-item-key="{basket_item.item_key|h}" data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="row">
@@ -89,6 +103,7 @@
 									</div>
 								</div>
 							</div>
+						</div>
 						</div>
 
 						<!-- big item basket -->
@@ -171,18 +186,48 @@
 						{{simple_ajax_form '/basket/finish'}}
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="fosv-2">
-									<input type="text" placeholder="Фамилия И. О."/>
-									<input type="text" placeholder="Ваш адрес"/>
-									<input type="text" placeholder="Ваш телефон"/>
-									<input type="text" placeholder="Ваш email"/>
-									<select name="delivery" class="js-sumoselect">
-										<option value="">Вариант доставки</option>
+									<div>
+										<div>
+											<input name="name" type="text" placeholder="Фамилия И. О." />
+										</div>
+									</div>
 
-										<foreach Delivery_variant>
-											<option value="{.id}">{.title}</option>
-										</foreach>
-									</select>
-									<textarea placeholder="Ваш комментарий"></textarea>
+									<div>
+										<div>
+											<input name="address" type="text" placeholder="Ваш адрес" />
+										</div>
+									</div>
+
+									<div>
+										<div>
+											<input name="phone" type="text" placeholder="Ваш телефон" />
+										</div>
+									</div>
+
+									<div>
+										<div>
+											<input name="email" type="text" placeholder="Ваш email" />
+										</div>
+									</div>
+
+									<div>
+										<div>
+										<select name="delivery_type" class="js-sumoselect" >
+											<option value="">Вариант доставки</option>
+
+											<foreach Delivery_variant>
+												<option value="{.id}">{.title}</option>
+											</foreach>
+										</select>
+										</div>
+									</div>
+
+									<div>
+										<div>
+											<textarea name="comment" placeholder="Ваш комментарий"></textarea>
+										</div>
+									</div>
+
 									<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку ваших персональных данных</span>
 									<input type="submit" class="send-10" value="Отправить заявку"/>
 								</div>
