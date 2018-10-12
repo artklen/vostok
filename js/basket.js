@@ -83,7 +83,7 @@ Basket = (function() {
 		
 		if (data.total_number) {
 			$('.js-basket-empty').hide();
-			$('.js-basket-not-empty').show();
+			//$('.js-basket-not-empty').show();
 			
 			/* товары в корзине */
 			for (var key in data.items) {
@@ -138,6 +138,7 @@ Basket = (function() {
 $(function() {
 	
 	var get_basket_data = function(t) {
+		console.log(t)
 		var data = {};
 		var p = t.closest('[data-product_id]');
 		if (p.length) {

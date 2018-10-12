@@ -5,12 +5,14 @@
 		</div>
 	</div>
 </div>
+
+@ if (count($_GET['collection_id']) === 1) {
 <div class="inside-3">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">	
 				<div class="left">
-					<h1>{{edit}}{seo.h1|h}</h1>
+					<h1>{{edit d()->this_page}}{seo.h1|h}</h1>
 					<div class="text">Для истинных ценителей неординарного стиля и надежности выпущена целая серия наручных мужских и женских часов Восток-Европа. Механизмы отличаются швейцарским качеством.</div>
 				</div>
 			</div>
@@ -22,14 +24,18 @@
 		</div>
 	</div>
 </div>
+@ }
+
 <div class="catalog-3">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div class="title">
-					Наручные часы Амфибия Классика корпус 060 автоподзавод противоударные водонепроницаемые 30 м 
+			@ if (count($_GET['collection_id']) != 1) {
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="title">
+						{{edit d()->this_page}}{seo.h1|h}
+					</div>
 				</div>
-			</div>
+			@ }
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-xs">
 				@ if (d()->Option.image_catalog_banner) {
 					<div class="banner-1" style="background-image: url({Option.image_catalog_banner}) no-repeat top center;">

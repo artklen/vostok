@@ -1,3 +1,7 @@
+$(document).on('click', '.js-close_popup', function() {
+	$.fancybox.close();
+});
+
 $(function(){
 	$('.js-pseudo-filter').hide();
 	
@@ -304,12 +308,17 @@ $(document).ready(function () {
 });
 
 function fancybox_common_params() {
+	
 	return {
 		padding: 0,
+		 
 		helpers : {
 			overlay : {
 				locked : true
 			}
+		},
+		tpl: {
+			closeBtn : '<a title="close" class="close" href="javascript:;"></a>'
 		}
 	};
 }

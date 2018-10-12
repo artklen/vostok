@@ -43,7 +43,7 @@ d()->basket_ajax_refresh = function() {
 
 
 // страница корзины
-d()->get('/basket/', function() {
+d()->get('/basket', function() {
 	d()->set_page_title('Корзина');
 	return d()->view->partial('/basket/index.html');
 });

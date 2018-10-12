@@ -1,83 +1,241 @@
-<div class="main_wrp">
-	{{crumbs}}
-	<div class="w_block">
-		<h1 class="lc_title">{Seo.h1|h}</h1>
-		<div class="order_detail_wrp cart_list">
-			
-			<foreach basket->items as basket_item>
-				<div class="order_detail_block js-basket-item-exists" data-basket-item-key="{.item_key|h}" 
-{{if ~basket_item->product_id !== '', 'data-product_id="' . h(~basket_item->product_id) . '"'}}
-{{if ~basket_item->products_variant_id !== '', 'data-products_variant_id="' . h(~basket_item->products_variant_id) . '"'}}
-				>
-					<div class="order_detail_left">
-					@ if (~basket_item->image !== '') {
-						<div class="order_detail_img">
-							<img src="{basket_item.image|preview 98, 'auto'}" alt="" />
-						</div>
-					@ }
-						<div class="order_detail_txt">
-							<div class="od_name">{basket_item.product_title|h}</div>
-							<div class="od_weight">{basket_item.products_variant_title|h}</div>
-							
-						</div>
-					</div>
-					<div class="order_detail_right">
-						<div class="order_detail_cost">{basket_item.price|price_format} р.-</div>
-						<div class="order_detail_counter js-basket-change">
-							<button class="count_ctrl js-basket-change-minus">-</button>
-							<input type="text" name="prod_counter" value="{basket_item|basket_number_of}" class="count_input js-basket-change-input">
-							<button class="count_ctrl js-basket-change-plus">+</button>
-							
-						</div>
-						<div class="order_detail_summ"><span class="js-basket-item-total-price">{basket_item|basket_total_price}</span> р.-</div>
-						<a href="javascript:void(0);" class="prod_remove js-basket-delete">
-							<img src="/images/close_icon-orange.png" alt="">
-						</a>
-					</div>
-				</div>
-			</foreach>
-				<div class="cart_btm_block clearfix">
-					<div class="cart_b_r">
-						<div class="cart_summ">Итого: <span class="js-basket-total-price">{{basket_total_price}}</span> р.-</div>
-						 
-						<a class="green_btn" href="/basket/order">Оформить заказ</a>
-						
-					</div>
-					<div class="cart_b_l">
-						<div class="ttl">Вы получите {Ball.will_recieve_show} на свой счет</div>
-						@ if(~Auth->is_guest) {
-						<div class="sub_ttl">Войдите в систему, чтобы посмотреть количество баллов</div>
-						<a href="" class="green_btn_v2 popup_btn-1">Войти в личный кабинет</a>
-						@ }
-					</div>
-					
-				</div>
-			
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			{{crumbs}}
 		</div>
-		
 	</div>
-	
-	@ if(count(~basket->items)){
-	<div class="product_list_wrp">
-		<div class="product_list_ttl">
-			<div class="ttl">Также рекомендуем к заказу</div>
-		</div>
-		<div class="product_list clearfix">
-		
-	 
-			 <foreach ~basket->items->_products->_categories->suptree->subtree->_products->only('basket_recommendation')->order_by('RAND()')->limit(5)>
-			 
-				{{/products/small.html}} 
-			 </foreach>
-			
-		</div>
-		
-	</div>
-	@ }
-	{{/inc/youwatched.html}}
-	
+</div>
+<div class="inside-1">
+	<h1>{{edit}}{seo.h1|h}</h1>
 </div>
 
+<div class="basket-2 js-basket-empty" {{if_basket_empty}}>
 
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1">
+				<div class="content">
+					<p>	Корзина пуста
+					</p>			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="basket-2 js-basket-not-empty" {{if_basket_not_empty}}>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+				<div class="left">
+					<div class="title-1 hidden-xs">
+						<div class="row">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Название</div>
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Упаковка</div>
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Кол-во</div>
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Сумма</div>
+							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
+						</div>
+					</div>
 
- 
+					<foreach basket->items as basket_item>
+						<?php d()->product = d()->basket_item->product?>
+						<?php d()->products_variant = d()->basket_item->products_variant?>
+
+						<!-- small item basket -->
+						<div class="visible-xs">
+						<div class="item last-1 js-basket-item-exists" data-product_id="<?=d()->product->id?>" data-basket-item-key="{basket_item.item_key|h}" data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<a href="/product" class="picture-1"><img src="<?=preview(d()->product->image, 'in150', 'in150');?>" alt=""/></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="row">
+										<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+											<a href="/product/<?=d()->product->url?>" class="title-2">{product.title}</a>
+											<div class="price-1">{product.calc_price_format} &#8381;
+												@ if (d()->product->discount) {
+													<span>{product.price_origin_format} &#8381;</span>
+												@ }
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+											<div class="center-4 wrap-7">
+												<span class="title-3">Упаковка</span>
+
+												@ if (d()->products_variant->id) {
+													<a href="#" class="picture-2 js-fancybox">
+														<img src="{products_variant.required_image|preview 'in46', 'in46'}" alt=""/>
+													</a>
+													<div class="material">
+														{products_variant.title}
+														<div class="price-2">{products_variant.price} &#8381;</div>
+													</div>
+												@ } else {
+													<div class="material">
+														Стандартная
+													</div>
+												@ }
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+											<div class="center-5 wrap-7">
+												<span class="title-3">Количество</span>
+												<div class="count js-basket-change">
+													<button class="top js-basket-change-plus"></button>
+													<input type="text" class="middle js-basket-change-input" value="{basket_item.number|h}"/>
+													<button class="bottom js-basket-change-minus"></button>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+											<div class="center-5 wrap-7">
+												<span class="title-3">Сумма</span>
+												<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> &#8381;</div>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+											<a href="#" class="close visible-xs  js-basket-delete">удалить</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- big item basket -->
+						<div
+							class="item last-2 hidden-xs js-basket-item-exists"
+							data-product_id="<?=d()->product->id?>"
+							data-basket-item-key="{basket_item.item_key|h}"
+						>
+							{{edit d()->product}}{{delete d()->product}}
+							<div
+								class="row"
+								data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+									<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in150', 'in150');?>" alt=""/></a>
+								</div>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<a href="/product/<?=d()->product->url?>" class="title-2">
+										<?=d()->product->title?>
+									</a>
+
+									<div class="price-1"><?=d()->product->calc_price_format?> &#8381;
+										@ if (d()->product->discount) {
+											<span><?=d()->product->price_origin_format?> &#8381;</span>
+										@ }
+									</div>
+								</div>
+
+								@ if (d()->products_variant->id) {
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										{{edit d()->products_variant}}{{delete d()->products_variant}}
+										<a href="#" class="picture-2 js-fancybox"><img src="<?=preview(d()->products_variant->image, 'in46', 'in46')?>" alt=""/></a>
+										<div class="material"><?=d()->products_variant->title?></div>
+										<div class="price-2"><?=d()->products_variant->price?> &#8381;</div>
+									</div>
+								@ } else {
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										<div class="material">Стандартная</div>
+									</div>
+								@ }
+
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 js-basket-change">
+									<div class="count">
+										<button class="top js-basket-change-plus"></button>
+										<input type="text" class="middle js-basket-change-input" value="{basket_item.number|h}"/>
+										<button class="bottom js-basket-change-minus"></button>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+									<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> &#8381;</div>
+								</div>
+								<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+									<a href="#" class="close js-basket-delete"></a>
+								</div>
+							</div>
+						</div>
+					</foreach>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+				<div class="right">
+					<div class="row grid-row">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<div class="title-1">Итого</div>
+						</div>
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<div class="price">
+								<span class="js-basket-total-price">{basket.total_price|price_format}
+								</span>
+								&#8381;
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<div class="title-2">Количество</div>
+						</div>
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<div class="quantity"><span class="js-basket-total-number">{basket.total_number}</span> шт.</div>
+						</div>
+					</div>
+					<div class="row">
+						{{simple_ajax_form '/basket/finish'}}
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="fosv-2">
+									<div>
+										<div>
+											<input name="name" type="text" placeholder="Фамилия И. О." />
+										</div>
+									</div>
+
+									<div>
+										<div>
+											<input name="address" type="text" placeholder="Ваш адрес" />
+										</div>
+									</div>
+
+									<div>
+										<div>
+											<input name="phone" type="text" placeholder="Ваш телефон" />
+										</div>
+									</div>
+
+									<div>
+										<div>
+											<input name="email" type="text" placeholder="Ваш email" />
+										</div>
+									</div>
+
+									<div>
+										<div>
+										<select name="delivery_type" class="js-sumoselect" >
+											<option value="">Вариант доставки</option>
+
+											<foreach Delivery_variant>
+												<option value="{.id}">{.title}</option>
+											</foreach>
+										</select>
+										</div>
+									</div>
+
+									<div>
+										<div>
+											<textarea name="comment" placeholder="Ваш комментарий"></textarea>
+										</div>
+									</div>
+
+									<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку ваших персональных данных</span>
+									<input type="submit" class="send-10" value="Отправить заявку"/>
+								</div>
+							</div>
+						{{/form}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

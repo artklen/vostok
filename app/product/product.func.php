@@ -2,7 +2,7 @@
 
 d()->route('/product/:url', function($url) {
 	d()->this = d()->Product->find_by('url', $url);
-	d()->view->render('/pages/product.html');
+	d()->view->render('/product/product.html');
 });
 
 d()->route('/product', function($url) {

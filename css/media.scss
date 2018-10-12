@@ -213,7 +213,9 @@
 					padding: 0 0 5px 0;
 				}
 				.title-2 {
-					font-size: 14px;
+					p {
+						font-size: 14px;
+					}
 				}
 			}
 		}
@@ -380,23 +382,26 @@
 	.footer-1 {
 		padding: 80px 0 40px 0;
 		.item {
-			ul {
-				&.left-1 {
-					padding: 0 0 50px 0;
-				}
-				&.right {
-					padding: 0;
+			.left-1 {
+				padding: 0 0 50px 0;
+			}
+			.right {
+				padding: 0;
+				li {
+					&:nth-child(1) {
+						max-width: 400px;
+					}
 				}
 			}
-			ul {
-				&.social {
-					position: absolute;
-					top: 0;
-					right: 0;
-					margin-right: 108px;
-					margin-top: 50px;
-				}
+		
+			.social {
+				position: absolute;
+				top: 0;
+				right: 0;
+				margin-right: 108px;
+				margin-top: 50px;
 			}
+			
 		}
 	}
 	.footer-3 {
@@ -416,9 +421,9 @@
 	.wrap-5 {
 		top: -58px;
 	}
-	.wrap-6 {
+	/*.wrap-6 {
 		margin: 0 0 15px 0;
-	}
+	}*/
 	input[type='submit'].send-1, .send-1, a.send-1 {
 		padding: 8px 25px 8px 25px;
 		font-size: 10px;
@@ -500,6 +505,17 @@
 		}
 	}
 	.basket-1 {
+		.menu-2 {
+			> li {
+				&.arrow {
+					.last-1 {
+						.last-2 {
+							right: -9px;
+						}
+					}
+				}
+			}
+		}
 		.left {
 			&.empty {
 				margin-right: 0;
@@ -525,7 +541,14 @@
 							font-size: 18px;
 						}
 						.material {
-							padding: 0 15px 15px 0;
+							padding: 0 0 0 10px;
+						}
+						.picture-1 {
+							img {
+								max-width: 100px;
+								padding: 0;
+								margin: 0 0 15px 0;
+							}
 						}
 						.picture-2 {
 							img {
@@ -553,7 +576,13 @@
 				}
 				
 			}
-			
+			&.basket-pop-up-wrapper {
+				.popup_footer {
+					.send-6 {
+						margin: 15px 0 0 0;
+					}
+				}
+			}
 		}
 		.right {
 			margin: 30px 0 0 0;
@@ -573,8 +602,7 @@
 			.offer-wrapper {
 				position: relative;
 				min-height: 400px;	
-			}
-				
+			}	
 			.offer {
 				bottom: 40px;
 				margin-top: auto;
@@ -584,11 +612,12 @@
 					padding: 0 0 10px 0;
 				}
 				.title-2 {
-					font-size: 10px;
 					padding: 0 0 15px 0;
+					p {
+						font-size: 10px;
+					}
 				}
 			}
-			
 		}
 		.slick-dots {
 			left: 5px;
@@ -823,9 +852,9 @@
 			.content-tab-2, .content-tab-3 {
 				padding: 40px 0 0 0;
 			}
-			.workshops {
+			/*.workshops {
 				padding: 0 0 40px 0;
-			}
+			}*/
 		}
 	}
 	.footer-1 {

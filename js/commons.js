@@ -32,7 +32,7 @@ $(function() {
 			var fancybox_params = window.fancybox_common_params ? window.fancybox_common_params() : {};
 			fancybox_params.type = 'ajax';
 			fancybox_params.href = href;
-			fancybox_params.tpl = {closeBtn : '<a title="close" class="close" href="javascript:;"></a>',};
+			//fancybox_params.tpl = {closeBtn : '<a title="close" class="close" href="javascript:;"></a>',};
 			$.fancybox(fancybox_params);
 			return false;
 		});

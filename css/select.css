@@ -40,6 +40,11 @@
 	box-shadow: inset 0px 0px 0px 1px #d39a6e;
 }
 .SumoSelect > .optWrapper > .options li.opt {
+	font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    color: #292928;
+    font-weight: 400;
+    line-height: inherit;
 	border-bottom: none;
 	padding: 6px 8px;
 }

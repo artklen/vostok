@@ -194,6 +194,9 @@ textarea {
 
 .wrap-6 {
   min-height: 56px; }
+
+.wrap-7 {
+  margin: 0 0 15px 0; }
 /* button */
 input[type='submit'].send-1, .send-1, a.send-1, input[type='submit'].send-2, .send-2, a.send-2, input[type='submit'].send-3, .send-3, a.send-3, input[type='submit'].send-4, .send-4, a.send-4, input[type='submit'].send-5, .send-5, a.send-5, input[type='submit'].send-6, .send-6, a.send-6, input[type='submit'].send-7, .send-7, a.send-7, input[type='submit'].send-8, .send-8, a.send-8, input[type='submit'].send-9, .send-9, a.send-9, input[type='submit'].send-10, .send-10, a.send-10, input[type='submit'].send-11, .send-11, a.send-11 {
   font-family: 'Roboto Condensed', sans-serif;
@@ -252,7 +255,7 @@ input[type='submit'].send-5, .send-5, a.send-5 {
   width: 222px;
   color: #292928;
   border: 3px solid #d39a6e;
-  padding: 15px 0 15px 0;
+  padding: 12px 0 12px 0;
   margin: 0 0 0 20px;
   background: none; }
 
@@ -338,8 +341,8 @@ input[type='submit'].send-11, .send-11, a.send-11 {
   width: 12px;
   height: 12px;
   position: absolute;
-  top: 28px;
-  right: 20px;
+  top: 26px;
+  right: 26px;
   z-index: 110;
   background: url(/images/close-02.svg) no-repeat top center;
   background-size: 12px 24px; }
@@ -820,7 +823,7 @@ input.list[type="checkbox"]:disabled:hover + span {
   display: block;
   position: relative;
   float: right;
-  margin: 7px 0 0 0; }
+  margin: 5px 0 0 0; }
   .menu-1-xs:before {
     content: '';
     width: 24px;
@@ -854,6 +857,8 @@ input.list[type="checkbox"]:disabled:hover + span {
   background: #333332;
   padding: 4px 0 4px 0;
   min-height: 41px; }
+  .header-top .row .col-xs-10 {
+    padding-right: 0; }
   .header-top .phone {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
@@ -1043,7 +1048,8 @@ input.list[type="checkbox"]:disabled:hover + span {
       text-transform: none; }
 
 .basket-2 {
-  padding: 40px 0 40px 0; }
+  padding: 40px 0 40px 0;
+  background: #fff; }
   .basket-2 .left .title-1, .basket-2 .left .title-2, .basket-2 .left .title-3 {
     font-family: 'Roboto Condensed', sans-serif;
     color: #292928; }
@@ -1062,7 +1068,8 @@ input.list[type="checkbox"]:disabled:hover + span {
       padding-right: 0; }
     .basket-2 .left .title-2 {
       font-size: 16px;
-      display: inline-block;
+      /*display: inline-block;*/
+      display: block;
       line-height: 20px;
       padding: 0 15px 0 0;
       margin: 0 0 5px 0;
@@ -1169,6 +1176,13 @@ input.list[type="checkbox"]:disabled:hover + span {
         background-size: 12px 24px; }
     .basket-2 .left .item:last-of-type {
       margin: 0; }
+    .basket-2 .left.basket-popup-wrapper {
+      margin-top: 20px; }
+    .basket-2 .left.basket-popup-wrapper .item {
+      padding: 20px 0 0 0;
+      border: none; }
+    .basket-2 .left .basket-popup-footer {
+      padding: 20px 0 0 0; }
   .basket-2 .right .title-1, .basket-2 .right .title-2, .basket-2 .right .price, .basket-2 .right .quantity {
     font-family: 'Roboto', sans-serif;
     color: #292928; }
@@ -1181,8 +1195,10 @@ input.list[type="checkbox"]:disabled:hover + span {
     .basket-2 .right .price {
       font-size: 30px;
       font-weight: 700;
-      text-align: right;
-      padding: 0 0 10px 0; }
+      /*text-align: right;*/
+      padding: 0 0 10px 0;
+      float: right;
+      white-space: nowrap; }
     .basket-2 .right .quantity {
       font-size: 13px;
       color: #5f5f5e;
@@ -1216,7 +1232,8 @@ input.list[type="checkbox"]:disabled:hover + span {
       font-weight: 300;
       text-transform: uppercase;
       text-shadow: 1px 1px 0 rgba(0, 0, 0, .35);
-      padding: 0; }
+      padding: 0;
+      line-height: normal; }
   .slider-1 .left-1 {
     width: 20px;
     height: 38px;
@@ -2249,6 +2266,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     background: #efece4; }
 
 .news-3 img {
+  margin: 40px 0 0 0;
   max-width: 100%; }
 /* faq */
 .faq {
@@ -2424,6 +2442,9 @@ input.list[type="checkbox"]:disabled:hover + span {
     background: url(/images/date.svg) no-repeat left center;
     background-size: 15px 13px; }
 
+.inside-news-2 {
+  padding: 0; }
+
 .inside-3 {
   background: #292928; }
   .inside-3 .left {
@@ -2468,7 +2489,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     font-size: 14px;
     color: #292928;
     font-weight: 700;
-    width: 33.33333%;
+    width: 50%;
     text-transform: uppercase;
     border: 1px solid #efece4;
     padding: 13px 0 13px 0;
@@ -2512,16 +2533,25 @@ input.list[type="checkbox"]:disabled:hover + span {
   .contacts .workshops li {
     list-style: none;
     border-bottom: 1px solid #efece4; }
-  .contacts .workshops li a.item {
+  .contacts .workshops li .item {
     display: block;
     padding: 20px; }
-    .contacts .workshops li a.item .title {
+  .contacts .workshops li .item .city {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #292928;
+    padding: 0 0 10px 0;
+    font-weight: 700;
+    display: block; }
+  .contacts .workshops li .item .warranty {
+    padding: 0 0 25px 0; }
+    .contacts .workshops li .item .warranty .title {
       font-family: 'Roboto', sans-serif;
       font-size: 16px;
       color: #292928;
       padding: 0 0 10px 0;
       display: block; }
-    .contacts .workshops li a.item .phone, .contacts .workshops li a.item .clock {
+    .contacts .workshops li .item .warranty .phone, .contacts .workshops li .item .warranty .clock {
       font-family: 'Roboto', sans-serif;
       font-size: 12px;
       color: #888886;
@@ -2529,17 +2559,19 @@ input.list[type="checkbox"]:disabled:hover + span {
       display: inline-block;
       background: url(/images/phone-02.svg) no-repeat left top 2px;
       background-size: 10px 10px; }
-    .contacts .workshops li a.item .phone {
+    .contacts .workshops li .item .warranty .phone {
       margin: 0 12px 0 0; }
-    .contacts .workshops li a.item .clock {
+    .contacts .workshops li .item .warranty .clock {
       padding: 0 0 0 13px;
       background: url(/images/clock.svg) no-repeat left top 4px;
       background-size: 9px 9px; }
-    .contacts .workshops li a.item:hover {
-      background: #efece4;
-      text-decoration: none; }
-    .contacts .workshops li a.item.active {
-      background: #efece4; }
+    .contacts .workshops li .item .warranty:last-child {
+      padding: 0; }
+  .contacts .workshops li .item:hover {
+    background: #efece4;
+    text-decoration: none; }
+  .contacts .workshops li .item.active {
+    background: #efece4; }
   .contacts .workshops li:last-child {
     border-bottom: 1px solid transparent; }
 /* crumbs */
@@ -2590,7 +2622,8 @@ input.list[type="checkbox"]:disabled:hover + span {
     font-size: 14px;
     color: #a1a095;
     margin: 0 0 15px 0;
-    padding: 0; }
+    padding: 0;
+    line-height: 24px; }
   .footer-1 .item .right li:nth-child(1) {
     background: url(/images/icon-03.svg) no-repeat left center;
     background-size: 15px 21px;
@@ -2649,6 +2682,8 @@ input.list[type="checkbox"]:disabled:hover + span {
     color: #a1a095;
     font-weight: 300;
     line-height: 20px; }
+  .footer-2 .text p:last-child {
+    padding: 0; }
 
 .footer-3 {
   padding: 10px 0 10px 0; }
@@ -2812,6 +2847,7 @@ input.list[type="checkbox"]:disabled:hover + span {
   padding: 100px 0 100px 0;
   text-align: center; }
   .error-page img {
+    max-width: 100%;
     padding: 0 0 50px 0; }
   .error-page .title {
     font-family: 'Roboto Condensed', sans-serif;

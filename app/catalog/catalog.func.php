@@ -84,5 +84,16 @@ d()->route('/catalog', function ()
 
 	d()->this = d()->this_products;
 
-	d()->view->render('/pages/catalog.html');
+	if (d()->get->collection_id && count(d()->get->collection_id === 1)) {
+		d()->this_page = d()->Collection->f(d()->get->collection_id);
+	}
+	if (!d()->this_page || d()->this_page->is_empty) {
+		d()->this_page = d()->Page->find_by('url', 'catalog');
+	}
+	
+	d()->crumbs_list = d()->catalog_seo_data['crumbs_list'];
+	d()->canonical = d()->catalog_seo_data['canonical'];
+	d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
+	
+	d()->view->render('/catalog/catalog.html');
 });
