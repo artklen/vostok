@@ -368,7 +368,7 @@ input[type='submit'].send-11, .send-11, a.send-11 {
 .box-side:first-child {
   padding: 2px 10px 8px 10px; }
   .box-side:last-child {
-    padding: 2px 10px 8px 10px; }
+    padding: 2px 10px 0 10px; }
 
 .box.empty label {
   opacity: 0.4; }
@@ -1640,13 +1640,25 @@ input.list[type="checkbox"]:disabled:hover + span {
     -ms-flex-pack: center;
     min-height: 140px;
     padding: 0 0 0 60px;
-    margin: 0 0 20px 0; }
+    margin: 0 0 20px 0;
+    position: relative; }
   .catalog-3 .banner-2 .title-1 {
+    padding: 0 0 4px 0; }
+  .catalog-3 .banner-2 .title-1 a {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 24px;
     color: #292928;
-    text-transform: uppercase;
-    padding: 0 0 4px 0; }
+    text-transform: uppercase; }
+  .catalog-3 .banner-2 .title-1 a:hover {
+    text-decoration: none; }
+  .catalog-3 .banner-2 .title-1 a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10; }
   .catalog-3 .banner-2 .title-2 {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 16px;
@@ -2800,6 +2812,12 @@ input.list[type="checkbox"]:disabled:hover + span {
     line-height: 16px;
     padding: 10px 0 20px 0;
     display: inline-block; }
+  .fosv-1 .error input, .fosv-2 .error input {
+    border: 1px solid red;
+    box-shadow: inset 0px 0px 0px 1px #f00; }
+  .fosv-1 .error input:focus, .fosv-2 .error input:focus {
+    border: 1px solid red;
+    box-shadow: inset 0px 0px 0px 1px #f00; }
 
 .fosv-1 {
   max-width: 380px;
@@ -2831,12 +2849,6 @@ input.list[type="checkbox"]:disabled:hover + span {
     color: #5f5f5e;
     text-transform: uppercase;
     padding: 0 0 2px 0; }
-  .fosv-1 .error input {
-    border: 1px solid red;
-    box-shadow: inset 0px 0px 0px 1px red; }
-  .fosv-1 .error input:focus {
-    border: 1px solid red;
-    box-shadow: inset 0px 0px 0px 1px red; }
 
 .fosv-2 input[type="text"] {
   margin: 0 0 8px 0; }

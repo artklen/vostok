@@ -449,7 +449,7 @@ input[type='submit'].send-11, .send-11, a.send-11 {
 		padding: 2px 10px 8px 10px;
 	}
 	&:last-child {
-		padding: 2px 10px 8px 10px;
+		padding: 2px 10px 0 10px;
 	}
 }
 
@@ -2069,12 +2069,27 @@ input.list[type="checkbox"]:disabled:hover + span {
 		min-height: 140px;
 		padding: 0 0 0 60px;
 		margin: 0 0 20px 0;
+		position: relative;
 		.title-1 {
-			font-family: 'Roboto Condensed', sans-serif;
-			font-size: 24px;
-			color: #292928;
-			text-transform: uppercase;
 			padding: 0 0 4px 0;
+			a {
+				font-family: 'Roboto Condensed', sans-serif;
+				font-size: 24px;
+				color: #292928;
+				text-transform: uppercase;
+				&:hover {
+					text-decoration: none;
+				}
+				&:before {
+					content: '';
+					position: absolute;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					z-index: 10;
+				}
+			}
 		}
 		.title-2 {
 			font-family: 'Roboto Condensed', sans-serif;
@@ -3611,6 +3626,16 @@ input.list[type="checkbox"]:disabled:hover + span {
 		padding: 10px 0 20px 0;
 		display: inline-block;
 	}
+	.error {
+		input {
+			border: 1px solid red;
+			box-shadow: inset 0px 0px 0px 1px #ff0000;
+			&:focus {
+				border: 1px solid red;
+				box-shadow: inset 0px 0px 0px 1px #ff0000;
+			}
+		}
+	}
 }
 .fosv-1 {
 	max-width: 380px;
@@ -3648,16 +3673,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 		padding: 0 0 2px 0;
 	}
 	
-	.error{
-		input{
-			border: 1px solid red;
-			box-shadow: inset 0px 0px 0px 1px red;
-			&:focus {
-				border: 1px solid red;
-			box-shadow: inset 0px 0px 0px 1px red;
-			}
-		}
-	}
+	
 }
 .fosv-2 {
 	input[type="text"] {

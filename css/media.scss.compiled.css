@@ -37,7 +37,7 @@
     background-size: 100%; }
     .catalog-3 .banner-2 {
       min-height: 115px; }
-      .catalog-3 .banner-2 .title-1 {
+      .catalog-3 .banner-2 .title-1 a {
         font-size: 20px; }
       .catalog-3 .banner-2 .title-2 {
         font-size: 14px; }
@@ -153,10 +153,12 @@
     background-size: 100%; }
     .catalog-3 .banner-2 {
       min-height: 88px;
-      padding: 0 50px 0 38px;
+      padding: 0 0 0 38px;
       margin: 0 0 25px 0; }
     .catalog-3 .banner-2 .title-1 {
-      font-size: 16px; }
+      max-width: 420px; }
+      .catalog-3 .banner-2 .title-1 a {
+        font-size: 16px; }
     .catalog-3 .banner-2 .title-2 {
       font-size: 10px; }
     .catalog-3 .product .top img {

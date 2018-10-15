@@ -7,9 +7,18 @@ d()->route('/catalog', function ()
 	d()->get = new Get();
 	//$this_products = d()->this->subtree->_products;
 
-	if ($str = $_REQUEST['search'])
+	if ($str = $_GET['search'])
 	{
-		$this_products = d()->Product->where('title like ?', "%$str%");
+		//$products_list->search('title', $str);
+		$trigrams = get_trigram($str);
+		$ids = d()->Products_trigram->select('`product_id`,count(*) as `c`')->where('`value` in (?)', $trigrams)->group_by('`product_id`')->order_by('`c` desc')->limit(8)->fast_all_of('product_id');
+		if (!empty($ids)) {
+			$products_list->where('`id` in (?)', $ids)->order_by('field(id,' . implode(',', $ids) . ')');
+		} else {
+			$products_list->where('false');
+		}
+
+		#$this_products = d()->Product->where('title like ?', "%$str%");
 	}
 	else
 	{

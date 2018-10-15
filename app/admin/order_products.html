@@ -18,7 +18,7 @@
 			<td><?php print $key + 1; ?></td>
 			<td><?php
 			if ($product->ne) {
-				?><a href="/products/<?= h($product->url) ?>" target="_blank">{.title|h}</a><?php
+				?><a href="/product/<?= h($product->url) ?>" target="_blank">{.title|h}</a><?php
 			} else {
 				?>{.title|h}<?php
 			} ?></td>

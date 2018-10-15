@@ -11,7 +11,7 @@ class Product extends ActiveRecord
 
 	function price()
 	{
-		return $res = $this->get('price') * (1 - ($this->discount/100));
+		return $res = $this->get('price') * (1 - ($this->discount / 100));
 	}
 
 	function price_origin_format()
@@ -42,5 +42,10 @@ class Product extends ActiveRecord
 	function similar_products()
 	{
 
+	}
+
+	function trigrams_string()
+	{
+		return $this->title;
 	}
 }
