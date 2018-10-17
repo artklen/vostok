@@ -1,6 +1,11 @@
 <?php 
 
 d()->render_field = function($name, $meta = [], $path = '') {
+	/*var_dump($name);
+	var_dump($meta);
+	exit;*/
+	/*is_array(~get[~field['name']]) && in_array(~data['value'], ~get[~name])*/
+
 	if (is_array($name)) {
 		$args = $name;
 		$name = $args[0];
@@ -11,11 +16,16 @@ d()->render_field = function($name, $meta = [], $path = '') {
 			}
 		}
 	}
+
+	/*var_dump($name);
+	var_dump($meta);
+	exit;*/
+
 	$old_vars = d()->set_vars([
 		'field' => $meta,
 		'name'  => $name
 	]);
-	
+
 	$result = '';
 	$template = $path . (isset($meta['type']) ? $meta['type']  : '');
 	if ($template{0} === '/') {

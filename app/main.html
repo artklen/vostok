@@ -24,6 +24,7 @@
 	<link href="/css/sumoselect.min.css" rel="stylesheet">
 	<link href="/css/select.css" rel="stylesheet">
 	<link href="/css/color-fixes.css" rel="stylesheet" type="text/css"/>
+	<link href="/css/catalog-search.css" rel="stylesheet">
 	{{stylesheets '/css/style.scss', '/css/media.scss'}}
 </head>
 <body>
@@ -64,7 +65,7 @@
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 hidden-xs">
 				<form method="get" action="/catalog">
 					<div class="search">
-						<input name="search" type="text" placeholder="Поиск по каталогу"/>
+						<input class="search-input" name="search" type="text" placeholder="Поиск по каталогу"/>
 						<button type="submit"></button>
 					</div>
 				</form>
@@ -247,12 +248,14 @@
 </div>
 
 <script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/typehead.js"></script>
 <script src="/js/fancybox/jquery.fancybox.pack.js"></script>
 <script src="/js/slick/slick.min.js"></script>
 <script src="/js/jquery.sumoselect.min.js"></script>
 <script src="/js/commons.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/basket.js"></script>
+<script src="/js/catalog-search.js"></script>
 
 <script type="text/javascript">
 window.site_main_domain = "<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>";

@@ -1,0 +1,13 @@
+<div class="search-list">
+	<foreach d()->this_products>
+		<a href="/product/{.url}">
+			<div class="search-list-item">
+				<img src="{.image|preview 'in250', 'in250'}">
+				<span class="search-list-item-name">
+                    {.title} {.full_title}
+                </span>
+			</div>
+			<div class="clear"></div>
+		</a>
+	</foreach>
+</div>

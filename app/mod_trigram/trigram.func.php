@@ -3,7 +3,7 @@
 function get_trigram($str)
 {
 	$str = mb_strtolower($str, 'UTF-8');
-	$str = preg_replace('#[\\\'\"\-\s\t\(\)\.«»]#', '', $str);
+	$str = preg_replace('#[\\\'\"\-\s\t\(\)\.«»]#u', '', $str);
 	//$str = '__' . $str . '__';
     $array = array();
 	$strlen = mb_strlen($str);

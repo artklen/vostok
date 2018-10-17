@@ -9,16 +9,28 @@ d()->route('/catalog', function ()
 
 	if ($str = $_GET['search'])
 	{
-		//$products_list->search('title', $str);
+		$this_products = d()->Product->where('title like ?', "%$str%");
+	}
+	elseif ($str = $_GET['searchtrigram'])
+	{
 		$trigrams = get_trigram($str);
 		$ids = d()->Products_trigram->select('`product_id`,count(*) as `c`')->where('`value` in (?)', $trigrams)->group_by('`product_id`')->order_by('`c` desc')->limit(8)->fast_all_of('product_id');
 		if (!empty($ids)) {
-			$products_list->where('`id` in (?)', $ids)->order_by('field(id,' . implode(',', $ids) . ')');
+			$this_products = d()->Product->where('`id` in (?)', $ids)->order_by('field(id,' . implode(',', $ids) . ')');
 		} else {
-			$products_list->where('false');
+			$this_products = d()->Product->where('false');
 		}
 
-		#$this_products = d()->Product->where('title like ?', "%$str%");
+		d()->this_products = $this_products;
+		$this_products_array = d()->this_products->to_array();
+
+		foreach ($this_products_array as &$tt)
+			$tt['link'] = '/product/'.$tt['url'];
+
+		print json_encode($this_products_array);
+		#var_dump(d()->this_products->all);die;
+		#print d()->view->partial('/app/catalog/_search_popup.html');
+		exit;
 	}
 	else
 	{
@@ -71,9 +83,70 @@ d()->route('/catalog', function ()
 		d()->get
 	);
 
+	#var_dump($fields_data);
+	#var_dump($fields_filtered_data);
+	#die;
+
+
+	/*if (!empty(d()->get[$name]) && is_array(d()->get[$name]) && in_array(~data['value'], ~get[~name]))*/
+
+	$selected = [];
+	# поднимаем вверх выбранные элементы
+
+
+	foreach ($fields_filtered_data as $name => &$fields_filtered)
+	{
+		#var_dump($name);
+		#var_dump($fields_filtered);
+		#die;
+
+		/*
+		 пропускаем если это диапазон
+
+		 array(2) {
+		  ["min"]=>
+		  string(6) "500000"
+		  ["max"]=>
+		  string(6) "500000"
+		}
+		 */
+		if (!isset($fields_filtered[0]))
+			continue;
+
+		foreach ($fields_filtered as $key => &$value)
+		{
+			#var_dump($name);
+			#var_dump(d()->get[$name]);
+			#var_dump($value);
+			#die;
+
+			if ($key === 0)
+			{
+				continue;
+			}
+
+			if ((is_array(d()->get[$name]) && in_array($value['value'], d()->get[$name]) || (d()->get[$name] == $value['value'])))
+			{
+				$selected[$name][] = $fields_filtered[$key];
+				unset($fields_filtered[$key]);
+			}
+		}
+	}
+
+
+	#var_dump($selected);die;
+
+	foreach ($selected as $name => $value)
+		foreach ($value as $v)
+		array_unshift($fields_filtered_data[$name], $v);
+
+	#var_dump($fields_filtered_data);die;
+
 	d()->products__fields = $products__fields;
 	d()->fields_data = $fields_data;
 	d()->fields_filtered_data = $fields_filtered_data;
+
+	#var_dump(d()->fields_filtered_data);die;
 
 	#d()->crumbs_list = d()->categories_seo_data['crumbs_list'];
 	#d()->canonical = d()->categories_seo_data['canonical'];

@@ -1,14 +1,5 @@
 <?php
 
-d()->route('/product/:url', function($url) {
-	d()->this = d()->Product->find_by('url', $url);
-	d()->view->render('/product/product.html');
-});
-
-d()->route('/product', function($url) {
-	d()->page_not_found();
-});
-
 d()->route('/product/update_trigram',  function()
 {
 	if (isset($_GET['product_id'])) {
@@ -33,4 +24,13 @@ d()->route('/product/update_trigram',  function()
 		print 'OK';
 	}
 	exit;
+});
+
+d()->route('/product/:url', function($url) {
+	d()->this = d()->Product->find_by('url', $url);
+	d()->view->render('/product/product.html');
+});
+
+d()->route('/product', function($url) {
+	d()->page_not_found();
 });
