@@ -67,9 +67,9 @@
 												<span class="title-3">Упаковка</span>
 
 												@ if (d()->products_variant->id) {
-													<a href="#" class="picture-2 js-fancybox">
+													<span class="picture-2 ">
 														<img src="{products_variant.required_image|preview 'in46', 'in46'}" alt=""/>
-													</a>
+													</span>
 													<div class="material">
 														{products_variant.title}
 														<div class="price-2">{products_variant.price} &#8381;</div>
@@ -134,7 +134,7 @@
 								@ if (d()->products_variant->id) {
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 										{{edit d()->products_variant}}{{delete d()->products_variant}}
-										<a href="#" class="picture-2 js-fancybox"><img src="<?=preview(d()->products_variant->image, 'in46', 'in46')?>" alt=""/></a>
+										<span class="picture-2 "><img src="<?=preview(d()->products_variant->image, 'in46', 'in46')?>" alt=""/></span>
 										<div class="material"><?=d()->products_variant->title?></div>
 										<div class="price-2"><?=d()->products_variant->price?> &#8381;</div>
 									</div>

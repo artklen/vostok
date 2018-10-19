@@ -7,6 +7,8 @@
 			<ul class="last-2">
 				<li>
 					<ul class="last-3">
+						{{add 'menu_elements'}}
+
 						<!--foreach Product->where('collection_id = ?', d()->this->id)>
 						<li>
 							<a href="/product/{.url}">
@@ -16,29 +18,81 @@
 						</li>
 						foreach>-->
 
-						<foreach Product->select('count(id) cnt, series')->where('collection_id = ?', d()->this->id)->group_by('series')>
+						<!--<foreach Product->select('count(id) cnt, series')->where('collection_id = ?', d()->this->id)->group_by('series')>
 							<?php if (!~this->series) continue; ?>
 							<li>
 								<a href="/catalog?series%5B%5D={.series|urlencode}">
 									<span class="sub-1">
-										<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
+										&lt;!&ndash;<img src="{this.required_image|preview '33', '33'}" alt=""/>&ndash;&gt;
 									</span>
 									<span class="sub-2">{.series} <span class="sub-3">{.cnt}</span></span>
 								</a>
 							</li>
+						</foreach>-->
+
+						<foreach Menu_element->where('collection_id = ?', d()->this->id)>
+							<li>
+								{{edit}}{{delete}}
+								<?php
+									$params = [];
+									$params_names =
+									[
+										'series_name' => 'series',
+										'carcas_name' => 'carcas',
+									];
+
+									foreach ($params_names as $field => $param_name)
+									{
+										if (d()->this->$field)
+										{
+											$params[$param_name.'[]'] = d()->this->$field;
+										}
+									}
+
+									$query = http_build_query($params);
+
+									// считаем кол-во
+									$existsParams = [];
+									foreach ($params as $p => $v)
+									{
+										$val =  mb_substr($p, 0, -2);
+										$existsParams[] = $val;
+									}
+
+									$existsParamsSql = implode(',', $existsParams);
+
+									$placeholders = [];
+									foreach ($existsParams as $pp)
+										$placeholders[] = "$pp = '".$params[$pp.'[]']."'";
+
+									$placeholders = implode(' and ', $placeholders);
+
+									$count = d()->Product->select('count(id) cnt, '.$existsParamsSql)->where('collection_id = ? and '.$placeholders, d()->this->collection_id)->group_by($existsParamsSql)->cnt;
+
+									$count = $count ? $count : 0;
+									#var_dump($count);die;
+								?>
+
+								<a href="/catalog?<?=$query?>">
+									<span class="sub-1">
+										<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
+									</span>
+									<span class="sub-2">{.title} <span class="sub-3"><?=$count?></span></span>
+								</a>
+							</li>
 						</foreach>
 
-						<foreach Product->select('count(id) cnt, carcas')->where('collection_id = ?', d()->this->id)->group_by('carcas')>
+						<!--<foreach Product->select('count(id) cnt, carcas')->where('collection_id = ?', d()->this->id)->group_by('carcas')>
 							<?php if (!~this->carcas) continue; ?>
 							<li>
 								<a href="/catalog?carcas%5B%5D={.carcas|urlencode}">
 									<span class="sub-1">
-										<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
+										&lt;!&ndash;<img src="{this.required_image|preview '33', '33'}" alt=""/>&ndash;&gt;
 									</span>
 									<span class="sub-2">{.carcas} <span class="sub-3">{.cnt}</span></span>
 								</a>
 							</li>
-						</foreach>
+						</foreach>-->
 					</ul>
 					<ul class="last-3">
 

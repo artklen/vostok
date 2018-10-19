@@ -1,0 +1,33 @@
+{{/admin/chosen/chosen_inc.html}}
+<div class="control-group">
+ 
+  <label class="control-label">{title}</label>
+  <div class="controls">
+	<?php
+		$_table_name = d()->field_params[3];
+	  	$_table_field = d()->field_params[4];
+	
+		$_modelname=ActiveRecord::plural_to_one(strtolower($_table_name));
+		$_first_letter=strtoupper(substr($_modelname,0,1));
+		$_modelname = $_first_letter.substr($_modelname,1);
+
+		d()->list_of_rows =  new $_modelname;
+	?>
+	<select   name="{name}"  class="input-xlarge chosen-select" data-placeholder="Выберите вариант...">
+		<option value="">Не выбрано</option>
+
+		<foreach $_modelname->select($_table_field)->group_by($_table_field)>
+			<?php
+				$_table_field_value = d()->this->$_table_field;
+			?>
+			<option <?php
+
+			if(d()->value == $_table_field_value) {
+				print 'selected';
+			}
+
+			?> value="<?php print $_table_field_value; ?>"><?php print $_table_field_value; ?></option>
+		</foreach>
+	</select>
+  </div>
+</div>
