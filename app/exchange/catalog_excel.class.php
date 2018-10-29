@@ -9,10 +9,10 @@ class Catalog_excel {
 	public function import_products($filename) {
 		set_time_limit(0);
 		
-		/*$log = d()->Importlog->new;
+		$log = d()->Importlog->new;
 		$log->import_type = 'import_products_excel';
 		$log->file = $filename;
-		$log->save();*/
+		$log->save();
 		
 		if (!sbs($filename, 'http://') && !sbs($filename, 'https://')) {
 			if (!sbs($filename, '/')) {
@@ -57,13 +57,17 @@ class Catalog_excel {
 		$headerFields = [];
 		$idField = 'id';
 		$idTitle = 'id';
+		$idFieldFix = 'code';
+
 		$ownFields = [
 			$this->unicalize_field_title($idTitle) => $idField,
+			$this->unicalize_field_title('Артикул') => 'code',
 			$this->unicalize_field_title('Название') => 'title',
 			$this->unicalize_field_title('Изображение') => 'image',
 			$this->unicalize_field_title('Цена') => 'price',
-			$this->unicalize_field_title('Коллекция') => 'collection_id',
+			$this->unicalize_field_title('Коллекция') => 'collection_name',
 			$this->unicalize_field_title('Скидка') => 'discount',
+			$this->unicalize_field_title('Выгоды') => 'benefits',
 			#$this->unicalize_field_title('Свойства часов') => 'text_props',
 			#$this->unicalize_field_title('Краткое описание') => 'text',
 			#$this->unicalize_field_title('Полное описание') => 'text_full',
@@ -93,9 +97,12 @@ class Catalog_excel {
 				$products_colors_ids = null;
 				$products_shapes_ids = null;
 				$id = null;
+				$collection_name = null;
+
 				if (isset($idColumn)) {
 					$id = $objWorksheet->getCellByColumnAndRow($idColumn, $row)->getValue();
 				}
+
 				/*if (trim($id) === '') {
 					continue;
 				}*/
@@ -144,7 +151,23 @@ class Catalog_excel {
 								}
 								break;
 							case 'collection_id':
-								$values[$ownColumns[$column]] = d()->Collection->where('title = ?', $value)->id;
+								/*$values[$ownColumns[$column]] = d()->Collection->where('title = ?', $value)->id;
+								break;*/
+							case 'collection_name':
+								$collection_name = $value;
+								$collection = d()->Collection->where('title = ?', $collection_name);
+
+								if ($collection->is_empty) {
+									$collection->create([
+										'title' => $collection_name,
+									]);
+
+									$collection = d()->Collection->where('title = ?', $collection_name);
+								}
+
+								#var_dump($collection_name);
+								#var_dump($collection->to_sql);
+								#die('NOO');
 								break;
 							default:
 								$values[$ownColumns[$column]] = ($value === '' || $value === '-' || $value === '_') ? '' : $value;
@@ -170,15 +193,29 @@ class Catalog_excel {
 				}*/
 				
 				$query_array = $values;
-				if (trim($id) !== '') {
-					$product_orm = d()->Product->find_by($idField, $id);
+
+				$idValueFix = $query_array[$idFieldFix];
+
+				if ($idValueFix && trim($idValueFix) !== '')
+					$product_orm = d()->Product->find_by($idFieldFix, $idValueFix);
+
+				if ($product_orm->$idFieldFix) {
 					$query_strs = [];
 					foreach ($query_array as $key => $value) {
 						$query_strs[] = '`' . et($key) . '`=binary ' . e($value);
 					}
-					#var_dump($query_strs);die;
+
 					$query_strs[] = '`updated_at`=now()';
+
+					if ($collection->id)
+					{
+						$query_strs[] = '`collection_id`='.$collection->id;
+					}
+
+					$query_strs[] = "url='product" . $product_id . "'";
+
 					$q = 'update `products` set ' . implode(',', $query_strs) . ' where `id`=' . e($product_orm->id);
+
 					d()->db->exec($q);
 					$updated_products_ids[] = $last_id = $product_id = $product_orm->id;
 				} else {
@@ -186,12 +223,19 @@ class Catalog_excel {
 					$product_orm = d()->Product;
 					$product_orm->create($query_array);
 					$created_products_ids[] = $last_id = $product_id = $product_orm->insert_id;
-					$product_orm = d()->Product->find_by($idField, $product_id);
+					$product_orm = d()->Product->find_by($idField, $id);
 					$product_orm->url = 'product' . $product_id;
+
+					if ($collection->id)
+					{
+						$product_orm->collection_id = $collection->id;
+					}
+
 					$product_orm->save();
 				}
 
-				/*foreach ($images_real as $import_name => $image) {
+				// кроме главного изображения есть дополнительные
+				foreach ($images_real as $import_name => $image) {
 					$image_orm = d()->Products_image->where('`product_id`=? and binary `image`= binary ?', $product_id, $image);
 					if ($image_orm->is_empty) {
 						$image_orm->create([
@@ -200,7 +244,7 @@ class Catalog_excel {
 							'import_name' => $import_name,
 						]);
 					}
-				}*/
+				}
 			}
 		}
 		
@@ -212,7 +256,7 @@ class Catalog_excel {
 		unset($objPHPExcel);
 		//$_SESSION['flash'] = 'Импорт успешно завершен.';
 		//header('Location: ' . $_SERVER['REQUEST_URI']);
-		//exit;
+		//exit('[OK]');
 	}
 	
 	public function export_products($filename) {
@@ -223,6 +267,7 @@ class Catalog_excel {
 			'price' => 'Цена',
 			'discount' => 'Скидка',
 			'collection_id' => 'Коллекция',
+			'benefits' => 'Выгоды',
 			#'text' => 'Краткое описание',
 			#'text_full' => 'Полное описание',
 			#'text_props' => 'Свойства часов',

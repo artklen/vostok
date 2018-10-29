@@ -6,8 +6,10 @@
 	@ }
 </div>
 <div class="top">
-	<a href="/product/{url}" class="main-item">
-		<img src="{this.required_image|preview '200', '200'}" alt=""/></a>
+
+	<a href="/product/{.url}" class="main-item">
+		<?php //var_dump(d()->this->required_image); die; ?>
+		<img src="{this.required_image|preview 'in200', 'in200'}" alt=""/></a>
 
 	<!--<div class="middle">
 		<a href="#" class="mini"><img src="/images/mini-1.jpg" alt=""/></a>
@@ -16,12 +18,12 @@
 	</div>-->
 </div>
 <div class="bottom">
-	<a href="/product/{url}" class="title">
+	<a href="/product/{.url}" class="title">
 		{.title}
 	</a>
-	<div class="price">{.calc_price_format}
+	<div class="price">{.calc_price_format} р.
 		@ if (d()->this->discount) {
-		&#8381; <span>{price_origin_format} &#8381;</span>
+		 <span>{.price_origin_format} р.</span>
 		@ }
 	</div>
 </div>

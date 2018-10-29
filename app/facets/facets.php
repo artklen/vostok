@@ -1,6 +1,6 @@
 <?php
 
-d()->facets = function($object, $fields = null, $params = null) {
+d()->facets = function($object, $fields = null, $params = null) {	
 	$class = get_class($object);
 	if (!isset($fields)) {
 		$fields = d()->{"{$class}__field"};
@@ -8,20 +8,25 @@ d()->facets = function($object, $fields = null, $params = null) {
 	if (!isset($params)) {
 		$params = new Get();
 	}
+
 	$filters = [];
 	$facet_fields = [];
 	$all_values = [];
+
 	foreach ($fields as $field) {
 		if (isset($field['field_name'], $field['filter_instance'])) {
 			$name = $field['field_name'];
 			$facet_fields[$name] = $field['filter_instance'];
 			$filters[$name] = $facet_fields[$name];
 			$sort_type = isset($field['sort_type']) ? $field['sort_type'] : '';
+			#die('1 rzdsss');
+		
 			$all_values[$name] = $filters[$name]->get_values(clone $object, $sort_type);
 		}
 	}
+
 	$active_values = [];
-	foreach ($facet_fields as $name => $field) {
+	foreach ($facet_fields as $name => $field) {		
 		if (!empty($all_values[$name])) {
 			$copy = clone $object;
 			foreach ($filters as $filter_name => $filter) {

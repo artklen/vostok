@@ -38,6 +38,7 @@ d()->route('/catalog', function ()
 	}
 
 	$products__fields = d()->Products__field->only('filter')->all;
+
 	array_unshift($products__fields, [
 		'title'           => 'Цена, руб.',
 		'field_name'      => 'price',
@@ -73,6 +74,8 @@ d()->route('/catalog', function ()
 	];
 
 	d()->unfiltered_products_list = $this_products;
+
+	#var_dump($products__fields);die;
 	list(
 		d()->this_products,
 		$fields_data,
@@ -173,9 +176,15 @@ d()->route('/catalog', function ()
 		d()->this_page = d()->Page->find_by('url', 'catalog');
 	}
 	
-	d()->crumbs_list = d()->catalog_seo_data['crumbs_list'];
-	d()->canonical = d()->catalog_seo_data['canonical'];
-	d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
+	if (isset($_GET['search'])) {
+		d()->set_page_title('Результаты поиска по запросу «' . $str . '»');
+		array_unshift(d()->crumbs_list, d()->page_crumb('/catalog'));
+		d()->canonical = '';
+	} else {
+		d()->crumbs_list = d()->catalog_seo_data['crumbs_list'];
+		d()->canonical = d()->catalog_seo_data['canonical'];
+		d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
+	}
 	
 	d()->view->render('/catalog/catalog.html');
 });

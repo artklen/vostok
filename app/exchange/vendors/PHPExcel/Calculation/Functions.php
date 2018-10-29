@@ -578,7 +578,8 @@ class PHPExcel_Calculation_Functions {
 				return 4;
 		} elseif(is_array($value)) {
 				return 64;
-				break;
+				# fix
+				# break;
 		} elseif(is_string($value)) {
 			//	Errors
 			if ((strlen($value) > 0) && ($value{0} == '#')) {

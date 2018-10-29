@@ -34,6 +34,7 @@
 	font-family: 'Roboto', sans-serif;
 	font-size: 13px;
 	color: #292928;
+	font-style: normal;
 }
 .SumoSelect:focus > .CaptionCont, .SumoSelect.open > .CaptionCont {
 	border: 1px solid #d39a6e;

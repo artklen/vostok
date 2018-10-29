@@ -6,7 +6,7 @@ $(function() {
 	
 	if (typeof $.fn.fancybox !== 'undefined') {
 		
-		$('.js-fancybox').fancybox(window.fancybox_common_params ? window.fancybox_common_params() : {});
+		$('.js-fancybox').fancybox(window.fancybox_common_params_fancy ? window.fancybox_common_params_fancy() : {});
 		
 		$(document).on('click', '.js-modal-button', function() {
 			fancybox_lock();

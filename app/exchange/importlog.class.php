@@ -2,7 +2,7 @@
 
 class Importlog extends ActiveRecord
 {
-	function hyperlink()
+	function show_file()
 	{
 		if ($this->file !== '') {
 			return '<a href="' . h($this->file) . '">' . h($this->file) . '</a><br>';
@@ -10,12 +10,14 @@ class Importlog extends ActiveRecord
 		return '';
 	}
 	
-	function catlink()
+	function show_import_type()
 	{
-		if (($this->category_id !== '') && $this->category->ne) {
-			return '<a target="_blank" href="' . d()->h_url_for($this->category) . '">' . h($this->category->full_title) . '</a>';
+		if ($this->import_type === 'import_products_excel') {
+			return 'Импорт товаров из Excel';
+		}
+		if ($this->import_type === 'import_products_images') {
+			return 'Импорт изображений из Zip-архива';
 		}
 		return '';
 	}
-	
 }

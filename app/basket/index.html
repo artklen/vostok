@@ -48,7 +48,7 @@
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="row">
 										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-											<a href="/product" class="picture-1"><img src="<?=preview(d()->product->image, 'in150', 'in150');?>" alt=""/></a>
+											<a href="/product" class="picture-1"><img src="<?=preview(d()->product->image, 'in250', 'in250');?>" alt=""/></a>
 										</div>
 									</div>
 								</div>
@@ -56,9 +56,9 @@
 									<div class="row">
 										<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 											<a href="/product/<?=d()->product->url?>" class="title-2">{product.title}</a>
-											<div class="price-1">{product.calc_price_format} &#8381;
+											<div class="price-1">{product.calc_price_format} р.
 												@ if (d()->product->discount) {
-													<span>{product.price_origin_format} &#8381;</span>
+													<span>{product.price_origin_format} р.</span>
 												@ }
 											</div>
 										</div>
@@ -68,11 +68,11 @@
 
 												@ if (d()->products_variant->id) {
 													<span class="picture-2 ">
-														<img src="{products_variant.required_image|preview 'in46', 'in46'}" alt=""/>
+														<img src="{products_variant.required_image|preview '46', 'auto'}" alt=""/>
 													</span>
 													<div class="material">
 														{products_variant.title}
-														<div class="price-2">{products_variant.price} &#8381;</div>
+														<div class="price-2">{products_variant.price} р.</div>
 													</div>
 												@ } else {
 													<div class="material">
@@ -94,7 +94,7 @@
 										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 											<div class="center-5 wrap-7">
 												<span class="title-3">Сумма</span>
-												<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> &#8381;</div>
+												<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> р.</div>
 											</div>
 										</div>
 										<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
@@ -107,26 +107,22 @@
 						</div>
 
 						<!-- big item basket -->
-						<div
-							class="item last-2 hidden-xs js-basket-item-exists"
-							data-product_id="<?=d()->product->id?>"
-							data-basket-item-key="{basket_item.item_key|h}"
-						>
+						<div class="item last-2 hidden-xs js-basket-item-exists" data-product_id="<?=d()->product->id?>" data-basket-item-key="{basket_item.item_key|h}" 	>
 							{{edit d()->product}}{{delete d()->product}}
 							<div
 								class="row"
 								data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
 								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-									<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in150', 'in150');?>" alt=""/></a>
+									<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in250', 'in250');?>" alt=""/></a>
 								</div>
 								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 									<a href="/product/<?=d()->product->url?>" class="title-2">
 										<?=d()->product->title?>
 									</a>
 
-									<div class="price-1"><?=d()->product->calc_price_format?> &#8381;
+									<div class="price-1"><?=d()->product->calc_price_format?> р.
 										@ if (d()->product->discount) {
-											<span><?=d()->product->price_origin_format?> &#8381;</span>
+											<span><?=d()->product->price_origin_format?> р.</span>
 										@ }
 									</div>
 								</div>
@@ -134,9 +130,9 @@
 								@ if (d()->products_variant->id) {
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 										{{edit d()->products_variant}}{{delete d()->products_variant}}
-										<span class="picture-2 "><img src="<?=preview(d()->products_variant->image, 'in46', 'in46')?>" alt=""/></span>
+										<span class="picture-2 "><img src="<?=preview(d()->products_variant->image, '46', 'auto')?>" alt=""/></span>
 										<div class="material"><?=d()->products_variant->title?></div>
-										<div class="price-2"><?=d()->products_variant->price?> &#8381;</div>
+										<div class="price-2"><?=d()->products_variant->price?> р.</div>
 									</div>
 								@ } else {
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
@@ -152,7 +148,7 @@
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-									<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> &#8381;</div>
+									<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> р.</div>
 								</div>
 								<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
 									<a href="#" class="close js-basket-delete"></a>
@@ -172,7 +168,7 @@
 							<div class="price">
 								<span class="js-basket-total-price">{basket.total_price|price_format}
 								</span>
-								&#8381;
+								р.
 							</div>
 						</div>
 						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -212,9 +208,8 @@
 
 									<div>
 										<div>
-										<select name="delivery_type" class="js-sumoselect" >
-											<option value="">Вариант доставки</option>
-
+										<select name="delivery_type" class="js-sumoselect" placeholder="Вариант доставки">
+											<option class="hidden"></option>
 											<foreach Delivery_variant>
 												<option value="{.id}">{.title}</option>
 											</foreach>

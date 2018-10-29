@@ -5,7 +5,7 @@ trait SmartImage
 	function required_image()
 	{
 		$result = $this->image;
-		if ($result === '') {
+		if ($result === '' || !file_exists(trim($result, '/'))) {
 			$result = '/storage/nophoto.png';
 		}
 		return $result;

@@ -322,7 +322,12 @@ function fancybox_common_params() {
 		}
 	};
 }
-
+function fancybox_common_params_fancy() {
+	
+	return {
+		padding: 5
+	};
+}
 var maps = $('.js-map');
 if (maps.length) {
 	ymaps_init(function() {

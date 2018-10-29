@@ -28,6 +28,15 @@ d()->route('/product/update_trigram',  function()
 
 d()->route('/product/:url', function($url) {
 	d()->this = d()->Product->find_by('url', $url);
+	d()->crumbs_list = [d()->page_crumb('/catalog')];
+	
+	if (d()->this->collection->id)
+		d()->crumbs_list[] = ['title' => d()->this->collection->title, 'link' => '/catalog?collection_id%5B%5D='. d()->this->collection->id];
+
+	#d()->crumbs_list[] = d()->crumb_for(d()->this, false);
+	d()->crumbs_list[] = ['title' => d()->this->code];
+	d()->seo->h1 = "Часы ".d()->this->code." (".d()->this->collection->title.")";
+
 	d()->view->render('/product/product.html');
 });
 

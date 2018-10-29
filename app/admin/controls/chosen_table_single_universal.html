@@ -16,7 +16,7 @@
 	<select   name="{name}"  class="input-xlarge chosen-select" data-placeholder="Выберите вариант...">
 		<option value="">Не выбрано</option>
 
-		<foreach $_modelname->select($_table_field)->group_by($_table_field)>
+		<foreach $_modelname->select($_table_field)->where(et($_table_field) . " <> ''")->group_by($_table_field)>
 			<?php
 				$_table_field_value = d()->this->$_table_field;
 			?>
@@ -26,8 +26,9 @@
 				print 'selected';
 			}
 
-			?> value="<?php print $_table_field_value; ?>"><?php print $_table_field_value; ?></option>
-		</foreach>
+			?> value="<?php print $_table_field_value; ?>"><?php print $_table_field_value;
+			?></option>
+		</foreach>a
 	</select>
   </div>
 </div>

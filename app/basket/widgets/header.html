@@ -9,7 +9,7 @@
 										<span class="right hidden-xs hidden-sm hidden-md">
 											<span class="title">Сумма</span>
 											<span class="sum js-basket-total-price"><?=d()->
-											price_format(d()->basket->order_price)?></span> <span class="sum">&#8381;</span>
+											price_format(d()->basket->order_price)?></span> <span class="sum">р.</span>
 										</span>
 									</span>
 			</a>
@@ -32,9 +32,9 @@
 										</div>
 										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 											<span class="title"><?=d()->product->title?></span>
-											<span class="price-1"><?=d()->price_format(d()->product->price)?>  <span
-												class="price-2"
-											>&#8381; х {basket_item.number|h} шт</span></span>
+											<span class="price-1"><?=d()->price_format(d()->product->price)?> р. 
+												<span class="price-2">х {basket_item.number|h} шт</span>
+											</span>
 										</div>
 										<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 											<a href="#" class="close js-basket-delete"></a>
