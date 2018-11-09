@@ -1690,7 +1690,7 @@ foreach($tmparr as $key=>$subval)
 				return $this->{$_one_prefix[1]}($name);
 			}
 		}
-		
+		/*
 		if($name!='this'){
 			if(is_object($this->this)) {
 				return $this->this->{$name};	
@@ -1698,7 +1698,7 @@ foreach($tmparr as $key=>$subval)
 			if(is_array($this->this)) {
 				return  $this->this[$name];
 			}			
-		}
+		}*/
 		return '';
 	}
 

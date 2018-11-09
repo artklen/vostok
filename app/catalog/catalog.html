@@ -6,19 +6,19 @@
 	</div>
 </div>
 
-@ if (count($_GET['collection_id']) === 1) {
+@ if (count($_GET['collection_id']) === 1) { d()->this_collection = d()->Collection->where('id = ?', $_GET['collection_id']);
 <div class="inside-3">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">	
 				<div class="left">
-					<h1>{{edit d()->this_page}}{seo.h1|h}</h1>
-					<div class="text">Для истинных ценителей неординарного стиля и надежности выпущена целая серия наручных мужских и женских часов Восток-Европа. Механизмы отличаются швейцарским качеством.</div>
+					<h1>{{edit d()->this_collection}}{this_collection.title|h}</h1>
+					<div class="text">{this_collection.text}</div>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 visible-lg">
 				<div class="right">
-					<img src="/images/banner-01.jpg" alt=""/>
+					<img src="{this_collection.image_banner|preview 'in555', 'in290'}" alt=""/>
 				</div>
 			</div>
 		</div>
@@ -67,16 +67,26 @@
 							<div class="row">
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 									<div class="sort">
+										<?php
+
+										function remove_url_query($url, $key)
+										{
+											$url = preg_replace('/(?:&|(\?))' . $key . '=[^&]*(?(1)&|)?/i', "$1", $url);
+											$url = rtrim($url, '?');
+											$url = rtrim($url, '&');
+											return $url;
+										}
+										?>
 										{{add 'products'}}
 										<div class="left">Товаров: <span>&nbsp;{this_products.count}</span></div>
 
 										<?php if ($_REQUEST['order'] == 'price_to_min') {
-											$link = '/catalog';
+											$link = remove_url_query($_SERVER['REQUEST_URI'], 'order');
 										?>
-											<style>
-												.sort .right a:after {transform: rotate(180deg);}
-											</style>
-										<?php } else { $link = '?order=price_to_min'; }?>
+										<style>
+											.sort .right a:after {transform: rotate(180deg);}
+										</style>
+										<?php } else { $link = (count($_GET) ? $_SERVER['REQUEST_URI'].'&' : '?').'order=price_to_min'; }?>
 										<div class="right">Сортировка по: &nbsp;<a href="<?=$link?>">Цене</a></div>
 									</div>
 								</div>

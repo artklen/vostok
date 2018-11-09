@@ -62,7 +62,7 @@ class Catalog_excel {
 		$ownFields = [
 			$this->unicalize_field_title($idTitle) => $idField,
 			$this->unicalize_field_title('Артикул') => 'code',
-			$this->unicalize_field_title('Название') => 'title',
+			$this->unicalize_field_title('Название') => 'excel_title',
 			$this->unicalize_field_title('Изображение') => 'image',
 			$this->unicalize_field_title('Цена') => 'price',
 			$this->unicalize_field_title('Коллекция') => 'collection_name',
@@ -262,7 +262,7 @@ class Catalog_excel {
 	public function export_products($filename) {
 		static $fixed_columns = [
 			'id' => 'id',
-			'title' => 'Название',
+			'excel_title' => 'Название',
 			'image' => 'Изображение',
 			'price' => 'Цена',
 			'discount' => 'Скидка',

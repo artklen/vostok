@@ -14,13 +14,17 @@ d()->route('/product/update_trigram',  function()
 		}
 	} else {
 		d()->db->exec('truncate table `products_trigrams`');
-		$stmt = d()->db->query('select `id`, `title` from `products`');
-		while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
-			$trigrams = get_trigram($row['title']);
-			if (!empty($trigrams)) {
-				d()->db->exec('insert into `products_trigrams` (`product_id`, `value`) values (' . $row['id'] . ',' . implode('), (' . $row['id'] . ',', array_map(array(d()->db, 'quote'), $trigrams)) . ')');
+		#$stmt = d()->db->query('select `id`, `title` from `products`');
+		#while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
+		foreach (d()->Product as $row)
+		{
+			$trigrams = get_trigram($row->title);
+			if (!empty($trigrams))
+			{
+				d()->db->exec('insert into `products_trigrams` (`product_id`, `value`) values ('.$row->id.','.implode('), ('.$row->id.',', array_map(array(d()->db, 'quote'), $trigrams)).')');
 			}
 		}
+		#}
 		print 'OK';
 	}
 	exit;
@@ -35,7 +39,7 @@ d()->route('/product/:url', function($url) {
 
 	#d()->crumbs_list[] = d()->crumb_for(d()->this, false);
 	d()->crumbs_list[] = ['title' => d()->this->code];
-	d()->seo->h1 = "Часы ".d()->this->code." (".d()->this->collection->title.")";
+	//d()->seo->h1 = "Часы ".d()->this->code." (".d()->this->collection->title.")";
 
 	d()->view->render('/product/product.html');
 });

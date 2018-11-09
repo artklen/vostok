@@ -219,7 +219,9 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="text" id="footer-text">
 					<!--{Option.footer_description}-->
-					{seo.text}
+					@ if (!d()->isSeoTextAlready) {
+						{seo.text}
+					@ }
 				</div>
 			</div>
 		</div>
