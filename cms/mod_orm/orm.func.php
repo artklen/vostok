@@ -820,10 +820,14 @@ abstract class ActiveRecord implements ArrayAccess, Iterator, Countable //extend
 			
 						if( d()->db->errorCode()=='HY000' ){
 
-				$options =
-					[
-						#PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-					];
+				$options = [];
+
+				# sorry Damir, but I needed to see it
+				if (defined('PATCHED_CMS') && PATCHED_CMS == 666)
+					$options =
+						[
+							PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+						];
 
 				if(DB_TYPE == 'mysql') {
 					doitClass::$instance->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD, $options);

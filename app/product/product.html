@@ -28,9 +28,9 @@
 						<div class="slider-nav js-slider-nav">
 							<div style="display:flex;justify-content:center;align-items:center;"><img src="{this.required_image|preview 'in64', 'in64'}" alt=""/></div>
 							<foreach this->products_images>
-								<a href="#">
+								<a href="javascript:void(0);">
 									<span style="display:flex;justify-content:center;align-items:center;">
-										<div style="position: absolute;">{{edit}}{{delete}}</div>
+										{{edit}}{{delete}}
 										<img src="{this.required_image|preview 'in64', 'in64'}" alt=""/>
 									</span>
 								</a>

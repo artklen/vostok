@@ -188,3 +188,142 @@ d()->route('/catalog', function ()
 	
 	d()->view->render('/catalog/catalog.html');
 });
+
+d()->route('/catalog/:category', function ($category)
+{
+	$per_page = 18;
+	d()->get = new Get();
+	$category_object = d()->Category->where('url = ?', $category);
+
+	if ($str = $_GET['search'])
+	{
+		$this_products = $category_object->products->where('title like ?', "%$str%");
+	}
+	elseif ($str = $_GET['searchtrigram'])
+	{
+		$trigrams = get_trigram($str);
+
+		$ids = $category_object
+			->products
+			->select('`product_id`,count(*) as `c`')
+			->where('`value` in (?)', $trigrams)
+			->group_by('`product_id`')
+			->order_by('`c` desc')
+			->limit(8)
+			->fast_all_of('product_id');
+
+		if (!empty($ids)) {
+			$this_products = $category_object
+				->products
+				->where('`id` in (?)', $ids)
+				->order_by('field(id,' . implode(',', $ids) . ')');
+		} else {
+			$this_products = $category_object->products->where('false');
+		}
+
+		d()->this_products = $this_products;
+		$this_products_array = d()->this_products->to_array();
+
+		foreach ($this_products_array as &$tt)
+			$tt['link'] = '/watchband/'.$tt['url'];
+
+		print json_encode($this_products_array);
+		exit;
+	}
+	else
+	{
+		$this_products = $category_object->products;
+	}
+
+	$products__fields = d()->Products__field->only('filter')->all;
+
+	array_unshift($products__fields,
+		[
+			'title'           => 'Цена, руб.',
+			'field_name'      => 'price',
+			'type'            => 'interval',
+			'filter_instance' => new Products_filter_interval('price'),
+		]
+	);
+
+	$products__fields[] = [
+		'field_name' => 'all_links',
+		'type'       => 'all_links',
+	];
+
+	d()->unfiltered_products_list = $this_products;
+
+	list(
+		d()->this_products,
+		$fields_data,
+		$fields_filtered_data
+		) = d()->facets(
+		$this_products,
+		$products__fields,
+		d()->get
+	);
+
+	$selected = [];
+	# поднимаем вверх выбранные элементы
+
+	foreach ($fields_filtered_data as $name => &$fields_filtered)
+	{
+		if (!isset($fields_filtered[0]))
+			continue;
+
+		foreach ($fields_filtered as $key => &$value)
+		{
+			if ($key === 0)
+			{
+				continue;
+			}
+
+			if ((is_array(d()->get[$name]) && in_array($value['value'], d()->get[$name]) || (d()->get[$name] == $value['value'])))
+			{
+				$selected[$name][] = $fields_filtered[$key];
+				unset($fields_filtered[$key]);
+			}
+		}
+	}
+
+	foreach ($selected as $name => $value)
+		foreach ($value as $v)
+			array_unshift($fields_filtered_data[$name], $v);
+
+	d()->products__fields = $products__fields;
+	d()->fields_data = $fields_data;
+	d()->fields_filtered_data = $fields_filtered_data;
+
+	if ($_REQUEST['order'] == 'price_to_min')
+		d()->this_products->order('1*price desc');
+	else
+		d()->this_products->order('1*price asc');
+
+	d()->this_products->paginate($per_page);
+
+	if (d()->this_products->is_empty) {
+		header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+		header('Status: 404 Not Found');
+	}
+
+	d()->this = d()->this_products;
+
+	if (d()->get->collection_id && count(d()->get->collection_id === 1)) {
+		d()->this_page = d()->Collection->f(d()->get->collection_id);
+	}
+	if (!d()->this_page || d()->this_page->is_empty) {
+		d()->this_page = d()->Page->find_by('url', 'catalog');
+	}
+
+	if (isset($_GET['search'])) {
+		d()->set_page_title('Результаты поиска по запросу «' . $str . '»');
+		array_unshift(d()->crumbs_list, d()->page_crumb('/catalog'));
+		d()->canonical = '';
+	} else {
+		d()->crumbs_list = d()->catalog_seo_data['crumbs_list'];
+		d()->canonical = d()->catalog_seo_data['canonical'];
+		d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
+	}
+
+	d()->view->render('/catalog/catalog.html');
+});

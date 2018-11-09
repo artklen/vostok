@@ -289,10 +289,14 @@ class doitClass
 			define('DB_TYPE','mysql');
 		}
 		try {
-			$options =
-				[
-					#PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-				];
+			$options = [];
+
+			# sorry Damir, but I needed to see it
+			if (defined('PATCHED_CMS') && PATCHED_CMS == 666)
+				$options =
+					[
+						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+					];
 
 			if(DB_TYPE == 'mysql') {
 				define ('DB_FIELD_DEL','`');
