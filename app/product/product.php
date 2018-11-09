@@ -4,6 +4,16 @@ class Product extends ActiveRecord
 {
 	use SmartImage;
 
+	function title()
+	{
+		$t = $this->get('title');
+
+		if ($t)
+			return $t;
+		else
+			return 'Часы '.$this->code." (".$this->collection->title.")";
+	}
+
 	function calc_price_format()
 	{
 		return d()->price_format($this->price);

@@ -3189,7 +3189,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 			font-weight: 300;
 			padding: 0 0 15px 0;
 		}
-		.text {
+		.text, .text p {
 			font-family: 'Roboto', sans-serif;
 			font-size: 14px;
 			color: #a2a29e;
@@ -3197,11 +3197,11 @@ input.list[type="checkbox"]:disabled:hover + span {
 			line-height: 24px;
 		}
 	}
-	.right {
+	/*.right {
 		img {
 			width: 100%;
 		}
-	}
+	}*/
 }
 
 /* contacts */

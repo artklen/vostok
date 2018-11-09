@@ -2473,7 +2473,12 @@ input.list[type="checkbox"]:disabled:hover + span {
   padding: 0; }
 
 .inside-3 {
-  background: #292928; }
+  background: #292928;
+  /*.right {
+   img {
+   width: 100%;
+   }
+   }*/ }
   .inside-3 .left {
     display: flex;
     display: -ms-flexbox;
@@ -2494,14 +2499,12 @@ input.list[type="checkbox"]:disabled:hover + span {
     color: #d39a6e;
     font-weight: 300;
     padding: 0 0 15px 0; }
-  .inside-3 .left .text {
+  .inside-3 .left .text, .inside-3 .left .text p {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: #a2a29e;
     font-weight: 300;
     line-height: 24px; }
-  .inside-3 .right img {
-    width: 100%; }
 /* contacts */
 .contacts {
   padding: 40px 0 40px 0;

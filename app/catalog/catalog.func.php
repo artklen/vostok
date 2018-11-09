@@ -9,7 +9,7 @@ d()->route('/catalog', function ()
 
 	if ($str = $_GET['search'])
 	{
-		$this_products = d()->Product->where('title like ?', "%$str%");
+		$this_products = d()->Product->where('excel_title like ?', "%$str%");
 	}
 	elseif ($str = $_GET['searchtrigram'])
 	{
@@ -25,7 +25,10 @@ d()->route('/catalog', function ()
 		$this_products_array = d()->this_products->to_array();
 
 		foreach ($this_products_array as &$tt)
+		{
+			$tt['title'] = d()->Product->where('id = ?', $tt['id'])->title;
 			$tt['link'] = '/product/'.$tt['url'];
+		}
 
 		print json_encode($this_products_array);
 		#var_dump(d()->this_products->all);die;

@@ -88,11 +88,11 @@
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
 				<div class="watch-2">
 					<div class="title-1">Новинка</div>
-					<div class="title-2"><span>Часы</span> {Option.product.title}</div>
+					<div class="title-2">{Option.product.title}</div>
 					<ul class="text">
-						<foreach Product->where('id = ?', d()->Option->product['id'])->limit(1)->props >
-							<li>{.title}</li>
-						</foreach>
+						<?php foreach(explode(';', d()->Product->where('id = ?', d()->Option->product_id)->benefits) as $benefit) { if (!$benefit) continue;?>
+						<li><?=trim($benefit)?></li>
+						<?php } ?>
 					</ul>
 				</div>
 			</div>
