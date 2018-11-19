@@ -1,6 +1,6 @@
 <div class="slider-1 js-slider-1">
 	<foreach Slider>
-		<div class="slide" style="background-image: url({this.image}) no-repeat center">
+		<div class="slide" style="background-image: url({this.image})">
 			<div class="container">
 				{{edit}}{{delete}}{{add 'sliders'}}
 				<div class="row">
@@ -21,8 +21,9 @@
 </div>
 <div class="catalog-1">
 	<div class="container">
+		{{add 'main_banners'}}
 		<div class="row">
-			<foreach Collection ->where('show_main = ?', true)>
+			<foreach Main_banner>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					{{edit}}{{delete}}
 					<!--<div class="product-1" style="background-image: url({this.required_image|preview 'in244', 'in400'}), url(/images/main-clock-bg.png)">
@@ -31,23 +32,21 @@
 							<a href="/catalog?collection_id%5B%5D={.id}" class="link-2">Перейти в каталог</a>
 						</div>
 					</div>-->
-					
+
 					<div class="product-wrapper">
 						<div class="product-right"></div>
 						<div class="product-middle">
 							<div class="title">
-								<a href="/catalog?collection_id%5B%5D={.id}" class="link-1">{.title}</a>
-								<a href="/catalog?collection_id%5B%5D={.id}" class="link-2">Перейти в каталог</a>
+								<a href="{.link}" class="link-1">{.title}</a>
+								<a href="{.link}" class="link-2">Перейти в каталог</a>
 							</div>
 						</div>
-						<div class="product-left" style="background-image: url({this.required_image|preview 'in240', 'in370'})"></div>
+						<div class="product-left" style="background-image: url({this.image|preview 'in240', 'in370'})"></div>
 					</div>
-					
-					
 				</div>
 			</foreach>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<a href="/catalog" class="send-2">Смотреть все модели</a>
+				<a href="/catalog/chasy" class="send-2">Смотреть все модели</a>
 			</div>
 		</div>
 	</div>
@@ -79,6 +78,8 @@
 		</div>
 	</div>
 </div>
+
+@ if (d()->Option->product->ne) {
 <div class="action-1">
 	<div class="container">
 		<div class="row">
@@ -102,6 +103,8 @@
 		</div>
 	</div>
 </div>
+@ }
+
 <div class="main-title">
 	<div class="container">
 		<div class="row">

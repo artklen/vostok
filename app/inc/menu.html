@@ -1,11 +1,7 @@
 <ul class="menu-2">
 
 	<li>
-		<a href="/catalog">Каталог часов</a>
-	</li>
-
-	<li>
-		<a href="/catalog/watchbands">Ремешки</a>
+		<a href="/catalog/chasy">Каталог часов</a>
 	</li>
 
 	{{add 'menu_main_elements'}}
@@ -62,6 +58,7 @@
 									$params = [];
 									$params_names =
 									[
+										'category_id' => 'category_id',
 										'series_name' => 'series',
 										'carcas_name' => 'carcas',
 										'collection_id' => 'collection_id',
@@ -103,7 +100,7 @@
 										$count = d()->Product->select('count(id) cnt '.($existsParamsSql ? ' , '.$existsParamsSql : ''));
 
 										if ($placeholders)
-											$count->where($placeholders, d()->this->collection_id)->group_by($existsParamsSql);
+											$count->where($placeholders)->group_by($existsParamsSql);
 
 										$count = $count->cnt;
 										$count = $count ? $count : 0;
@@ -115,7 +112,7 @@
 									}
 								?>
 
-								<a href="/catalog?<?=$query?>">
+								<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
 									<span class="sub-1">
 										<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
 									</span>
@@ -186,6 +183,7 @@
 							$params = [];
 							$params_names =
 							[
+								'category_id' => 'category_id',
 								'series_name' => 'series',
 								'carcas_name' => 'carcas',
 								'collection_id' => 'collection_id',
@@ -223,7 +221,7 @@
 							}
 
 							$count = d()->Product->select('count(id) cnt '.($existsParamsSql ? ' , '.$existsParamsSql : ''))
-								->where('collection_id = ? '.$placeholders, d()->this->collection_id)->group_by($existsParamsSql)->cnt;
+								->where($placeholders)->group_by($existsParamsSql)->cnt;
 
 							$count = $count ? $count : 0;
 							#var_dump($count);die;

@@ -541,11 +541,10 @@ function preview($adress,$param1=false,$param2=false )
 		$preview_adress = substr($adress, 0, strrpos($adress, "/") + 1) . ".thumbs/preview".$not_resize_hash.$watermark_suffix.$width.'x'.$height."_" . substr($adress, strrpos($adress, "/") + 1);
 	}
 	
-	
-	
+
 	//генерирование изображения при его отсуствии
 	if(!file_exists($_SERVER['DOCUMENT_ROOT'].$preview_adress)){
-		
+
 		//Создание превью
 		
 		$filename = $_SERVER['DOCUMENT_ROOT'].$adress;
@@ -591,6 +590,9 @@ function preview($adress,$param1=false,$param2=false )
 					break;
 				case 'image/jpeg':
 				case 'image/pjpeg':
+
+				//var_dump(ImageCreateFromJpeg($filename));
+				//exit;
 					$img = ImageCreateFromJpeg($filename);
 					if(function_exists("exif_read_data")){
 						$exif = exif_read_data($filename);
@@ -613,7 +615,9 @@ function preview($adress,$param1=false,$param2=false )
 					break;
 			}
 		}
+
 		if (empty($img)) {
+
 			return false;
 		}
 

@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/vendors/PHPExcel/Shared/String.php';
 require_once __DIR__ . '/vendors/PHPExcel.php';
 spl_autoload_unregister(['PHPExcel_Autoloader', 'Load']);
@@ -33,7 +34,7 @@ class Catalog_excel {
 			$field_names[$field->id] = $field->field_name;
 			$field_types_by_field_names[$field->field_name] = $field->type;
 		}
-		
+
 		$cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
 		$cacheSettings = ['memoryCacheSize' => '8MB'];
 		PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
@@ -68,9 +69,13 @@ class Catalog_excel {
 			$this->unicalize_field_title('Коллекция') => 'collection_name',
 			$this->unicalize_field_title('Скидка') => 'discount',
 			$this->unicalize_field_title('Выгоды') => 'benefits',
+
+			//$this->unicalize_field_title('Автоподзавод') => 'auto',
+
+			$this->unicalize_field_title('Краткое описание') => 'text',
+			$this->unicalize_field_title('Подробное описание') => 'text_full',
+
 			#$this->unicalize_field_title('Свойства часов') => 'text_props',
-			#$this->unicalize_field_title('Краткое описание') => 'text',
-			#$this->unicalize_field_title('Полное описание') => 'text_full',
 		];
 		$ownColumns = [];
 		$idColumn = null;
@@ -133,6 +138,7 @@ class Catalog_excel {
 									$images = slice_cell_value($value); // несколько изображений
 									//$images = [$value]; // одно изображение
 									foreach ($images as $image) {
+										$image = mb_strtolower($image);
 										if (substr($image, 0, 1) === '/') {
 											$images_real[$image] = $image;
 										} else {
@@ -169,7 +175,24 @@ class Catalog_excel {
 								#var_dump($collection->to_sql);
 								#die('NOO');
 								break;
+/*
+							case 'waterproof':
+
+
+								$values['waterproof'] = (mb_strtolower($value) === 'да') ? '1' : '0';
+
+								break;
+
+							case 'auto':
+
+
+								$values['auto'] = (mb_strtolower($value) === 'да') ? '1' : '0';
+
+								break;
+*/
 							default:
+
+
 								$values[$ownColumns[$column]] = ($value === '' || $value === '-' || $value === '_') ? '' : $value;
 								break;
 						}
@@ -179,6 +202,12 @@ class Catalog_excel {
 						if (isset($field_types_by_field_names[$field_name]) && $field_types_by_field_names[$field_name] === 'strings_list') {
 							$value = implode("\n", slice_cell_value($value));
 						}
+
+						if (isset($field_types_by_field_names[$field_name]) && $field_types_by_field_names[$field_name] === 'boolean') {
+							$value = (mb_strtolower($value) === 'да') ? '1' : '0';;
+						}
+
+
 						$values[$headerFields[$column]] = ($value === '' || $value === '-' || $value === '_') ? '' : $value;
 					}
 				}
@@ -191,9 +220,9 @@ class Catalog_excel {
 					$brand->save();
 					$created_brands_ids[] = $brand->insert_id;
 				}*/
-				
-				$query_array = $values;
 
+				$values['category_id'] = 1;
+				$query_array = $values;
 				$idValueFix = $query_array[$idFieldFix];
 
 				if ($idValueFix && trim($idValueFix) !== '')
@@ -247,7 +276,7 @@ class Catalog_excel {
 				}
 			}
 		}
-		
+
 		d()->is_imported = true;
 		d()->created_products_list = d()->Product->where('`id` in (?)', $created_products_ids);
 		d()->updated_products_list = d()->Product->where('`id` in (?)', $updated_products_ids);
@@ -268,8 +297,8 @@ class Catalog_excel {
 			'discount' => 'Скидка',
 			'collection_id' => 'Коллекция',
 			'benefits' => 'Выгоды',
-			#'text' => 'Краткое описание',
-			#'text_full' => 'Полное описание',
+			'text' => 'Краткое описание' ,
+			'text_full' => 'Подробное описание',
 			#'text_props' => 'Свойства часов',
 		];
 		static $columns_callbacks = [];

@@ -178,7 +178,7 @@ d()->route('/catalog', function ()
 	if (!d()->this_page || d()->this_page->is_empty) {
 		d()->this_page = d()->Page->find_by('url', 'catalog');
 	}
-	
+
 	if (isset($_GET['search'])) {
 		d()->set_page_title('Результаты поиска по запросу «' . $str . '»');
 		array_unshift(d()->crumbs_list, d()->page_crumb('/catalog'));
@@ -188,7 +188,7 @@ d()->route('/catalog', function ()
 		d()->canonical = d()->catalog_seo_data['canonical'];
 		d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
 	}
-	
+
 	d()->view->render('/catalog/catalog.html');
 });
 
@@ -196,17 +196,22 @@ d()->route('/catalog/:category', function ($category)
 {
 	$per_page = 18;
 	d()->get = new Get();
-	$category_object = d()->Category->where('url = ?', $category);
+	d()->this_category = d()->Category->where('url = ?', $category);
+
+	if (!d()->this_category->ne)
+	{
+		d()->page_not_found();
+	}
 
 	if ($str = $_GET['search'])
 	{
-		$this_products = $category_object->products->where('title like ?', "%$str%");
+		$this_products = d()->this_category->products->where('title like ?', "%$str%");
 	}
 	elseif ($str = $_GET['searchtrigram'])
 	{
 		$trigrams = get_trigram($str);
 
-		$ids = $category_object
+		$ids = d()->this_category
 			->products
 			->select('`product_id`,count(*) as `c`')
 			->where('`value` in (?)', $trigrams)
@@ -216,12 +221,12 @@ d()->route('/catalog/:category', function ($category)
 			->fast_all_of('product_id');
 
 		if (!empty($ids)) {
-			$this_products = $category_object
+			$this_products = d()->this_category
 				->products
 				->where('`id` in (?)', $ids)
 				->order_by('field(id,' . implode(',', $ids) . ')');
 		} else {
-			$this_products = $category_object->products->where('false');
+			$this_products = d()->this_category->products->where('false');
 		}
 
 		d()->this_products = $this_products;
@@ -235,8 +240,12 @@ d()->route('/catalog/:category', function ($category)
 	}
 	else
 	{
-		$this_products = $category_object->products;
+		#var_dump(d()->this_category->all);die;
+		#$this_products = d()->this_category->products;
+		$this_products = d()->Product->where('category_id = ?', d()->this_category->id);
 	}
+
+	#var_dump($this_products->all);die;
 
 	$products__fields = d()->Products__field->only('filter')->all;
 
@@ -246,6 +255,12 @@ d()->route('/catalog/:category', function ($category)
 			'field_name'      => 'price',
 			'type'            => 'interval',
 			'filter_instance' => new Products_filter_interval('price'),
+		],
+		[
+			'title'           => 'Коллекция',
+			'field_name'      => 'collection_id',
+			'type'            => 'table',
+			'filter_instance' => new Products_filter('collection_id'),
 		]
 	);
 
@@ -326,6 +341,18 @@ d()->route('/catalog/:category', function ($category)
 		d()->crumbs_list = d()->catalog_seo_data['crumbs_list'];
 		d()->canonical = d()->catalog_seo_data['canonical'];
 		d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
+	}
+
+	if (d()->this_category->ne)
+	{
+		d()->crumbs_list[0] = [
+			'title' => d()->this_category->title
+		];
+
+		if (count($_GET) > 0)
+		{
+			d()->crumbs_list[0]['link'] = '/catalog/'.d()->this_category->url;
+		}
 	}
 
 	d()->view->render('/catalog/catalog.html');

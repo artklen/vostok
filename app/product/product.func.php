@@ -32,10 +32,27 @@ d()->route('/product/update_trigram',  function()
 
 d()->route('/product/:url', function($url) {
 	d()->this = d()->Product->find_by('url', $url);
-	d()->crumbs_list = [d()->page_crumb('/catalog')];
+
+	if (!d()->this->ne)
+	{
+		d()->page_not_found();
+	}
+
+	#d()->crumbs_list = [d()->page_crumb('/catalog')];
+	d()->crumbs_list =
+		[
+			[
+				'title' => d()->this->category->title,
+				'link' => '/catalog/'. d()->this->category->url
+			]
+		];
 	
 	if (d()->this->collection->id)
-		d()->crumbs_list[] = ['title' => d()->this->collection->title, 'link' => '/catalog?collection_id%5B%5D='. d()->this->collection->id];
+		d()->crumbs_list[] =
+			[
+				'title' => d()->this->collection->title,
+				'link' => '/catalog/'.d()->this->category->url.'?collection_id%5B%5D='. d()->this->collection->id
+			];
 
 	#d()->crumbs_list[] = d()->crumb_for(d()->this, false);
 	d()->crumbs_list[] = ['title' => d()->this->code];

@@ -21,7 +21,16 @@ class Product extends ActiveRecord
 
 	function price()
 	{
-		return $res = $this->get('price') * (1 - ($this->discount / 100));
+		if ($this->discount)
+		{
+			return $this->discount;
+		}
+		else
+		{
+			return $res = $this->get('price');
+		}
+		# старая версия с %
+		#return $res = $this->get('price') * (1 - ($this->discount / 100));
 	}
 
 	function price_origin_format()

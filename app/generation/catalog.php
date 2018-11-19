@@ -30,7 +30,7 @@ d()->singleton('catalog_seo_data', function() {
 	$title_arr = [];
 	$special_title_arr = [];
 	$flag_strs = [];
-	$catalog_full_title = d()->full_title_of(d()->this_page);
+	$catalog_full_title = d()->full_title_of(d()->this_category);
 	if (!empty(d()->products__fields)) {
 		foreach (d()->products__fields as $products_filter_field) {
 			$field_name = $products_filter_field['field_name'];
@@ -78,6 +78,7 @@ d()->singleton('catalog_seo_data', function() {
 						$str = array_pop($values_arr);
 						$title_arr[$field_name] = implode(', ', $values_arr) . ' и ' . $str;
 					}
+					#var_dump($title_arr);exit;
 					break;
 				case 'colors':
 					$value = d()->get[$field_name];
@@ -173,12 +174,13 @@ d()->singleton('catalog_seo_data', function() {
 		$last_flag_str = array_pop($flag_strs);
 		$title_arr[] = (!empty($flag_strs) ? implode(', ', $flag_strs) . ' и ' : '') . $last_flag_str;
 	}
-	
+
+	#var_dump($special_title_arr);exit;
 	$copy = clone d()->this_products;
 	$min_price = 1 * $copy->where('1*`price`>1e-7')->select('min(1*`price`) as `min`')->min;
 	
-	if (d()->this_page->page_title !== '') {
-		$title = d()->this_page->page_title;
+	if (d()->this->page_title !== '') {
+		$title = d()->this->page_title;
 	} else {
 		$title = $catalog_full_title;
 		if (!empty($title_arr)) {

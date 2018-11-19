@@ -204,9 +204,24 @@
 						<li>{Option.contact_email|h}</li>
 					</ul>
 					<ul class="social">
-						<li><a href="{Option.link_vk}"></a></li>
-						<li><a href="{Option.link_facebook}"></a></li>
-						<li><a href="{Option.link_instagramm}"></a></li>
+
+						<li <?=!d()->Option->link_vk ? 'style="display:none;"' : ''?>>
+							@ if (d()->Option->link_vk) {
+							<a href="{Option.link_vk}" target="_blank" rel="nofollow"></a>
+							@ }
+						</li>
+
+						<li <?=!d()->Option->link_facebook ? 'style="display:none;"' : ''?>>
+							@ if (d()->Option->link_facebook) {
+							<a href="{Option.link_facebook}" target="_blank" rel="nofollow"></a>
+							@ }
+						</li>
+
+						<li <?=!d()->Option->link_instagramm ? 'style="display:none;"' : ''?>>
+							@ if (d()->Option->link_instagramm) {
+							<a href="{Option.link_instagramm}" target="_blank" rel="nofollow"></a>
+							@ }
+						</li>
 					</ul>
 				</div>
 			</div>

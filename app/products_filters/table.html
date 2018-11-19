@@ -8,7 +8,7 @@ $class = mb_strtoupper(mb_substr(~name, 0, 1)) . mb_substr(~name, 1, -3); ?>
 	@ }
 		<a href="javascript:void(0);" class="name js-unfolding-button">
 			<span>
-				{field.title|h}{{if ~field['unit'] !== '', ', ' . h(~field['unit'])}}
+				{field.title|h}
 			</span>
 		</a>
 		<div class="<?php if( count(d()->fields_filtered_data[d()->name]) > 3){ ?>wrap-5<?php } ?> js-unfolding-block">

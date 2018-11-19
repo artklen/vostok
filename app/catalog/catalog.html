@@ -6,11 +6,11 @@
 	</div>
 </div>
 
-@ if (count($_GET['collection_id']) === 1) { d()->this_collection = d()->Collection->where('id = ?', $_GET['collection_id']);
+@ if (count($_GET['collection_id']) === 1 && count($_GET) === 1) { d()->this_collection = d()->Collection->where('id = ?', $_GET['collection_id']);
 <div class="inside-3">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">	
+			<div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
 				<div class="left">
 					<h1>{{edit d()->this_collection}}{this_collection.title|h}</h1>
 					<div class="text">{this_collection.text}</div>
@@ -29,21 +29,23 @@
 <div class="catalog-3">
 	<div class="container">
 		<div class="row">
-			@ if (count($_GET['collection_id']) != 1) {
+			@ if (count($_GET['collection_id']) != 1 || count($_GET) != 1) {
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="title">
-						{{edit d()->this_page}}{seo.h1|h}
+						{seo.h1|h}
 					</div>
 				</div>
 			@ }
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-xs">
 				@ if (d()->Option.image_catalog_banner) {
-					<div class="banner-1" style="background-image: url({Option.image_catalog_banner}) no-repeat top center;">
+					<div class="banner-1" style="background-image: url({Option.image_catalog_banner|preview 'in555', 'in290'}) no-repeat top center;">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-7 col-lg-12">
 								<div class="banner-2">
 									<div class="title-1">
-										<a href="#">{Option.title_catalog_banner}</a>
+										@ if (d()->Option->link_catalog_banner) {
+										<a href="{Option.link_catalog_banner}">{Option.title_catalog_banner}</a>
+										@ }
 									</div>
 									<div class="title-2">
 										{Option.description_catalog_banner}
@@ -58,6 +60,18 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
 						{{/inc/facets.html}}
+						<div class="facets-1 js-facets-1">
+							<div class="item js-unfolding-container">
+								<span class="name">Категории</span>
+								<div class="categories-list">
+									<foreach Category>
+										@ if (d()->this_category->id != d()->this->id) {
+										<a href="/catalog/{.url}">{.title}</a><br>
+										@ }
+									</foreach>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-lg">
 						<a href="javascript:void(0);" class="facets-2 js-facets-2">Показать фильтр</a>
@@ -78,7 +92,7 @@
 										}
 										?>
 										{{add 'products'}}
-										<div class="left">Товаров: <span>&nbsp;{this_products.count}</span></div>
+										<div class="left">Товаров: <span>&nbsp;<?=d()->this_category->products->count?></span></div>
 
 										<?php if ($_REQUEST['order'] == 'price_to_min') {
 											$link = remove_url_query($_SERVER['REQUEST_URI'], 'order');

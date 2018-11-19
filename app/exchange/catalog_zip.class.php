@@ -40,12 +40,32 @@ class Catalog_zip
 		{
 			$stat = $zip->statIndex($i);
 			$name = $stat['name'];
+			$nameLower = mb_strtolower($name);
 			$ext = strrchr($name, '.');
 			if (isset($exts[strtolower($ext)]))
 			{
 				$path =
 					"{$_SERVER['DOCUMENT_ROOT']}/storage/import/"
-					.md5($name).$ext;
+					.md5($nameLower).$ext;
+
+				$path = mb_strtolower($path);
+
+				/*if
+				(
+					#md5($nameLower) == "07863f3f01b46a2faebafcc7ae3bcc91" ||
+					error_get_last()['type'] == 8
+				){
+					print "zip://{$filename}#{$name}";
+					print "  ";
+					print $path;
+					print "  ";
+					var_dump(copy("zip://{$filename}#{$name}", $path));
+					$errors= error_get_last();
+					echo "COPY ERROR: ".$errors['type'];
+					echo "<br />\n".$errors['message'];
+					copy("zip://{$filename}#{$name}", $path);
+					exit;
+				}*/
 
 				copy("zip://{$filename}#{$name}", $path);
 				$this->fix_image($path);
