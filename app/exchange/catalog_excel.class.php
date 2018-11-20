@@ -6,8 +6,7 @@ spl_autoload_unregister(['PHPExcel_Autoloader', 'Load']);
 spl_autoload_register(['PHPExcel_Autoloader', 'Load'], false, true);
 
 class Catalog_excel {
-	
-	public function import_products($filename) {
+	public function import_products($idCategory, $filename) {
 		set_time_limit(0);
 		
 		$log = d()->Importlog->new;
@@ -21,8 +20,9 @@ class Catalog_excel {
 			}
 			$filename = $_SERVER['DOCUMENT_ROOT'] . $filename;
 		}
-		
+
 		$fields = d()->Products__field;
+
 		$field_id_by_title = [];
 		$field_names = [];
 		$field_types_by_field_names = [];
@@ -221,7 +221,7 @@ class Catalog_excel {
 					$created_brands_ids[] = $brand->insert_id;
 				}*/
 
-				$values['category_id'] = 1;
+				$values['category_id'] = $idCategory;
 				$query_array = $values;
 				$idValueFix = $query_array[$idFieldFix];
 
@@ -283,12 +283,15 @@ class Catalog_excel {
 		
 		$objPHPExcel->disconnectWorksheets();
 		unset($objPHPExcel);
+
+		#d()->update_trigrams();
+
 		//$_SESSION['flash'] = 'Импорт успешно завершен.';
 		//header('Location: ' . $_SERVER['REQUEST_URI']);
 		//exit('[OK]');
 	}
 	
-	public function export_products($filename) {
+	public function export_products($idCategory, $filename) {
 		static $fixed_columns = [
 			'id' => 'id',
 			'excel_title' => 'Название',
@@ -318,8 +321,13 @@ class Catalog_excel {
 			$php_excel = new PHPExcel();
 			$worksheet = $php_excel->getActiveSheet();
 
-			$products_list = d()->Product;
-			$fields = d()->Products__field->all;
+			$products_list = d()->Product->where('category_id = ?', $idCategory);
+			#$fields = d()->Products__field->where('category_id = ?', $idCategory)->all;
+			#var_dump($idCategory);
+			$fields = d()->Category->find_by('id', $idCategory)->products__fields->all;
+
+			#var_dump($fields);die;
+
 			$fields_by_names = [];
 			foreach ($fields as $field) {
 				$fields_by_names[$field->field_name] = $field;

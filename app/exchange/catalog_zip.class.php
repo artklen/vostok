@@ -2,7 +2,7 @@
 
 class Catalog_zip
 {
-	function import_products_images($filename)
+	function import_products_images($id, $filename)
 	{
 		static $exts = array(
 			'.jpg' => 1,

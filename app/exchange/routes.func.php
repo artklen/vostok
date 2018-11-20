@@ -1,6 +1,6 @@
 <?php
 
-d()->route('/exchange/export_products', function() {
+d()->route('/exchange/export_products/:id', function($id) {
 	if (!iam()) {
 		header('HTTP/1.0 403 Forbidden');
 		exit;
@@ -8,7 +8,7 @@ d()->route('/exchange/export_products', function() {
 	$filename = str_replace(['/', '\\', ':', ';', '*', '"', '<', '>', '|'], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 'products') . '.xlsx';
 	$filepath = '/storage/export/' . $filename;
 	$catalog_excel = new Catalog_excel();
-	$catalog_excel->export_products($filepath);
+	$catalog_excel->export_products($id, $filepath);
 
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');

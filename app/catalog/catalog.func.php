@@ -9,7 +9,7 @@ d()->route('/catalog', function ()
 
 	if ($str = $_GET['search'])
 	{
-		$this_products = d()->Product->where('excel_title like ?', "%$str%");
+		$this_products = d()->Product->where('excel_title like ? or code like ?', "%$str%", "%$str%");
 	}
 	elseif ($str = $_GET['searchtrigram'])
 	{
