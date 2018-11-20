@@ -151,6 +151,8 @@
 							</a>
 							<?php } ?>
 						</div>
+					@ } else {
+					<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked hidden/>
 					@ }
 
 					<a href="javascript:void(0);" class="send-6 js-basket-add">Добавить в корзину</a>
@@ -185,7 +187,7 @@
 					@ }
 
 					<section class="content-tab-1">
-						@ if (d()->this->collection ) {
+						@ if (d()->this->collection->ne) {
 						<div class="item">
 							<div class="left"><span>Коллекция</span></div>
 							<div class="right"><span>{.collection.title}</span></div>
@@ -193,6 +195,7 @@
 						@ }
 						<?php d()->this_product = d()->this ?>
 						<foreach Products__field>
+							@ if (!in_array(d()->this_product->category_id, d()->this->categories->fast_all_of('id'))) continue;
 							@ ~value = ~this->value_of(~this_product);
 							@ if (~value !== '') {
 							<div class="item">
