@@ -9,4 +9,15 @@
 		<button type="submit" class="send-8">Показать</button>
 		<a href="/catalog<?=d()->this_category->url ? '/'.d()->this_category->url : ''?>" class="send-9">Сбросить фильтр</a>
 	</form>
+
+	<div class="item js-unfolding-container container-categories">
+		<span class="name">Категории</span>
+		<div class="categories-list">
+			<foreach Category>
+				@ if (d()->this_category->id != d()->this->id) {
+				<a href="/catalog/{.url}">{.title}</a><br>
+				@ }
+			</foreach>
+		</div>
+	</div>
 </div>

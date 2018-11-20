@@ -76,53 +76,28 @@
 						</div>
 					</div>
 
-					<div class="title-1">Выберите упаковку</div>
+					@ if (d()->this->category->url == 'chasy') {
+						<div class="title-1">Выберите упаковку</div>
 
-					<div class="js-unfolding-container">
+						<div class="js-unfolding-container">
 
-						<div class="box-1 box-2">
-							<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked />
-							<label for="list-s" class="active">
-								<table class="choice-1">
-									<tr>
-										<td class="text">
-											<span></span>
-											<div class="part">Стандартная</div>
-										</td>
-									</tr>
-								</table>
-							</label>
-						</div>
-
-						<?php $max = 2; ?>
-						<foreach Products_variant>
-							<?php if (d()->key >= $max) break; ?>
-							{{edit}}{{delete}}{{add 'products_variants'}}
-							<div class="box-2">
-								<input type="radio" id="list-<?=d()->key?>" class="list-1" name="material" data-products_variant_id="{.id}" />
-								<label for="list-<?=d()->key?>" class="active">
+							<div class="box-1 box-2">
+								<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked />
+								<label for="list-s" class="active">
 									<table class="choice-1">
 										<tr>
 											<td class="text">
 												<span></span>
-												<div class="part">{.title}</div>
-											</td>
-											<td class="price">{.price} р.</td>
-											<td>
-												<a href="{this.required_image|preview 'in1000', 'in1000', 'not_resize' => true}" class="js-fancybox">
-													<img src="{this.required_image|preview '46', 'auto'}" alt="" />
-												</a>
+												<div class="part">Стандартная</div>
 											</td>
 										</tr>
 									</table>
 								</label>
 							</div>
-						</foreach>
 
-						<?php if (d()->Products_variant->count > $max) { ?>
-						<div class="js-unfolding-block-product">
+							<?php $max = 2; ?>
 							<foreach Products_variant>
-								<?php if (d()->key < $max) continue; ?>
+								<?php if (d()->key >= $max) break; ?>
 								{{edit}}{{delete}}{{add 'products_variants'}}
 								<div class="box-2">
 									<input type="radio" id="list-<?=d()->key?>" class="list-1" name="material" data-products_variant_id="{.id}" />
@@ -144,12 +119,39 @@
 									</label>
 								</div>
 							</foreach>
+
+							<?php if (d()->Products_variant->count > $max) { ?>
+							<div class="js-unfolding-block-product">
+								<foreach Products_variant>
+									<?php if (d()->key < $max) continue; ?>
+									{{edit}}{{delete}}{{add 'products_variants'}}
+									<div class="box-2">
+										<input type="radio" id="list-<?=d()->key?>" class="list-1" name="material" data-products_variant_id="{.id}" />
+										<label for="list-<?=d()->key?>" class="active">
+											<table class="choice-1">
+												<tr>
+													<td class="text">
+														<span></span>
+														<div class="part">{.title}</div>
+													</td>
+													<td class="price">{.price} р.</td>
+													<td>
+														<a href="{this.required_image|preview 'in1000', 'in1000', 'not_resize' => true}" class="js-fancybox">
+															<img src="{this.required_image|preview '46', 'auto'}" alt="" />
+														</a>
+													</td>
+												</tr>
+											</table>
+										</label>
+									</div>
+								</foreach>
+							</div>
+							<a href="javascript:void(0);" class="link js-unfolding-button">
+								<span>Показать все упаковки</span>
+							</a>
+							<?php } ?>
 						</div>
-						<a href="javascript:void(0);" class="link js-unfolding-button">
-							<span>Показать все упаковки</span>
-						</a>
-						<?php } ?>
-					</div>
+					@ }
 
 					<a href="javascript:void(0);" class="send-6 js-basket-add">Добавить в корзину</a>
 				</div>
