@@ -80,7 +80,7 @@
 										}
 										?>
 										{{add 'products'}}
-										<div class="left">Товаров: <span>&nbsp;<?=d()->this_category->products->count?></span></div>
+										<div class="left">Товаров: <span>&nbsp;<?=d()->count_this_products?></span></div>
 
 										<?php if ($_REQUEST['order'] == 'price_to_min') {
 											$link = remove_url_query($_SERVER['REQUEST_URI'], 'order');

@@ -50,7 +50,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-10 col-sm-6 col-md-6 col-lg-3">
-				<div class="phone">{Option.number}</div>
+				<div class="phone"><a href="tel:{Option.number}">{Option.number}</a></div>
 				<a href="/feedback/call" class="call js-feedback">Заказать звонок</a>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 visible-lg">
@@ -200,8 +200,8 @@
 					<div class="title">Контакты</div>
 					<ul class="right">
 						<li>{Option.address}</li>
-						<li>{Option.number}</li>
-						<li>{Option.contact_email|h}</li>
+						<li><a href="tel:{Option.number}">{Option.number}</a></li>
+						<li><a href="mailto:{Option.contact_email|h}">{Option.contact_email|h}</a></li>
 					</ul>
 					<ul class="social">
 

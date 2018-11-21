@@ -872,6 +872,9 @@ input.list[type="checkbox"]:disabled:hover + span {
     display: inline-block;
     background: url(/images/phone-01.svg) no-repeat left center;
     background-size: 14px 14px; }
+    .header-top .phone a {
+      color: #efece4;
+      text-decoration: none; }
   .header-top .call {
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
@@ -2654,6 +2657,11 @@ input.list[type="checkbox"]:disabled:hover + span {
     margin: 0 0 15px 0;
     padding: 0;
     line-height: 24px; }
+  .footer-1 .item .right li a {
+    color: #a1a095;
+    text-decoration: none; }
+    .footer-1 .item .right li a:hover {
+      color: #a1a095; }
   .footer-1 .item .right li:nth-child(1) {
     background: url(/images/icon-03.svg) no-repeat left center;
     background-size: 15px 21px;
@@ -2830,6 +2838,9 @@ input.list[type="checkbox"]:disabled:hover + span {
     line-height: 16px;
     padding: 10px 0 20px 0;
     display: inline-block; }
+  .fosv-1 .privacy a, .fosv-2 .privacy a {
+    color: #d39a6e;
+    text-decoration: underline; }
   .fosv-1 .error input, .fosv-2 .error input {
     border: 1px solid red;
     box-shadow: inset 0px 0px 0px 1px #f00; }

@@ -163,6 +163,7 @@ d()->route('/catalog', function ()
 	else
 		d()->this_products->order('1*price asc');
 
+	d()->count_this_products = d()->this_products->count;
 	d()->this_products->paginate($per_page);
 
 	if (d()->this_products->is_empty) {
@@ -302,6 +303,8 @@ d()->route('/catalog/:category', function ($category)
 				unset($fields_filtered[$key]);
 			}
 		}
+
+		unset($value);
 	}
 
 	foreach ($selected as $name => $value)
@@ -317,6 +320,7 @@ d()->route('/catalog/:category', function ($category)
 	else
 		d()->this_products->order('1*price asc');
 
+	d()->count_this_products = d()->this_products->count;
 	d()->this_products->paginate($per_page);
 
 	if (d()->this_products->is_empty) {
