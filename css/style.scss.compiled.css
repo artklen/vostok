@@ -2714,6 +2714,17 @@ input.list[type="checkbox"]:disabled:hover + span {
   .footer-2 .text {
     padding: 40px 0 50px 0;
     border-top: 1px solid #20201f; }
+  .footer-2 .text h1, .footer-2 .text h2, .footer-2 .text h3, .footer-2 .text ul, .footer-2 .text ol {
+    padding: 0 0 20px 0;
+    color: #a1a095; }
+  .footer-2 .text a {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #d66a40;
+    font-weight: 300;
+    text-decoration: underline; }
+  .footer-2 .text a:hover {
+    text-decoration: none; }
   .footer-2 .text p {
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
@@ -2722,6 +2733,25 @@ input.list[type="checkbox"]:disabled:hover + span {
     line-height: 20px; }
   .footer-2 .text p:last-child {
     padding: 0; }
+  .footer-2 .text ul, .footer-2 .text ol {
+    margin: 0 0 0 40px; }
+  .footer-2 .text ul li, .footer-2 .text ol li {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #252829;
+    line-height: 32px;
+    font-weight: 300; }
+  .footer-2 .text table {
+    width: 100%;
+    margin: 10px 0 20px 0; }
+  .footer-2 .text table tbody tr td {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #251f19;
+    font-weight: 300;
+    line-height: 32px;
+    border: 1px solid #292928;
+    padding: 5px; }
 
 .footer-3 {
   padding: 10px 0 10px 0; }
