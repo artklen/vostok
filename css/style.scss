@@ -3489,6 +3489,21 @@ input.list[type="checkbox"]:disabled:hover + span {
 	.text {
 		padding: 40px 0 50px 0;
 		border-top: 1px solid #20201f;
+		
+		h1, h2, h3, ul, ol {
+			padding: 0 0 20px 0;
+			color: #a1a095;
+		}
+		a {
+			font-family: 'Roboto', sans-serif;
+			font-size: 16px;
+			color: #d66a40;
+			font-weight: 300;
+			text-decoration: underline;
+			&:hover {
+				text-decoration: none;
+			}
+		}
 		p {
 			font-family: 'Roboto', sans-serif;
 			font-size: 13px;
@@ -3497,6 +3512,35 @@ input.list[type="checkbox"]:disabled:hover + span {
 			line-height: 20px;
 			&:last-child {
 				padding: 0;
+			}
+		}
+		ul,
+		ol {
+			margin: 0 0 0 40px ;
+			li {
+				font-family: 'Roboto', sans-serif;
+				font-size: 16px;
+				color: #252829;
+				line-height: 32px;
+				font-weight: 300;
+				
+			}
+		}
+		table {
+			width: 100%;
+			margin: 10px 0 20px 0;
+			tbody {
+				tr {
+					td {
+						font-family: 'Roboto', sans-serif;
+						font-size: 16px;
+						color: #251f19;
+						font-weight: 300;
+						line-height: 32px;
+						border: 1px solid #292928;
+						padding: 5px;
+					}
+				}
 			}
 		}
 	}
