@@ -5,7 +5,7 @@ d()->seo = function() {
 	if (!isset($seo)) {
 		d()->is_seo_prepared = true;
 		$seo = new SeoObject();
-		$uri = urldecode($_SERVER['REQUEST_URI']);
+		$uri = $_SERVER['REQUEST_URI'];
 		$seoparam = d()->Seoparam->where('`page_url`=?', $uri);
 		if (defined('MULTISITE') && MULTISITE) {
 			$seoparam->order('`multi_domain` desc');
@@ -15,7 +15,7 @@ d()->seo = function() {
 			$seo->add_source($array[0]);
 			d()->admin_add_panel_button('/admin/edit/seoparams/' . $seoparam->id, 'Параметры страницы');
 		} else {
-			d()->admin_add_panel_button('/admin/edit/seoparams/add?page_url=' . $uri, 'Параметры страницы');
+			d()->admin_add_panel_button('/admin/edit/seoparams/add?page_url=' . urlencode($_SERVER['REQUEST_URI']), 'Параметры страницы');
 		}
 	}
 	return $seo;
