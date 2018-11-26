@@ -204,7 +204,7 @@ class Catalog_excel {
 						}
 
 						if (isset($field_types_by_field_names[$field_name]) && $field_types_by_field_names[$field_name] === 'boolean') {
-							$value = (mb_strtolower($value) === 'да') ? '1' : '0';;
+							$value = (mb_strtolower($value) === 'да' || mb_strtolower($value) === '1') ? '1' : '0';;
 						}
 
 
