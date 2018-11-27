@@ -37,6 +37,7 @@ d()->route('/catalog', function ()
 	}
 	else
 	{
+		d()->page_not_found();
 		$this_products = d()->Product;
 	}
 

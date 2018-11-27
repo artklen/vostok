@@ -1,5 +1,79 @@
 <?php
 
+d()->page_not_found = function() {
+	foreach (d()->Seoparam as $item) {
+		$urls_str = $item->old_urls;
+		$urls = explode("\n", $urls_str);
+		foreach ($urls as $url) {
+			$url = trim($url);
+			if ($_SERVER['REQUEST_URI'] === $url) {
+				d()->redirect_301($item->page_url);
+			}
+		}
+	}
+
+	foreach (d()->Seoparam as $item) {
+		$urls_str = $item->old_urls;
+		$urls = explode("\n", $urls_str);
+		foreach ($urls as $url) {
+			$url = trim($url);
+			if (d()->url_path === $url) {
+				d()->redirect_301($item->page_url);
+			}
+		}
+	}
+
+	foreach (d()->Product as $item) {
+		$urls_str = $item->old_urls;
+		$urls = explode("\n", $urls_str);
+		foreach ($urls as $url) {
+			$url = trim($url);
+			if ($_SERVER['REQUEST_URI'] === $url) {
+				d()->redirect_301("/product/".$item->url);
+			}
+		}
+	}
+
+	foreach (d()->Product as $item) {
+		$urls_str = $item->old_urls;
+		$urls = explode("\n", $urls_str);
+		foreach ($urls as $url) {
+			$url = trim($url);
+			if (d()->url_path === $url) {
+				d()->redirect_301("/product/".$item->url);
+			}
+		}
+	}
+
+	foreach (d()->Collection as $item) {
+		$urls_str = $item->old_urls;
+		$urls = explode("\n", $urls_str);
+		foreach ($urls as $url) {
+			$url = trim($url);
+			if (d()->url_path === $url) {
+				d()->redirect_301("/catalog/chasy?collection_id%5B%5D=".$item->id);
+			}
+		}
+	}
+	foreach (d()->Collection as $item) {
+		$urls_str = $item->old_urls;
+		$urls = explode("\n", $urls_str);
+		foreach ($urls as $url) {
+			$url = trim($url);
+			if (d()->url_path === $url) {
+				d()->redirect_301("/catalog/chasy?collection_id%5B%5D=".$item->id);
+			}
+		}
+	}
+
+	ob_end_clean();
+	header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+	header('Status: 404 Not Found');
+	d()->content = d()->error_404_tpl();
+	print d()->main_tpl();
+	exit;
+};
+
 function main()
 {
 	d()->current_city = d()->city_of_subdomain;
