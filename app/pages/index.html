@@ -122,7 +122,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
 				<div class="left">
-					<foreach News->sort_by('dt_at', 'desc')->limit(1)>
+					<foreach News->order_by('dt_at desc')->limit(1)>
 						{{edit}}{{delete}}
 						<?php d()->last_news = d()->this ?>
 						<a href="/news/{.url}"><img src="{this.required_image_full|preview 'auto', 'in310'}" alt=""/></a>
@@ -134,7 +134,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
 				<div class="right">
-					<foreach News->where('id <> ?', d()->last_news['_data'][0]['id'])->sort_by('dt_at', 'desc')->limit(4)>
+					<foreach News->where('id <> ?', d()->last_news['_data'][0]['id'])->order_by('dt_at desc')->limit(4)>
 						<div class="item">
 							<div class="row">
 								{{edit}}{{delete}}
