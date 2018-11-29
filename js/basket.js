@@ -10,7 +10,7 @@ Basket = (function() {
 
 	$('body').on('click', '.js-basket-not-empty a', function (e)
 	{
-		location.href = $(e.target).attr('href');
+		location.href = $(e.target).closest('a').attr('href');
 	});
 	
 	var query = function(action, data, target) {
