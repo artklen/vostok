@@ -321,6 +321,8 @@ d()->route('/catalog/:category', function ($category)
 	else
 		d()->this_products->order('1*price asc');
 
+	d()->this_products->order('sort');
+
 	d()->count_this_products = d()->this_products->count;
 	d()->this_products->paginate($per_page);
 
@@ -350,7 +352,8 @@ d()->route('/catalog/:category', function ($category)
 
 	if (d()->this_category->ne)
 	{
-		d()->crumbs_list[0] = [
+		d()->crumbs_list[0] =
+		[
 			'title' => d()->this_category->title
 		];
 

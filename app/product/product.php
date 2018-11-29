@@ -67,4 +67,10 @@ class Product extends ActiveRecord
 	{
 		return $this->title;
 	}
+	
+	function admin_sort_title()
+	{
+		return $this->image_as_preview . ' <span style="font-size: 20px; display: inline-block; vertical-align: middle;">' . h($this->title) . '</span><br>';
+	}
+	
 }
