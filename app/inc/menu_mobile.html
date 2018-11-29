@@ -1,24 +1,78 @@
 <ul class="menu-3 visible-xs">
-	<foreach Collection->where('show_header = ?', true)>
+	<foreach Menu_main_element>
 		<li class="js-unfolding-container-menu">
 			<a href="javascript:void(0);" class="arrow js-unfolding-button-menu">
 				{.title}
 			</a>
 			<ul class="last-1 js-unfolding-block-menu">
-				<foreach Product->select('count(id) cnt, series')->where('collection_id = ?', d()->this->id)->group_by('series')>
-					<?php if (!~this->series) continue; ?>
+				<foreach d()->Menu_element->where('menu_main_element_id = ?', d()->this->id )>
+
+					<?php
+					$params = [];
+					$params_names =
+					[
+					'category_id' => 'category_id',
+					'series_name' => 'series',
+					'carcas_name' => 'carcas',
+					'collection_id' => 'collection_id',
+					'is_auto' => 'auto',
+					'genders' => 'genders',
+					];
+
+					foreach ($params_names as $field => $param_name)
+					{
+					if (trim(d()->this->$field))
+					{
+					$params[$param_name.'[]'] = d()->this->$field;
+					}
+					}
+
+					$query = http_build_query($params);
+
+					// считаем кол-во
+					$existsParams = [];
+					foreach ($params as $p => $v)
+					{
+					if (!trim($v)) continue;
+					$val =  mb_substr($p, 0, -2);
+					$existsParams[] = $val;
+					}
+
+					$existsParamsSql = implode(',', $existsParams);
+
+					$placeholders = [];
+					foreach ($existsParams as $pp){
+					$placeholders[] = et($pp) . " = ". e($params[$pp.'[]'])." ";
+					}
+
+					$placeholders = implode(' and ', $placeholders);
+
+					if ($placeholders)
+					{
+					#var_dump($placeholders);die;
+					$count = d()->Product->select('count(id) cnt '.($existsParamsSql ? ' , '.$existsParamsSql : ''));
+
+					if ($placeholders)
+					$count->where($placeholders)->group_by($existsParamsSql);
+
+					$count = $count->cnt;
+					$count = $count ? $count : 0;
+					#var_dump($count);die;
+					}
+					else
+					{
+					$count = 0;
+					}
+					?>
 
 					<li>
-						<a href="/catalog?series%5B%5D={.series|urlencode}">
+						<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
 							<span class="sub-1"><!--<img src="/images/mini-2.jpg" alt=""/>--></span>
-							<span class="sub-2">{.series} <span class="sub-3">{.cnt}</span></span>
+							<span class="sub-2">{.title} <span class="sub-3"><?=$count?></span></span>
 						</a>
 					</li>
 				</foreach>
 			</ul>
 		</li>
 	</foreach>
-
-	<li><a href="/products-4">С символикой</a></li>
-	<li><a href="/catalog">Другие</a></li>
 </ul>
