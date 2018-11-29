@@ -2,7 +2,7 @@
 
 d()->route('/news', function () {
 	d()->use_page_model();
-	d()->this_news = d()->News->sort_by('dt_at', 'desc');
+	d()->this_news = d()->News->order_by('dt_at desc');
 	d()->view->render('/news/news-1.html');
 });
 
