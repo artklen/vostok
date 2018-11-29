@@ -2,6 +2,16 @@ Basket = (function() {
 	var Basket = {};
 	var itemsTimeout;
 	var widget_i = 0;
+
+	$('body').on('click', '.js-basket-not-empty', function (e)
+	{
+		e.preventDefault();
+	});
+
+	$('body').on('click', '.js-basket-not-empty a', function (e)
+	{
+		location.href = $(e.target).attr('href');
+	});
 	
 	var query = function(action, data, target) {
 		$('.js-basket-widget').not('[data-basket-widget-id]').each(function() {
