@@ -61,6 +61,6 @@ d()->route('/product/:url', function($url) {
 	d()->view->render('/product/product.html');
 });
 
-d()->route('/product', function($url) {
+d()->route('/product', function() {
 	d()->page_not_found();
 });
