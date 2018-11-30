@@ -24,7 +24,7 @@ d()->singleton('catalog_seo_data', function() {
 	$result = [];
 	$catalog_url = '/catalog';
 	$get = (d()->get !== '') ? d()->get : new Get();
-	$canonical_get = new Get($catalog_url);
+	$canonical_get = new Get(d()->url_for(d()->this_category));
 	$crumbs_get = new Get($catalog_url);
 	$crumbs_list = [d()->page_crumb('/catalog')];
 	$title_arr = [];
@@ -232,7 +232,7 @@ d()->singleton('catalog_seo_data', function() {
 	$copy = clone d()->this_products;
 	if ($copy->limit(2)->count === 1) {
 		$result['canonical'] = d()->url_for($copy);
-	} else if ("$canonical_get" !== '' . d()->Get) {
+	} else if ("$canonical_get" !== $_SERVER['REQUEST_URI']) {
 		$result['canonical'] = "$canonical_get";
 	}
 	

@@ -1,6 +1,6 @@
 <?php
 	# I'm sorry, Damir, but I needed to see it, so I made a small patch for myself
-	if (file_exists($injection = __DIR__.'/medicaments/index.php')) {require_once $injection;return;}
+	#if (file_exists($injection = __DIR__.'/medicaments/index.php')) {require_once $injection;return;}
 
 	include_once ('config.php');
 

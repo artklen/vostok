@@ -1,4 +1,5 @@
 <?php
+d()->categories_url_base = '/catalog/';
 
 d()->route('/catalog', function ()
 {
