@@ -5,7 +5,10 @@ Basket = (function() {
 
 	$('body').on('click', '.js-basket-not-empty', function (e)
 	{
-		e.preventDefault();
+		var link = $(e.target).closest('a').attr('href');
+
+		if (link == '/basket')
+			e.preventDefault();
 	});
 
 	$('body').on('click', '.js-basket-not-empty a', function (e)
