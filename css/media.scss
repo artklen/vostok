@@ -529,26 +529,25 @@
 		}
 	}
 	.basket-2 {
-		padding: 40px 0 40px 0;
+		padding: 0;
 		.left {
 			.item {
 				padding: 40px 0 40px 0;
-				.title-2 {
-					display: block;
-				}
-				.title-3 {
-					display: block;
-				}
+				.title-2,
+				.title-3,
 				.center-4 {
 					display: block;
 				}
+				
 				> .row {
 					display: block;
 					div[class*='col-'] {
 						.price-1 {
 							padding: 0 10px 20px 0;
 						}
-						
+						.price-2 {
+							clear: both;
+						}
 						.price-3 {
 							font-size: 18px;
 						}
@@ -557,9 +556,9 @@
 						}
 						.picture-1 {
 							img {
-								max-width: 100px;
-								margin: 0 15px 15px 0;
-								padding: 0;
+								width: auto;
+							    max-width: 100%;
+								padding: 0 10px;
 							}
 						}
 						.picture-2 {
@@ -596,16 +595,12 @@
 					padding-top: 0;
 				}
 			}
-			/*&.basket-pop-up-wrapper {
-				.popup_footer {
-					.send-6 {
-						margin: 15px 0 0 0;
-					}
-				}
-			}*/
 		}
 		.right {
 			margin: 30px 0 0 0;
+		}
+		&.basket-modal {
+			padding: 40px 0 40px 0;
 		}
 	}
 	.slider-1 {

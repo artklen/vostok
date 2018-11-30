@@ -377,6 +377,11 @@ function admin_show_one_list($table,$id1,$id2)
 		d()->datapool['admin']['columns']=array();
 		d()->datapool['admin']['columns']['title']='Заголовок';
 		d()->datapool['admin']['columns']['url']='URL';
+
+		if (url(3) == 'products')
+		{
+			d()->datapool['admin']['columns']['excel_title'] = 'Название из excel';
+		}
 	}
 	$sort_field = 'sort';
 	if(isset(d()->admin['list']) && isset(d()->admin['list']['sort_field'] )){

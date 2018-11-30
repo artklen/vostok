@@ -319,59 +319,51 @@
       .basket-1 .left.empty {
         margin-right: 0; }
     .basket-2 {
-      padding: 40px 0 40px 0; }
-      .basket-2 .left {
-        /*&.basket-pop-up-wrapper {
-         .popup_footer {
-         .send-6 {
-         margin: 15px 0 0 0;
-         }
-         }
-         }*/ }
-        .basket-2 .left .item {
-          padding: 40px 0 40px 0; }
-          .basket-2 .left .item .title-2 {
-            display: block; }
-          .basket-2 .left .item .title-3 {
-            display: block; }
-          .basket-2 .left .item .center-4 {
-            display: block; }
-          .basket-2 .left .item > .row {
-            display: block; }
-            .basket-2 .left .item > .row div[class*='col-'] .price-1 {
-              padding: 0 10px 20px 0; }
-              .basket-2 .left .item > .row div[class*='col-'] .price-3 {
-                font-size: 18px; }
-              .basket-2 .left .item > .row div[class*='col-'] .material {
-                padding: 10px 0 0 0; }
-              .basket-2 .left .item > .row div[class*='col-'] .picture-1 img {
-                max-width: 100px;
-                margin: 0 15px 15px 0;
+      padding: 0; }
+      .basket-2 .left .item {
+        padding: 40px 0 40px 0; }
+        .basket-2 .left .item .title-2, .basket-2 .left .item .title-3, .basket-2 .left .item .center-4 {
+          display: block; }
+        .basket-2 .left .item > .row {
+          display: block; }
+          .basket-2 .left .item > .row div[class*='col-'] .price-1 {
+            padding: 0 10px 20px 0; }
+            .basket-2 .left .item > .row div[class*='col-'] .price-2 {
+              clear: both; }
+            .basket-2 .left .item > .row div[class*='col-'] .price-3 {
+              font-size: 18px; }
+            .basket-2 .left .item > .row div[class*='col-'] .material {
+              padding: 10px 0 0 0; }
+            .basket-2 .left .item > .row div[class*='col-'] .picture-1 img {
+              width: auto;
+              max-width: 100%;
+              padding: 0 10px; }
+            .basket-2 .left .item > .row div[class*='col-'] .picture-2 {
+              float: left;
+              padding: 10px 0 0 0; }
+              .basket-2 .left .item > .row div[class*='col-'] .picture-2 img {
+                width: 23px;
+                margin: 0 10px 0 0;
                 padding: 0; }
-              .basket-2 .left .item > .row div[class*='col-'] .picture-2 {
-                float: left;
-                padding: 10px 0 0 0; }
-                .basket-2 .left .item > .row div[class*='col-'] .picture-2 img {
-                  width: 23px;
-                  margin: 0 10px 0 0;
-                  padding: 0; }
-              .basket-2 .left .item > .row div[class*='col-'] .close {
-                font-family: 'Roboto Condensed', sans-serif;
-                font-size: 10px;
-                color: #959591;
-                font-weight: 700;
-                text-transform: uppercase;
-                padding: 0 0 0 20px;
-                background: url(/images/close-button-02.svg) no-repeat left center;
-                background-size: 12px 12px; }
-                .basket-2 .left .item > .row div[class*='col-'] .close:hover {
-                  background: url(/images/close-button-02-h.svg) no-repeat left center;
-                  background-size: 12px 12px;
-                  text-decoration: none; }
+            .basket-2 .left .item > .row div[class*='col-'] .close {
+              font-family: 'Roboto Condensed', sans-serif;
+              font-size: 10px;
+              color: #959591;
+              font-weight: 700;
+              text-transform: uppercase;
+              padding: 0 0 0 20px;
+              background: url(/images/close-button-02.svg) no-repeat left center;
+              background-size: 12px 12px; }
+              .basket-2 .left .item > .row div[class*='col-'] .close:hover {
+                background: url(/images/close-button-02-h.svg) no-repeat left center;
+                background-size: 12px 12px;
+                text-decoration: none; }
         .basket-2 .left.basket-popup-wrapper .item {
           padding-top: 0; }
       .basket-2 .right {
         margin: 30px 0 0 0; }
+      .basket-2.basket-modal {
+        padding: 40px 0 40px 0; }
     .slider-1 {
       background: #171715; }
       .slider-1 .left-1, .slider-1 .right-1 {
@@ -388,14 +380,14 @@
         .slider-1 .slide .offer {
           bottom: 40px;
           margin-top: auto; }
-          .slider-1 .slide .offer .title-1 {
-            font-size: 24px;
-            line-height: normal;
-            padding: 0 0 10px 0; }
-          .slider-1 .slide .offer .title-2 {
-            padding: 0 0 15px 0; }
-            .slider-1 .slide .offer .title-2 p {
-              font-size: 10px; }
+        .slider-1 .slide .offer .title-1 {
+          font-size: 24px;
+          line-height: normal;
+          padding: 0 0 10px 0; }
+        .slider-1 .slide .offer .title-2 {
+          padding: 0 0 15px 0; }
+          .slider-1 .slide .offer .title-2 p {
+            font-size: 10px; }
       .slider-1 .slick-dots {
         left: 5px;
         text-align: left; }
@@ -476,9 +468,9 @@
         width: 56px; }
         .news-2 .right .item .side-1 img {
           width: 100%; }
-        .news-2 .right .item .side-3 {
-          width: calc(100% - 76px);
-          margin: 0; }
+      .news-2 .right .item .side-3 {
+        width: calc(100% - 76px);
+        margin: 0; }
     .faq .left {
       position: fixed;
       top: 0;
@@ -500,8 +492,8 @@
       padding: 0 0 30px 0; }
       .advantages .item .picture {
         min-height: 30px; }
-        .advantages .item .picture img.icon-1 {
-          width: 55px; }
+      .advantages .item .picture img.icon-1 {
+        width: 55px; }
         .advantages .item .picture img.icon-2 {
           width: 60px; }
         .advantages .item .picture img.icon-3 {
