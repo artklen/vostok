@@ -18,11 +18,10 @@
 					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 						<div class="center-4 wrap-7">
 							<span class="title-3">Упаковка</span>
-
 							@ if (d()->products_variant->id) {
-							<span class="picture-2 ">
-															<img src="{products_variant.required_image|preview '46', 'auto'}" alt=""/>
-														</span>
+							<span class="picture-2">
+								<img src="{products_variant.required_image|preview '46', 'auto'}" alt=""/>
+							</span>
 							<div class="material">
 								{products_variant.title}
 								<div class="price-2">{products_variant.price} р.</div>

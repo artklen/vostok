@@ -536,6 +536,12 @@
 				.title-2 {
 					display: block;
 				}
+				.title-3 {
+					display: block;
+				}
+				.center-4 {
+					display: block;
+				}
 				> .row {
 					display: block;
 					div[class*='col-'] {
@@ -547,19 +553,21 @@
 							font-size: 18px;
 						}
 						.material {
-							/*padding: 0 0 0 10px;*/
+							padding: 10px 0 0 0;
 						}
 						.picture-1 {
 							img {
 								max-width: 100px;
+								margin: 0 15px 15px 0;
 								padding: 0;
-								margin: 0 0 15px 0;
 							}
 						}
 						.picture-2 {
+							float: left;
+							padding: 10px 0 0 0;
 							img {
 								width: 23px;
-								margin-top: -10px;
+								margin: 0 10px 0 0;
 								padding: 0;
 							}
 						}
