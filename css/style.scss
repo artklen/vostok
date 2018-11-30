@@ -408,17 +408,17 @@ input[type='submit'].send-11, .send-11, a.send-11 {
 /* close */
 
 .close {
-	width: 12px;
-	height: 12px;
+	width: 30px;
+	height: 30px;
 	position: absolute;
-	top: 26px;
-	right: 26px;
+	top: 20px;
+	right: 10px;
 	z-index: 110;
-	background: url(/images/close-02.svg) no-repeat top center;
-	background-size: 12px 24px;
+	background: url(/images/close-button-02.svg) no-repeat center;
+	background-size: 12px 12px;
 	&:hover {
-		background: url(/images/close-02.svg) no-repeat bottom center;
-		background-size: 12px 24px;
+		background: url(/images/close-button-02-h.svg) no-repeat center;
+		background-size: 12px 12px;
 	}
 }
 
@@ -1505,15 +1505,19 @@ input.list[type="checkbox"]:disabled:hover + span {
 						position: static;
 						top: auto;
 						right: auto;
-						background: url(/images/close-02.svg) no-repeat top center;
+						background: url(/images/close-button-02.svg) no-repeat center;
 						background-size: 12px 24px;
 						opacity: 1;
 						&:hover {
-							background: url(/images/close-02.svg) no-repeat bottom center;
-							background-size: 12px 24px;
+							background: url(/images/close-button-02-h.svg) no-repeat center;
+							background-size: 12px 12px;
 						}
 					}
 				}
+			}
+			.basket-part-left {
+				float:left;
+				padding:0 20px 0 0;
 			}
 			&:last-of-type {
 				margin: 0;
