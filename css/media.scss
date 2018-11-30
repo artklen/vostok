@@ -582,13 +582,18 @@
 				}
 				
 			}
-			&.basket-pop-up-wrapper {
+			&.basket-popup-wrapper {
+				.item {
+					padding-top: 0;
+				}
+			}
+			/*&.basket-pop-up-wrapper {
 				.popup_footer {
 					.send-6 {
 						margin: 15px 0 0 0;
 					}
 				}
-			}
+			}*/
 		}
 		.right {
 			margin: 30px 0 0 0;
@@ -914,10 +919,6 @@
 		img {
 			max-width: 290px;
 		}
-	}
-	
-	.basket-2 .left.basket-popup-wrapper .item {
-		padding-top: 0;
 	}
 }
 
