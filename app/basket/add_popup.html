@@ -16,78 +16,7 @@
 		
 			<?php d()->product = d()->basket_item->product?>
 			<?php d()->products_variant = d()->basket_item->products_variant?>
-			<div class="item last-1 visible-xs">
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<div class="basket-part-left">
-									<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in250', 'in250');?>" alt=""/></a>
-								</div>
-								
-								<div class="basket-part-right">
-									<a href="/product/<?=d()->product->url?>" class="title-2">{product.title}</a>
-									<div class="price-1">{product.calc_price_format} р.
-										@ if (d()->product->discount) {
-											<span>{product.price_origin_format} р.</span>
-										@ }
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="row">
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 hidden-xs">
-								<a href="/product/<?=d()->product->url?>" class="title-2">{product.title}</a>
-								<div class="price-1">{product.calc_price_format} р.
-									@ if (d()->product->discount) {
-										<span>{product.price_origin_format} р.</span>
-									@ }
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<div class="center-4 wrap-7">
-									<span class="title-3">Упаковка</span>
-									@ if (d()->products_variant->id) {
-										<a href="#" class="picture-2 js-fancybox">
-											<img src="{d()->products_variant.required_image|preview 'in46', 'in70'}" alt=""/>
-										</a>
-										<div class="material">
-											{products_variant.title}
-											<div class="price-2">{products_variant.price} р.</div>
-										</div>
-									@ } else {
-										<div class="material">
-											Стандартная
-										</div>
-									@ }
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<div class="center-5 wrap-7">
-									<span class="title-3">Количество</span>
-									<div class="count">
-										<button class="top js-basket-change-plus"></button>
-										<input type="text" class="middle" value="{basket_item.number|h}"/>
-										<button class="bottom js-basket-change-minus"></button>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-								<div class="center-5 wrap-7">
-									<span class="title-3">Сумма</span>
-									<div class="price-3">{basket_item.total_price|price_format} р.</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
-								<a href="#" class="close visible-xs">удалить</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			{{/basket/basket_rows_mobile.html}}
 		
 			<?php d()->product = d()->basket_item->product?>
 			<?php d()->products_variant = d()->basket_item->products_variant?>
