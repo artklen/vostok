@@ -186,6 +186,7 @@ d()->route('/catalog', function ()
 		d()->set_page_title('Результаты поиска по запросу «' . $str . '»');
 		array_unshift(d()->crumbs_list, d()->page_crumb('/catalog'));
 		d()->canonical = '';
+		d()->crumbs_list = [];
 	} else {
 		d()->crumbs_list = d()->catalog_seo_data['crumbs_list'];
 		d()->canonical = d()->catalog_seo_data['canonical'];
@@ -345,6 +346,7 @@ d()->route('/catalog/:category', function ($category)
 		d()->set_page_title('Результаты поиска по запросу «' . $str . '»');
 		array_unshift(d()->crumbs_list, d()->page_crumb('/catalog'));
 		d()->canonical = '';
+		d()->crumbs_list = [];
 	} else {
 		d()->crumbs_list = d()->catalog_seo_data['crumbs_list'];
 		d()->canonical = d()->catalog_seo_data['canonical'];
