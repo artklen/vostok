@@ -241,7 +241,7 @@
 	</div>
 </div>
 
-@ if (d()->Product->where('is_interesting = ?', 1)->ne) {
+@ # if (d()->Product->where('is_interesting = ?', 1)->ne) {
 	<div class="main-title">
 		<div class="container">
 			<div class="row">
@@ -265,8 +265,9 @@
 								{{/inc/product.html}}
 							</div>
 						</foreach>
+
 						@ if (d()->Product->where('is_interesting = ?', 1)->count == 0) {
-						<foreach Product->where('collection_id = ?', d()->this->collection_id)->limit(8)>
+						<foreach Product->where('collection_id = ?', d()->this->collection_id)->group_by('carcas')->limit(8)>
 							<div class="slide">
 								{{/inc/product.html}}
 							</div>
@@ -277,4 +278,4 @@
 			</div>
 		</div>
 	</div>
-@ }
+@ # }
