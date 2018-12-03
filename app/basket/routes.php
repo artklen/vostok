@@ -37,7 +37,7 @@ d()->basket_ajax_refresh = function() {
 		$result['items_total_price'][$item->item_key] = d()->basket_total_price($item->item_key);
 		$result['items_total_weight'][$item->item_key] = d()->basket_total_weight($item->item_key);
 	}
-	return 'Basket.refresh(' . json_encode($result) . ')';
+	return 'Basket.refresh(' . json_encode($result) . ');$.fancybox.update();';
 };
 
 
