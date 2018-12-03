@@ -545,6 +545,10 @@ function preview($adress,$param1=false,$param2=false )
 	//генерирование изображения при его отсуствии
 	if(!file_exists($_SERVER['DOCUMENT_ROOT'].$preview_adress)){
 
+		#error_reporting(E_ALL);
+		#ini_set('display_errors', 1);
+
+		#die('gen preview');
 		//Создание превью
 		
 		$filename = $_SERVER['DOCUMENT_ROOT'].$adress;
@@ -552,6 +556,7 @@ function preview($adress,$param1=false,$param2=false )
 			return '';
 		}
 		$dest = $_SERVER['DOCUMENT_ROOT'].$preview_adress;
+		#die($dest);
 		
 		$dest_folder = $_SERVER['DOCUMENT_ROOT'].substr($adress, 0, strrpos($adress, "/") + 1) . ".thumbs";
 		if(!file_exists($dest_folder)){
@@ -622,6 +627,8 @@ function preview($adress,$param1=false,$param2=false )
 		}
 
 		list($org_width, $org_height) = getimagesize($filename);
+
+		#echo "sizes:";var_dump($org_width, $org_height);die;
 		
 		if($changed_rotation){
 			$tmp_width = $org_width;
@@ -669,6 +676,9 @@ function preview($adress,$param1=false,$param2=false )
 				$width=round($height* ($org_width/$org_height));
 			}
 		}
+
+		#echo "sizes:";var_dump($org_height, $height, $org_width, $width);die;
+
 		if ($width / $height <   $org_width / $org_height) {
 			$dy=0;
 			$xtmp = $org_width;
@@ -686,7 +696,7 @@ function preview($adress,$param1=false,$param2=false )
 			$xoffset=$dx;
 			$yoffset=$dy;
 		}
-		
+
 		if($org_height <= $height &&  $org_width <= $width && $orig_params['not_resize']){
 			$height= $nch_org_height;
 			$width= $nch_org_width;
@@ -719,15 +729,17 @@ function preview($adress,$param1=false,$param2=false )
 		}
 		
 		if($type=="gif") {
-			imagegif($img_n, $dest);
+			$code = imagegif($img_n, $dest);
 		} elseif($type=="jpg") {
-			imagejpeg($img_n, $dest, 100);
+			$code = imagejpeg($img_n, $dest, 100);
+			#echo"check1:";var_dump($type);var_dump($code);die;
+
 		} elseif($type=="png") {
-			imagepng($img_n, $dest);
+			$code = imagepng($img_n, $dest);
 		} elseif($type=="bmp") {
-			imagewbmp($img_n, $dest);
+			$code = imagewbmp($img_n, $dest);
 		}
-		
+
 		if(isset($_ENV["DOIT_OPTIMIZE_IMAGES"]) && $_ENV["DOIT_OPTIMIZE_IMAGES"]==true){
 			if(isset($_ENV["DOIT_OPTIMIZE_IMAGES_EXTEND"])){
 				if($type=="jpg" && isset($_ENV["DOIT_OPTIMIZE_IMAGES_EXTEND"]) && isset($_ENV["DOIT_OPTIMIZE_IMAGES_EXTEND"]['JPG'])){
@@ -756,9 +768,12 @@ function preview($adress,$param1=false,$param2=false )
 				$res = $optimizer->optimize($dest);
 			}
 		}
+
+		#var_dump($dest);var_dump(file_exists($dest)); die;
 		
 		chmod($dest, 0777);
 	}
+
 	return $preview_adress;
 }
 
