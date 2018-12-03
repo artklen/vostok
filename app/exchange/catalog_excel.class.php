@@ -253,7 +253,11 @@ class Catalog_excel {
 					$product_orm->create($query_array);
 					$created_products_ids[] = $last_id = $product_id = $product_orm->insert_id;
 					$product_orm = d()->Product->find_by($idField, $id);
-					$product_orm->url = 'product' . $product_id;
+
+					if (!$product_orm->url)
+					{
+						$product_orm->url = 'product'.$product_id;
+					}
 
 					if ($collection->id)
 					{
