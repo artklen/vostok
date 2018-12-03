@@ -124,8 +124,8 @@
 				<div class="left">
 					<foreach News->order_by('dt_at desc')->limit(1)>
 						{{edit}}{{delete}}
-						<?php d()->last_news = d()->this ?>
-						<a href="/news/{.url}"><img src="{this.required_image_full|preview 'auto', 'in310'}" alt=""/></a>
+						<?php d()->last_news = d()->this;/* var_dump(d()->this->required_image_full);die;*/ ?>
+						<a href="/news/{.url}"><img src="{required_image_full|preview 'in710', 'in710'}" alt=""/></a>
 						<a href="/news/{.url}" class="title">{.title}</a>
 						<div class="text">{.text}</div>
 						<a href="/news/{.url}" class="link">Читать полностью</a>
