@@ -7,11 +7,22 @@ class Product extends ActiveRecord
 	function title()
 	{
 		$t = $this->get('title');
+		$clock = 'Часы ';
 
-		if ($t)
-			return $t;
+		// сложный непонятный говнокод
+		if ($this->code)
+		{
+			if ($t)
+				return $t;
+			else
+			{
+				return $clock.$this->code." (".$this->collection->title.")";
+			}
+		}
 		else
-			return 'Часы '.$this->code." (".$this->collection->title.")";
+		{
+			return $this->excel_title;
+		}
 	}
 
 	function calc_price_format()
@@ -72,5 +83,4 @@ class Product extends ActiveRecord
 	{
 		return $this->image_as_preview . ' <span style="font-size: 20px; display: inline-block; vertical-align: middle;">' . h($this->title) . '</span><br>';
 	}
-	
 }
