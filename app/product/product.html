@@ -241,7 +241,7 @@
 	</div>
 </div>
 
-@ # if (d()->Product->where('is_interesting = ?', 1)->ne) {
+@ if (d()->Product->where('is_interesting = ?', 1)->ne || d()->Product->where('collection_id = ? and id != ?', d()->this->collection_id, d()->this->id)->group_by('carcas')->limit(1)->ne) {
 	<div class="main-title">
 		<div class="container">
 			<div class="row">
@@ -278,4 +278,4 @@
 			</div>
 		</div>
 	</div>
-@ # }
+@ }
