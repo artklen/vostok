@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1">
 			<div class="content">
-				<?php d()->isSeoTextAlready = true; ?>
+				<?php if (d()->seo->text) d()->isSeoTextAlready = true; ?>
 				{seo.text}
 			</div>	
 		</div>

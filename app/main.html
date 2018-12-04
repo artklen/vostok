@@ -228,12 +228,13 @@
 		</div>
 	</div>
 </div>
+
+@ if (!d()->isSeoTextAlready && d()->seo->text) {
 <div class="footer-2">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="text" id="footer-text">
-					<!--{Option.footer_description}-->
 					@ if (!d()->isSeoTextAlready) {
 						{seo.text}
 					@ }
@@ -242,6 +243,8 @@
 		</div>
 	</div>
 </div>
+@ }
+
 <div class="footer-3">
 	<div class="container">
 		<div class="row">
