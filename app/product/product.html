@@ -267,7 +267,7 @@
 						</foreach>
 
 						@ if (d()->Product->where('is_interesting = ?', 1)->count == 0) {
-						<foreach Product->where('collection_id = ?', d()->this->collection_id)->group_by('carcas')->limit(8)>
+						<foreach Product->where('collection_id = ? and id != ?', d()->this->collection_id, d()->this->id)->group_by('carcas')->limit(8)>
 							<div class="slide">
 								{{/inc/product.html}}
 							</div>
