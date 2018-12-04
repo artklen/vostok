@@ -58,7 +58,7 @@
 									$params = [];
 									$params_names =
 									[
-										#'category_id' => 'category_id',
+										'category_id' => 'category_id',
 										'series_name' => 'series',
 										'carcas_name' => 'carcas',
 										'collection_id' => 'collection_id',
@@ -74,6 +74,7 @@
 										}
 									}
 
+									unset($params['category_id[]']);
 									$query = http_build_query($params);
 
 									// считаем кол-во
@@ -183,7 +184,7 @@
 							$params = [];
 							$params_names =
 							[
-								#'category_id' => 'category_id',
+								'category_id' => 'category_id',
 								'series_name' => 'series',
 								'carcas_name' => 'carcas',
 								'collection_id' => 'collection_id',
@@ -197,6 +198,7 @@
 								}
 							}
 
+							unset($params['category_id[]']);
 							$query = http_build_query($params);
 
 							// считаем кол-во
