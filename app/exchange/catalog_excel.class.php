@@ -305,6 +305,7 @@ class Catalog_excel {
 		static $fixed_columns = [
 			'id' => 'id',
 			'excel_title' => 'Название',
+			'code' => 'Артикул',
 			'image' => 'Изображение',
 			'price' => 'Цена',
 			'discount' => 'Скидка',
