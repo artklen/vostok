@@ -74,9 +74,6 @@
 										}
 									}
 
-									unset($params['category_id[]']);
-									$query = http_build_query($params);
-
 									// считаем кол-во
 									$existsParams = [];
 									foreach ($params as $p => $v)
@@ -111,6 +108,9 @@
 									{
 										$count = 0;
 									}
+
+									unset($params['category_id[]']);
+									$query = http_build_query($params);
 								?>
 
 								<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
@@ -198,9 +198,6 @@
 								}
 							}
 
-							unset($params['category_id[]']);
-							$query = http_build_query($params);
-
 							// считаем кол-во
 							$existsParams = [];
 							foreach ($params as $p => $v)
@@ -227,6 +224,9 @@
 
 							$count = $count ? $count : 0;
 							#var_dump($count);die;
+
+							unset($params['category_id[]']);
+							$query = http_build_query($params);
 						?>
 
 						<a href="/catalog?<?=$query?>">
