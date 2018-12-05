@@ -10,7 +10,7 @@ class Product extends ActiveRecord
 		$clock = 'Часы ';
 
 		// сложный непонятный говнокод
-		if ($this->code)
+		if ($this->code && $this->category->is_gen)
 		{
 			if ($t)
 				return $t;
