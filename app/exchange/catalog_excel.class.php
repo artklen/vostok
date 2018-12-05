@@ -241,21 +241,25 @@ class Catalog_excel {
 						$query_strs[] = '`collection_id`='.$collection->id;
 					}
 
-					$query_strs[] = "url='product" . $product_id . "'";
+					#$query_strs[] = "url='product" . $product_id . "'";
 
 					$q = 'update `products` set ' . implode(',', $query_strs) . ' where `id`=' . e($product_orm->id);
 
 					d()->db->exec($q);
 					$updated_products_ids[] = $last_id = $product_id = $product_orm->id;
 				} else {
+					#die('yes');
 					#var_dump($query_array);die;
 					$product_orm = d()->Product;
 					$product_orm->create($query_array);
+					#var_dump($product_orm->insert_id);die;
 					$created_products_ids[] = $last_id = $product_id = $product_orm->insert_id;
-					$product_orm = d()->Product->find_by($idField, $id);
+					$product_orm = d()->Product->find_by($idField, $product_id);
 
+					#var_dump($product_id);die;
 					if (!$product_orm->url)
 					{
+						#die('no url');
 						$product_orm->url = 'product'.$product_id;
 					}
 
@@ -264,7 +268,9 @@ class Catalog_excel {
 						$product_orm->collection_id = $collection->id;
 					}
 
+					#die('saving...');
 					$product_orm->save();
+					#var_dump(d()->Product->find_by('id', $product_orm->id)->all);die;
 				}
 
 				// кроме главного изображения есть дополнительные
