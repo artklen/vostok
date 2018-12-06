@@ -365,6 +365,7 @@ d()->route('/catalog/:category', function ($category)
 		if (count($_GET) > 0)
 		{
 			d()->crumbs_list[0]['link'] = '/catalog/'.d()->this_category->url;
+			d()->crumbs_list[1]['link'] = str_replace('/catalog', '/catalog/'.d()->this_category->url, d()->crumbs_list[1]['link']);
 		}
 	}
 
