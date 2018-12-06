@@ -74,6 +74,21 @@ $(function(){
 });
 
 $(function(){
+	// скрывать кнопки показать еще итд если нет фильтров
+	// место для костылей
+	if ($('.js-filter-form .js-unfolding-container').length === 0)
+		$('.js-facets-1').remove();
+
+	// скрывать описание если его нет
+	if($('.content-tab-1').html().indexOf('<') == -1)
+	{
+		$('.content-tab-1').remove();
+		$('label[for="tab-1"]').remove();
+
+		$('label[for="tab-2"]').click();
+	}
+	// костылей дальше нет (но это не точно)
+
 	$(document).on('click', '.js-facets-2', function() {
 		if ($('.js-facets-1').hasClass('active')) {
 			close_facets();
