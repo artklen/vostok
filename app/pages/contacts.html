@@ -6,28 +6,36 @@
 	</div>
 </div>
 <div class="inside-1">
-	<h1>{{edit}}{seo.h1|h}</h1>		
+	<h1>{{edit}}{seo.h1|h}</h1>
 </div>
 <div class="contacts">
-	<div class="container">	
-		<div class="row">	
+	<div class="container">
+		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="menu">
-						
+
 					<input type="radio" id="tab-1" class="tab-1" name="tabs" checked />
 					<label for="tab-1" class="target active">Контактная информация</label>
-				
+
 					<input type="radio" id="tab-2" class="tab-2" name="tabs" />
 					<label for="tab-2" class="target active">Гарантийные мастерские</label>
-				
+
 					<!--<input type="radio" id="tab-3" class="tab-3" name="tabs" />
 					<label for="tab-3" class="target active">Офисы продаж</label>
 					<div class="clear"></div>-->
-					
+
 					<section class="content-tab-1">
 						<div class="row">
 							<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3">
 								<div class="adress">
+									{{edit current_city}}
+									<?php if (!d()->current_city->ne || !d()->current_city->address) {
+										d()->current_city = d()->City->where('id = 1');
+									?>
+									{{edit current_city}}
+									<?php
+									 } ?>
+
 									<div class="title">Адрес</div>
 									<div class="text">{current_city.address|h}</div>
 									<div class="title">Телефон</div>
@@ -90,9 +98,9 @@
 								</div>
 							</foreach>
 
-							
 
-							
+
+
 							<!--<div class="col-xs-12 col-sm-7 col-md-7 col-lg-9">
 								<div class="js-map" data-map-coords="55.829100, 48.101850" data-map-title="Название компании" data-map-address="Адрес"></div>
 							</div>-->
@@ -102,7 +110,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3">
 								<div class="drop wrap-4">
-									<select name="city" class="js-sumoselect">	
+									<select name="city" class="js-sumoselect">
 										<option value="">Казань</option>
 										<option value="">1</option>
 										<option value="">2</option>
@@ -139,6 +147,6 @@
 					</section>-->
 				</div>
 			</div>
-		</div>		
+		</div>
 	</div>
 </div>

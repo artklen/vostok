@@ -1,6 +1,16 @@
+<style>
+	@media (max-width: 767px)
+	{
+		.slider-1 .slide
+		{
+			background-position: right -440px bottom 200px;
+		}
+	}
+</style>
+
 <div class="slider-1 js-slider-1">
 	<foreach Slider>
-		<div class="slide" style="background: url({this.image}) no-repeat right -160px top;">
+		<div class="slide" style="background-image: url({this.image});">
 			<div class="container">
 				{{edit}}{{delete}}{{add 'sliders'}}
 				<div class="row">
