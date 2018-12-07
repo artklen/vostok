@@ -21,7 +21,7 @@ class Product extends ActiveRecord
 		}
 		else
 		{
-			return $this->excel_title;
+			return ($temp = $this->get('title')) ? $temp : $this->excel_title;
 		}
 	}
 
