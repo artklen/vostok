@@ -79,15 +79,54 @@ $(function(){
 	if ($('.js-filter-form .js-unfolding-container').length === 0)
 		$('.js-facets-1').remove();
 
-	// скрывать описание если его нет
-	if($('.content-tab-1').html().indexOf('<') == -1)
+	var temp;
+	if (temp = $('.content-tab-1').html())
 	{
-		$('.content-tab-1').remove();
-		$('label[for="tab-1"]').remove();
+		// скрывать описание если его нет
+		if (temp.indexOf('<') == -1)
+		{
+			$('.content-tab-1').remove();
+			$('label[for="tab-1"]').remove();
 
-		$('label[for="tab-2"]').click();
+			$('label[for="tab-2"]').click();
+		}
 	}
+
+	$(document).on('click', '.js-city-confirm', function() {
+		var t = $(this);
+		set_cookie('is_city_confirmed', 1);
+		set_cookie('city_id', t.data('city_id'));
+		document.location.href = t.data('href');
+	});
 	// костылей дальше нет (но это не точно)
+
+	// города
+	var cities_filter_update = function(c) {
+		var unfiltered_list = $('.js-cities-filter-unfiltered-list', c);
+		var filtered_list = $('.js-cities-filter-filtered-list', c);
+		var items = $('.js-cities-filter-item', c);
+		var input = $('.js-cities-filter-input', c);
+		var value = input.val().trim().toLowerCase();
+		if (value === '') {
+			filtered_list.stop(true, true).hide();
+			unfiltered_list.stop(true, true).show();
+			items.stop(true, true).hide();
+		} else {
+			unfiltered_list.stop(true, true).hide();
+			filtered_list.stop(true, true).show();
+			items.not('[data-cities-filter-title*="' + value + '"]').stop(true, true).hide();
+			items.filter('[data-cities-filter-title*="' + value + '"]').stop(true, true).show();
+		}
+	};
+
+	var cities_filter_timeout;
+	$(document).on('change keyup', '.js-cities-filter-input', function() {
+		var c = $(this).closest('.js-cities-filter-container');
+		clearTimeout(cities_filter_timeout);
+		cities_filter_timeout = setTimeout(function() {
+			cities_filter_update(c);
+		}, 50);
+	});
 
 	$(document).on('click', '.js-facets-2', function() {
 		if ($('.js-facets-1').hasClass('active')) {

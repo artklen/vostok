@@ -170,6 +170,7 @@
 			top: 20px;
 		}
 	}
+	
 	.header-bottom {
 		padding: 10px 0 10px 0;
 		.logo {
@@ -421,6 +422,12 @@
 			margin: 0;
 		}
 	}
+	.city-form {
+		width: 680px;
+	}
+	.city-selection {
+		max-width: 130px;
+	}
 }
 
 @media (max-width: 767px) {
@@ -491,6 +498,10 @@
 	}
 	.header-top {
 		/*padding: 9px 0 9px 0;*/
+		.phone-position {
+			float: none;
+			margin: 10px 0 0 0;
+		}
 	}
 	.header-bottom {
 		padding: 10px 0 10px 0;
@@ -922,6 +933,16 @@
 	.error {
 		img {
 			max-width: 290px;
+		}
+	}
+	.city-form {
+		width: auto;
+		.city-top {
+			padding: 45px 35px;
+		}
+		.city-bottom {
+			padding: 0 35px 0 35px;
+			
 		}
 	}
 }

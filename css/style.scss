@@ -711,6 +711,9 @@ input.list[type="checkbox"]:disabled:hover + span {
 		bottom: 0;
 		margin: auto;
 	}
+	&.small {
+		
+	}
 }
 
 /* center */
@@ -812,9 +815,9 @@ input.list[type="checkbox"]:disabled:hover + span {
 
 .menu-1 {
 	font-size: 0;
-	margin: 0 0 0 50px;
-	/*padding: 5px 0 0 0;*/
-	padding: 9px 0 0 0;
+	/*margin: 0 0 0 50px;
+	padding: 5px 0 0 0;*/
+	padding: 10px 0 0 0;
 	li {
 		display: inline-block;
 		padding: 0 20px 0 0;
@@ -996,6 +999,9 @@ input.list[type="checkbox"]:disabled:hover + span {
 				background-size: 7px 4px;
 			
 			}
+			
+			
+			
 		}	
 		.last-1 {
 			list-style: none;
@@ -1031,6 +1037,36 @@ input.list[type="checkbox"]:disabled:hover + span {
 					padding: 0 0 25px 0;
 				}
 			}
+		}
+		.search {
+			margin: 0 0 12px 0;
+			
+			input {
+				background: #f1ebe3;
+				border: 1px solid #ded4c6;	
+				&:focus {
+					border: 1px solid #d39a6e;
+					box-shadow: inset 0px 0px 0px 1px #d39a6e;
+				}
+			}
+		}
+		.city-mobile-block {
+			font-size: 0;
+			position: relative;
+			.city-selection {
+				color: #292928;
+				padding: 0;
+				max-width: 100%;
+				
+				margin: 13px 0 13px 17px;
+				&:before {
+					top: -2px;
+					left: 0;
+				}
+			}
+		}
+		&:first-child {
+			border-top: none;
 		}
 		&:last-child {
 			border-bottom: 1px solid #efece4;
@@ -1119,14 +1155,20 @@ input.list[type="checkbox"]:disabled:hover + span {
 		font-size: 14px;
 		color: #efece4;
 		padding: 0 5px 0 20px;
-		margin-top: 9px;
+		
 		display: inline-block;
 		background: url(/images/phone-01.svg) no-repeat left center;
 		background-size: 14px 14px;
+		position: relative;
+		top: -4px;
 		a {
 			color: #efece4;
 			text-decoration: none;
 		}
+	}
+	.phone-position {
+		float: right;
+		margin: 12px 20px 0 0;
 	}
 	.call {
 		font-family: 'Roboto', sans-serif;
@@ -1137,7 +1179,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 		border-bottom: 1px dashed #d39a6e;
 		line-height: 13px;
 		position: relative;
-		top: -1px;
+		top: -5px;
 		transition: border-bottom 0.2s;
 		&:hover {
 			color: #e6b385;
@@ -1172,6 +1214,41 @@ input.list[type="checkbox"]:disabled:hover + span {
 		display: inline-block;
 		position: relative;
 		top: 5px;
+	}
+}
+
+/* выбор города */
+
+.city-selection {
+	font-family: 'Roboto', serif;
+	font-size: 14px;
+	color: #efece4;
+	text-decoration: none;
+	border-bottom: 1px dashed #252829;
+	line-height: 14px;
+	max-width: 160px;
+	display: inline-block;
+	margin: 13px 0 0 17px;
+	transition: color .2s, 
+				border-bottom .2s;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+	&:hover, &:focus {
+		text-decoration: none;
+		color: #efece4;
+		border-bottom: 1px dashed #fff;
+	}
+	&:before {
+		content: '';
+		width: 11px;
+		height: 16px;
+		position: absolute;
+		top: 4px;
+		left: 15px;
+		bottom: 0;
+		margin: auto;
+		background: url(/images/city-marker.png) no-repeat center;
 	}
 }
 
@@ -3928,7 +4005,71 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 		border-bottom: 1px solid #f5f5f5;
 	}
 }
-	
+
+.city-form {
+	width: 780px;
+	max-width: 780px;
+	.item {
+		margin: 0 0 20px 0;
+		a {
+			color: #292928;
+			&:hover {
+				color: #e6b385;
+				text-decoration: none;
+			}
+		}
+		li {
+			display: block;
+			padding: 0 0 15px 0;
+			a {
+				font-family: 'Roboto Condensed', serif;
+				font-size: 14px;
+				color: #292928;
+				display: inline-block;
+				line-height: 20px;
+				transition: color .2s;
+				&:hover {
+					color: #e6b385;
+					text-decoration: none;
+				}
+			}
+			&:last-child {
+				padding: 0;
+			}
+		}
+		.first-letter {
+			font-family: 'Roboto Condensed', serif;
+			font-size: 16px;
+			color: #d39a6e;
+			font-weight: 700;
+			padding: 0 0 15px 0;
+		}
+	}
+	.title {
+		font-family: 'Roboto Condensed', serif;
+		font-size: 22px;
+		color: #292928;
+		text-transform: uppercase;
+		padding: 8px 0;
+	}
+	.city-top {
+		padding: 45px 55px 45px 35px;
+	}
+	.city-bottom {
+		padding: 0 45px;
+		margin-bottom: 25px;
+		height: 340px;
+		text-align: left;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	.city-form-search {
+		width: 100%;
+		padding: 10px 10px;
+		border: 1px solid #ded4c6;
+	}
+}
+
 /* grid row */
 
 .row.grid-row {
@@ -3997,19 +4138,15 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 	}
 }
 
-.categories-list
-{
+.categories-list {
 	padding-left: 15px;
-	font-size: 15px;
 	padding-bottom: 5px;
-
-	a
-	{
+	font-size: 15px;
+	a {
 		color: #d66a40;
 	}
 }
 
-.container-categories
-{
+.container-categories {
 	margin-top: 25px !important;
 }

@@ -1,5 +1,18 @@
 <ul class="menu-3 visible-xs">
 	<li>
+		<form method="get" action="/catalog">
+			<div class="search small">
+				<input class="search-input" name="search" type="text" placeholder="Поиск по каталогу"/>
+				<button type="submit"></button>
+			</div>
+		</form>
+	</li>
+	<li>
+		<div class="city-mobile-block">
+			<a href="/cities/select?url=%2F" class="city-selection js-feedback">Петропавловск-Камчатский</a>
+		</div>
+	</li>
+	<li>
 		<a href="/catalog/chasy">Каталог часов</a>
 	</li>
 	<foreach Menu_main_element>

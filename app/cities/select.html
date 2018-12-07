@@ -1,0 +1,61 @@
+@ if (!AJAX) {
+<div class="container">
+@ }
+<div class="city-form js-cities-filter-container">
+	<div class="line-1"></div>
+	<div class="city-top">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+				<div class="title">Выбор города</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-9">
+				<input type="text" class="city-form-search js-cities-filter-input">
+			</div>
+		</div>
+	</div>
+	<div class="city-bottom js-cities-filter-unfiltered-list">
+		<div class="row">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+			@ ~current_first_letter = ~cities_list->first_letter;
+			@ ~current_column = 1;
+				<div class="item">
+					<div class="first-letter">{current_first_letter|h}</div>
+					<ul>
+						<foreach cities_list>
+							@ if (~current_first_letter !== ~this->first_letter) {
+								@ ~current_first_letter = ~this->first_letter;
+					</ul>
+				</div>
+				@ if (~key > ~cities_list->count * ~current_column / 4 - 1) {
+				@ ~current_column++;
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				@ }
+				<div class="item">
+					<div class="first-letter">{.first_letter|h}</div>
+					<ul>
+						@ }
+						<?php d()->this->domainTrick = explode('.', d()->this->domain)[0].'.'.$_ENV['SITE_MAIN_DOMAIN'] ?>
+						<li><a href="{this|protocol}://{.domainTrick|h}{current_url_path|h}" data-city_id="{.id|h}" class="js-city-confirm">{.title|h}</a></li>
+						</foreach>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="city-bottom js-cities-filter-filtered-list" style="display: none;">
+		<div class="item">
+			<div class="row">
+				<foreach cities_list>
+					<div class="col-xs-12 item js-cities-filter-item" data-cities-filter-title="{.title|mb_strtolower|h}" style="display: none;">
+						<a href="javascript:void(0);" data-href="{this|protocol}://{.domain|h}{current_url_path|h}" data-city_id="{.id|h}" class="js-city-confirm">{.title|h}</a>
+					</div>
+				</foreach>
+			</div>
+			{* <!-- От четырёх столбцов отказался из-за того что при скрывании элементов некорректно работал класс grid-row. Можно исправить сделав отдельную сетку, например, на inline-block. --> *}
+		</div>
+	</div>
+</div>
+@ if (!AJAX) {
+</div>
+@ }

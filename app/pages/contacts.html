@@ -46,7 +46,7 @@
 					</section>
 					<section class="content-tab-2">
 						<div class="row grid-row">
-							<foreach City>
+							
 								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 									<!--<div class="drop wrap-4">
 										<select name="city" class="js-sumoselect">
@@ -58,34 +58,36 @@
 											<option value="">5</option>
 										</select>
 									</div>-->
-									<ul class="workshops">
-										@ ~city_id = ~this->id
-										{{add 'cities'}}
-										{{edit}}{{delete}}
-											<li>
-												<span class="item">
-													<span class="city">{.title}</span>
-													{{add 'workshops', 'city_id' => ~this->id}}
-													<foreach Workshop->where('city_id = ?', ~city_id)>
-														<div class="warranty">
-															{{edit}}{{delete}}
-															<span class="title">{.title}</span>
-															<span class="title">{.address}</span>
-															<span class="phone">{.work_number}</span>
-															<span class="clock">{.work_time}</span>
-														</div>
-													</foreach>
-												</span>
-											</li>
-										<!--<li>
-											<a href="#" class="item active">
-												<span class="title">ООО "Таймсервис", ул. Островского, д.21</span>
-												<span class="phone">8 987 478-98-45</span> <span class="clock">пн-пт с 9:00 до 18:00</span>
-											</a>
-										</li>-->
-									</ul>
+									<foreach City>
+										<ul class="workshops">
+											@ ~city_id = ~this->id
+											{{add 'cities'}}
+											{{edit}}{{delete}}
+												<li>
+													<span class="item">
+														<span class="city">{.title}</span>
+														{{add 'workshops', 'city_id' => ~this->id}}
+														<foreach Workshop->where('city_id = ?', ~city_id)>
+															<div class="warranty">
+																{{edit}}{{delete}}
+																<span class="title">{.title}</span>
+																<span class="title">{.address}</span>
+																<span class="phone">{.work_number}</span>
+																<span class="clock">{.work_time}</span>
+															</div>
+														</foreach>
+													</span>
+												</li>
+											<!--<li>
+												<a href="#" class="item active">
+													<span class="title">ООО "Таймсервис", ул. Островского, д.21</span>
+													<span class="phone">8 987 478-98-45</span> <span class="clock">пн-пт с 9:00 до 18:00</span>
+												</a>
+											</li>-->
+										</ul>
+									</foreach>
 								</div>
-							</foreach>
+							
 							<!--<div class="col-xs-12 col-sm-7 col-md-7 col-lg-9">
 								<div class="js-map" data-map-coords="55.829100, 48.101850" data-map-title="Название компании" data-map-address="Адрес"></div>
 							</div>-->

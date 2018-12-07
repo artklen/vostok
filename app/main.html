@@ -49,20 +49,25 @@
 <div class="header-top">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-10 col-sm-6 col-md-6 col-lg-3">
-				<div class="phone"><a href="tel:{Option.number}">{Option.number}</a></div>
-				<a href="/feedback/call" class="call js-feedback">Заказать звонок</a>
+			<div class="col-xs-10 col-sm-7 col-md-6 col-lg-5">
+				<a href="/cities/select?url=%2F" class="city-selection hidden-xs js-feedback">{current_city.title|h}</a>
+				<div class="phone-position">
+					<div class="phone">
+						<a href="tel:{Option.number}">{Option.number}</a>
+					</div>
+					<a href="/feedback/call" class="call js-feedback">Заказать звонок</a>
+				</div>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 visible-lg">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 visible-lg">
 				<ul class="menu-1">
 					<li><a href="/payment" {{if ~url_path === '/payment', 'class="active"'}}>Оплата и доставка</a></li>
-					<li><a href="/news" {{if ~url_path === '/news', 'class="active"'}}>Новости</a></li>
-					<li><a href="/about" {{if ~url_path === '/about', 'class="active"'}}>О нас</a></li>
+					<?/*<li><a href="/news" {{if ~url_path === '/news', 'class="active"'}}>Новости</a></li>
+					<li><a href="/about" {{if ~url_path === '/about', 'class="active"'}}>О нас</a></li>*/?>
 					<li><a href="/faq" {{if ~url_path === '/faq', 'class="active"'}}>Вопрос-ответ</a></li>
 					<li><a href="/contacts" {{if ~url_path === '/contacts', 'class="active"'}}>Контакты</a></li>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 hidden-xs">
+			<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 hidden-xs">
 				<form method="get" action="/catalog">
 					<div class="search">
 						<input class="search-input" name="search" type="text" placeholder="Поиск по каталогу"/>

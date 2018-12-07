@@ -250,7 +250,13 @@
     margin-left: -15px; }
 
   .fosv-2 textarea {
-    margin: 0; } }
+    margin: 0; }
+
+  .city-form {
+    width: 680px; }
+
+  .city-selection {
+    max-width: 130px; } }
 
 @media (max-width: 767px) {
   /*.wrap-6 {
@@ -300,6 +306,9 @@
       margin: 30px 0 50px 0; }
     .header-top {
       /*padding: 9px 0 9px 0;*/ }
+      .header-top .phone-position {
+        float: none;
+        margin: 10px 0 0 0; }
     .header-bottom {
       padding: 10px 0 10px 0; }
       .header-bottom .logo {
@@ -547,7 +556,13 @@
     .fosv-1 .line-2 {
       padding: 60px 15px 60px 15px; }
     .error img {
-      max-width: 290px; } }
+      max-width: 290px; }
+    .city-form {
+      width: auto; }
+      .city-form .city-top {
+        padding: 45px 35px; }
+      .city-form .city-bottom {
+        padding: 0 35px 0 35px; } }
 
 @media (min-width: 480px) and (max-width: 767px) {
   .slider-1 .slide {
