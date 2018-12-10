@@ -75,6 +75,7 @@
 										</select>
 									</div>-->
 									<foreach this>
+										@ if (~Workshop->where('city_id = ?', ~this->id)->ne) {
 										<ul class="workshops">
 											@ ~city_id = ~this->id
 											{{add 'cities'}}
@@ -101,6 +102,7 @@
 												</a>
 											</li>-->
 										</ul>
+										@ }
 									</foreach>
 								</div>
 							</foreach>
