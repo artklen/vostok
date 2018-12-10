@@ -28,6 +28,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3">
 								{{edit current_city}}
+								{{delete current_city}}
 								{{add 'contacts', 'city_id' => d()->current_city->id}}
 
 								<?php if (!d()->current_city->ne || !d()->current_city->contacts->address) {
