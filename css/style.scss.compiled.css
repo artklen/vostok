@@ -2607,7 +2607,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     padding-left: 0;
     padding-right: 0; }
   .contacts .adress {
-    padding: 40px 30px 10px 20px; }
+    padding: 0px 30px 10px 20px; }
   .contacts .adress .title {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 12px;
