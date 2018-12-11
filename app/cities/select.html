@@ -35,7 +35,17 @@
 					<div class="first-letter">{.first_letter|h}</div>
 					<ul>
 						@ }
-						<?php d()->this->domainTrick = explode('.', d()->this->domain)[0].'.'.$_ENV['SITE_MAIN_DOMAIN'] ?>
+						<?php
+						//very very dirty trick
+						$temp = explode('.', d()->this->domain)[0];
+						if (mb_strpos($_ENV['SITE_MAIN_DOMAIN'], $temp) === 0)
+							$temp = '';
+
+						d()->this->domainTrick = $_ENV['SITE_MAIN_DOMAIN'];
+
+						if ($temp)
+						d()->this->domainTrick = $temp.'.'.d()->this->domainTrick;
+						?>
 						<li><a href="{this|protocol}://{.domainTrick|h}{current_url_path|h}" data-city_id="{.id|h}" class="js-city-confirm">{.title|h}</a></li>
 						</foreach>
 					</ul>
