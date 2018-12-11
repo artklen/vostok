@@ -66,9 +66,13 @@
 
 								<a href="/feedback/question" class="send-5 js-feedback">Задать вопрос</a>
 							</div>
-							<div class="col-xs-12 col-sm-7 col-md-7 col-lg-9">
-								<div class="js-map" data-map-coords="{currentCityHack.coords|h}" data-map-title="{Option.common_title|h}" data-map-address="{currentCityHack.address|h}"></div>
+
+							<foreach currentCityHack->contacts>
+							<div class="col-xs-12 col-sm-7 col-md-7 col-lg-9" style="margin-bottom: 50px">
+								<h3>{.address}</h3>
+								<div class="js-map" data-map-coords="{.coords|h}" data-map-title="{Option.common_title|h}" data-map-address="{.address|h}"></div>
 							</div>
+							</foreach>
 						</div>
 					</section>
 					<section class="content-tab-2">
