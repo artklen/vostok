@@ -266,6 +266,7 @@ d()->route('/catalog/:category', function ($category)
 			'title'           => 'Коллекция',
 			'field_name'      => 'collection_id',
 			'type'            => 'table',
+			'table_name'      => 'Collection',
 			'filter_instance' => new Products_filter('collection_id'),
 		]
 	);

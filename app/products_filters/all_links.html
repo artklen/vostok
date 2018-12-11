@@ -53,7 +53,30 @@ foreach (~products__fields as $field) {
 					<span><?= h($field['title']) ?></span>
 <?php
 				}
-			} else {
+			}
+			elseif ($field['type'] === 'table') {
+				#var_dump($field_name);die;
+				#var_dump($field);
+				#var_dump($variant);
+				#die;
+				$table_name = $field['table_name'];
+				if (isset(d()->get[$field_name])) { ?>
+			<span class="{{active_if in_array($variant['value'], d()->get[$field_name])}}"><?= h(d()->$table_name->where('id = ?', $variant['value'])->title) ?><?php
+					if (in_array($variant['value'], d()->get[$field_name])) {
+						d()->get_tmp->delete("{$field_name}[]", $variant['value']);
+						?><a href="{{url_path}}{get_tmp}" class="x">×</a><?php
+					}
+					?></span>
+			<?php
+				} else if ($count) { ?>
+			<a href="{{url_path}}{get_tmp}"><?= h($variant['value']) ?></a>
+			<?php
+				} else { ?>
+			<span><?= h($variant['value']) ?></span>
+			<?php
+				}
+			}
+			else {
 				if (isset(d()->get[$field_name])) { ?>
 					<span class="{{active_if in_array($variant['value'], d()->get[$field_name])}}"><?= h($variant['value']) ?><?php
 					if (in_array($variant['value'], d()->get[$field_name])) {
