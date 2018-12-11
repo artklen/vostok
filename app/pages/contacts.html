@@ -33,13 +33,14 @@
 								{{delete currentCityHack}}
 								{{add 'contacts', 'city_id' => d()->currentCityHack->id}}
 
-								<?php if (!d()->currentCityHack->ne || !d()->currentCityHack->contacts->address) {
+								<?php if (!d()->currentCityHack->contacts->ne) {
 								d()->currentCityHack = d()->City->where('id = 1');
 								?>
 								<!--{{edit currentCityHack}}
 								{{add 'contacts', 'city_id' => d()->currentCityHack->id}}-->
 								<?php
-									 } ?>
+								}
+								?>
 
 								<foreach currentCityHack->contacts>
 									<div class="adress">
