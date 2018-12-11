@@ -443,10 +443,10 @@
         top: 20px; }
     .action-1 {
       padding: 50px 0 60px 0; }
-      .action-1 .watch-1 img {
-        width: 100%; }
-      .action-1 .watch-2 {
-        margin: 35px 0 15px 0; }
+      .action-1 .watch-1 {
+        /*width: 100%;*/ }
+        .action-1 .watch-2 {
+          margin: 35px 0 15px 0; }
         .action-1 .watch-2 .title-2 {
           padding: 0 0 15px 0;
           line-height: 24px; }
