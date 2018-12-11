@@ -27,19 +27,21 @@
 					<section class="content-tab-1">
 						<div class="row">
 							<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3">
-								{{edit current_city}}
-								{{delete current_city}}
-								{{add 'contacts', 'city_id' => d()->current_city->id}}
+								<?php d()->currentCityHack = d()->current_city; ?>
 
-								<?php if (!d()->current_city->ne || !d()->current_city->contacts->address) {
-								d()->current_city = d()->City->where('id = 1');
+								{{edit currentCityHack}}
+								{{delete currentCityHack}}
+								{{add 'contacts', 'city_id' => d()->currentCityHack->id}}
+
+								<?php if (!d()->currentCityHack->ne || !d()->currentCityHack->contacts->address) {
+								d()->currentCityHack = d()->City->where('id = 1');
 								?>
-								<!--{{edit current_city}}
-								{{add 'contacts', 'city_id' => d()->current_city->id}}-->
+								<!--{{edit currentCityHack}}
+								{{add 'contacts', 'city_id' => d()->currentCityHack->id}}-->
 								<?php
 									 } ?>
 
-								<foreach current_city->contacts>
+								<foreach currentCityHack->contacts>
 									<div class="adress">
 										{{edit}}{{delete}}
 										<div class="title">Адрес</div>
@@ -56,7 +58,7 @@
 								<a href="/feedback/question" class="send-5 js-feedback">Задать вопрос</a>
 							</div>
 							<div class="col-xs-12 col-sm-7 col-md-7 col-lg-9">
-								<div class="js-map" data-map-coords="{current_city.coords|h}" data-map-title="{Option.common_title|h}" data-map-address="{current_city.address|h}"></div>
+								<div class="js-map" data-map-coords="{currentCityHack.coords|h}" data-map-title="{Option.common_title|h}" data-map-address="{currentCityHack.address|h}"></div>
 							</div>
 						</div>
 					</section>
