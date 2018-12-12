@@ -10,6 +10,9 @@
 @ if (isset(d()->params['message']) && (d()->params['message'] !== '')) {
 	Сообщение: <br>{params.message|hnl2br}<br><br>
 @ }
+@ if (isset(d()->params['question']) && (d()->params['question'] !== '')) {
+Вопрос: <br>{params.question|hnl2br}<br><br>
+@ }
 @ if (isset(d()->params['url']) && (d()->params['url'] !== '')) {
 	Страница сайта: <a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN'] . d()->params['url']) ?>"><?= h(d()->params['url']) ?></a>
 @ }
