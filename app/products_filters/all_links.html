@@ -69,7 +69,7 @@ foreach (~products__fields as $field) {
 					?></span>
 			<?php
 				} else if ($count) { ?>
-			<a href="{{url_path}}{get_tmp}"><?= h($variant['value']) ?></a>
+			<a href="{{url_path}}{get_tmp}"><?= h(d()->$table_name->where('id = ?', $variant['value'])->title) ?></a>
 			<?php
 				} else { ?>
 			<span><?= h($variant['value']) ?></span>
