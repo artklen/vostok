@@ -77,6 +77,17 @@ d()->page_not_found = function() {
 function main()
 {
 	d()->current_city = d()->city_of_subdomain;
+
+	if (!d()->current_city->ne)
+	{
+		#d()->current_city = d()->City->where('id = ?', 1);
+		$url = $_ENV['SITE_MAIN_DOMAIN'];
+		# хз почему так не работает
+		#d()->redirect($url);die;
+		# поэтому сделал так
+		header("Location: //$url");die;
+	}
+
 	$content = d()->content();
 	d()->check_if_seo_prepared();
 	d()->content = "$content";
