@@ -1,4 +1,5 @@
 <?php
+d()->products_url_base = '/product/';
 
 d()->route('/product/update_trigram',  function()
 {
