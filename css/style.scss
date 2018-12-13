@@ -2209,13 +2209,19 @@ input.list[type="checkbox"]:disabled:hover + span {
 	.info{
 		background: #efece4;
 		padding: 20px;
-		border: 2px solid #d39a6e;
 		text-align: center;
 		font-family: 'Roboto', sans-serif;
 		font-size: 16px;
 		color: #292928;
 		font-weight: 300;
 		margin-bottom: 25px;
+		a {
+			color: #b6754d;
+			text-decoration: none;
+			&:hover{
+				text-decoration: none;
+			}
+		}
 	}
 	.title-1, .title-2 {
 		font-family: 'Roboto Condensed', sans-serif;
