@@ -49,7 +49,7 @@
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 hidden-xs">
 					<div class="title-1">Артикул: {.code}</div>
 					@ if (d()->this->is_quantity){
-						<div class="title-1 quantity">Вналичии: {.quantity}</div>
+						<div class="title-1 quantity">В наличии: {.quantity} шт.</div>
 					@ }
 					@ if (d()->this->benefits) {
 					<ul class="type-1">
@@ -164,10 +164,12 @@
 					@ if (d()->this->is_quantity){
 						<a href="javascript:void(0);" class="send-6 js-basket-add">Добавить в корзину</a>
 					@ } elseif (d()->this->is_quantity === false) {
-						<div class="info">Товар снят с производства</div>
+						<div class="info">Товар снят с производства<br/>
+						Извините!  Эта  модель  снята  с  производства. Ознакомьтесь с <a href="#to_show">похожей продукцией.
+						</div>
 					@ } else {
-						<div class="info">Товар доступен под заказ</div>
-						<a href="/feedback/order?id={.id}" class="send-6 js-feedback">Заказать</a>
+						<div class="info">Нет в наличии</div>
+						<a href="/feedback/order?id={.id}" class="send-6 js-feedback">Под заказ</a>
 					@ }
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 visible-xs">
@@ -252,7 +254,7 @@
 </div>
 
 @ if (d()->Product->where('is_interesting = ?', 1)->ne || d()->Product->where('collection_id = ? and id != ?', d()->this->collection_id, d()->this->id)->group_by('carcas')->limit(1)->ne) {
-	<div class="main-title">
+	<div class="main-title" id="to_show">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
