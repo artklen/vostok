@@ -2505,7 +2505,8 @@ input.list[type="checkbox"]:disabled:hover + span {
   text-align: center;
   background: url(/images/action-bg.jpg) no-repeat center; }
   .inside-1 h1 {
-    color: #fff;
+    /*color: #fff;*/
+    font-weight: 400;
     padding: 0 5px 0 5px; }
 
 .inside-2 {
@@ -2607,7 +2608,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     padding-left: 0;
     padding-right: 0; }
   .contacts .adress {
-    padding: 0px 30px 10px 20px; }
+    padding: 40px 30px 10px 20px; }
   .contacts .adress .title {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 12px;
