@@ -2503,7 +2503,7 @@ input.list[type="checkbox"]:disabled:hover + span {
   -ms-flex-pack: center;
   min-height: 107px;
   text-align: center;
-  background: url(/images/action-bg.jpg) no-repeat center; }
+  background: url(/images/inside-bg.jpg) no-repeat center; }
   .inside-1 h1 {
     /*color: #fff;*/
     font-weight: 400;
