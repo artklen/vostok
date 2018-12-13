@@ -64,8 +64,7 @@
 		<?php foreach(d()->datapool['admin']['columns'] as $col_name => $col_title){
 			print '<td>';
 			if(d()->_list_safe_data){
-				$val = h(d()->this[$col_name]);
-				print $val;
+				print h(d()->this[$col_name]);
 			}else{
 				print d()->this[$col_name];
 			}

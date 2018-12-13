@@ -94,7 +94,7 @@ abstract class ActiveRecord implements ArrayAccess, Iterator, Countable //extend
 	public $per_page=10;
 	private $_is_sliced=false;
 	private $_revinded=0;
-	private $_count=0;
+	public $_count=0;
 	private $_must_revind=false;
 	private $_slice_size=5;
 	private $_objects_cache=array();
@@ -393,6 +393,13 @@ abstract class ActiveRecord implements ArrayAccess, Iterator, Countable //extend
 			$this->find_by($this->_options['namefield'], $id);
 		}
 		$this->limit(1);
+		return $this;
+	}
+	
+	public function f($id)
+	{
+		$this->_options['id']=(int)$id;
+		$this->find_by('id',(int)$id);
 		return $this;
 	}
 	
@@ -819,22 +826,12 @@ abstract class ActiveRecord implements ArrayAccess, Iterator, Countable //extend
 			}
 			
 						if( d()->db->errorCode()=='HY000' ){
-
-				$options = [];
-
-				# sorry Damir, but I needed to see it
-				if (defined('PATCHED_CMS') && PATCHED_CMS == 666)
-					$options =
-						[
-							PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-						];
-
 				if(DB_TYPE == 'mysql') {
-					doitClass::$instance->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD, $options);
+					doitClass::$instance->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
 					doitClass::$instance->db->exec('SET CHARACTER SET utf8');
 					doitClass::$instance->db->exec('SET NAMES utf8');
 				} else {
-					doitClass::$instance->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD, $options);
+					doitClass::$instance->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
 				}
 				$db_result = doitClass::$instance->db->query($_sql);
 			}
@@ -1282,7 +1279,24 @@ abstract class ActiveRecord implements ArrayAccess, Iterator, Countable //extend
 		ActiveRecord::$_queries_cache = array();
 		return $this;
 	}
-
+	//Синоним id_or_insert_id
+	public function ioi()
+	{
+		return $this->insert_id ? $this->insert_id : $this->id;
+	}
+	
+	public function id_or_insert_id()
+	{
+		return $this->insert_id ? $this->insert_id : $this->id;
+	}
+	public function save_and_load()
+	{
+		$this->save();
+		$class = get_class($this);
+		$result = new $class;
+		return $result->find_by('id', $this->insert_id ? $this->insert_id : $this->id);
+	}
+	
 	public function create($params=array())  //Crud - Create
 	{
 		//Более быстрый вариант $this->new

@@ -48,7 +48,9 @@
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 hidden-xs">
 					<div class="title-1">Артикул: {.code}</div>
-
+					@ if (d()->this->is_quantity){
+						<div class="title-1 quantity">Вналичии: {.quantity}</div>
+					@ }
 					@ if (d()->this->benefits) {
 					<ul class="type-1">
 						<?php foreach(explode(';', d()->this->benefits) as $benefit) { if (!$benefit) continue;?>
@@ -72,14 +74,16 @@
 							<span>{.price_origin_format} р.</span>
 							<?php } ?> {.calc_price_format} р.
 						</div>
-						<div class="right js-basket-add-container">
-							<button class="top js-basket-add-plus"></button>
-							<input type="text" class="middle js-basket-add-input" value="1"/>
-							<button class="bottom js-basket-add-minus"></button>
-						</div>
+						@ if (d()->this->is_quantity){
+							<div class="right js-basket-add-container">
+								<button class="top js-basket-add-plus"></button>
+								<input type="text" class="middle js-basket-add-input" value="1"/>
+								<button class="bottom js-basket-add-minus"></button>
+							</div>
+						@ }
 					</div>
 
-					@ if (d()->this->category->url == 'chasy') {
+					@ if (d()->this->category->url == 'chasy' && d()->this->is_quantity) {
 						<div class="title-1">Выберите упаковку</div>
 
 						<div class="js-unfolding-container">
@@ -157,8 +161,14 @@
 					@ } else {
 					<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked hidden/>
 					@ }
-
-					<a href="javascript:void(0);" class="send-6 js-basket-add">Добавить в корзину</a>
+					@ if (d()->this->is_quantity){
+						<a href="javascript:void(0);" class="send-6 js-basket-add">Добавить в корзину</a>
+					@ } elseif (d()->this->is_quantity === false) {
+						<div class="info">Товар снят с производства</div>
+					@ } else {
+						<div class="info">Товар доступен под заказ</div>
+						<a href="/feedback/order?id={.id}" class="send-6 js-feedback">Заказать</a>
+					@ }
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 visible-xs">
 					<div class="title-1">Артикул: {.code}</div>
