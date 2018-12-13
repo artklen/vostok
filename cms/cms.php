@@ -32,7 +32,6 @@ SOFTWARE.
 */
 //error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 error_reporting(0);
-#error_reporting(E_ALL);
 session_start();
 mb_internal_encoding("UTF-8");
 
@@ -289,24 +288,14 @@ class doitClass
 			define('DB_TYPE','mysql');
 		}
 		try {
-			$options = [];
-
-			# sorry Damir, but I needed to see it
-			if (defined('PATCHED_CMS') && PATCHED_CMS == 666)
-				$options =
-					[
-						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-					];
-
 			if(DB_TYPE == 'mysql') {
 				define ('DB_FIELD_DEL','`');
-				$this->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD, $options);
+				$this->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
 				$this->db->exec('SET CHARACTER SET utf8');
 				$this->db->exec('SET NAMES utf8');
-				$this->db->setAttribute(PDO::ATTR_ERRMODE);
 			} else {
 				define ('DB_FIELD_DEL','');
-				$this->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD, $options);
+				$this->db = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
 			}
 			
 		} catch (PDOException $e) {
@@ -550,7 +539,7 @@ foreach($tmparr as $key=>$subval)
 
 		// {.title|h}
 		$this->template_patterns[]='/\{\.([a-zA-Z0-9_]+)\|([a-zA-Z0-9_]+)\}/';
-		$this->template_replacements[]='<'.'?php if(is_array($doit->this)) {  print  $2($doit->this[\'$1\']); }else{ print  $2($doit->this->$1); } ?'.'>';
+		$this->template_replacements[]='<'.'?php if(is_array($doit->this)) {  print  $doit->$2($doit->this[\'$1\']); }else{ print  $doit->$2($doit->this->$1); } ?'.'>';
 		
 		// </if> //DEPRECATED
 //		$this->template_patterns[]='/\<\/if\>/';
@@ -658,6 +647,7 @@ foreach($tmparr as $key=>$subval)
 			$_work_folders = array('cms','app');
 		}
 		$ignore_subfolders = array('.','..','internal','external','fields','vendor');
+		
 		define('SERVER_NAME',preg_replace('/^www./i','',$_SERVER['SERVER_NAME']));
 		if(file_exists($_SERVER['DOCUMENT_ROOT'].'/sites/'.SERVER_NAME)){
 			$_work_folders[]='sites/'.SERVER_NAME;
@@ -675,14 +665,27 @@ foreach($tmparr as $key=>$subval)
 		
 		$simple_folders = array();
 		
-		foreach($_work_folders as $dirname) { 
+		foreach($_work_folders as $dirname) {
+			
+			$current_ignore_subfolders = $ignore_subfolders;
+			
+			
 			$_files[$dirname]['/']=array();
 			$_handle = opendir($_SERVER['DOCUMENT_ROOT'].'/'.$dirname);
 			if (!$_handle) {
 				continue;
 			}
 			while (false !== ($_file = readdir($_handle))) {
-				 if(substr($_file,0,4)=='mod_') {
+				if($dirname =='cms'){
+					if(isset($_ENV['DOIT_ADMIN_VERSION']) && $_ENV['DOIT_ADMIN_VERSION']=='2' && $_file == 'mod_admin'){
+						continue;
+					}
+					if((!isset($_ENV['DOIT_ADMIN_VERSION']) || $_ENV['DOIT_ADMIN_VERSION']!='2') && $_file == 'admin'){
+						continue;
+					}
+					
+				}
+				if(substr($_file,0,4)=='mod_') {
 					if(!in_array(substr($_file,4), $disabled_modules)){
 						$_subhandle = opendir($_SERVER['DOCUMENT_ROOT'].'/'.$dirname.'/'.$_file);
 						$_files[$dirname]['/'.$_file.'/']=array();
@@ -691,13 +694,13 @@ foreach($tmparr as $key=>$subval)
 						}
 						closedir($_subhandle);
 					}
-				 } elseif (is_dir($_SERVER['DOCUMENT_ROOT'].'/'.$dirname .'/'. $_file) && !in_array($_file, $ignore_subfolders) ){
+				} elseif (is_dir($_SERVER['DOCUMENT_ROOT'].'/'.$dirname .'/'. $_file) && !in_array($_file, $ignore_subfolders) ){
 					//Модули 2.0, список директорий
 					$simple_folders[] = $dirname.'/'.$_file;
 					doitClass::_fill_simple_folders_subdirectories($dirname.'/'.$_file, $simple_folders);
-				 } else {
+				} else {
 					$_files[$dirname]['/'][]=$_file;
-				 }
+				}
 			}
 			closedir($_handle);
 		}
@@ -787,8 +790,8 @@ foreach($tmparr as $key=>$subval)
 
 			while (false !== ($_file = readdir($_handle))) {
 				//ищем php файлы
-				
-				if (strrchr($_file, '.')=='.php' || is_dir($_SERVER['DOCUMENT_ROOT'].'/'.$folder.'/'.$_file)) {
+				$extension = strrchr($_file, '.');
+				if ($extension=='.php' || is_dir($_SERVER['DOCUMENT_ROOT'].'/'.$folder.'/'.$_file)) {
 					$fistrsim = $_file{0};
 					if($fistrsim>='A' && $fistrsim<='Z'){
 						//это класс
@@ -796,14 +799,46 @@ foreach($tmparr as $key=>$subval)
 					}else{
 						$this->for_include[$folder.'/'.$_file] = $folder.'/'.$_file;
 					}
+				}elseif ($extension=='.ini') {
+					//Правила, срабатывающие в любом случае, инициализация опций системы  и плагинов
+					if (substr($_file,-8)=='init.ini') {
+						//Если имя файла оканчивается на .init.ini, инициализировать его сразу
+						$this->for_ini[$folder.'/'.$_file]=($folder.'/'.$_file);
+					} else {
+						//При первом запросе адрес сбрасывается в false для предотвращения последующего чтения
+						//Хранит адрес ini-файла, запускаемого перед определённой функцией //DEPRECATED
+
+						$_dir_file=($folder.'/'.$_file);
+
+						
+						//Реалзация приоритетов: одноимённый файл из папки app переопределит тотже из папки cms
+						if(isset($ini_files_dirs[$_dir_file])){
+							foreach($this->ini_database as $_key=> $_ininame){
+								foreach($_ininame as $key=>$value){
+									if($value==$ini_files_dirs[$_dir_file]){
+										unset($this->ini_database[$_key][$key]);
+									}
+								}
+							}
+						}
+						$ini_files_dirs[$_dir_file]=$folder.'/'.$_file;
+						if(isset($this->ini_database[substr($_file,0,-4)])){
+							$this->ini_database[substr($_file,0,-4)][]=$folder.'/'.$_file;
+						}else{
+							$this->ini_database[substr($_file,0,-4)]=array($folder.'/'.$_file);
+						}
+					}
+					continue;
 				}
+				
+				
 				
 			}
 			//создаём план работы над директориями и их кодом
 			//PHP файлы инклудим
 			//HTML файлы запоминаем
+			
 		}
-		
 		foreach($this->for_ini as $value) {
 			$this->load_and_parse_ini_file ($value);
 		}
@@ -1634,6 +1669,7 @@ foreach($tmparr as $key=>$subval)
 	 */
 	function __set($name,$value)
 	{
+		
 		unset($this->_closures[$name]);
 		if( is_object($value) && ($value instanceof Closure)){
 			$this->_closure_directories[$name] = $this->_current_include_directory;
@@ -2049,6 +2085,7 @@ foreach($tmparr as $key=>$subval)
 		$res=array();
 		$currentGroup='';
 		$arrayKeys=array();
+		$cache_block = false;
 		foreach($ini as $row) {
 			$first_symbol=substr(trim($row),0,1);
 			if($first_symbol==';') continue; //Комментарии строки игнорируются
@@ -2056,6 +2093,16 @@ foreach($tmparr as $key=>$subval)
 				$currentGroup=substr($row,1,-1);
 				continue;
 			}
+			if ($first_symbol=='{') { //Начало новой группы {
+				$cache_block = true;
+				continue;
+			}
+			if ($first_symbol=='}') { //Начало новой группы {
+				$cache_block = false;
+				$arrayKeys[$currentGroup]++;
+				continue;
+			}
+			
 			$delimeterPos=strpos($row,'=');
 			if($delimeterPos===false) {
 				//Если тип строки - неименованный массив, разделённый пробелами
@@ -2107,7 +2154,54 @@ foreach($tmparr as $key=>$subval)
 				$value=array($arrayKeys[$currentGroup]=>$value);
 				$arrayKeys[$currentGroup]++; //Генерация номера элемента массива, массив нельзя перемешивать с обычными данными
 				
-			} else {
+			} elseif ($cache_block) { //Активирован режим фигурных скобок
+				
+				
+				$subject=$currentGroup;
+					
+				if (!isset($arrayKeys[$currentGroup])) {
+					$arrayKeys[$currentGroup]=0;
+				}
+				
+				$subject_key=  trim(substr($row,0,$delimeterPos));
+ 
+				$value=ltrim(substr($row,$delimeterPos+1));
+				if(substr($value,0,5) == 'json:'){
+					$value = json_decode(substr($value ,5),true);
+				}
+				
+				if (strpos($subject_key,'.')===false) {
+					$value=array($arrayKeys[$currentGroup]=> array($subject_key=>$value));
+				} else {
+					$tmpvalue=$value;
+					$tmparr=array_reverse(explode('.',$subject_key));
+					foreach($tmparr as $subSubject) {
+						$tmpvalue=array($subSubject=>$tmpvalue);
+					}
+					 
+					$value=array($arrayKeys[$currentGroup]=>  $tmpvalue);
+					 
+					
+				}
+				
+				
+				
+				
+				//Если встречаются числовые теги, делается replace вместо merge
+				if (strpos($subject,'.')===false) {
+					$res=array_replace_recursive ($res,array($subject=>$value));
+				} else {
+					$tmpvalue=$value;
+					$tmparr=array_reverse(explode('.',$subject));
+					foreach($tmparr as $subSubject) {
+						$tmpvalue=array($subSubject=>$tmpvalue);
+					}
+					$res=array_replace_recursive ($res,$tmpvalue);
+				}
+				
+				continue;
+				
+			}else {
 				$subject= rtrim(substr($row,0,$delimeterPos));
 				if ($currentGroup!='') {
 					$subject = $currentGroup . '.' . $subject;

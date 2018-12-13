@@ -338,6 +338,14 @@ function admin_show_one_list($table,$id1,$id2)
 	}
 	//модель для опасного запроса к списку сущностей
 	d()->_list_safe_data=true; //Если переопределяем, то safe пропадает,
+	/*
+	[admin.titles]
+list_title = Текстовые страницы
+	*/
+	if(isset(d()->datapool['admin']['titles']['list_title']) && d()->datapool['admin']['titles']['list_title'] !=''){
+		d()->curr_title=d()->datapool['admin']['titles']['list_title'];
+	}
+	//d()->curr_title='Список объектов из таблицы '.url(3);
 	
 	$model_suffix = '_safe';
 	if(empty($_GET['sort'])){
@@ -377,11 +385,6 @@ function admin_show_one_list($table,$id1,$id2)
 		d()->datapool['admin']['columns']=array();
 		d()->datapool['admin']['columns']['title']='Заголовок';
 		d()->datapool['admin']['columns']['url']='URL';
-
-		if (url(3) == 'products')
-		{
-			d()->datapool['admin']['columns']['excel_title'] = 'Название из excel';
-		}
 	}
 	$sort_field = 'sort';
 	if(isset(d()->admin['list']) && isset(d()->admin['list']['sort_field'] )){
@@ -1469,13 +1472,15 @@ function admin_generate_scheme()
 	}
 	
 	set_time_limit(0);
-	header("Content-Disposition: attachment; filename=schema.ini");
-
-	header("Content-Type: application/octet-stream");
-	header("Content-transfer-encoding: binary");
+	if(!isset($_GET['save']) && $_GET['save'] != '1'){
+		header("Content-Disposition: attachment; filename=schema.ini");
+		header("Content-Type: application/octet-stream");
+		header("Content-transfer-encoding: binary");
+	}
 	$tables = d()->db->query('SHOW TABLES')->fetchAll();
+	$result = "";
 	foreach ($tables as $row){
-		print "[schema.{$row[0]}]\r\n";
+		$result.= "[schema.{$row[0]}]\r\n";
 		
 		$columns = d()->db->query('SHOW COLUMNS FROM '.DB_FIELD_DEL.$row[0].DB_FIELD_DEL)->fetchAll();
 		$printed_array=array();
@@ -1486,8 +1491,20 @@ function admin_generate_scheme()
 		}
 		sort($printed_array);
 		foreach ($printed_array as $column){
-			print "{$column}\r\n";
+			$result.= "{$column}\r\n";
 		}
+	}
+	if(!isset($_GET['save']) && $_GET['save'] != '1'){
+		print $result;	
+		
+	}else{
+		$try = file_put_contents($_SERVER['DOCUMENT_ROOT'].'/app/schema.ini',$result);
+		if($try ===false){
+			header('Location: /admin/scaffold/migrate_scheme?done=0');
+		}else{
+			header('Location: /admin/scaffold/migrate_scheme?done=1');
+		}
+		exit;
 	}
 	//d()->Scaffold->update_scheme();
 	//print d()->view();

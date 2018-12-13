@@ -74,6 +74,7 @@ class Catalog_excel {
 
 			$this->unicalize_field_title('Краткое описание') => 'text',
 			$this->unicalize_field_title('Подробное описание') => 'text_full',
+			$this->unicalize_field_title('Наличие') => 'quantity',
 
 			#$this->unicalize_field_title('Свойства часов') => 'text_props',
 		];
@@ -313,6 +314,7 @@ class Catalog_excel {
 			'benefits' => 'Выгоды',
 			'text' => 'Краткое описание' ,
 			'text_full' => 'Подробное описание',
+			'quantity' => 'Наличие',
 			#'text_props' => 'Свойства часов',
 		];
 		static $columns_callbacks = [];

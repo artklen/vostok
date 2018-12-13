@@ -78,6 +78,17 @@ class Product extends ActiveRecord
 	{
 		return $this->title;
 	}
+	function is_quantity()
+	{
+		$quantity = $this->get('quantity');
+		if (is_numeric($quantity) && $quantity > 0){
+			return true;
+		}		
+		if ($quantity == "Снят с производства"){
+			return false;
+		}
+		return 0;
+	}
 	
 	function admin_sort_title()
 	{

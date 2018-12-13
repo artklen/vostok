@@ -1,0 +1,30 @@
+<div class="fosv-1">
+	<div class="line-1"></div>
+	<div class="line-2">
+		{{simple_ajax_form '/feedback/' . d()->form_type}}
+			<div class="title-1">Заказать</div>
+			<div class="title-1"><?=d()->Product->find_by_id(h($_GET['id']))->title; ?></div>
+			<div class="title-2">Оставьте свои данные и мы свяжемся с вами в ближайшее время</div>
+			<div>
+				<div class="text">Ваше Имя</div>
+				<div><input type="text" {{inputparams 'name'}} /></div>
+			</div>
+			<div>
+				<div class="text">Ваш телефон</div>
+				<div><input type="text" {{inputparams 'phone'}} /></div>
+			</div>
+			<div>
+				<div class="text">Ваш E-mail</div>
+				<div><input type="text" {{inputparams 'email'}} /></div>
+			</div>
+			<div>
+				<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку ваших <a href="/privacy-policy">персональных данных</a></span>
+			</div>
+			<div class="center">
+				<input type="submit" class="send-10" value="Заказать" />
+			</div>
+			<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
+			<input type="hidden" name="шв" value="<?= h($_GET['id']) ?>" />
+		{{/form}}
+	</div>
+</div>

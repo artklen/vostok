@@ -2206,6 +2206,17 @@ input.list[type="checkbox"]:disabled:hover + span {
 
 .tovar {
 	padding: 40px 0 100px 0;
+	.info{
+		background: #efece4;
+		padding: 20px;
+		border: 2px solid #d39a6e;
+		text-align: center;
+		font-family: 'Roboto', sans-serif;
+		font-size: 16px;
+		color: #292928;
+		font-weight: 300;
+		margin-bottom: 25px;
+	}
 	.title-1, .title-2 {
 		font-family: 'Roboto Condensed', sans-serif;
 		font-size: 14px;
@@ -2213,6 +2224,9 @@ input.list[type="checkbox"]:disabled:hover + span {
 		font-weight: 700;
 		text-transform: uppercase;
 		padding: 0 0 20px 0;
+		&.quantity {
+			text-transform: none;
+		}
 	}
 	.title-2 {
 		padding: 0 0 10px 0;
