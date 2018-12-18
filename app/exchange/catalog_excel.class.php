@@ -362,7 +362,7 @@ class Catalog_excel {
 					if (isset($columns_callbacks[$column_field])) {
 						$value = $columns_callbacks[$column_field]($product_orm, $column_field);
 					} else {
-						$value = $product_orm->$column_field;
+						$value = $product_orm->get($column_field);
 						if (isset($fields_by_names[$column_field]) &&
 							($fields_by_names[$column_field]->type === 'strings_list')) {
 							$value = str_replace("\n", ', ', $value);

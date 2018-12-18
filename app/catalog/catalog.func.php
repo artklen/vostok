@@ -154,7 +154,7 @@ d()->route('/catalog', function ()
 	d()->fields_data = $fields_data;
 	d()->fields_filtered_data = $fields_filtered_data;
 
-	var_dump(d()->fields_filtered_data);die;
+	#var_dump(d()->fields_filtered_data);die;
 
 	#var_dump(d()->fields_filtered_data);die;
 
