@@ -1,37 +1,37 @@
-<p>Поступил новый заказ.</p>
+<p>Поступила оплата за заказ.</p>
 <table border="1">
 	<tr><th align="left">№</th>
-		<td>{order.id}</td></tr>
+		<td>{order_t.id}</td></tr>
 	<tr><th align="left">Дата</th>
-		<td>{order.ordered_at|userdate}</td></tr>
+		<td>{order_t.ordered_at|userdate}</td></tr>
 	<tr><th align="left">Статус</th>
-		<td>{order.show_status_id}</td></tr>
+		<td>{order_t.show_status_id}</td></tr>
 		
 	<tr><th align="left">Статус оплаты</th>
-		<td>{order.show_is_payed}</td></tr>
+		<td>{order_t.show_is_payed}</td></tr>
 	
 	<tr><th align="left">Способ получения</th>
-		<td>{order.show_delivery}</td></tr>
+		<td>{order_t.show_delivery}</td></tr>
  
 </table>
 <p>&nbsp;</p>
 <p>Информация о покупателе:</p>
 <table border="1" width="100%">
 	<tr><th align="left">Имя</th>
-		<td>{order.name|h}</td></tr>
+		<td>{order_t.name|h}</td></tr>
 	<tr><th align="left">E-mail</th>
-		<td>{order.email|h}</td></tr>
+		<td>{order_t.email|h}</td></tr>
 		
 		
 	<tr><th align="left">Телефон</th>
-		<td>{order.phone|h}</td></tr>
+		<td>{order_t.phone|h}</td></tr>
 		
-	@ if (d()->order['address']) {
+	@ if (d()->order_t->address != "") {
 	<tr><th align="left">Адрес</th>
-		<td>{order.address|h}</td></tr>
+		<td>{order_t.address|h}</td></tr>
 	@ }
 	<tr><th align="left">Комментарий</th>
-		<td>{order.comment|hnl2br}</td></tr>
+		<td>{order_t.comment|hnl2br}</td></tr>
 		
 </table>
 <p>&nbsp;</p>
@@ -46,7 +46,7 @@
 		<th align="left">Цена</th>
 		<th align="left">Стоимость</th> 
 	</tr>
-<foreach order->orders_items->all>
+<foreach order_t->orders_items->all>
 	<tr>
 		<td>{.show_item_source|h}</td>
 		<td><a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>{this|h_url_for}" target="_blank">{.title|h}</a></td>
@@ -60,15 +60,16 @@
 </foreach>
 </table>
 
-<p>Всего товаров: <b>{order.number|h} шт.</b>, к оплате: <b>{order.order_price|price_format} руб.</b>
-<?php $delivery = d()->Delivery_variant->find_by_id(d()->order->delivery_type);
+<p>Всего товаров: <b>{order_t.number|h} шт.</b>, оплачено: <b>{order_t.payed_amount|price_format} руб.</b> 
+<?php $delivery = d()->Delivery_variant->find_by_id(d()->order_t->delivery_type);
 if ($delivery->ne){
 	if ($delivery->price != "" && $delivery->price*1 >0){
-		if ($delivery->free_price!= "" && $delivery->free_price >= d()->order->order_price - $delivery->price*1){
+		if ($delivery->free_price!= "" && $delivery->free_price >= d()->order_t->payed_amount - $delivery->price*1){
 			print "В том числе доставка: <b>".$delivery->price." руб.</b>";
 		}elseif ($delivery->free_price==""){
 			print "В том числе доставка: <b>".$delivery->price." руб.</b>";
 		}
 	}
-}?></p>
+}?>
+</p>
 

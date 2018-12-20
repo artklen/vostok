@@ -146,15 +146,17 @@
 
 									<div>
 										<div>
-										<select name="delivery_type" class="js-sumoselect" placeholder="Вариант доставки">
+										<select name="delivery_type" class="js-sumoselect js-delivery" placeholder="Вариант доставки">
 											<option class="hidden"></option>
 											<foreach Delivery_variant>
-												<option value="{.id}">{.title}</option>
+												<option value="{.id}" data-price="{.price}" data-free_price="{.free_price}" data-message="{.text}" <?=($_SESSION['delivery_id']==d()->this->id)?"selected":""?>>{.title}</option>
 											</foreach>
 										</select>
 										</div>
 									</div>
-
+									<div class="delivery_message">
+										<?=(isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!="" && d()->Delivery_variant->find_by_id($_SESSION['delivery_id'])->ne)?d()->Delivery_variant->find_by_id($_SESSION['delivery_id'])->text:""?>
+									</div>
 									<div>
 										<div>
 											<textarea name="comment" placeholder="Ваш комментарий"></textarea>
@@ -162,7 +164,9 @@
 									</div>
 
 									<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку ваших персональных данных</span>
-									<input type="submit" class="send-10" value="Отправить заявку"/>
+									@ if (iam(developer)){
+										<input type="submit" class="send-10" value="Заказать"/>
+									@ }
 								</div>
 							</div>
 						{{/form}}
