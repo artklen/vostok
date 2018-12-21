@@ -3820,6 +3820,24 @@ input.list[type="checkbox"]:disabled:hover + span {
 				box-shadow: inset 0px 0px 0px 1px #ff0000;
 			}
 		}
+		.CaptionCont {
+			border: 1px solid red;
+			box-shadow: inset 0px 0px 0px 1px #ff0000;
+			&:focus {
+				border: 1px solid red;
+				box-shadow: inset 0px 0px 0px 1px #ff0000;
+			}
+		}
+	}
+	.delivery_message {
+		p {
+			font-family: "Roboto", sans-serif;
+			font-size: 11px;
+			color: #5f5f5e;
+			line-height: 16px;
+			padding: 0 0 5px 0;
+			display: inline-block;
+		}
 	}
 }
 .line-1 {

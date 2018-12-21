@@ -2953,6 +2953,19 @@ input.list[type="checkbox"]:disabled:hover + span {
   .fosv-1 .error input:focus, .fosv-2 .error input:focus {
     border: 1px solid red;
     box-shadow: inset 0px 0px 0px 1px #f00; }
+  .fosv-1 .error .CaptionCont, .fosv-2 .error .CaptionCont {
+    border: 1px solid red;
+    box-shadow: inset 0px 0px 0px 1px #f00; }
+  .fosv-1 .error .CaptionCont:focus, .fosv-2 .error .CaptionCont:focus {
+    border: 1px solid red;
+    box-shadow: inset 0px 0px 0px 1px #f00; }
+  .fosv-1 .delivery_message p, .fosv-2 .delivery_message p {
+    font-family: "Roboto", sans-serif;
+    font-size: 11px;
+    color: #5f5f5e;
+    line-height: 16px;
+    padding: 0 0 5px 0;
+    display: inline-block; }
 
 .line-1 {
   width: 100%;

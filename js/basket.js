@@ -57,6 +57,7 @@ Basket = (function() {
 	Basket.add = create_item_callback('add_item');
 	Basket.update = create_item_callback('update_item');
 	Basket.delete = create_item_callback('delete_item');
+	Basket.delivery = create_item_callback('delivery');
 	
 	Basket.refresh = function(data) {
 		/* обновление виджетов */
@@ -246,5 +247,12 @@ $(function() {
 		var t = $(this).closest('.js-basket-change').find('.js-basket-change-input');
 		t.val(1 * t.val() + 1);
 		basket_change_input_update(t);
+	});
+	$(document).on('change keyup', '.js-delivery', function() {
+		$('.delivery_message').html($(this).find('option:selected').data('message'));
+		var data = {};
+		data.delivery_id = $(this).val();
+		Basket.delivery(data);
+		Basket.refresh;
 	});
 });
