@@ -194,8 +194,8 @@ class Order extends ActiveRecord
 	}
 
 	function show_delivery() {
-		if(d()->Delyvery_variant->find_by_id($this->delivery_type)->ne){
-			return d()->Delyvery_variant->find_by_id($this->delivery_type)->title;
+		if(d()->Delivery_variant->find_by_id($this->delivery_type)->ne){
+			return d()->Delivery_variant->find_by_id($this->delivery_type)->title;
 		}
 		return 'Неизвестно (возможно, произошла ошибка)';
 	}
