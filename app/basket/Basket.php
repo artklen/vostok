@@ -166,6 +166,10 @@ class Basket extends UniversalSingletoneHelper
 	function total_price($item_key = null)
 	{
 		$result = 0;
+		$delivery_bool = false;
+		if ($item_key = null){
+			$delivery_bool = true;
+		}
 		if (is_array($item_key) || is_object($item_key)) {
 			$item_key = $this->item_key_of($item_key);
 		}
@@ -174,18 +178,19 @@ class Basket extends UniversalSingletoneHelper
 		foreach ($items as $item) {
 			$result += $item->number * $item->price;
 		}
-		if (!(is_array($item_key) || is_object($item_key))) {
-		if (isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!= ""){
-			$delivery = d()->Delivery_variant->find_by_id($_SESSION['delivery_id']);
-			if ($delivery->ne){
-				if ($delivery->free_price != "" && $delivery->free_price*1 <= $result){
-					return $result;
-				}
-				if ($delivery->price != "" && $delivery->price*1 >0){
-					return ($result+$delivery->price);
+		if ($delivery_bool) {
+			if (isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!= ""){
+				$delivery = d()->Delivery_variant->find_by_id($_SESSION['delivery_id']);
+				if ($delivery->ne){
+					if ($delivery->free_price != "" && $delivery->free_price*1 <= $result){
+						return $result;
+					}
+					if ($delivery->price != "" && $delivery->price*1 >0){
+						return ($result+$delivery->price);
+					}
 				}
 			}
-		}}
+		}
 		return $result;
 	}
 	
