@@ -162,14 +162,16 @@ class Catalog_excel {
 								break;*/
 							case 'collection_name':
 								$collection_name = $value;
-								$collection = d()->Collection->where('title = ?', $collection_name);
-
-								if ($collection->is_empty) {
-									$collection->create([
-										'title' => $collection_name,
-									]);
-
+								if ($collection_name != ""){
 									$collection = d()->Collection->where('title = ?', $collection_name);
+
+									if ($collection->is_empty) {
+										$collection->create([
+											'title' => $collection_name,
+										]);
+
+										$collection = d()->Collection->where('title = ?', $collection_name);
+									}
 								}
 
 								#var_dump($collection_name);

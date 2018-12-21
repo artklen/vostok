@@ -58,7 +58,7 @@
 						<?php } ?>
 					</ul>
 					@ }
-
+					<?php if (d()->seo->text) d()->isSeoTextAlready = true; ?>
 					@ if (d()->this->text) {
 					<div class="title-1">Краткое описание</div>
 					<div class="text-1">
