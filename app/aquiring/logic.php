@@ -100,7 +100,7 @@ d()->on('aquiring.successfull_paid',function($param){
 		curl_close($curl);
 		$response = json_decode($json_response);
 		$respons_err = $response->Response;
-		if ($respons_err->Error != 0){
+		if ($respons_err->Error != 0 || $status!=200){
 			foreach ($emails as $email){
 				$message = d()->letter->render('order/chek_err');
 				$email = trim($email);		
