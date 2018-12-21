@@ -14,7 +14,7 @@ d()->on('aquiring.successfull_paid',function($param){
 	$order = $param[0];
 	if($order->is_paid){
 		d()->order_t = d()->Order->find_by_id($order->id);
-		$emails = explode(',', d()->Option->email);
+		$emails = explode(',', d()->Option->feedback_email);
 		foreach ($emails as $email){
 			$message = d()->letter->render('order/manager');
 			$email = trim($email);		
@@ -41,7 +41,7 @@ d()->on('aquiring.successfull_paid',function($param){
 			"Lines" => array(),
 			"NonCash" => array(round(d()->order_t->payed_amount*100)),
 			"TaxMode" => 0,
-			"PhoneOrEmail" => d()->Option->email,
+			"PhoneOrEmail" => $emails[0],
 		);
 		foreach (d()->order_t->orders_items->all as $order_item){
 			$datas['Lines'][]=array(
@@ -99,8 +99,8 @@ d()->on('aquiring.successfull_paid',function($param){
 		d()->order_ch->save();
 		curl_close($curl);
 		$response = json_decode($json_response);
-		$respons_err = $response['Response'];
-		if ($respons_err['Error'] != 0){
+		$respons_err = $response->Response;
+		if ($respons_err->Error != 0){
 			foreach ($emails as $email){
 				$message = d()->letter->render('order/chek_err');
 				$email = trim($email);		
