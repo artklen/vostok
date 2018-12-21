@@ -307,7 +307,7 @@ class Catalog_excel {
 			'id' => 'id',
 			'excel_title' => 'Название',
 			'code' => 'Артикул',
-			'image' => 'Изображение',
+			//'image' => 'Изображение',
 			'price' => 'Цена',
 			'discount' => 'Скидка',
 			'collection_id' => 'Коллекция',

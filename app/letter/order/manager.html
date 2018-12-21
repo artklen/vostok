@@ -38,17 +38,17 @@
 <p>Товары:</p>
 <table border="1" width="100%">
 	<tr>
-		<th align="left">Источник</th>
+		<th align="left">№</th>
 		<th align="left">Название</th>
 		<th align="left">Нетто</th>
 		<th align="left">Код поставщика</th>
 		<th align="left">Всего</th>
 		<th align="left">Цена</th>
 		<th align="left">Стоимость</th> 
-	</tr>
+	</tr><?php $i=0;?>
 <foreach order_t->orders_items->all>
 	<tr>
-		<td>{.show_item_source|h}</td>
+		<td><?=$i++;?></td>
 		<td><a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>{this|h_url_for}" target="_blank">{.title|h}</a></td>
 		<td>{.netto|h}</td>
 		<td>{.sku_dealer|h}</td>

@@ -41,7 +41,7 @@ d()->on('aquiring.successfull_paid',function($param){
 			"Lines" => array(),
 			"NonCash" => array(round(d()->order_t->payed_amount*100)),
 			"TaxMode" => 0,
-			"PhoneOrEmail" => $emails[0],
+			"PhoneOrEmail" => (d()->order_t->email != "")?d()->order_t->email:d()->order_t->phone,
 		);
 		foreach (d()->order_t->orders_items->all as $order_item){
 			$datas['Lines'][]=array(
