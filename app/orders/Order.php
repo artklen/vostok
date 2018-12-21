@@ -194,14 +194,14 @@ class Order extends ActiveRecord
 	}
 
 	function show_delivery() {
-		if(isset(self::$delivery_types_titles[$this->delivery_type])){
-			return self::$delivery_types_titles[$this->delivery_type];
+		if(d()->Delyvery_variant->find_by_id($this->delivery_type)->ne){
+			return d()->Delyvery_variant->find_by_id($this->delivery_type)->title;
 		}
 		return 'Неизвестно (возможно, произошла ошибка)';
 	}
 	function show_is_payed() {
 		$result = "";
-		switch ($this->is_payed) {
+		switch ($this->is_paid) {
 		case '1':
 			$result .= '<span style="color:#3c3;font-weight:bold;font-size:1.5em;line-height:1em;">☑</span>';
 			break;

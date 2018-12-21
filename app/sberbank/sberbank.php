@@ -45,7 +45,7 @@ d()->route('/aquiring/sber/payfororder/:order_id', function($order_id) {
 		$payment->sber_url = $result['formUrl'];
 		$payment->sber_order_code = $result['orderId'];
 		$payment->save();
-		
+		unset($_SESSION['delivery_id']);
 		header('Location: ' . $result['formUrl']);
 	} catch (Exception $e) {
 		echo 'Ошибка платежа: ' . $e->getMessage() . "\n";
