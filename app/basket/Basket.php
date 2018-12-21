@@ -30,6 +30,12 @@ class Basket extends UniversalSingletoneHelper
 			$this->order = d()->Order->find_by('id', $order->insert_id);
 		}
 	}
+	function delivery($params)
+	{
+		if (isset($params['delivery_id']) && $params['delivery_id']!= ""){
+			$_SESSION['delivery_id'] = $params['delivery_id'];
+		}
+	}
 	
 	function add_item($params, $number = null)
 	{
@@ -141,6 +147,7 @@ class Basket extends UniversalSingletoneHelper
 		if (isset($this->order)) {
 			d()->db->exec('delete from `orders_items` where `order_id`=' . d()->db->quote($this->order->id));
 		}
+		unset($_SESSION['delivery_id']);
 	}
 		
 	function total_number($item_key = null)
@@ -166,6 +173,17 @@ class Basket extends UniversalSingletoneHelper
 		#var_dump($items->all);die;
 		foreach ($items as $item) {
 			$result += $item->number * $item->price;
+		}
+		if (isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!= ""){
+			$delivery = d()->Delivery_variant->find_by_id($_SESSION['delivery_id']);
+			if ($delivery->ne){
+				if ($delivery->free_price != "" && $delivery->free_price*1 <= $result){
+					return $result;
+				}
+				if ($delivery->price != "" && $delivery->price*1 >0){
+					return ($result+$delivery->price);
+				}
+			}
 		}
 		return $result;
 	}
