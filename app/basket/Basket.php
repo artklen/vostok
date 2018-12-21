@@ -167,7 +167,7 @@ class Basket extends UniversalSingletoneHelper
 	{
 		$result = 0;
 		$delivery_bool = false;
-		if ($item_key = null){
+		if ($item_key == null){
 			$delivery_bool = true;
 		}
 		if (is_array($item_key) || is_object($item_key)) {
