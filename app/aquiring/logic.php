@@ -55,7 +55,7 @@ d()->on('aquiring.successfull_paid',function($param){
 		$delivery = d()->Delivery_variant->find_by_id(d()->order_t->delivery_type);
 		if ($delivery->ne){
 			if ($delivery->price != "" && $delivery->price*1 >0){
-				if ($delivery->free_price!= "" && $delivery->free_price >= d()->order->order_price - $delivery->price*1){
+				if ($delivery->free_price!= "" && $delivery->free_price >= d()->order_t->order_price - $delivery->price*1){
 					$datas['Lines'][]=array(
 						"Qty" => 1000,
 						"Price" => $delivery->price * 100,
