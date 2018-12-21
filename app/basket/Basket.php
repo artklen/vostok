@@ -174,6 +174,7 @@ class Basket extends UniversalSingletoneHelper
 		foreach ($items as $item) {
 			$result += $item->number * $item->price;
 		}
+		if (!(is_array($item_key) || is_object($item_key))) {
 		if (isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!= ""){
 			$delivery = d()->Delivery_variant->find_by_id($_SESSION['delivery_id']);
 			if ($delivery->ne){
@@ -184,7 +185,7 @@ class Basket extends UniversalSingletoneHelper
 					return ($result+$delivery->price);
 				}
 			}
-		}
+		}}
 		return $result;
 	}
 	
