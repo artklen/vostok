@@ -78,7 +78,7 @@ d()->post('/basket/finish', function() {
 
 			d()->notification->new_order($order);
 				
-			print 'document.location.href="/aquiring/sber/payfororder/"'.$order->id.';';
+			print 'document.location.href="/aquiring/sber/payfororder/'.$order->id.'";';
 			exit;
 		}
 		if (isset($_POST['is_modal'])) {
