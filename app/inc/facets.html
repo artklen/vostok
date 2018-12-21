@@ -2,7 +2,6 @@
 	<a href="javascript:void(0);" class="close js-close hidden-lg"></a>
 	<form action="/catalog<?=d()->this_category->url ? '/'.d()->this_category->url : ''?>" method="get" class="js-filter-form">
 		@ foreach (~products__fields as ~field) {
-			<?=~field['title']?>
 			@ if (!empty(~fields_data[~field['field_name']]) || ~field['field_name'] === 'all_links') {
 				{{render_field ~field['field_name'], ~field, '/products_filters/'}}
 			@ }
