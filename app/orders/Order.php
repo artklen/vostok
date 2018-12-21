@@ -103,6 +103,17 @@ class Order extends ActiveRecord
 				$result += $item->number * $item->price;
 			}
 		}
+		if ($this->get('delivery_type')!= ""){
+			$delivery = d()->Delivery_variant->find_by_id($this->get('delivery_type'));
+			if ($delivery->ne){
+				if ($delivery->free_price != "" && $delivery->free_price*1 <= $result){
+					return $result;
+				}
+				if ($delivery->price != "" && $delivery->price*1 >0){
+					return ($result+$delivery->price);
+				}
+			}
+		}
 		return $result;
 	}
 	
