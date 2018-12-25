@@ -355,8 +355,11 @@ class Catalog_excel {
 			$row = 1;
 			$col = 0;
 			foreach ($columns as $column_title) {
-				$worksheet->setCellValueByColumnAndRow($col++, $row, $column_title);
-			}
+				
+				$b = PHPExcel_Cell::stringFromColumnIndex($col++);
+				//print $b.$row; exit;
+				$worksheet->setCellValueExplicit($b.$row, $column_title,  PHPExcel_Cell_DataType::TYPE_STRING);
+			} 
 			$row++;
 			foreach ($products_list as $product_orm) {
 				$col = 0;
@@ -370,7 +373,8 @@ class Catalog_excel {
 							$value = str_replace("\n", ', ', $value);
 						}
 					}
-					$worksheet->setCellValueByColumnAndRow($col++, $row, $value);
+					$b = PHPExcel_Cell::stringFromColumnIndex($col++);
+					$worksheet->setCellValueExplicit($b.$row, $value,  PHPExcel_Cell_DataType::TYPE_STRING);
 				}
 				$row++;
 			}

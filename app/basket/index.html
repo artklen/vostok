@@ -154,6 +154,15 @@
 										</select>
 										</div>
 									</div>
+									<div>
+										<div>
+										<select name="pay_type" class="js-sumoselect" placeholder="Вариант оплаты">
+											<option class="hidden"></option>
+											<option value="1" >Онлайн оплата</option>											
+											<option value="2" >Наличными или перечислением</option>
+										</select>
+										</div>
+									</div>
 									<div class="delivery_message">
 										<?=(isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!="" && d()->Delivery_variant->find_by_id($_SESSION['delivery_id'])->ne)?d()->Delivery_variant->find_by_id($_SESSION['delivery_id'])->text:""?>
 									</div>

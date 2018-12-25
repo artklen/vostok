@@ -224,45 +224,16 @@ class Order extends ActiveRecord
 			$result .= '<span style="color:red;font-weight:bold;font-size:1.5em;line-height:1em;">☒</span>';
 			break;
 		}
-		switch ($this->payment_type) {
-		case 'cash':
-			$result .= ' Наличными курьеру';
+		return $result;
+	}
+	function show_pay_type() {
+		$result = "";
+		switch ($this->pay_type) {
+		case '1':
+			$result .= 'Онлайн оплата';
 			break;
-		case 'cashless':
-			$result .= ' Безналичный расчет';
-			break;
-		case 'online':
-			$result .= ' Онлайн';
-			break;
-		case 'PC':
-			$result .= 'Оплата из кошелька в Яндекс.Деньгах (Онлайн яндекс.касса)';
-			break;
-		case 'AC':
-			$result .= 'Оплата пластиковой картой (Онлайн яндекс.касса)';
-			break;
-		case 'SB':
-			$result .= 'Оплата через Сбербанк: по смс или Сбербанк Онлайн (Онлайн яндекс.касса)';
-			break;
-		case 'GP':
-			$result .= 'Оплата наличными через кассы и терминалы (Онлайн яндекс.касса)';
-			break;
-		case 'AB':
-			$result .= 'Оплата через Альфа-Клик (Онлайн яндекс.касса)';
-			break;
-		case 'PB':
-			$result .= 'Оплата через интернет-банк Промсвязьбанка (Онлайн яндекс.касса)';
-			break;
-		case 'bank':
-			$result .= ' <b>Предварительная заявка</b> (Банковская квитанция)';
-			break;
-		case 'post':
-			$result .= ' <b>Предварительная заявка</b> (Почтовый перевод)';
-			break;
-		case 'card':
-			$result .= ' <b>Предварительная заявка</b> (Перечислением на карту)';
-			break;
-		case 'platron':
-			$result .= ' Оплата через SMS (онлайн-оплата Platron)';
+		case '2':
+			$result .= 'Наличными или перечислением';
 			break;
 		}
 		return $result;

@@ -65,6 +65,7 @@ d()->post('/basket/finish', function() {
 			$order->email        = d()->params['email'];
 			$order->comment      = d()->params['comment'];
 			$order->delivery_type = d()->params['delivery_type'];
+			$order->pay_type = d()->params['pay_type'];
 			
 			
 			$order->secret       = md5(uniqid(rand() . json_encode($_SERVER) . session_id() . microtime(), true));
@@ -77,8 +78,11 @@ d()->post('/basket/finish', function() {
 			
 
 			d()->notification->new_order($order);
-	
-			print 'document.location.href="/aquiring/sber/payfororder/'.$order->secret.'";';
+			if (params['pay_type']==1){
+				print 'document.location.href="/aquiring/sber/payfororder/'.$order->secret.'";';
+			} else {
+				print 'document.location.href="/thankyou"';
+			}
 			exit;
 		}
 		if (isset($_POST['is_modal'])) {
