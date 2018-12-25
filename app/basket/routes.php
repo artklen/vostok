@@ -78,7 +78,7 @@ d()->post('/basket/finish', function() {
 			
 
 			d()->notification->new_order($order);
-			if (params['pay_type']==1){
+			if (d()->params['pay_type']==1){
 				print 'document.location.href="/aquiring/sber/payfororder/'.$order->secret.'";';
 			} else {
 				print 'document.location.href="/thankyou"';
