@@ -81,6 +81,7 @@ d()->post('/basket/finish', function() {
 			if (d()->params['pay_type']==1){
 				print 'document.location.href="/aquiring/sber/payfororder/'.$order->secret.'";';
 			} else {
+				unset($_SESSION['delivery_id']);
 				print 'document.location.href="/thankyou"';
 			}
 			exit;

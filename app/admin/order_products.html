@@ -32,6 +32,16 @@
 			</td> */?>
 		</tr>
 	</foreach>
+	@ if (d()->delivery_bool) {
+		<tr>
+			<td><?php print $key + 1; ?></td>
+			<td>Доставка</td>
+			<td>{delivery.price|h} р.</td>
+			<td>-</td>
+			<td>1</td>
+			<td>{delivery.price|h} р.</td>
+		</tr>	
+	@ }
 	</tbody>
 </table>
 <?php/*
