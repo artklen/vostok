@@ -5,7 +5,7 @@ d()->route('/admin/order_products/:id', function($id) {
 	#d()->this = d()->Order->f($id);
 	d()->this = d()->Order->where('id = ?', $id);
 	d()->orders_items = d()->this->orders_items;
-	d()->delivery = d()->Delivery_variant->find_by_id(d()->order->delivery_type);
+	d()->delivery = d()->Delivery_variant->find_by_id(d()->this->delivery_type);
 	d()->delivery_bool = false;
 	if (d()->delivery->ne){
 		if (d()->delivery->price != "" && d()->delivery->price*1 >0){
