@@ -34,7 +34,7 @@ d()->on('aquiring.successfull_paid',function($param){
 			d()->mail->send();
 		}
 		//=====================================================
-		$url = "https://fce.chekonline.ru:4443/fr/api/v2/Complex";
+		$url = "https://kkt.chekonline.ru/fr/api/v2/Complex";
 		$datas = array(
 			"Device" => "auto",
 			'RequestId' => uniqid(),
@@ -87,9 +87,9 @@ d()->on('aquiring.successfull_paid',function($param){
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $mydatas);
 		curl_setopt($curl, CURLOPT_URL,$url);
 		// Сертификат
-		curl_setopt($curl,CURLOPT_SSLCERT, getcwd().'/app/aquiring/certificate_test.pem');
+		curl_setopt($curl,CURLOPT_SSLCERT, getcwd().'/app/aquiring/certificate.pem');
 		// Закрытый ключ
-		curl_setopt($curl,CURLOPT_SSLKEY, getcwd().'/app/aquiring/privateKey_test.pem');
+		curl_setopt($curl,CURLOPT_SSLKEY, getcwd().'/app/aquiring/privateKey.pem');
 		$json_response = curl_exec($curl);
 		d()->order_ch->chek_response = $json_response;
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
