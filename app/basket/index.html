@@ -158,8 +158,8 @@
 										<div>
 										<select name="pay_type" class="js-sumoselect" placeholder="Вариант оплаты">
 											<option class="hidden"></option>
-											<option value="1" >Онлайн оплата</option>											
-											<option value="2" >Наличными или перечислением</option>
+											<option value="1">Онлайн оплата</option>											
+											<option value="2" title="Наложенный платеж (+ 2% комиссия)">Наложенный платеж (+ 2% комиссия)</option>
 										</select>
 										</div>
 									</div>
@@ -172,8 +172,8 @@
 										</div>
 									</div>
 
-									<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку ваших персональных данных</span>
-									@ if (iam()){
+									<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку <a href="/privacy-policy">ваших персональных данных</a></span>
+									@ if (iam() || true){
 										<input type="submit" class="send-10" value="Заказать"/>
 									@ }
 								</div>

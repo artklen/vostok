@@ -11,8 +11,10 @@ php_flag magic_quotes_runtime off
 RewriteEngine On
 RewriteBase /
 
+RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]  
 RewriteRule ^index$    / [R=301,L]
 
 RewriteRule \.git - [F,L]
 
-RewriteRule  !\.jpg$|\.jpeg$|\.woff$|\.xlsx?$|\.pptx?$|\.docx?$|\.gif$|\.png$|\.bmp$|\.jpeg$|\.zip$|\.tar.gz$|\.swf$|\.pdf$|\.rar$|\.js$|\.css$|\.ico$|\.woff$|^cms/external|^docs\/docs\.php|^cms/mod_admin/imanager|^images/|^yandex|^google|^BingSiteAuth|^wmail|^cmsmagazine|^robots\.txt|^storage/(.*)        index.php   [L]
+RewriteRule  !\.jpg$|\.jpeg$|\.woff$|\.xlsx?$|\.pptx?$|\.docx?$|\.gif$|\.png$|\.bmp$|\.jpeg$|\.zip$|\.tar.gz$|\.swf$|\.pdf$|\.rar$|\.js$|\.css$|\.ico$|\.woff$|^cms/external|^docs\/docs\.php|^cms/mod_admin/imanager|^images/|^yandex|^google|^BingSiteAuth|^wmail|^cmsmagazine|^storage/(.*)|^sitemaps/(.*)        index.php   [L]

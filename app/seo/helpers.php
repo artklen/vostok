@@ -51,6 +51,10 @@ d()->seo_from_object = function($object, $params = null) {
 
 d()->check_if_seo_prepared = function() {
 	if (!d()->is_seo_prepared && d()->this) {
+		$table_params_key = d()->this->table . '_seo_params';
+		if (!empty(d()->datapool[$table_params_key])) {
+			d()->seo_from_object(d()->this, d()->$table_params_key);
+		}
 		d()->seo_from_object(d()->this, d()->seo_default_params);
 	}
 };

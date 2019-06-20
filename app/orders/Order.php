@@ -238,5 +238,25 @@ class Order extends ActiveRecord
 		}
 		return $result;
 	}
+	function pay_info() {
+		$result = "";
+		switch ($this->pay_type) {
+		case '1':
+			$result .= 'Онлайн оплата';
+			if ($this->is_paid){
+				$result .= ' <span style="color:green">[Оплачено]</span>';
+				if (strpos($this->chek_response, '{"Error":0}')){
+					$result .= ' <span style="color:green">(Чек отправлен)</span>';
+				}else{
+					$result .= ' <span style="color:red">(Ошибка отправки чека, обратитесь к администратору)</span>';
+				}
+			}
+			break;
+		case '2':
+			$result .= 'Наличными или перечислением';
+			break;
+		}
+		return $result;
+	}
 
 }

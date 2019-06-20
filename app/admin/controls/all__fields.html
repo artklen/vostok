@@ -13,6 +13,8 @@ foreach($user_fields as $value){
 	d()->field_params = null;
 	if ($value['type'] === 'boolean') {
 		print d()->admin_checkbox();
+	} elseif ($value['type'] === 'strings_list') {
+		print d()->admin_big();
 	} else {
 		print d()->admin_small();
 	}

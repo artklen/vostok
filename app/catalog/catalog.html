@@ -31,26 +31,26 @@
 		<div class="row">
 			@ if (count($_GET['collection_id']) != 1 || count($_GET) != 1) {
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="title">
-						{seo.h1|h}
-					</div>
+					<h1 class="title">
+						{{edit d()->this_category}}{seo.h1|h}
+					</h1>
 				</div>
 			@ }
 
 			@ if (!$_GET['search']) {
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-xs">
-				@ if (d()->Option.image_catalog_banner) {
-					<div class="banner-1" style="background-image: url({Option.image_catalog_banner|preview 'in555', 'in290'}) no-repeat top center;">
+				@ if (d()->Option->image_catalog_banner) {
+					<div class="banner-1" style="background-image: url({Option->image_catalog_banner|preview 'in555', 'in290'}) no-repeat top center;">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-7 col-lg-12">
 								<div class="banner-2">
 									<div class="title-1">
 										@ if (d()->Option->link_catalog_banner) {
-										<a href="{Option.link_catalog_banner}">{Option.title_catalog_banner}</a>
+										<a href="{Option.link_catalog_banner|h}">{Option.title_catalog_banner|h}</a>
 										@ }
 									</div>
 									<div class="title-2">
-										{Option.description_catalog_banner}
+										{Option.description_catalog_banner|h}
 									</div>
 								</div>
 							</div>
@@ -97,7 +97,7 @@
 											.sort .right a:after {transform: rotate(180deg);}
 										</style>
 										<?php } else { $link = (count($_GET) ? $_SERVER['REQUEST_URI'].'&' : '?').'order=price_to_min'; }?>
-										<div class="right">Сортировка по: &nbsp;<a href="<?=$link?>">Цене</a></div>
+										<?/*<div class="right">Сортировка по: &nbsp;<a href="<?=$link?>">Цене</a></div>*/?>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">

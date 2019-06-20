@@ -1,15 +1,37 @@
 {{edit}}{{delete}}
+<?/*
 <div class="wrap-6">
 	@ if (d()->this->discount) {
 	<span class="sale">Скидка</span>
 	@ } else {
 	@ }
 </div>
+*/?>
+<div class="wrap-6">
+
+	@ if(d()->this->is_action) {
+			
+		@ if(d()->this->action_type =='1') {
+			<span class="sale">Хит продаж</span>
+		@}
+		
+		@ if(d()->this->action_type =='2') {
+			<span class="sale">Скидка</span>
+		@}
+		
+	@ } else if (d()->this->discount){
+		<span class="sale">Скидка</span>
+	@ }
+</div>
+
 <div class="top">
 
 	<a href="/product/{.url}" class="main-item">
 		<?php //var_dump(d()->this->required_image); die; ?>
-		<img src="{this.required_image|preview 'in200', 'in200'}" alt=""/></a>
+		<!--<img src="{this.required_image|preview 'in200', 'in200', 'watermark' => '/images/watermark.png'}" alt=""/>-->
+		
+		<img src="<?php if(d()->this->image && is_file($_SERVER['DOCUMENT_ROOT'].d()->this->image)){?>{.image|preview 'in200', 'in200', 'watermark' => '/images/watermark.png'}<?php } else { ?>/storage/nophoto.png<?php } ?>" alt="">
+	</a>
 
 	<!--<div class="middle">
 		<a href="#" class="mini"><img src="/images/mini-1.jpg" alt=""/></a>
@@ -21,9 +43,20 @@
 	<a href="/product/{.url}" class="title">
 		{.title}
 	</a>
-	<div class="price">{.calc_price_format} р.
-		@ if (d()->this->discount) {
-		 <span>{.price_origin_format} р.</span>
-		@ }
-	</div>
+	@ if (1 * ~this->quantity > 0) {
+		<div>В наличии</div>
+	@ }
+	@ if (d()->this->discount) {
+		<div class="price price-sale-color">{.calc_price_format} р.
+			@ if (d()->this->discount) {
+			 <span>{.price_origin_format} р.</span>
+			@ }
+		</div>
+	@ } else {
+		<div class="price">{.calc_price_format} р.
+			@ if (d()->this->discount) {
+			 <span>{.price_origin_format} р.</span>
+			@ }
+		</div>
+	@ }
 </div>

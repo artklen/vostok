@@ -82,10 +82,19 @@
 					?>
 
 					<li>
+						@ if (d()->this->url != ""){ 
+							<a href="/{.url}">
+								<span class="sub-1">
+									<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
+								</span>
+								<span class="sub-2">{.title}</span>
+							</a>
+						@ } else {
 						<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
 							<span class="sub-1"><!--<img src="/images/mini-2.jpg" alt=""/>--></span>
 							<span class="sub-2">{.title} <span class="sub-3"><?=$count?></span></span>
 						</a>
+						@ }
 					</li>
 				</foreach>
 			</ul>

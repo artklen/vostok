@@ -153,7 +153,7 @@ class Catalog_excel {
 										array_shift($images_real);
 									}
 								} else {
-									$values[$ownColumns[$column]] = '';
+									//$values[$ownColumns[$column]] = '';
 									// $values[$ownColumns[$column] . '_import_value'] = '';
 								}
 								break;
@@ -309,7 +309,7 @@ class Catalog_excel {
 			'id' => 'id',
 			'excel_title' => 'Название',
 			'code' => 'Артикул',
-			//'image' => 'Изображение',
+			'image' => 'Изображение',
 			'price' => 'Цена',
 			'discount' => 'Скидка',
 			'collection_id' => 'Коллекция',
@@ -323,7 +323,7 @@ class Catalog_excel {
 		try {
 			if (empty($columns_callbacks)) {
 				$columns_callbacks = [
-					'image' => 'export_field_import_value_callback',
+					//'image' => 'export_field_import_value_callback',
 					'text' => 'export_field_import_value_callback',
 					'text_full' => 'export_field_import_value_callback',
 					'collection_id' => 'export_collection_value',
@@ -358,8 +358,20 @@ class Catalog_excel {
 				
 				$b = PHPExcel_Cell::stringFromColumnIndex($col++);
 				//print $b.$row; exit;
+				$worksheet->getStyle($b.$row)
+					->getNumberFormat()
+					->setFormatCode(
+						PHPExcel_Style_NumberFormat::FORMAT_TEXT
+					);
 				$worksheet->setCellValueExplicit($b.$row, $column_title,  PHPExcel_Cell_DataType::TYPE_STRING);
-			} 
+			}
+			// $b = PHPExcel_Cell::stringFromColumnIndex($col++);
+			// $worksheet->getStyle($b.$row)
+				// ->getNumberFormat()
+				// ->setFormatCode(
+					// PHPExcel_Style_NumberFormat::FORMAT_TEXT
+				// );
+			// $worksheet->setCellValueExplicit($b.$row, "Изображение",  PHPExcel_Cell_DataType::TYPE_STRING);
 			$row++;
 			foreach ($products_list as $product_orm) {
 				$col = 0;
@@ -374,6 +386,11 @@ class Catalog_excel {
 						}
 					}
 					$b = PHPExcel_Cell::stringFromColumnIndex($col++);
+					$worksheet->getStyle($b.$row)
+						->getNumberFormat()
+						->setFormatCode(
+							PHPExcel_Style_NumberFormat::FORMAT_TEXT
+						);
 					$worksheet->setCellValueExplicit($b.$row, $value,  PHPExcel_Cell_DataType::TYPE_STRING);
 				}
 				$row++;

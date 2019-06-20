@@ -16,12 +16,19 @@
 					{{add 'products_images', 'product_id'=>d()->this->id}}{{edit}}
 					<div class="slider-3">
 						<div class="slider-for js-slider-for">
-							<div><a href="{this.required_image|preview '1000', 'auto'}" class="js-fancybox" data-fancybox-group="product"><img src="{this.required_image|preview 'in389', 'in387'}" alt=""/></a></div>
+							<?/*<div><a href="{this.required_image|preview '1000', 'auto', 'watermark' => '/images/watermark-4x.png'}" class="js-fancybox" data-fancybox-group="product"><img src="{this.required_image|preview 'in389', 'in387', 'watermark' => '/images/watermark-2x.png'}" alt=""/></a></div>*/?>
+							
+							<div>	
+								<a href="<?php if(d()->this->image && is_file($_SERVER['DOCUMENT_ROOT'].d()->this->image)){?>{.image|preview '1000', 'auto', 'watermark' => '/images/watermark-4x.png'}<?php } else { ?>/storage/nophoto.png<?php } ?>" class="js-fancybox" data-fancybox-group="product"><img src="<?php if(d()->this->image && is_file($_SERVER['DOCUMENT_ROOT'].d()->this->image)){?>{.image|preview 'in389', 'in387', 'watermark' => '/images/watermark-2x.png'}<?php } else { ?>/storage/nophoto.png<?php } ?>" alt=""></a>
+							</div>
 							<foreach this->products_images>
-								<div>
-									<a href="{this.required_image|preview '1000', 'auto'}" class="js-fancybox" data-fancybox-group="product">
-										<img src="{this.required_image|preview 'in389', 'in387'}" alt=""/>
+								<?/*<div>
+									<a href="{this.required_image|preview '1000', 'auto', 'watermark' => '/images/watermark-4x.png'}" class="js-fancybox" data-fancybox-group="product">
+										<img src="{this.required_image|preview 'in389', 'in387', 'watermark' => '/images/watermark-2x.png'}" alt=""/>
 									</a>
+								</div>*/?>
+								<div>	
+									<a href="<?php if(d()->this->image && is_file($_SERVER['DOCUMENT_ROOT'].d()->this->image)){?>{.image|preview '1000', 'auto', 'watermark' => '/images/watermark-4x.png'}<?php } else { ?>/storage/nophoto.png<?php } ?>" class="js-fancybox" data-fancybox-group="product"><img src="<?php if(d()->this->image && is_file($_SERVER['DOCUMENT_ROOT'].d()->this->image)){?>{.image|preview 'in389', 'in387', 'watermark' => '/images/watermark-2x.png'}<?php } else { ?>/storage/nophoto.png<?php } ?>" alt=""></a>
 								</div>
 							</foreach>
 						</div>
@@ -72,7 +79,13 @@
 						<div class="left">
 							<?php if (d()->this->discount) { ?>
 							<span>{.price_origin_format} р.</span>
-							<?php } ?> {.calc_price_format} р.
+							<?php } ?> 
+							@ if (d()->this->discount) {
+								<span class="price-sale-color">{.calc_price_format} р.</span>
+							@ } else {
+								{.calc_price_format} р.
+							@ }
+							
 						</div>
 						@ if (d()->this->is_quantity){
 							<div class="right js-basket-add-container">
@@ -168,8 +181,8 @@
 						Извините!  Эта  модель  снята  с  производства. Ознакомьтесь с <a href="#to_show">похожей продукцией.
 						</div>
 					@ } else {
-						<div class="info">Нет в наличии</div>
-						<a href="/feedback/order?id={.id}" class="send-6 js-feedback">Под заказ</a>
+						<div class="info">Данный товар вы можете</br>приобрести под заказ</div>
+						<a href="/feedback/order?id={.id}" class="send-6 js-feedback">Заказать</a>
 					@ }
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 visible-xs">
@@ -201,6 +214,9 @@
 						<label for="tab-2" class="active">Описание</label>
 					@ }
 
+					<input type="radio" id="tab-3" class="tab-3" name="tabs"/>
+					<label for="tab-3" class="active">Отзывы</label>
+					
 					<section class="content-tab-1">
 						@ if (d()->this->collection->ne) {
 						<div class="item">
@@ -233,6 +249,65 @@
 						{.text_full}
 					</section>
 					@ }
+					<section class="content-tab-3">
+						<div class="reviews-2">
+							{{add 'reviews', 'product_id' => d()->this->id}}
+							<div class="row grid-row">
+								@ if (iam() || d()->reviews_list->ne) {
+									<foreach reviews_list>
+										<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+											<div class="block-reviews">
+												@ if (iam()) {
+													<div>{.show_is_published}{{edit}}{{delete}}</div>
+												@ }
+												<div class="date-reviews">{.published_at|userdate}</div>
+												<div class="name-reviews">{.name}</div>	
+												<div class="text-reviews"><p>{.text}</p></div>
+											</div>
+										</div>
+									</foreach>
+								@ } else {
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<div class="block-no-reviews"><p>Пока нет ни одного отзыва.</p></div>
+									</div>
+								@ }
+							</div>
+							<div class="feedback-reviews">
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<div class="leave">Оставить отзыв:</div>
+									</div>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<div class="all"><a href="/reviews/">Посмотреть все отзывы</a></div>
+									</div>
+								</div>	
+								{{simple_ajax_form '/feedback/review'}}
+									<div class="row">	
+										<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+											<div>
+												<div class="title">Ваше Имя</div>
+												<div><input type="text" {{inputparams 'name'}} class="box"></div>
+											</div>
+											<div>
+												<div class="title">Ваш E-mail</div>
+												<div><input type="text" {{inputparams 'email'}}></div>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+											<div class="title">Текст отзыва</div>
+											<textarea {{inputparams 'text'}} class="box"></textarea>
+											<input type="submit" class="send-10" value="Отправить">
+										</div>
+										<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
+										<input type="hidden" name="product_id" value="{.id|h}" />
+										<input type="hidden" name="date" value="{.userdate}" />
+									</div>
+								{{/form}}
+							</div>
+							
+							
+						</div>
+					</section>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">

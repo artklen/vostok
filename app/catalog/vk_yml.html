@@ -1,0 +1,38 @@
+<<?php /* */ ?>?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE yml_catalog SYSTEM "shops.dtd">
+<yml_catalog date="<?= Date('Y-m-d H:i') ?>">
+	<shop>
+		<name>Восток</name>
+		<company>ООО &quot;Время&quot;</company>
+		<url>{protocol|h}://<?= h($_SERVER['SERVER_NAME']) ?>/</url>
+		<currencies>
+			<currency id="RUR" rate="1"/>
+		</currencies>
+		<categories>
+			<foreach categories_list>
+				<category id="{.id}"<?= d()->this->category_id !== '' ? ' parentId="' . h(d()->this->category_id) . '"' : ''?>>{.title|h}</category>
+			</foreach>
+		</categories>
+		<offers>
+		<foreach products_list>
+		@ ~price = 1 * ~this->price;
+		@ if (~price > 1e-7) {
+			<offer id="{.id|h}" available="<?= 1 * d()->this->quantity > 0 ? 'true' : 'false' ?>">
+				<name>{.title|h}</name>
+				<vendor><?= d()->this->collection_id === '168' ? 'Vostok Europe' : 'Восток' ?></vendor>
+				<url>{protocol|h}://<?= h($_SERVER['SERVER_NAME']) ?>{this|h_url_for}</url>
+				<price>{price|h}</price>
+				<currencyId>RUR</currencyId>
+				<categoryId type="Own">{.category_id|h}</categoryId>
+			@ if (~this->image !== '') {
+				<picture>{protocol|h}://<?= h($_SERVER['SERVER_NAME']) ?>{.image|h}</picture> 
+			@ }
+			@ if (~this->text !== '') {
+				<description>{.text|strip_tags|h}</description>
+			@ }
+			</offer>
+		@ }
+		</foreach>
+		</offers>
+	</shop>
+</yml_catalog>

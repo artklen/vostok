@@ -1,4 +1,6 @@
 <?php
+d()->rubrics_url_base = '/rubrics/';
+d()->news_url_base = '/news/';
 
 d()->route('/news', function () {
 	d()->use_page_model();

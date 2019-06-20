@@ -1,0 +1,67 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			{{crumbs}}
+		</div>
+	</div>
+</div>
+<div class="inside-1">
+	<h1>{{edit}}{seo.h1|h}</h1>		
+</div>
+
+<div class="reviews-1">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h2>Отзывы о нас</h2>
+				<div class="about-reviews">
+					<a href="https://vk.com/vostokclock" target="blank" class="link">Официальная группа Вконтакте</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h2>Отзывы о нашей продукции</h2>
+			</div>
+		</div>
+		{{add 'reviews', 'product_id' => d()->this->id}}
+		<div class="row grid-row">
+			@ if (iam() || d()->reviews_list->ne) {
+				<foreach reviews_list>
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+						<div class="block-reviews">
+							@ if (iam()) {
+								<div>{.show_is_published}{{edit}}{{delete}}</div>
+							@ }
+							<div class="date-reviews">{.published_at|userdate}</div>
+							<div class="name-reviews">{.name}</div>	
+							<div class="product-reviews">
+								<div class="row">
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+										<a href="/product/<?=d()->product->url?>" target="blank"><img src="<?=preview(d()->product->required_image, 'auto', 'auto');?>"/></a>
+									</div>
+									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+										<a href="/product/<?=d()->product->url?>" class="title" target="blank"><?=d()->product->title?></a>
+										<a href="/product/<?=d()->product->url?>" class="link" target="blank">Посмотреть товар</a>
+									</div>
+								</div>
+							</div>
+							<div class="text-reviews"><p>{.text}</p></div>
+						</div>
+					</div>
+				</foreach>
+			@ } else {
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="block-no-reviews"><p>Пока нет ни одного отзыва.</p></div>
+				</div>
+			@ }
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="center-3">
+					{reviews_list|custom_pagination "/components/pagination.html"}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

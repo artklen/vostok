@@ -47,8 +47,8 @@ d()->on('aquiring.successfull_paid',function($param){
 			$datas['Lines'][]=array(
 				"Qty" => $order_item->number * 1000,
 				"Price" => $order_item->price * 100,
-				"PayAttribute" => 4,
-				"TaxId" => 1,
+				"PayAttribute" => 1,
+				"TaxId" => 4,
 				"Description"=> $order_item->title,
 			);
 		}
@@ -59,16 +59,16 @@ d()->on('aquiring.successfull_paid',function($param){
 					$datas['Lines'][]=array(
 						"Qty" => 1000,
 						"Price" => $delivery->price * 100,
-						"PayAttribute" => 4,
-						"TaxId" => 1,
+						"PayAttribute" => 1,
+						"TaxId" => 4,
 						"Description"=> "Доставка " . $delivery->title,
 					);
 				}elseif ($delivery->free_price==""){
 					$datas['Lines'][]=array(
 						"Qty" => 1000,
 						"Price" => $delivery->price * 100,
-						"PayAttribute" => 4,
-						"TaxId" => 1,
+						"PayAttribute" => 1,
+						"TaxId" => 4,
 						"Description"=> "Доставка " . $delivery->title,
 					);
 				}

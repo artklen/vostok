@@ -71,5 +71,5 @@ d()->root_domain = function() {
 };
 
 d()->protocol = function($city = null) {
-	return 'http';
+	return 'https';
 };

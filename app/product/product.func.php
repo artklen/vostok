@@ -8,7 +8,7 @@ d()->route('/product/update_trigram',  function()
 		d()->db->exec('delete from `products_trigrams` where `product_id`=' . $product_id);
 		$product = d()->Product->find_by('id', $product_id);
 		if ($product->ne) {
-			$trigrams = get_trigram($this->title);
+			$trigrams = get_trigram($product->title);
 			if (!empty($trigrams)) {
 				d()->db->exec('insert into `products_trigrams` (`product_id`, `value`) values (' . $product_id . ',' . implode('), (' . $product_id . ',', array_map(array(d()->db, 'quote'), $trigrams)) . ')');
 			}
@@ -38,23 +38,31 @@ d()->route('/product/:url', function($url) {
 	{
 		d()->page_not_found();
 	}
-
-	#d()->crumbs_list = [d()->page_crumb('/catalog')];
-	d()->crumbs_list =
-		[
-			[
-				'title' => d()->this->category->title,
-				'link' => '/catalog/'. d()->this->category->url
-			]
-		];
 	
-	if (d()->this->collection->id)
-		d()->crumbs_list[] =
-			[
-				'title' => d()->this->collection->title,
-				'link' => '/catalog/'.d()->this->category->url.'?collection_id%5B%5D='. d()->this->collection->id
+	d()->reviews_list = d()->this->reviews->order('`published_at`');
+	if (!iam()) {
+		d()->reviews_list->only('published');
+	}
+	
+	#d()->crumbs_list = [d()->page_crumb('/catalog')];
+	d()->crumbs_list = [[
+		'title' => d()->this->category->title,
+		'link' => '/catalog/'. d()->this->category->url
+	]];
+	
+	if (d()->this->collection->id) {
+		d()->crumbs_list[] = [
+			'title' => d()->this->collection->title,
+			'link' => d()->url_for(d()->this->category) . '?collection_id%5B%5D=' . d()->this->collection->id
+		];
+		if (d()->this->series) {
+			d()->crumbs_list[] = [
+				'title' => d()->this->series,
+				'link' => d()->url_for(d()->this->category) . '?collection_id%5B%5D=' . d()->this->collection->id . '&series%5B%5D=' . str_replace('%20', '+', urlencode(d()->this->series)),
 			];
-
+		}
+	}
+	
 	#d()->crumbs_list[] = d()->crumb_for(d()->this, false);
 	d()->crumbs_list[] = ['title' => d()->this->code];
 	//d()->seo->h1 = "Часы ".d()->this->code." (".d()->this->collection->title.")";
@@ -65,3 +73,4 @@ d()->route('/product/:url', function($url) {
 d()->route('/product', function() {
 	d()->page_not_found();
 });
+

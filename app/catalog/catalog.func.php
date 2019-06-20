@@ -194,8 +194,22 @@ d()->route('/catalog', function ()
 		d()->canonical = d()->catalog_seo_data['canonical'];
 		d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
 	}
-
 	d()->view->render('/catalog/catalog.html');
+});
+
+d()->route('/catalog/yml', function() {
+    d()->products_list = d()->Product;
+    d()->categories_list = d()->Category->where('`id` in (?)', d()->products_list->fast_all_of('category_id'));
+    header('Content-type:application/xml; charset=utf-8');
+    print d()->view->render('/catalog/yml.html');
+    exit;
+});
+d()->route('/catalog/vk_yml', function() {
+    d()->products_list = d()->Product;
+    d()->categories_list = d()->Category->where('`id` in (?)', d()->products_list->fast_all_of('category_id'));
+    header('Content-type:application/xml; charset=utf-8');
+    print d()->view->render('/catalog/vk_yml.html');
+    exit;
 });
 
 d()->route('/catalog/:category', function ($category)
@@ -356,19 +370,19 @@ d()->route('/catalog/:category', function ($category)
 		d()->seo_from_object(d()->this_page, d()->catalog_seo_params);
 	}
 
-	if (d()->this_category->ne)
-	{
-		d()->crumbs_list[0] =
-		[
-			'title' => d()->this_category->title
-		];
-
-		if (count($_GET) > 0)
-		{
-			d()->crumbs_list[0]['link'] = '/catalog/'.d()->this_category->url;
-			d()->crumbs_list[1]['link'] = str_replace('/catalog', '/catalog/'.d()->this_category->url, d()->crumbs_list[1]['link']);
-		}
-	}
+	//if (d()->this_category->ne)
+	//{
+	//	d()->crumbs_list[0] =
+	//	[
+	//		'title' => d()->this_category->title
+	//	];
+    //
+	//	if (count($_GET) > 0)
+	//	{
+	//		d()->crumbs_list[0]['link'] = '/catalog/'.d()->this_category->url;
+	//		d()->crumbs_list[1]['link'] = str_replace('/catalog', '/catalog/'.d()->this_category->url, d()->crumbs_list[1]['link']);
+	//	}
+	//}
 
 	d()->view->render('/catalog/catalog.html');
 });

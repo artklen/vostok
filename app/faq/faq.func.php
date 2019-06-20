@@ -1,4 +1,5 @@
 <?php
+d()->faq_categories_url_base = '/faq/';
 
 d()->route('/faq', function (){
 	d()->use_page_model();

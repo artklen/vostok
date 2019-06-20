@@ -41,6 +41,25 @@ d()->post($url_base . ':name', function($name) {
 		unset(d()->params['_element'], d()->params['_action'], d()->params['_is_simple_names']);
 		$feedback->form_data = json_encode(d()->params, JSON_FORCE_OBJECT);
 		$feedback->save();
+		
+		if (!empty(d()->feedback_form[$name]['tables'])) {
+			foreach (d()->feedback_form[$name]['tables'] as $table => $fields) {
+				$orm = activerecord_factory_from_table($table);
+				$create = array();
+				foreach ($fields as $table_field => $params_field) {
+					if (is_numeric($table_field)) {
+						$table_field = $params_field;
+					}
+					if ($params_field === 'NOW') {
+						$create[$table_field] = date('Y-m-d');
+					} else {
+						$create[$table_field] = d()->params[$params_field];
+					}
+				}
+				$orm->create($create);
+			}
+		}
+		
 		d()->notification->feedback($name);
 		$redirect = isset(d()->feedback_form[$name]['redirect']) ? d()->feedback_form[$name]['redirect'] : '/thankyou';
 		if (AJAX) {

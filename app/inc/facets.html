@@ -12,8 +12,8 @@
 </div>
 
 <div class="item js-unfolding-container container-categories">
-	<span class="name">Также в продаже:</span>
-	<div class="categories-list">
+	<span class="name also-available-title">Также в продаже:</span>
+	<div class="categories-list also-available-list">
 		<foreach Category>
 			@ if (d()->this_category->id != d()->this->id) {
 			<a href="/catalog/{.url}">{.title}</a><br>
