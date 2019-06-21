@@ -75,6 +75,7 @@ class Catalog_excel {
 			$this->unicalize_field_title('Краткое описание') => 'text',
 			$this->unicalize_field_title('Подробное описание') => 'text_full',
 			$this->unicalize_field_title('Наличие') => 'quantity',
+			$this->unicalize_field_title('Можно упаковать') => 'is_can_packaged',
 
 			#$this->unicalize_field_title('Свойства часов') => 'text_props',
 		];
@@ -313,6 +314,7 @@ class Catalog_excel {
 			'price' => 'Цена',
 			'discount' => 'Скидка',
 			'collection_id' => 'Коллекция',
+			'is_can_packaged' => 'Можно упаковать',
 			'benefits' => 'Выгоды',
 			'text' => 'Краткое описание' ,
 			'text_full' => 'Подробное описание',

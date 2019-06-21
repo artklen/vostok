@@ -175,12 +175,17 @@ $(function() {
 	};
 	
 	$(document).on('click', '.js-basket-add', function() {
+		var that = $(this);
+
 		var data = get_basket_data($(this));
 		var input = $('.js-basket-add-input');
 		if (input.length) {
 			data.number = input.val();
 		}
 		Basket.add(data);
+
+		that.addClass("hide");
+		that.parent().find(".js-in-basket").removeClass("hide");
 	});
 	
 	$(document).on('click', '.js-basket-update', function() {

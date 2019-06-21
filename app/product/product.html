@@ -96,7 +96,7 @@
 						@ }
 					</div>
 
-					@ if (d()->this->category->url == 'chasy' && d()->this->is_quantity) {
+					@ if (d()->this->category->url == 'chasy' && d()->this->is_can_packaged && d()->this->is_quantity) {
 						<div class="title-1">Выберите упаковку</div>
 
 						<div class="js-unfolding-container">
@@ -172,13 +172,17 @@
 							<?php } ?>
 						</div>
 					@ } else {
-					<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked hidden/>
+						<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked hidden/>
 					@ }
+
 					@ if (d()->this->is_quantity){
-						<a href="javascript:void(0);" class="send-6 js-basket-add">Добавить в корзину</a>
+						@ d()->in_basket = d()->basket->product_items(d()->this->id)->count > 0;
+						<a href="javascript:void(0);" class="send-6 js-basket-add <?= (! d()->in_basket ?: 'hide') ?>">Добавить в корзину</a>
+						<a href="/basket" class="send-2 js-in-basket <?= (d()->in_basket ?: 'hide') ?>">Перейти в корзину</a>
 					@ } elseif (d()->this->is_quantity === false) {
-						<div class="info">Товар снят с производства<br/>
-						Извините!  Эта  модель  снята  с  производства. Ознакомьтесь с <a href="#to_show">похожей продукцией.
+						<div class="info">
+							Товар снят с производства<br/>
+							Извините!  Эта  модель  снята  с  производства. Ознакомьтесь с <a href="#to_show">похожей продукцией.
 						</div>
 					@ } else {
 						<div class="info">Данный товар вы можете</br>приобрести под заказ</div>

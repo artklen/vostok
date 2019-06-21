@@ -143,10 +143,10 @@
 	}
 	.menu-2 {
 		margin: 0;
-	
+
 		> li {
 			a {
-				font-size: 13px;
+				font-size: 12px;
 			}
 			&.arrow {
 				.last-1 {
@@ -162,6 +162,10 @@
 						}
 					}
 				}
+			}
+			margin: 0 4px 0 0;
+			&:last-child {
+				margin: 0 0 0 4px;
 			}
 		}
 	}

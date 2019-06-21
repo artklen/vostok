@@ -91,15 +91,20 @@
 
   .menu-2 {
     margin: 0; }
-    .menu-2 > li a {
-      font-size: 13px; }
+    .menu-2 > li {
+      margin: 0 4px 0 0; }
+      .menu-2 > li a {
+        font-size: 12px; }
       .menu-2 > li.arrow .last-1 {
         /*min-width: 569px;
          margin: -2px 0 0 0;*/ }
         .menu-2 > li.arrow:last-child .last-1 {
           /*margin: -2px 0 0 0;*/ }
-          .menu-2-xs .close {
-            top: 20px; }
+          .menu-2 > li:last-child {
+            margin: 0 0 0 4px; }
+
+  .menu-2-xs .close {
+    top: 20px; }
 
   .header-bottom {
     padding: 10px 0 10px 0; }

@@ -658,16 +658,15 @@ input.list[type="checkbox"]:disabled:hover + span {
 .menu-2 {
   font-size: 0;
   padding: 10px 0 0 0;
-  margin: 0 0 0 20px;
   position: relative; }
   .menu-2 > li {
     list-style: none;
     display: inline-block;
-    margin: 0 25px 0 0;
+    margin: 0 8px 0 0;
     /*position: relative;*/ }
     .menu-2 > li > a {
       font-family: 'Roboto Condensed', sans-serif;
-      font-size: 15px;
+      font-size: 14px;
       color: #171715;
       height: 30px;
       font-weight: 700;
@@ -683,7 +682,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     .menu-2 > li:hover > a {
       color: #d39a6e; }
     .menu-2 > li:last-child {
-      margin: 0; }
+      margin: 0 0 0 8px; }
     .menu-2 > li.arrow {
       /*padding: 0 15px 0 0;
        margin: 0 10px 0 0;*/
@@ -1916,7 +1915,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     display: inline-block;
     padding: 0 0 0 30px;
     position: relative;
-    top: 17px; }
+    top: -12px; }
   .tovar .price .right .top {
     width: 14px;
     height: 8px;

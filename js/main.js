@@ -1,3 +1,5 @@
+var mobileDetect = new MobileDetect(window.navigator.userAgent);
+
 $(document).on('click', '.js-close_popup', function() {
 	$.fancybox.close();
 });
@@ -16,7 +18,10 @@ $(function(){
 	});
 
 	$(document).on('change', '.js-filter-form :input', function() {
-		$(this).closest('form').submit();
+		if (! (mobileDetect.phone() || mobileDetect.tablet())) {
+			$(this).closest('form').submit();
+			return true;
+		}
 	});
 
 	$('.js-slider-1').slick({
@@ -133,6 +138,7 @@ $(function(){
 			close_facets();
 		} else {
 			open_facets();
+			$(".send-8").width($("form.js-filter-form").width());
 		}
 	});
 	var open_facets = function() {
@@ -282,6 +288,10 @@ $('.js-interval-slider').each(function() {
 
 	this.noUiSlider.on('set', function() {
 		setTimeout(function() {
+			if ((mobileDetect.phone() || mobileDetect.tablet())) {
+				return false;
+			}
+
 			$('.js-filter-form').submit();
 		}, 100);
 	});
@@ -337,6 +347,10 @@ $('.js-number-slider').each(function() {
 			/*if (input.val() === '') {
 				input.removeAttr('name');
 			}*/
+			if ((mobileDetect.phone() || mobileDetect.tablet())) {
+				return false;
+			}
+
 			$('.js-filter-form').submit();
 		}, 100);
 	});
@@ -437,3 +451,17 @@ $('.js-unfolding-button-2').show();
 /*function feedback_success() {
 	_current_form.hide().after('<div class="success-message">Спасибо<br>Наши специалисты свяжутся с Вами в кратчайшие сроки</div>').remove();
 }*/
+
+$(function(){
+	(function () {
+		if (! (mobileDetect.phone() || mobileDetect.tablet())) {
+			return false;
+		}
+
+		$(".send-8").css({
+			"z-index": "9",
+			"position": "fixed",
+			"bottom": "0"
+		});
+	})();
+});
