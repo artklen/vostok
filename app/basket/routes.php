@@ -15,7 +15,7 @@ d()->basket_ajax_refresh = function() {
 		'total_price' => d()->basket_total_price,
 		'total_weight' => d()->basket_total_weight,
 		'order_price' => d()->basket_order_price,
-		'items' => array(),
+		'items' => [],
 		'items_total_price' => array(),
 		'items_total_weight' => array(),
 		'widgets' => array(),
@@ -31,12 +31,28 @@ d()->basket_ajax_refresh = function() {
 		}
 		$result['widgets_ids'][$widget_type][] = $widget_id;
 	}
-	$items = $basket->items();
-	foreach ($items as $item) {
-		$result['items'][$item->item_key] = $item->number;
-		$result['items_total_price'][$item->item_key] = d()->basket_total_price($item->item_key);
-		$result['items_total_weight'][$item->item_key] = d()->basket_total_weight($item->item_key);
-	}
+//	$items = $basket->items();
+//	foreach ($items as $item) {
+//		$result['items'][$item->item_key] = $item->number;
+//		$result['items_total_price'][$item->item_key] = d()->basket_total_price($item->item_key);
+//		$result['items_total_weight'][$item->item_key] = d()->basket_total_weight($item->item_key);
+//	}
+
+    foreach ($basket->items() as $item) {
+        $test = $item->product->url;
+
+        $result['items'][] = [
+            'id' => $item->product->id,
+            'variant_id' => $item->products_variant->is_empty ? 0 : $item->products_variant->id,
+            'basket_item_id' => $item->item_key,
+            'title' => $item->product->title,
+            'img_link' => preview($item->product->image, '33', '33'),
+            'price' => d()->price_format($item->product->price),
+            'count' => $item->number,
+            'link' => $item->product->url,
+        ];
+    }
+
 	return 'Basket.refresh(' . json_encode($result) . ');$.fancybox.update();';
 };
 
@@ -97,25 +113,156 @@ d()->post('/basket/finish', function() {
 	exit;
 });
 
-// API
-d()->post('/basket/:method', function($method) {
-	if (d()->validate(d()->url_path)) {
-		d()->basket->$method(d()->params);
-	}
-	if (AJAX) {
-		if ($method === 'add_item') {
-			d()->basket_item = d()->basket->items(d()->params);
-			/*print <<<h
-var jb = $('.js-basket-add');
-jb.html('Товар добавлен в корзину');
-jb.attr('href', '/basket');
-h;*/
-			print 'Basket.popup(' . json_encode('' . d()->view->partial('/basket/add_popup.html')) . ');';
-		}
-		print d()->basket_ajax_refresh();
-		exit;
-	} else {
-		header('Location: /basket/');
-		exit;
-	}
+//// API
+//d()->post('/basket/:method', function($method) {
+//	if (d()->validate(d()->url_path)) {
+////		d()->basket->$method(d()->params);
+//	}
+//
+//	if (! AJAX) {
+//		header('Location: /basket/');
+//		exit;
+//	}
+//
+//	switch ($method) {
+////        case 'add_item':
+////            $params = array_merge(['products_variant_id' => 0], d()->params);
+////            d()->basket->add_item($params);
+////            d()->basket_item = d()->find_item($params);
+////
+////            print 'Basket.popup(' . json_encode('' . d()->view->partial('/basket/add_popup.html')) . ');';
+////            break;
+//    }
+//
+//    exit(d()->basket_ajax_refresh());
+//});
+
+d()->post('/basket/update_item', function () {
+    if (! isset($_POST['product_id']) || empty((string) $_POST['product_id'])) {
+        exit(json_encode(['ERROR' => 'EMPTY_PRODUCT_ID']));
+    }
+
+    $product = d()->Product->find($_POST['product_id'])->first;
+
+    if ($product->is_empty) {
+        exit(json_encode(['ERROR' => 'PRODUCT_NOT_FOUND']));
+    }
+
+    if (! isset($_POST['products_variant_id']) || empty((string) $_POST['products_variant_id'])) {
+        $product_variant = null;
+    } else {
+        $product_variant = d()->Products_variant->find($_POST['products_variant_id'])->first;
+
+        if ($product->is_empty) {
+            exit(json_encode(['ERROR' => 'PRODUCT_VARIANT_NOT_FOUND']));
+        }
+    }
+
+    $count = intval($_POST['number']);
+
+    //
+
+    $params = [
+        'product_id' => $product->id,
+        'products_variant_id' => is_null($product_variant) ? 0 : $product_variant->id,
+    ];
+
+    d()->basket->update_item(array_merge($_POST, $params), $count);
+
+    //
+
+    print d()->basket_ajax_refresh();
+    exit();
+});
+
+d()->post('/basket/delete_item', function () {
+    if (! isset($_POST['product_id']) || empty((string) $_POST['product_id'])) {
+        exit(json_encode(['ERROR' => 'EMPTY_PRODUCT_ID']));
+    }
+
+    $product = d()->Product->find($_POST['product_id'])->first;
+
+    if ($product->is_empty) {
+        exit(json_encode(['ERROR' => 'PRODUCT_NOT_FOUND']));
+    }
+
+    if (! isset($_POST['products_variant_id']) || empty((string) $_POST['products_variant_id'])) {
+        $product_variant = null;
+    } else {
+        $product_variant = d()->Products_variant->find($_POST['products_variant_id'])->first;
+
+        if ($product->is_empty) {
+            exit(json_encode(['ERROR' => 'PRODUCT_VARIANT_NOT_FOUND']));
+        }
+    }
+
+    //
+
+    $params = [
+        'product_id' => $product->id,
+        'products_variant_id' => is_null($product_variant) ? 0 : $product_variant->id,
+    ];
+
+    d()->basket->delete_item(array_merge($_POST, $params));
+
+    //
+
+    print d()->basket_ajax_refresh();
+    exit();
+});
+
+d()->post('/basket/add_item', function () {
+    if (! isset($_POST['product_id']) || empty((string) $_POST['product_id'])) {
+        exit(json_encode(['ERROR' => 'EMPTY_PRODUCT_ID']));
+    }
+
+    $product = d()->Product->find($_POST['product_id'])->first;
+
+    if ($product->is_empty) {
+        exit(json_encode(['ERROR' => 'PRODUCT_NOT_FOUND']));
+    }
+
+    if (! isset($_POST['products_variant_id']) || empty((string) $_POST['products_variant_id'])) {
+        $product_variant = null;
+    } else {
+        $product_variant = d()->Products_variant->find($_POST['products_variant_id'])->first;
+
+        if ($product->is_empty) {
+            exit(json_encode(['ERROR' => 'PRODUCT_VARIANT_NOT_FOUND']));
+        }
+    }
+
+    $count = intval($_POST['number']);
+
+    //
+
+    $params = [
+        'product_id' => $product->id,
+        'products_variant_id' => is_null($product_variant) ? 0 : $product_variant->id,
+    ];
+
+    d()->basket->add_item(array_merge($_POST, $params), $count);
+    d()->basket_item = d()->basket->find_item($params);
+
+    //
+
+    print d()->basket_ajax_refresh();
+    print 'Basket.popup(' . json_encode('' . d()->view->partial('/basket/add_popup.html')) . ');';
+    exit();
+});
+
+d()->post('/basket/delivery', function () {
+    $delivery_id = intval($_POST['delivery_id']);
+
+    //
+
+    $params = [
+        'delivery_id' => $delivery_id,
+    ];
+
+    d()->basket->delivery(array_merge($_POST, $params));
+
+    //
+
+    exit();
 });

@@ -1,61 +1,76 @@
 <div class="basket-1">
 	<ul class="menu-2">
 		<li class="arrow">
-			<a href="/basket" class="js-basket-not-empty" {{if_basket_not_empty}}>
-									<span>
-										<span class="left">
-											<span class="num"><?=count(d()->basket->items)?></span>
-										</span>
-										<span class="right hidden-xs hidden-sm hidden-md">
-											<span class="title">Сумма</span>
-											<span class="sum js-basket-total-price"><?=d()->
-											price_format(d()->basket->order_price)?></span> <span class="sum">р.</span>
-										</span>
-									</span>
-			</a>
-			<div class="last-1 js-basket-not-empty" {{if_basket_not_empty}}>
-				<ul class="last-2">
-					<li>
-						<ul class="last-3">
-							<foreach d()->basket->items as basket_item>
-								<?php d()->product = d()->basket_item->product?>
-								<?php d()->products_variant = d()->basket_item->products_variant?>
-								<li
-									class="js-basket-item-exists" data-product_id="<?=d()->product->id?>"
-
-									data-products_variant_id="<?=d()->products_variant->id ? d()->products_variant->id : 0?>"
-									data-basket-item-key="{basket_item.item_key|h}"
-								>
-									<div class="row">
-										<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-											<img src="<?=preview(d()->product->image, '33', '33')?>" alt=""/>
-										</div>
-										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-											<span class="title"><?=d()->product->title?></span>
-											<span class="price-1"><?=d()->price_format(d()->product->price)?> р. 
+			<div class="js-basket-not-empty" {{if_basket_not_empty}}>
+				<span>
+					<span class="left">
+						<span class="num js-basket-total-number"><?= h(d()->basket_total_number) ?></span>
+					</span>
+					<span class="right hidden-xs hidden-sm hidden-md">
+						<span class="title">Сумма</span>
+						<span class="sum js-basket-total-price"><?= d()->price_format(d()->basket->order_price) ?></span> <span class="sum">р.</span>
+					</span>
+				</span>
+				<div class="last-1">
+					<ul class="last-2 js-basket-not-empty" {{if_basket_not_empty}}>
+						<li>
+							<ul class="last-3 js-basket-list">
+								<foreach d()->basket->items as basket_item>
+									<?php d()->product = d()->basket_item->product?>
+									<?php d()->products_variant = d()->basket_item->products_variant?>
+									<li class="js-basket-item-exists" data-product_id="<?=d()->product->id?>" data-products_variant_id="<?=d()->products_variant->id ? d()->products_variant->id : 0?>" data-basket-item-key="{basket_item.item_key|h}">
+										<div class="row">
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+												<img src="<?=preview(d()->product->image, '33', '33')?>" alt=""/>
+											</div>
+											<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+												<span class="title"><?=d()->product->title?></span>
+												<span class="price-1"><?=d()->price_format(d()->product->price)?> р.
 												<span class="price-2">х {basket_item.number|h} шт</span>
 											</span>
+											</div>
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+												<a href="#" class="close js-basket-delete"></a>
+											</div>
 										</div>
-										<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-											<a href="#" class="close js-basket-delete"></a>
+										<a href="/product/<?=d()->product->url?>" class="inner"></a>
+									</li>
+								</foreach>
+								<template>
+									<li class="js-basket-item-exists" data-product_id=":id:" data-products_variant_id=":variant_id:" data-basket-item-key=":basket_item_id:">
+										<div class="row">
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+												<img src=":img_link:" alt=""/>
+											</div>
+											<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+												<span class="title">:title:</span>
+												<span class="price-1">:price: р.
+													<span class="price-2">х :count: шт</span>
+												</span>
+											</div>
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+												<a href="#" class="close js-basket-delete"></a>
+											</div>
 										</div>
-									</div>
-									<a href="/product/<?=d()->product->url?>" class="inner"></a>
+										<a href="/product/:link:" class="inner"></a>
+									</li>
+								</template>
+								<li class="js-basket-link">
+									<a href="/basket">Перейти в корзину</a>
 								</li>
-							</foreach>
-							<li><a href="/basket">Перейти в корзину</a></li>
-						</ul>
-					</li>
-				</ul>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<span class="js-basket-empty" {{if_basket_empty}}>
-								<span class="left empty"></span>
-								<span class="right empty hidden-xs hidden-sm hidden-md">
-									<span class="title">Корзина</span>
-									<span class="sum">Товаров: <?= d()->basket->items ? count(d()->basket->items) : 'нет'?></span>
-								</span>
-							</span>
 
+			<span class="js-basket-empty" {{if_basket_empty}}>
+				<span class="left empty"></span>
+				<span class="right empty hidden-xs hidden-sm hidden-md">
+					<span class="title">Корзина</span>
+					<span class="sum">Товаров: нет</span>
+				</span>
+			</span>
 		</li>
 	</ul>
 </div>

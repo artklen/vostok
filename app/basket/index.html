@@ -45,11 +45,9 @@
 						{{/basket/basket_rows_mobile.html}}
 
 						<!-- big item basket -->
-						<div class="item last-2 hidden-xs js-basket-item-exists" data-product_id="<?=d()->product->id?>" data-basket-item-key="{basket_item.item_key|h}" 	>
+						<div class="item last-2 hidden-xs js-basket-item-exists" data-product_id="<?=d()->product->id?>" data-products_variant_id="<?=d()->products_variant->id ? : 0?>" data-basket-item-key="{basket_item.item_key|h}">
 							{{edit d()->product}}{{delete d()->product}}
-							<div
-								class="row"
-								data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
+							<div class="row">
 								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 									<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in250', 'in250');?>" alt=""/></a>
 								</div>

@@ -177,8 +177,8 @@
 
 					@ if (d()->this->is_quantity){
 						@ d()->in_basket = d()->basket->product_items(d()->this->id)->count > 0;
-						<a href="javascript:void(0);" class="send-6 js-basket-add <?= (! d()->in_basket ?: 'hide') ?>">Добавить в корзину</a>
-						<a href="/basket" class="send-2 js-in-basket <?= (d()->in_basket ?: 'hide') ?>">Перейти в корзину</a>
+						<a href="javascript:void(0);" class="send-6 js-basket-add-without-hide">Добавить в корзину</a>
+						<a href="/basket" class="send-2 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">Перейти в корзину</a>
 					@ } elseif (d()->this->is_quantity === false) {
 						<div class="info">
 							Товар снят с производства<br/>
