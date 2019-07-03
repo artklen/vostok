@@ -5,6 +5,3 @@ Disallow: /feedback
 Disallow: /cities/select?url=
 Disallow: /*&lang=rus
 Disallow: /*?lang=rus
-
-Host: https://shop-vostok.com
-Sitemap: https://shop-vostok.com/sitemap.xml
