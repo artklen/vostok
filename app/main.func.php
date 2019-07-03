@@ -50,7 +50,7 @@ d()->page_not_found = function() {
 		$urls = explode("\n", $urls_str);
 		foreach ($urls as $url) {
 			$url = trim($url);
-			if (d()->url_path === $url) {
+            if ($_SERVER['REQUEST_URI'] === $url) {
 				d()->redirect_301("/catalog/chasy?collection_id%5B%5D=".$item->id);
 			}
 		}

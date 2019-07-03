@@ -39,6 +39,9 @@ d()->pages_route = function() {
 			$template = '/pages/show.html';
 		}
 	}
+
+	d()->show_seo_text = true;
+
 	return d()->view->render($template);
 };
 

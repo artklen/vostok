@@ -56,14 +56,13 @@
 								{{edit}}{{delete}}
 								<?php
 									$params = [];
-									$params_names =
-									[
-										'category_id' => 'category_id',
-										'series_name' => 'series',
-										'carcas_name' => 'carcas',
+									$params_names = [
 										'collection_id' => 'collection_id',
-										'is_auto' => 'auto',
+										'series_name' => 'series',
+										'category_id' => 'category_id',
+										'carcas_name' => 'carcas',
 										'genders' => 'genders',
+										'is_auto' => 'auto',
 									];
 
 									foreach ($params_names as $field => $param_name)
@@ -112,7 +111,7 @@
 									unset($params['category_id[]']);
 									$query = http_build_query($params);
 								?>
-								@ if (d()->this->url != ""){ 
+								@ if (d()->this->url != ""){
 									<a href="/{.url}">
 										<span class="sub-1">
 											<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
@@ -120,12 +119,12 @@
 										<span class="sub-2">{.title}</span>
 									</a>
 								@ } else {
-								<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
-									<span class="sub-1">
-										<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
-									</span>
-									<span class="sub-2">{.title} <span class="sub-3"><?=$count?></span></span>
-								</a>
+									<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
+										<span class="sub-1">
+											<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
+										</span>
+										<span class="sub-2">{.title} <span class="sub-3"><?=$count?></span></span>
+									</a>
 								@ }
 							</li>
 
