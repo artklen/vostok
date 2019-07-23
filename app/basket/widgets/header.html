@@ -7,8 +7,8 @@
 						<span class="num js-basket-total-number"><?= h(d()->basket_total_number) ?></span>
 					</span>
 					<span class="right hidden-xs hidden-sm hidden-md">
-						<span class="title">Сумма</span>
-						<span class="sum js-basket-total-price"><?= d()->price_format(d()->basket->order_price) ?></span> <span class="sum">р.</span>
+						<span class="title">{"Сумма"|t}</span>
+						<span class="sum js-basket-total-price"><?= d()->price_format(d()->basket->order_price) ?></span> <span class="sum">{"р_"|t}</span>
 					</span>
 				</span>
 				<div class="last-1">
@@ -25,7 +25,7 @@
 											</div>
 											<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 												<span class="title"><?=d()->product->title?></span>
-												<span class="price-1"><?=d()->price_format(d()->product->price)?> р.
+												<span class="price-1"><?=d()->price_format(d()->product->price)?> {"р_"|t}
 												<span class="price-2">х {basket_item.number|h} шт</span>
 											</span>
 											</div>
@@ -33,7 +33,7 @@
 												<a href="#" class="close js-basket-delete"></a>
 											</div>
 										</div>
-										<a href="/product/<?=d()->product->url?>" class="inner"></a>
+										<a href="{langlink}/product/<?=d()->product->url?>" class="inner"></a>
 									</li>
 								</foreach>
 								<template>
@@ -44,7 +44,7 @@
 											</div>
 											<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 												<span class="title">:title:</span>
-												<span class="price-1">:price: р.
+												<span class="price-1">:price: {"р_"|t}
 													<span class="price-2">х :count: шт</span>
 												</span>
 											</div>
@@ -52,11 +52,11 @@
 												<a href="#" class="close js-basket-delete"></a>
 											</div>
 										</div>
-										<a href="/product/:link:" class="inner"></a>
+										<a href="{langlink}/product/:link:" class="inner"></a>
 									</li>
 								</template>
 								<li class="js-basket-link">
-									<a href="/basket">Перейти в корзину</a>
+									<a href="{langlink}/basket">{"Перейти в корзину"|t}</a>
 								</li>
 							</ul>
 						</li>
@@ -67,8 +67,8 @@
 			<span class="js-basket-empty" {{if_basket_empty}}>
 				<span class="left empty"></span>
 				<span class="right empty hidden-xs hidden-sm hidden-md">
-					<span class="title">Корзина</span>
-					<span class="sum">Товаров: нет</span>
+					<span class="title">{"Корзина"|t}</span>
+					<span class="sum">{"Товаров__нет"|t}</span>
 				</span>
 			</span>
 		</li>

@@ -1,5 +1,5 @@
 <?php
-$url_base = '/feedback/';
+$url_base = d()->langlink . '/feedback/';
 
 d()->get($url_base . ':name', function($name) {
 	if (strpos($name, '.') !== false || !is_file(__DIR__ . "/$name.html")) {
@@ -75,7 +75,7 @@ d()->post($url_base . ':name', function($name) {
 				print '_current_form.find(".error").removeClass("error");';
 				print '_current_form.find(".has-error").removeClass("has-error");';
 				print '_current_form.find(".js-clear-on-success").val("");';
-				print '_current_form.prepend(' . json_encode('<div class="alert alert-success js-closeable"><button type="button" class="close js-close-button" aria-label="Закрыть"><span aria-hidden="true">×</span></button>' . d()->feedback_form[$name]['success_message'] . '</div>') .  ');';
+				print '_current_form.prepend(' . json_encode('<div class="alert alert-success js-closeable"><button type="button" class="close js-close-button" aria-label="' . t('Закрыть') . '"><span aria-hidden="true">×</span></button>' . d()->feedback_form[$name]['success_message'] . '</div>') .  ');';
 			} else {
 				print 'document.location.href="' . $redirect . '";';
 			}

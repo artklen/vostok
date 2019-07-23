@@ -22,10 +22,10 @@
 			} else {
 				?>{.title|h}<?php
 			} ?></td>
-			<td>{.price|h} р.</td>
+			<td>{.price|h} {"р_"|t}</td>
 			<td><?= ~this->products_variant->ne ? h(~this->products_variant->title) : '-' ?></td>
 			<td>{.number|h}</td>
-			<td><?= d()->this->price * d()->this->number ?> р.</td>
+			<td><?= d()->this->price * d()->this->number ?> {"р_"|t}</td>
 <?php/*		<td>
 				<a href="/admin/edit/orders_products/{.id}" target="_blank" class="btn btn-mini">Править</a>
 				<a href="/admin/delete/orders_products/{.id}" target="_blank" class="btn btn-mini btn-danger">Удалить</a>
@@ -36,10 +36,10 @@
 		<tr>
 			<td><?php print $key + 1; ?></td>
 			<td>Доставка</td>
-			<td>{delivery.price|h} р.</td>
+			<td>{delivery.price|h} {"р_"|t}</td>
 			<td>-</td>
 			<td>1</td>
-			<td>{delivery.price|h} р.</td>
+			<td>{delivery.price|h} {"р_"|t}</td>
 		</tr>	
 	@ }
 	</tbody>

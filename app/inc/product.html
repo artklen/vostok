@@ -2,7 +2,7 @@
 <?/*
 <div class="wrap-6">
 	@ if (d()->this->discount) {
-	<span class="sale">Скидка</span>
+	<span class="sale">{"Скидка"|t}</span>
 	@ } else {
 	@ }
 </div>
@@ -12,21 +12,21 @@
 	@ if(d()->this->is_action) {
 			
 		@ if(d()->this->action_type =='1') {
-			<span class="sale">Хит продаж</span>
+			<span class="sale">{"Хит продаж"|t}</span>
 		@}
 		
 		@ if(d()->this->action_type =='2') {
-			<span class="sale">Скидка</span>
+			<span class="sale">{"Скидка"|t}</span>
 		@}
 		
 	@ } else if (d()->this->discount){
-		<span class="sale">Скидка</span>
+		<span class="sale">{"Скидка"|t}</span>
 	@ }
 </div>
 
 <div class="top">
 
-	<a href="/product/{.url}" class="main-item">
+	<a href="{langlink}/product/{.url}" class="main-item">
 		<?php //var_dump(d()->this->required_image); die; ?>
 		<!--<img src="{this.required_image|preview 'in200', 'in200', 'watermark' => '/images/watermark.png'}" alt=""/>-->
 		
@@ -40,31 +40,31 @@
 	</div>-->
 </div>
 <div class="bottom">
-	<a href="/product/{.url}" class="title">
+	<a href="{langlink}/product/{.url}" class="title">
 		{.title}
 	</a>
 
 	@ if (1 * ~this->quantity > 0) {
-		<div>В наличии</div>
+		<div>{"В наличии"|t}</div>
 	@ }
 
 	@ if (d()->this->discount) {
-		<div class="price price-sale-color">{.calc_price_format} р.
+		<div class="price price-sale-color">{.calc_price_format} {"р_"|t}
 			@ if (d()->this->discount) {
-			 <span>{.price_origin_format} р.</span>
+			 <span>{.price_origin_format} {"р_"|t}</span>
 			@ }
 		</div>
 	@ } else {
-		<div class="price">{.calc_price_format} р.
+		<div class="price">{.calc_price_format} {"р_"|t}
 			@ if (d()->this->discount) {
-			 <span>{.price_origin_format} р.</span>
+			 <span>{.price_origin_format} {"р_"|t}</span>
 			@ }
 		</div>
 	@ }
 
 	@ if (1 * ~this->quantity > 0) {
 		@ d()->in_basket = d()->basket->product_items(d()->this->id)->count > 0;
-		<a href="javascript:void(0);" class="send-9 js-basket-add <?= (! d()->in_basket ?: 'hide') ?>" style="margin-top:5px">Добавить в корзину</a>
-		<a href="/basket" class="send-8 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">Перейти в корзину</a>
+		<a href="javascript:void(0);" class="send-9 js-basket-add <?= (! d()->in_basket ?: 'hide') ?>" style="margin-top:5px">{"Добавить в корзину"|t}</a>
+		<a href="{langlink}/basket" class="send-8 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">{"Перейти в корзину"|t}</a>
 	@ }
 </div>

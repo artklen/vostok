@@ -1,11 +1,11 @@
 <div class="crumbs">
 <?php
 if (!empty(d()->crumbs_list)) { ?>
-	<a href="/">Главная</a><?php
+	<a href="{langlink}/">{"Главная"|t}</a><?php
 	foreach (d()->crumbs_list as d()->crumb) {
 		if (!empty(d()->crumb)) {
 			if (!empty(d()->crumb['link'])) {
-				?> <span class="marker">/</span> <a href="{crumb.link|h}">{crumb.title|h}</a><?php
+				?> <span class="marker">/</span> <a href="{langlink}{crumb.link|h}">{crumb.title|h}</a><?php
 			} else {
 				?> <span class="marker">/</span> <span>{crumb.title|h}</span><?php
 			}

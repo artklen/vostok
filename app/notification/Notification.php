@@ -32,7 +32,7 @@ class Notification {
 			$message = d()->letter->order_created('user');
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
 			d()->mail->setTo($order->email);
-			d()->mail->setSubject('Новый заказ на сайте');
+			d()->mail->setSubject(t('Новый заказ на сайте'));
 			d()->mail->setBody($message, 'text/html');
 			d()->mail->send();
 		}
@@ -42,7 +42,7 @@ class Notification {
 			$message = d()->letter->feedback_order;
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
 			d()->mail->setTo($one_email);
-			d()->mail->setSubject('Новый заказ на сайте');
+			d()->mail->setSubject(t('Новый заказ на сайте'));
 			d()->mail->setBody($message, 'text/html');
 			d()->mail->send();
 		}
@@ -67,7 +67,7 @@ class Notification {
 			}
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
 			d()->mail->setTo($email);
-			d()->mail->setSubject('Новый заказ с сайта');
+			d()->mail->setSubject(t('Новый заказ с сайта'));
 			d()->mail->setBody($message, 'text/html');
 			d()->mail->send();
 
@@ -86,7 +86,7 @@ class Notification {
 			$message = d()->letter->orders_status_change('user');
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
 			d()->mail->setTo($order->email);
-			d()->mail->setSubject('Смена статуса заказа на сайте ');
+			d()->mail->setSubject(t('Смена статуса заказа на сайте'));
 			d()->mail->setBody($message, 'text/html');
 			d()->mail->send();
 		}

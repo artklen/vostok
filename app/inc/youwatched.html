@@ -11,13 +11,13 @@ if (!empty($_COOKIE['watched_products'])) {
 
 		<div class="recently_w_ttl">
 
-			<div class="ttl">Вы смотрели</div>
+			<div class="ttl">{"Вы смотрели"|t}</div>
 
 		</div>
 
 		<div class="recently_w_list clearfix">
 			<foreach watched_products_list>
-						<a href="{this|url_for|h}" class="recently_w_item">
+						<a href="{langlink}{this|url_for|h}" class="recently_w_item">
 							<img src="{.image|preview 'in104', 'in104'}" title="{.title|h}" alt="">
 						</a>
 			</foreach>

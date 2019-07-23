@@ -1,7 +1,7 @@
 <?php
-d()->products_url_base = '/product/';
+d()->products_url_base = d()->langlink . '/product/';
 
-d()->route('/product/update_trigram',  function()
+d()->route(d()->langlink . '/product/update_trigram',  function()
 {
 	if (isset($_GET['product_id'])) {
 		$product_id = (int) $_GET['product_id'];
@@ -31,7 +31,7 @@ d()->route('/product/update_trigram',  function()
 	exit;
 });
 
-d()->route('/product/:url', function($url) {
+d()->route(d()->langlink . '/product/:url', function($url) {
 	d()->this = d()->Product->find_by('url', $url);
 
 	if (!d()->this->ne)
@@ -70,7 +70,7 @@ d()->route('/product/:url', function($url) {
 	d()->view->render('/product/product.html');
 });
 
-d()->route('/product', function() {
+d()->route(d()->langlink . '/product', function() {
 	d()->page_not_found();
 });
 

@@ -1,9 +1,8 @@
 <?php
-$url_base = '/basket/';
 
 // страница корзины
-d()->get('/basket/order', function() {
-	d()->set_page_title('Оформление заказа');
+d()->get(d()->langlink . '/basket/order', function() {
+	d()->set_page_title(t('Оформление заказа'));
 	return d()->view->partial('/basket/order.html');
 });
 
@@ -56,16 +55,14 @@ d()->basket_ajax_refresh = function() {
 	return 'Basket.refresh(' . json_encode($result) . ');$.fancybox.update();';
 };
 
-
-
 // страница корзины
-d()->get('/basket', function() {
-	d()->set_page_title('Корзина');
+d()->get(d()->langlink . '/basket', function() {
+	d()->set_page_title(t('Корзина'));
 	return d()->view->partial('/basket/index.html');
 });
 
 // оформление заказа
-d()->post('/basket/finish', function() {
+d()->post(d()->langlink . '/basket/finish', function() {
 	if (AJAX) {
 		if (!isset(d()->basket->order)) {
 			print 'document.location.href="/basket/";';
@@ -137,7 +134,7 @@ d()->post('/basket/finish', function() {
 //    exit(d()->basket_ajax_refresh());
 //});
 
-d()->post('/basket/update_item', function () {
+d()->post(d()->langlink . '/basket/update_item', function () {
     if (! isset($_POST['product_id']) || empty((string) $_POST['product_id'])) {
         exit(json_encode(['ERROR' => 'EMPTY_PRODUCT_ID']));
     }
@@ -175,7 +172,7 @@ d()->post('/basket/update_item', function () {
     exit();
 });
 
-d()->post('/basket/delete_item', function () {
+d()->post(d()->langlink . '/basket/delete_item', function () {
     if (! isset($_POST['product_id']) || empty((string) $_POST['product_id'])) {
         exit(json_encode(['ERROR' => 'EMPTY_PRODUCT_ID']));
     }
@@ -211,7 +208,7 @@ d()->post('/basket/delete_item', function () {
     exit();
 });
 
-d()->post('/basket/add_item', function () {
+d()->post(d()->langlink . '/basket/add_item', function () {
     if (! isset($_POST['product_id']) || empty((string) $_POST['product_id'])) {
         exit(json_encode(['ERROR' => 'EMPTY_PRODUCT_ID']));
     }
@@ -251,7 +248,7 @@ d()->post('/basket/add_item', function () {
     exit();
 });
 
-d()->post('/basket/delivery', function () {
+d()->post(d()->langlink . '/basket/delivery', function () {
     $delivery_id = intval($_POST['delivery_id']);
 
     //

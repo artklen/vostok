@@ -11,7 +11,7 @@ class Review extends ActiveRecord
 	
 	function show_product_id() {
 		if ($this->product_id !== '' && $this->product->ne) {
-			return '<a href="' . d()->url_for($this->product) . '" target="_blank">' . $this->product->title . '</a>';
+			return '<a href="{langlink}' . d()->url_for($this->product) . '" target="_blank">' . $this->product->title . '</a>';
 		}
 		return '';
 	}

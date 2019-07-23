@@ -13,7 +13,7 @@
 
 		d()->list_of_rows =  new $_modelname;
 	?>
-	<select   name="{name}"  class="input-xlarge chosen-select" data-placeholder="Выберите вариант...">
+	<select   name="{name}"  class="input-xlarge chosen-select" data-placeholder="{"Выберите вариант___"|t}">
 		<option value="">Не выбрано</option>
 
 		<foreach $_modelname->select($_table_field)->where(et($_table_field) . " <> ''")->group_by($_table_field)>

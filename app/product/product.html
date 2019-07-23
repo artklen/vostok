@@ -54,9 +54,9 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 hidden-xs">
-					<div class="title-1">Артикул: {.code}</div>
+					<div class="title-1">{"Артикул"|t}: {.code}</div>
 					@ if (d()->this->is_quantity){
-						<div class="title-1 quantity">В наличии: {.quantity} шт.</div>
+						<div class="title-1 quantity">{"В наличии"|t}: {.quantity} шт.</div>
 					@ }
 					@ if (d()->this->benefits) {
 					<ul class="type-1">
@@ -67,7 +67,7 @@
 					@ }
 					<?php if (d()->seo->text) d()->isSeoTextAlready = true; ?>
 					@ if (d()->this->text) {
-					<div class="title-1">Краткое описание</div>
+					<div class="title-1">{"Краткое описание"|t}</div>
 					<div class="text-1">
 						{.text}
 					</div>
@@ -78,12 +78,12 @@
 					<div class="price">
 						<div class="left">
 							<?php if (d()->this->discount) { ?>
-							<span>{.price_origin_format} р.</span>
+							<span>{.price_origin_format} {"р_"|t}</span>
 							<?php } ?> 
 							@ if (d()->this->discount) {
-								<span class="price-sale-color">{.calc_price_format} р.</span>
+								<span class="price-sale-color">{.calc_price_format} {"р_"|t}</span>
 							@ } else {
-								{.calc_price_format} р.
+								{.calc_price_format} {"р_"|t}
 							@ }
 							
 						</div>
@@ -97,7 +97,7 @@
 					</div>
 
 					@ if (d()->this->category->url == 'chasy' && d()->this->is_can_packaged && d()->this->is_quantity) {
-						<div class="title-1">Выберите упаковку</div>
+						<div class="title-1">{"Выберите упаковку"|t}</div>
 
 						<div class="js-unfolding-container">
 
@@ -108,7 +108,7 @@
 										<tr>
 											<td class="text">
 												<span></span>
-												<div class="part">Стандартная</div>
+												<div class="part">{"Стандартная"|t}</div>
 											</td>
 										</tr>
 									</table>
@@ -128,7 +128,7 @@
 													<span></span>
 													<div class="part">{.title}</div>
 												</td>
-												<td class="price">{.price} р.</td>
+												<td class="price">{.price} {"р_"|t}</td>
 												<td>
 													<a href="{this.required_image|preview 'in1000', 'in1000', 'not_resize' => true}" class="js-fancybox">
 														<img src="{this.required_image|preview '46', 'auto'}" alt="" />
@@ -154,7 +154,7 @@
 														<span></span>
 														<div class="part">{.title}</div>
 													</td>
-													<td class="price">{.price} р.</td>
+													<td class="price">{.price} {"р_"|t}</td>
 													<td>
 														<a href="{this.required_image|preview 'in1000', 'in1000', 'not_resize' => true}" class="js-fancybox">
 															<img src="{this.required_image|preview '46', 'auto'}" alt="" />
@@ -167,7 +167,7 @@
 								</foreach>
 							</div>
 							<a href="javascript:void(0);" class="link js-unfolding-button">
-								<span>Показать все упаковки</span>
+								<span>{"Показать все упаковки"|t}</span>
 							</a>
 							<?php } ?>
 						</div>
@@ -177,20 +177,17 @@
 
 					@ if (d()->this->is_quantity){
 						@ d()->in_basket = d()->basket->product_items(d()->this->id)->count > 0;
-						<a href="javascript:void(0);" class="send-6 js-basket-add-without-hide">Добавить в корзину</a>
-						<a href="/basket" class="send-2 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">Перейти в корзину</a>
+						<a href="javascript:void(0);" class="send-6 js-basket-add-without-hide">{"Добавить в корзину"|t}</a>
+						<a href="{langlink}/basket" class="send-2 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">{"Перейти в корзину"|t}</a>
 					@ } elseif (d()->this->is_quantity === false) {
-						<div class="info">
-							Товар снят с производства<br/>
-							Извините!  Эта  модель  снята  с  производства. Ознакомьтесь с <a href="#to_show">похожей продукцией.
-						</div>
+						<div class="info">{"info#Товар снят с производства"|t}<br/>{"info#Извините!  Эта  модель  снята  с  производства. Ознакомьтесь с"|t} <a href="#to_show">{"info#похожей продукцией"|t}</a>.</div>
 					@ } else {
-						<div class="info">Данный товар вы можете</br>приобрести под заказ</div>
-						<a href="/feedback/order?id={.id}" class="send-6 js-feedback">Заказать</a>
+						<div class="info">{"info#Данный товар вы можете"|t}</br>{"info#приобрести под заказ"|t}</div>
+						<a href="{langlink}/feedback/order?id={.id}" class="send-6 js-feedback">{"Заказать"|t}</a>
 					@ }
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 visible-xs">
-					<div class="title-1">Артикул: {.code}</div>
+					<div class="title-1">{"Артикул"|t}: {.code}</div>
 					<ul class="type-1">
 						<foreach ~props>
 							<li>{.title}</li>
@@ -198,7 +195,7 @@
 					</ul>
 
 					@ if (d()->this->text) {
-					<div class="title-1">Краткое описание</div>
+					<div class="title-1">{"Краткое описание"|t}</div>
 					<div class="text-1">
 						{.text}
 					</div>
@@ -211,20 +208,20 @@
 				<div class="type-2">
 
 					<input type="radio" id="tab-1" class="tab-1" name="tabs" checked/>
-					<label for="tab-1" class="active">Характеристики</label>
+					<label for="tab-1" class="active">{"Характеристики"|t}</label>
 
 					@ if (d()->this->text_full) {
 						<input type="radio" id="tab-2" class="tab-2" name="tabs"/>
-						<label for="tab-2" class="active">Описание</label>
+						<label for="tab-2" class="active">{"Описание"|t}</label>
 					@ }
 
 					<input type="radio" id="tab-3" class="tab-3" name="tabs"/>
-					<label for="tab-3" class="active">Отзывы</label>
+					<label for="tab-3" class="active">{"Отзывы"|t}</label>
 					
 					<section class="content-tab-1">
 						@ if (d()->this->collection->ne) {
 						<div class="item">
-							<div class="left"><span>Коллекция</span></div>
+							<div class="left"><span>{"Коллекция"|t}</span></div>
 							<div class="right"><span>{.collection.title}</span></div>
 						</div>
 						@ }
@@ -238,7 +235,7 @@
 									<span>{.title|h}{{if ~this->unit !== '', ', ' . h(~this->unit)}}</span></div>
 								<div class="right"><span>
 									@ if (d()->this->type == 'boolean') {
-									<?=(int)d()->value ? 'Да' : 'Нет'?>
+										<?= ((int) d()->value) ? t('Да') : t('Нет') ?>
 									@ } else {
 										{value|h}
 									@ }
@@ -272,35 +269,35 @@
 									</foreach>
 								@ } else {
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-										<div class="block-no-reviews"><p>Пока нет ни одного отзыва.</p></div>
+										<div class="block-no-reviews"><p>{"Пока нет ни одного отзыва"|t}</p></div>
 									</div>
 								@ }
 							</div>
 							<div class="feedback-reviews">
 								<div class="row">
 									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-										<div class="leave">Оставить отзыв:</div>
+										<div class="leave">{"Оставить отзыв"|t}:</div>
 									</div>
 									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-										<div class="all"><a href="/reviews/">Посмотреть все отзывы</a></div>
+										<div class="all"><a href="{langlink}/reviews/">{"Посмотреть все отзывы"|t}</a></div>
 									</div>
 								</div>	
 								{{simple_ajax_form '/feedback/review'}}
 									<div class="row">	
 										<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 											<div>
-												<div class="title">Ваше Имя</div>
+												<div class="title">{"Ваше Имя"|t}</div>
 												<div><input type="text" {{inputparams 'name'}} class="box"></div>
 											</div>
 											<div>
-												<div class="title">Ваш E-mail</div>
+												<div class="title">{"Ваш E-mail"|t}</div>
 												<div><input type="text" {{inputparams 'email'}}></div>
 											</div>
 										</div>
 										<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-											<div class="title">Текст отзыва</div>
+											<div class="title">{"Текст отзыва"|t}</div>
 											<textarea {{inputparams 'text'}} class="box"></textarea>
-											<input type="submit" class="send-10" value="Отправить">
+											<input type="submit" class="send-10" value="{"Отправить"|t}">
 										</div>
 										<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
 										<input type="hidden" name="product_id" value="{.id|h}" />
@@ -318,12 +315,12 @@
 				<div class="text-2">
 					<div class="row">
 						<div class="col-xs-12 col-sm-7 col-md-12 col-lg-12">
-							<div class="title-2">Есть вопросы?</div>
-							<div class="title-3">Оставьте заявку или позвоните нам</div>
+							<div class="title-2">{"Есть вопросы?"|t}</div>
+							<div class="title-3">{"Оставьте заявку или позвоните нам"|t}</div>
 							<div class="phone">{Option.number}</div>
 						</div>
 						<div class="col-xs-12 col-sm-5 col-md-12 col-lg-12">
-							<a href="/feedback/consultation" class="send-6 js-feedback">Получить консультацию</a>
+							<a href="{langlink}/feedback/consultation" class="send-6 js-feedback">{"Получить консультацию"|t}</a>
 						</div>
 					</div>
 				</div>
@@ -338,8 +335,8 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="center-1 wrap-5">
-						<div class="title-1">Интересные предложения</div>
-						<span class="title-2">Возможно, вас заинтересуют</span>
+						<div class="title-1">{"Интересные предложения"|t}</div>
+						<span class="title-2">{"Возможно, вас заинтересуют"|t}</span>
 					</div>
 				</div>
 			</div>

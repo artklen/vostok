@@ -1,6 +1,6 @@
 <?php
 
-d()->route('/reviews/', function () {
+d()->route(d()->langlink . '/reviews/', function () {
 	d()->use_page_model();
 	d()->reviews_list = d()->Review->order_by('dt_at desc');
 	if (!iam()) {

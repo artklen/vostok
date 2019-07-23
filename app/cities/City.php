@@ -16,7 +16,7 @@ class City extends ActiveRecord
 	{
 		$result = $this->get(__FUNCTION__);
 		if ($result === '') {
-			$result = 'в ' . $this->title;
+			$result = t('в') . ' ' . $this->title;
 		}
 		return $result;
 	}

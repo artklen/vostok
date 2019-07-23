@@ -84,7 +84,7 @@ if (!function_exists('postorder_traversal_tree')) {
 	 
 	?>
 	
-	<select data-placeholder="Выберите варианты..." class="input-xlarge chosen-select">
+	<select data-placeholder="{"Выберите варианты___"|t}" class="input-xlarge chosen-select">
 		<option value="">Не выбрано</option><?php
 postorder_traversal_tree($tree, array(
 	'function' => function($item, $lvl, $tree, $args) use ($_field) {

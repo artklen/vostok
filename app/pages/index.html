@@ -20,7 +20,7 @@
 								<!--<div class="title-1">Часы <span class="orange">«Восток»</span></div>-->
 								<div class="title-1">{.title}</div>
 								<div class="title-2">{.text}</div>
-								<a href="{.url}" class="send-1">Перейти в каталог</a>
+								<a href="{langlink}{.url}" class="send-1">{"Перейти в каталог"|t}</a>
 							</div>
 						</div>
 					</div>
@@ -38,8 +38,8 @@
 					{{edit}}{{delete}}
 					<!--<div class="product-1" style="background-image: url({this.required_image|preview 'in244', 'in400'}), url(/images/main-clock-bg.png)">
 						<div class="title">
-							<a href="/catalog?collection_id%5B%5D={.id}" class="link-1">{.title}</a>
-							<a href="/catalog?collection_id%5B%5D={.id}" class="link-2">Перейти в каталог</a>
+							<a href="{langlink}/catalog?collection_id%5B%5D={.id}" class="link-1">{.title}</a>
+							<a href="{langlink}/catalog?collection_id%5B%5D={.id}" class="link-2">{"Перейти в каталог"|t}</a>
 						</div>
 					</div>-->
 
@@ -47,8 +47,8 @@
 						<div class="product-right"></div>
 						<div class="product-middle">
 							<div class="title">
-								<a href="{.link}" class="link-1">{.title}</a>
-								<a href="{.link}" class="link-2">Перейти в каталог</a>
+								<a href="{langlink}{.link}" class="link-1">{.title}</a>
+								<a href="{langlink}{.link}" class="link-2">{"Перейти в каталог"|t}</a>
 							</div>
 						</div>
 						<div class="product-left" style="background-image: url({this.image|preview 'in240', 'in370'})"></div>
@@ -56,7 +56,7 @@
 				</div>
 			</foreach>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<a href="/catalog/chasy" class="send-2">Смотреть все модели</a>
+				<a href="{langlink}/catalog/chasy" class="send-2">{"Смотреть все модели"|t}</a>
 			</div>
 		</div>
 	</div>
@@ -66,8 +66,8 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="center-1">
-					<div class="title-1">Успейте купить</div>
-					<span class="title-2">Хиты продаж</span>
+					<div class="title-1">{"Успейте купить"|t}</div>
+					<span class="title-2">{"Хиты продаж"|t}</span>
 				</div>
 			</div>
 		</div>
@@ -98,7 +98,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
 				<div class="watch-2">
-					<div class="title-1">Новинка</div>
+					<div class="title-1">{"Новинка"|t}</div>
 					<div class="title-2">{Option.product.title}</div>
 					<ul class="text">
 						<?php foreach(explode(';', d()->Product->where('id = ?', d()->Option->product_id)->benefits) as $benefit) { if (!$benefit) continue;?>
@@ -108,7 +108,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-sm-offset-6 col-md-offset-0">
-				<a href="/product/{Option.product.url}" class="send-4">Подробнее</a>
+				<a href="{langlink}/product/{Option.product.url}" class="send-4">{"Подробнее"|t}</a>
 			</div>
 		</div>
 	</div>
@@ -120,8 +120,8 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="center-1">
-					<div class="title-1">Будьте в курсе</div>
-					<span class="title-2">Последние новости</span>
+					<div class="title-1">{"Будьте в курсе"|t}</div>
+					<span class="title-2">{"Последние новости"|t}</span>
 				</div>
 			</div>
 		</div>	
@@ -135,10 +135,10 @@
 					<foreach News->order_by('dt_at desc')->limit(1)>
 						{{edit}}{{delete}}
 						<?php d()->last_news = d()->this;/* var_dump(d()->this->required_image_full);die;*/ ?>
-						<a href="/news/{.url}"><img src="{required_image_full|preview 'in710', 'in710'}" alt=""/></a>
-						<a href="/news/{.url}" class="title">{.title}</a>
+						<a href="{langlink}/news/{.url}"><img src="{required_image_full|preview 'in710', 'in710'}" alt=""/></a>
+						<a href="{langlink}/news/{.url}" class="title">{.title}</a>
 						<div class="text">{.text}</div>
-						<a href="/news/{.url}" class="link">Читать полностью</a>
+						<a href="{langlink}/news/{.url}" class="link">{"Читать полностью"|t}</a>
 					</foreach>
 				</div>
 			</div>
@@ -149,12 +149,12 @@
 							<div class="row">
 								{{edit}}{{delete}}
 								<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-									<a href="/news/{.url}"><img src="{this.required_image|preview 'in80', 'in80'}" alt=""/></a>
+									<a href="{langlink}/news/{.url}"><img src="{this.required_image|preview 'in80', 'in80'}" alt=""/></a>
 								</div>
 								<div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
-									<a href="/news/{.url}" class="title">{.title}</a>
+									<a href="{langlink}/news/{.url}" class="title">{.title}</a>
 									<div class="text">{.text}</div>
-									<a href="/news/{.url}" class="link">Читать полностью</a>
+									<a href="{langlink}/news/{.url}" class="link">{"Читать полностью"|t}</a>
 								</div>
 							</div>
 						</div>

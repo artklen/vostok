@@ -16,16 +16,16 @@
 					<a href="javascript:void(0);" class="close js-close visible-xs"></a>
 					{{add 'rubrics'}}
 					<ul class="menu">
-						<li><a href="/news" <?= d()->this_rubric ? '' : 'class="active"'?>>Все публикации</a></li>
+						<li><a href="{langlink}/news" <?= d()->this_rubric ? '' : 'class="active"'?>>{"Все публикации"|t}</a></li>
 						<foreach Rubric>
 							{{edit}}{{delete}}
-							<li><a href="/rubrics/{.url}"  <?= d()->this_rubric->url == d()->this->url ? 'class="active"' : '' ?>>{.title}</a></li>
+							<li><a href="{langlink}/rubrics/{.url}"  <?= d()->this_rubric->url == d()->this->url ? 'class="active"' : '' ?>>{.title}</a></li>
 						</foreach>
 					</ul>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 visible-xs">
-				<a href="javascript:void(0);" class="open-1 js-open-1">Показать категории</a>
+				<a href="javascript:void(0);" class="open-1 js-open-1">{"Показать категории"|t}</a>
 			</div>
 			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
 				{{add 'news'}}
@@ -34,14 +34,14 @@
 					<div class="item">
 						<div class="side-1">
 							{{edit}}{{delete}}
-							<a href="/news/{.url}">
+							<a href="{langlink}/news/{.url}">
 								<img src="{this.required_image|preview '80', '80'}" alt=""/>
 							</a>
 						</div>
 						<div class="side-2 side-3">
-							<a href="/news/{.url}" class="title">{.title}</a>
+							<a href="{langlink}/news/{.url}" class="title">{.title}</a>
 							<div class="text">{.text}</div>
-							<a href="/news/{.url}" class="link">Читать полностью</a>
+							<a href="{langlink}/news/{.url}" class="link">{"Читать полностью"|t}</a>
 						</div>
 					</div>
 					</foreach>

@@ -47,7 +47,7 @@ Basket = (function() {
 					var data = arg_data;
 					var target = arg_target;
 					return function() {
-						query('/basket/' + method, data, target);
+						query(window.langlink + '/basket/' + method, data, target);
 					};
 				}(data, target), 200);
 			};

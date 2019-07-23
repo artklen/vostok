@@ -1,15 +1,15 @@
 <div class="line-1"></div>
 <div class="basket-2 basket-modal">
 	<div class="container">
-		<h2>Товар добавлен в корзину</h2>
+		<h2>{"Товар добавлен в корзину"|t}</h2>
 		<div class="left basket-popup-wrapper">
 			<div class="title-1 hidden-xs">
 				<div class="row">
 					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
-					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Название</div>
-					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Упаковка</div>
-					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Кол-во</div>
-					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Сумма</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">{"Название"|t}</div>
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">{"Упаковка"|t}</div>
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">{"Кол-во"|t}</div>
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">{"Сумма"|t}</div>
 					<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
 				</div>
 			</div>
@@ -25,16 +25,16 @@
 				 data-basket-item-key="{basket_item.item_key|h}">
 				<div class="row" data-products_variant_id="<?=d()->products_variant->id ? : 0?>">
 					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-						<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in190', 'in275');?>" alt=""/></a>
+						<a href="{langlink}/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in190', 'in275');?>" alt=""/></a>
 					</div>
 					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-						<a href="/product/<?=d()->product->url?>" class="title-2">
+						<a href="{langlink}/product/<?=d()->product->url?>" class="title-2">
 							<?=d()->product->title?>
 						</a>
 
-						<div class="price-1"><?=d()->product->calc_price_format?> р.
+						<div class="price-1"><?=d()->product->calc_price_format?> {"р_"|t}
 							@ if (d()->product->discount) {
-								<span><?=d()->product->price_origin_format?> р.</span>
+								<span><?=d()->product->price_origin_format?> {"р_"|t}</span>
 							@ }
 						</div>
 					</div>
@@ -42,11 +42,11 @@
 						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 							<span class="picture-2"><img src="<?=preview(d()->products_variant->image, 'in46', 'in70')?>" alt=""/></span>
 							<div class="material"><?=d()->products_variant->title?></div>
-							<div class="price-2"><?=d()->products_variant->price?> р.</div>
+							<div class="price-2"><?=d()->products_variant->price?> {"р_"|t}</div>
 						</div>
 					@ } else {
 						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-							<div class="material">Стандартная</div>
+							<div class="material">{"Стандартная"|t}</div>
 						</div>
 					@ }
 					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 js-basket-change">
@@ -57,7 +57,7 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-						<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> р.</div>
+						<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> {"р_"|t}</div>
 					</div>
 					<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
 						<a href="javascript:void(0);" class="close js-basket-delete"></a>
@@ -67,10 +67,10 @@
 			<div class="basket-popup-footer">
 				<div class="row">
 					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-						<a href="javascript:void(0);" class="send-8 js-close_popup">Продолжить покупки</a>
+						<a href="javascript:void(0);" class="send-8 js-close_popup">{"Продолжить покупки"|t}</a>
 					</div>
 					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">	
-						<a href="/basket" class="send-9">Перейти в корзину</a>
+						<a href="{langlink}/basket" class="send-9">{"Перейти в корзину"|t}</a>
 					</div>
 				</div>
 			</div>

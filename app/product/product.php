@@ -7,7 +7,7 @@ class Product extends ActiveRecord
 	function title()
 	{
 		$t = $this->get('title');
-		$clock = 'Часы ';
+		$clock = t('Часы') . ' ';
 
 		// сложный непонятный говнокод
 		if ($this->code && $this->category->is_gen)

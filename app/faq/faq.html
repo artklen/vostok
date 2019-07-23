@@ -16,16 +16,16 @@
 					<a href="javascript:void(0);" class="close js-close visible-xs"></a>
 					{{add 'faq_categories'}}
 					<ul class="menu">
-						<li><a href="/faq" <?= d()->this_faq_category ? '' : 'class="active"'?>>Все категории</a></li>
+						<li><a href="{langlink}/faq" <?= d()->this_faq_category ? '' : 'class="active"'?>>{"Все категории"|t}</a></li>
 						<foreach Faq_category>
 							{{edit}}{{delete}}
-							<li><a href="/faq/{.url}" <?= d()->this_faq_category->url == d()->this->url ? 'class="active"' : ''?>>{.title}</a></li>
+							<li><a href="{langlink}/faq/{.url}" <?= d()->this_faq_category->url == d()->this->url ? 'class="active"' : ''?>>{.title}</a></li>
 						</foreach>
 					</ul>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 visible-xs">
-				<a href="javascript:void(0);" class="open-1 js-open-1">Показать категории</a>
+				<a href="javascript:void(0);" class="open-1 js-open-1">{"Показать категории"|t}</a>
 			</div>
 			<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
 				<div class="right">

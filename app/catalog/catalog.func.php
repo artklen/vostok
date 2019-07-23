@@ -1,7 +1,7 @@
 <?php
-d()->categories_url_base = '/catalog/';
+d()->categories_url_base = d()->langlink . '/catalog/';
 
-d()->route('/catalog', function ()
+d()->route(d()->langlink . '/catalog', function ()
 {
 	$per_page = 18;
 
@@ -45,7 +45,7 @@ d()->route('/catalog', function ()
 	$products__fields = d()->Products__field->only('filter')->all;
 
 	array_unshift($products__fields, [
-		'title'           => 'Цена, руб.',
+		'title'           => t('Цена__руб_'),
 		'field_name'      => 'price',
 		'type'            => 'interval',
 		'filter_instance' => new Products_filter_interval('price'),
@@ -57,7 +57,7 @@ d()->route('/catalog', function ()
 		'filter_instance' => new Products_filter_interval('stones_count'),
 	],*/
 	[
-		'title'           => 'Коллекция',
+		'title'           => t('Коллекция'),
 		'field_name'      => 'collection_id',
 		'type'            => 'table',
 		'filter_instance' => new Products_filter('collection_id'),
@@ -154,6 +154,9 @@ d()->route('/catalog', function ()
 	d()->fields_data = $fields_data;
 	d()->fields_filtered_data = $fields_filtered_data;
 
+	var_dump(d()->products__fields, d()->fields_data, d()->fields_filtered_data);
+	exit;
+
 	#var_dump(d()->fields_filtered_data);die;
 
 	#var_dump(d()->fields_filtered_data);die;
@@ -185,7 +188,7 @@ d()->route('/catalog', function ()
 	}
 
 	if (isset($_GET['search'])) {
-		d()->set_page_title('Результаты поиска по запросу «' . $str . '»');
+		d()->set_page_title(t('Результаты поиска по запросу') . ' «' . $str . '»');
 		array_unshift(d()->crumbs_list, d()->page_crumb('/catalog'));
 		d()->canonical = '';
 		unset(d()->crumbs_list[0]);
@@ -212,7 +215,7 @@ d()->route('/catalog/vk_yml', function() {
     exit;
 });
 
-d()->route('/catalog/:category', function ($category)
+d()->route(d()->langlink . '/catalog/:category', function ($category)
 {
 	$per_page = 18;
 	d()->get = new Get();
@@ -271,13 +274,13 @@ d()->route('/catalog/:category', function ($category)
 
 	array_unshift($products__fields,
 		[
-			'title'           => 'Цена, руб.',
+			'title'           => t('Цена__руб_'),
 			'field_name'      => 'price',
 			'type'            => 'interval',
 			'filter_instance' => new Products_filter_interval('price'),
 		],
 		[
-			'title'           => 'Коллекция',
+			'title'           => t('Коллекция'),
 			'field_name'      => 'collection_id',
 			'type'            => 'table',
 			'table_name'      => 'Collection',
@@ -335,6 +338,43 @@ d()->route('/catalog/:category', function ($category)
 	d()->fields_data = $fields_data;
 	d()->fields_filtered_data = $fields_filtered_data;
 
+	if (! in_array(d()->lang, ['', 'ru'])) {
+	    $column = d()->lang . '_variants';
+
+        for ($i = 0; $i < count(d()->fields_data); $i++) {
+            if (mb_strlen(trim(d()->products__fields[$i]->{$column})) <= 0) {
+                continue;
+            }
+
+            $variants = [];
+            $all_variants = explode("\n", d()->products__fields[$i]->{$column});
+
+            foreach ($all_variants as $variant) {
+                if (mb_strlen(trim($variant)) <= 0) {
+                    continue;
+                }
+
+                $variant_value = explode("=", $variant);
+
+                if (mb_strlen(trim($variant_value[1])) < 1) {
+                    continue;
+                }
+
+                $variants[$variant_value[0]] = $variant_value[1];
+            }
+
+            foreach (d()->fields_data[d()->products__fields[$i]->field_name] as $key => $field) {
+                if (isset($variants[$field['value']])) {
+                    $value = $variants[$field['value']];
+                } else {
+                    $value = $field['value'];
+                }
+
+                d()->fields_data[d()->products__fields[$i]->field_name][$key]['value'] = $value;
+            }
+        }
+    }
+
 	if ($_REQUEST['order'] == 'price_to_min')
 		d()->this_products->order('1*price desc');
 	else
@@ -360,7 +400,7 @@ d()->route('/catalog/:category', function ($category)
 	}
 
 	if (isset($_GET['search'])) {
-		d()->set_page_title('Результаты поиска по запросу «' . $str . '»');
+		d()->set_page_title(t('Результаты поиска по запросу') . ' «' . $str . '»');
 		array_unshift(d()->crumbs_list, d()->page_crumb('/catalog'));
 		d()->canonical = '';
 		d()->crumbs_list = [];

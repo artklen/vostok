@@ -1,13 +1,13 @@
 <?php
-d()->faq_categories_url_base = '/faq/';
+d()->faq_categories_url_base = d()->langlink . '/faq/';
 
-d()->route('/faq', function (){
+d()->route(d()->langlink .'/faq', function (){
 	d()->use_page_model();
 	d()->this_faq = d()->Faq;
 	d()->view->render('/faq/faq.html');
 });
 
-d()->route('/faq/:url', function ($url) {
+d()->route(d()->langlink .'/faq/:url', function ($url) {
 	#d()->use_page_model('/faq');
 	d()->this = d()->this_faq_category = d()->Faq_category->where('url = ?', $url);
 	d()->this_faq = d()->Faq->where('faq_category_id = ?', d()->this_faq_category->id);

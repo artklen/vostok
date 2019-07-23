@@ -1,14 +1,19 @@
 <?php
 
-d()->pages_url_base = '/';
+d()->pages_url_base = d()->langlink . '/';
 
 d()->use_page_model = function($url = null) {
 	if (!isset($url)) {
 		$url = d()->url_path;
 	}
+
+    if (d()->langlink !== '' && sbs($url, d()->langlink . '/')) {
+        $url = cut_prefix($url, d()->langlink);
+    }
+
 	d()->this = d()->Page->find_by('url', ltrim($url, '/'));
 	if (d()->this->is_empty) {
-		return d()->page_not_found(d()->add(['pages', 'url' => $url]) . 'Страница не существует');
+		return d()->page_not_found(d()->add(['pages', 'url' => $url]) . t('Страница не существует'));
 	}
 	$reverse_crumbs = [];
 	$parent = $this->page;
@@ -26,7 +31,13 @@ d()->use_page_model = function($url = null) {
 
 d()->pages_route = function() {
 	d()->use_page_model();
-	$template = '/pages/' . d()->url_path;
+
+    $url = d()->url_path;
+    if (d()->langlink !== '' && sbs($url, d()->langlink . '/')) {
+        $url = cut_prefix($url, d()->langlink);
+    }
+
+	$template = '/pages/' . $url;
 	if (substr($template, -1) === '/') {
 		$template .= 'index';
 	}

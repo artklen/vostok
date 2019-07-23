@@ -13,15 +13,15 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<h2>Отзывы о нас</h2>
+				<h2>{"Отзывы о нас"|t}</h2>
 				<div class="about-reviews">
-					<a href="https://vk.com/vostokclock" target="blank" class="link">Официальная группа Вконтакте</a>
+					<a href="https://vk.com/vostokclock" target="blank" class="link">{"Официальная группа Вконтакте"|t}</a>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<h2>Отзывы о нашей продукции</h2>
+				<h2>{"Отзывы о нашей продукции"|t}</h2>
 			</div>
 		</div>
 		{{add 'reviews', 'product_id' => d()->this->id}}
@@ -38,11 +38,11 @@
 							<div class="product-reviews">
 								<div class="row">
 									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-										<a href="/product/<?=d()->product->url?>" target="blank"><img src="<?=preview(d()->product->required_image, 'auto', 'auto');?>"/></a>
+										<a href="{langlink}/product/<?=d()->product->url?>" target="blank"><img src="<?=preview(d()->product->required_image, 'auto', 'auto');?>"/></a>
 									</div>
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-										<a href="/product/<?=d()->product->url?>" class="title" target="blank"><?=d()->product->title?></a>
-										<a href="/product/<?=d()->product->url?>" class="link" target="blank">Посмотреть товар</a>
+										<a href="{langlink}/product/<?=d()->product->url?>" class="title" target="blank"><?=d()->product->title?></a>
+										<a href="{langlink}/product/<?=d()->product->url?>" class="link" target="blank">{"Посмотреть товар"|t}</a>
 									</div>
 								</div>
 							</div>
@@ -52,7 +52,7 @@
 				</foreach>
 			@ } else {
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="block-no-reviews"><p>Пока нет ни одного отзыва.</p></div>
+					<div class="block-no-reviews"><p>{"Пока нет ни одного отзыва"|t}</p></div>
 				</div>
 			@ }
 		</div>

@@ -15,10 +15,10 @@
 				<div class="menu">
 
 					<input type="radio" id="tab-1" class="tab-1" name="tabs" checked />
-					<label for="tab-1" class="target active">Контактная информация</label>
+					<label for="tab-1" class="target active">{"Контактная информация"|t}</label>
 
 					<input type="radio" id="tab-2" class="tab-2" name="tabs" />
-					<label for="tab-2" class="target active">Гарантийные мастерские</label>
+					<label for="tab-2" class="target active">{"Гарантийные мастерские"|t}</label>
 
 					<!--<input type="radio" id="tab-3" class="tab-3" name="tabs" />
 					<label for="tab-3" class="target active">Офисы продаж</label>
@@ -48,11 +48,11 @@
 									<div class="adress">
 										{{edit}}{{delete}}
 										@ if (~this->address) {
-										<div class="title">Адрес</div>
+										<div class="title">{"Адрес"|t}</div>
 										<div class="text">{.address|h}</div>
 										@ }
 										@ if (~this->phone) {
-										<div class="title">Телефон</div>
+										<div class="title">{"Телефон"|t}</div>
 										<div class="text">{.phone|h}</div>
 										@ }
 										@ if (~this->contact_email) {
@@ -60,12 +60,12 @@
 										<div class="text">{.contact_email|h}</div>
 										@ }
 										@ if (~this->work_time) {
-										<div class="title">Режим работы</div>
+										<div class="title">{"Режим работы"|t}</div>
 										<div class="text">{.work_time|h}</div>
 										@ }
 									</div>
 
-								<a href="/feedback/question" class="send-5 js-feedback">Задать вопрос</a>
+								<a href="{langlink}/feedback/question" class="send-5 js-feedback">{"Задать вопрос"|t}</a>
 							</div>
 
 							<div class="col-xs-12 col-sm-7 col-md-7 col-lg-9" style="margin-bottom: 50px">
@@ -76,8 +76,8 @@
 					</section>
 					<section class="content-tab-2">
 						<div>
-							<h3>Список гарантийных мастерских по ремонту часов "Восток".</h3>
-							<p>По вопросам гарантийного ремонта часов "Восток-Европа" обращаться в ООО "Время" по адресу:<br>422981, Республика Татарстан, г.Чистополь, ул.Энгельса, д. 127.</p>
+							<h3>{"Список гарантийных мастерских по ремонту часов \"Восток\""|t}.</h3>
+							<p>{"contacts#По вопросам гарантийного ремонта часов \"Восток-Европа\" обращаться в ООО \"Время\" по адресу"|t}:<br>{"contacts#422981, Республика Татарстан, г.Чистополь, ул.Энгельса, д. 127"|t}.</p>
 						</div>
 						<div class="row grid-row">
 							<foreach City->slice(8)>

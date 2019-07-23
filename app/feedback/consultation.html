@@ -2,21 +2,21 @@
 	<div class="line-1"></div>
 	<div class="line-2">
 		{{simple_ajax_form '/feedback/' . d()->form_type}}
-			<div class="title-1">Получить консультацию</div>
-			<div class="title-2">Оставьте свои данные и мы свяжемся с вами в ближайшее время</div>
+			<div class="title-1">{"Получить консультацию"|t}</div>
+			<div class="title-2">{"Оставьте свои данные и мы свяжемся с вами в ближайшее время"|t}</div>
 			<div>
-				<div class="text">Ваше Имя</div>
+				<div class="text">{"Ваше Имя"|t}</div>
 				<div><input type="text" {{inputparams 'name'}} /></div>
 			</div>
 			<div>
-				<div class="text">Ваш телефон</div>
+				<div class="text">{"Ваш телефон"|t}</div>
 				<div><input type="text" {{inputparams 'phone'}} /></div>
 			</div>
 			<div>
-				<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку ваших <a href="/privacy-policy">персональных данных</a></span>
+				<span class="privacy">{"privacy#Нажимая на кнопку вы соглашаетсь на хранение и обработку"|t} <a href="{langlink}/privacy-policy">{"privacy#ваших персональных данных"|t}</a></span>
 			</div>
 			<div class="center">
-				<input type="submit" class="send-10" value="Отправить заявку" />
+				<input type="submit" class="send-10" value="{"Отправить заявку"|t}" />
 			</div>
 			<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
 		{{/form}}

@@ -9,7 +9,7 @@
 
 								<div class="prod_nav_trigger">
 
-									<div class="prod_nav_ttl"><a href="">{.title}</a></div>
+									<div class="prod_nav_ttl"><a href="{langlink}">{.title}</a></div>
 
 									<div class="prod_nav_submenu_wrp">
 										{{edit}}{{add 'categories', 'category_id'=>d()->this->id }}
@@ -21,7 +21,7 @@
 										}
 										?>
 										<foreach cats>
-											<li><a href="/catalog/{.url}">{.title}</a> {{edit}}{{delete}}</li>
+											<li><a href="{langlink}/catalog/{.url}">{.title}</a> {{edit}}{{delete}}</li>
 										</foreach>
 										</ul>
 
@@ -34,7 +34,7 @@
 									<ul class="manuf_list">
 									@ ~cat_base_url = ~this->url;
 										<foreach cats->_products->_brands->limit(9)>
-											<li><a href="/catalog/{cat_base_url}?brand_id={.id}"><img src="{.image|preview 'in85', 'in50'}" alt=""></a></li>
+											<li><a href="{langlink}/catalog/{cat_base_url}?brand_id={.id}"><img src="{.image|preview 'in85', 'in50'}" alt=""></a></li>
 										</foreach>
 										
  
@@ -43,7 +43,7 @@
 
 									<ul class="prod_type_list">
 									<foreach cats->subtree->_superlinks->limit(3)>
-										<li><a href="{.link}">{.title}</a></li>
+										<li><a href="{langlink}{.link}">{.title}</a></li>
 										</foreach>
 									 
 
@@ -58,7 +58,7 @@
 				 
 							<li class="sellout_btn">
 
-								<a href="">Распродажа</a>
+								<a href="{langlink}">{"Распродажа"|t}</a>
 								
 							</li>
 

@@ -1,7 +1,7 @@
 <div class="pagination">
 	<ul>
 		@ if (~paginator_left !== '') {
-		<li class="left"><a href="{paginator_left|h}"></a></li>
+		<li class="left"><a href="{langlink}{paginator_left|h}"></a></li>
 		@ } else {
 		<li></li>
 		@ }
@@ -9,7 +9,7 @@
 			<ul>
 				<foreach paginator_list>
 					@ if (~this['type'] === 'LINK') {
-					<li><a href="{.link}">{.title|h}</a></li>
+					<li><a href="{langlink}{.link}">{.title|h}</a></li>
 					@ } else if (~this['type'] == 'ACTIVE') {
 					<li><span class="active">{.title|h}</span></li>
 					@ } else if (~this['type'] === 'EMPTY') {
@@ -19,7 +19,7 @@
 			</ul>
 		</li>
 		@ if (~paginator_right !== '') {
-		<li class="right"><a href="{paginator_right|h}"></a></li>
+		<li class="right"><a href="{langlink}{paginator_right|h}"></a></li>
 		@ } else {
 		<li></li>
 		@ }

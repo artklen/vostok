@@ -1,7 +1,7 @@
 <ul class="menu-2">
 
 	<li>
-		<a href="/catalog/chasy">Каталог часов</a>
+		<a href="{langlink}/catalog/chasy">{"Каталог часов"|t}</a>
 	</li>
 
 	{{add 'menu_main_elements'}}
@@ -9,7 +9,7 @@
 	<li class="arrow">
 		{{edit}}{{delete}} 	{{add 'menu_elements', 'menu_main_element_id' => d()->this->id }}{{sort_icon}}
 
-		<a href="{.page_url}">{.title}</a>
+		<a href="{langlink}{.page_url}">{.title}</a>
 		<div class="last-1">
 			<ul class="last-2">
 				<li>
@@ -23,7 +23,7 @@
 					
 						<!--foreach Product->where('collection_id = ?', d()->this->id)>
 						<li>
-							<a href="/product/{.url}">
+							<a href="{langlink}/product/{.url}">
 								<span class="sub-1"><img src="{this.required_image|preview '33', '33'}" alt=""/></span>
 								<span class="sub-2">{.title} <span class="sub-3">4</span></span>
 							</a>
@@ -33,7 +33,7 @@
 						<!--<foreach Product->select('count(id) cnt, series')->where('collection_id = ?', d()->this->id)->group_by('series')>
 							<?php if (!~this->series) continue; ?>
 							<li>
-								<a href="/catalog?series%5B%5D={.series|urlencode}">
+								<a href="{langlink}/catalog?series%5B%5D={.series|urlencode}">
 									<span class="sub-1">
 										&lt;!&ndash;<img src="{this.required_image|preview '33', '33'}" alt=""/>&ndash;&gt;
 									</span>
@@ -112,14 +112,14 @@
 									$query = http_build_query($params);
 								?>
 								@ if (d()->this->url != ""){
-									<a href="/{.url}">
+									<a href="{langlink}/{.url}">
 										<span class="sub-1">
 											<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
 										</span>
 										<span class="sub-2">{.title}</span>
 									</a>
 								@ } else {
-									<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
+									<a href="{langlink}/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
 										<span class="sub-1">
 											<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
 										</span>
@@ -135,7 +135,7 @@
 						<!--<foreach Product->select('count(id) cnt, carcas')->where('collection_id = ?', d()->this->id)->group_by('carcas')>
 							<?php if (!~this->carcas) continue; ?>
 							<li>
-								<a href="/catalog?carcas%5B%5D={.carcas|urlencode}">
+								<a href="{langlink}/catalog?carcas%5B%5D={.carcas|urlencode}">
 									<span class="sub-1">
 										&lt;!&ndash;<img src="{this.required_image|preview '33', '33'}" alt=""/>&ndash;&gt;
 									</span>
@@ -152,8 +152,8 @@
 	</foreach>
 
 	<?php /* ?>
-	<!-- <li><a href="/products-4" {{if ~url_path === '/catalog', 'class="active"'}}>С символикой</a></li> -->
-	<li class="arrow"><a href="/catalog">Другие</a>
+	<!-- <li><a href="{langlink}/products-4" {{if ~url_path === '/catalog', 'class="active"'}}>{"С символикой"|t}</a></li> -->
+	<li class="arrow"><a href="{langlink}/catalog">{"Другие"|t}</a>
 		<div class="last-1">
 			<ul class="last-2">
 				{{add 'menu_elements'}}
@@ -161,7 +161,7 @@
 					<ul class="last-3">
 						<foreach Product->select('count(id) cnt, series')->group_by('series')->limit(7)>
 							<li>
-								<a href="/catalog?series%5B%5D={.series|urlencode}">
+								<a href="{langlink}/catalog?series%5B%5D={.series|urlencode}">
 									<span class="sub-1"></span>
 									<span class="sub-2">{.series} <span class="sub-3">{.cnt}</span></span>
 								</a>
@@ -172,7 +172,7 @@
 					<ul class="last-3">
 						<foreach Product->select('count(id) cnt, carcas')->group_by('carcas')->limit(7)>
 							<li>
-								<a href="/catalog?carcas%5B%5D={.carcas|urlencode}">
+								<a href="{langlink}/catalog?carcas%5B%5D={.carcas|urlencode}">
 									<span class="sub-1"></span>
 									<span class="sub-2">{.carcas} <span class="sub-3">{.cnt}</span></span>
 								</a>
@@ -236,7 +236,7 @@
 							$query = http_build_query($params);
 						?>
 
-						<a href="/catalog?<?=$query?>">
+						<a href="{langlink}/catalog?<?=$query?>">
 							<span class="sub-1">
 								<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
 							</span>
@@ -250,6 +250,6 @@
 	<?php */ ?>
 
 	<li>
-		<a href="/symbols">С символикой</a>
+		<a href="{langlink}/symbols">{"С символикой"|t}</a>
 	</li>
 </ul>

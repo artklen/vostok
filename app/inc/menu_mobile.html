@@ -2,18 +2,18 @@
 	<li>
 		<form method="get" action="/catalog">
 			<div class="search small">
-				<input class="search-input" name="search" type="text" placeholder="Поиск по каталогу"/>
+				<input class="search-input" name="search" type="text" placeholder="{"Поиск по каталогу"|t}"/>
 				<button type="submit"></button>
 			</div>
 		</form>
 	</li>
 	<li>
 		<div class="city-mobile-block">
-			<a href="/cities/select?url=%2F" class="city-selection js-feedback">{current_city.title|h}</a>
+			<a href="{langlink}/cities/select?url=%2F" class="city-selection js-feedback">{current_city.title|h}</a>
 		</div>
 	</li>
 	<li>
-		<a href="/catalog/chasy">Каталог часов</a>
+		<a href="{langlink}/catalog/chasy">{"Каталог часов"|t}</a>
 	</li>
 	<foreach Menu_main_element>
 		<li class="js-unfolding-container-menu">
@@ -83,14 +83,14 @@
 
 					<li>
 						@ if (d()->this->url != ""){ 
-							<a href="/{.url}">
+							<a href="{langlink}/{.url}">
 								<span class="sub-1">
 									<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
 								</span>
 								<span class="sub-2">{.title}</span>
 							</a>
 						@ } else {
-						<a href="/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
+						<a href="{langlink}/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
 							<span class="sub-1"><!--<img src="/images/mini-2.jpg" alt=""/>--></span>
 							<span class="sub-2">{.title} <span class="sub-3"><?=$count?></span></span>
 						</a>
@@ -100,7 +100,7 @@
 			</ul>
 		</li>
 		<li>
-			<a href="/symbols">С символикой</a>
+			<a href="{langlink}/symbols">{"С символикой"|t}</a>
 		</li>
 	</foreach>
 </ul>

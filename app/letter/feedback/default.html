@@ -1,21 +1,21 @@
 @ if (isset(d()->params['name']) && (d()->params['name'] !== '')) {
-	Имя: {params.name|h}<br>
+	{"Имя"|t}: {params.name|h}<br>
 @ }
 @ if (isset(d()->params['phone']) && (d()->params['phone'] !== '')) {
-	Телефон: {params.phone|h}<br>
+	{"Телефон"|t}: {params.phone|h}<br>
 @ }
 @ if (isset(d()->params['email']) && (d()->params['email'] !== '')) {
 	E-mail: {params.email|h}<br>
 @ }
 @ if (isset(d()->params['message']) && (d()->params['message'] !== '')) {
-	Сообщение: <br>{params.message|hnl2br}<br><br>
+	{"Сообщение"|t}: <br>{params.message|hnl2br}<br><br>
 @ }
 @ if (isset(d()->params['question']) && (d()->params['question'] !== '')) {
-Вопрос: <br>{params.question|hnl2br}<br><br>
+{"Вопрос"|t}: <br>{params.question|hnl2br}<br><br>
 @ }
 @ if (isset(d()->params['id']) && (d()->params['id'] !== '')) {
-Заказ: <?=d()->Product->find_by_id(h(d()->params['id']))->title.'<br>АРТИКУЛ: '.d()->Product->find_by_id(h(d()->params['id']))->code; ?><br><br>
+{"Заказ"|t}: <?=d()->Product->find_by_id(h(d()->params['id']))->title.'<br>АРТИКУЛ: '.d()->Product->find_by_id(h(d()->params['id']))->code; ?><br><br>
 @ }
 @ if (isset(d()->params['url']) && (d()->params['url'] !== '')) {
-	Страница сайта: <a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN'] . d()->params['url']) ?>"><?= h(d()->params['url']) ?></a>
+	{"Страница сайта"|t}: <a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN'] . d()->params['url']) ?>"><?= h(d()->params['url']) ?></a>
 @ }

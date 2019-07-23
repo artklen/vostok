@@ -72,7 +72,7 @@
 					@ }
 
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-lg">
-						<a href="javascript:void(0);" class="facets-2 js-facets-2">Показать фильтр</a>
+						<a href="javascript:void(0);" class="facets-2 js-facets-2">{"Показать фильтр"|t}</a>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-12 <?= $_GET['search'] ? 'col-lg-12' : 'col-lg-9'?>">
 						<div class="wrap-2">
@@ -90,7 +90,7 @@
 										}
 										?>
 										{{add 'products'}}
-										<div class="left">Товаров: <span>&nbsp;<?=d()->count_this_products?></span></div>
+										<div class="left">{"Товаров"|t}: <span>&nbsp;<?=d()->count_this_products?></span></div>
 
 										<?php if ($_REQUEST['order'] == 'price_to_min') {
 											$link = remove_url_query($_SERVER['REQUEST_URI'], 'order');
@@ -99,7 +99,7 @@
 											.sort .right a:after {transform: rotate(180deg);}
 										</style>
 										<?php } else { $link = (count($_GET) ? $_SERVER['REQUEST_URI'].'&' : '?').'order=price_to_min'; }?>
-										<?/*<div class="right">Сортировка по: &nbsp;<a href="<?=$link?>">Цене</a></div>*/?>
+										<?/*<div class="right">{"Сортировка по"|t}: &nbsp;<a href="<?=$link?>">{"Цене"|t}</a></div>*/?>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">

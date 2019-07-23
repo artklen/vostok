@@ -76,7 +76,7 @@ d()->singleton('catalog_seo_data', function() {
 						$special_values_arr = [];
 						$values_arr = d()->$model_name->where('`id` in (?)', $value)->order('field(`id`,' . implode(',', array_map('e', $value)) . ')')->all_of('titles');
 						$str = array_pop($values_arr);
-						$title_arr[$field_name] = implode(', ', $values_arr) . ' и ' . $str;
+						$title_arr[$field_name] = implode(', ', $values_arr) . ' ' . t('и') . ' ' . $str;
 					}
 					#var_dump($title_arr);exit;
 					break;
@@ -103,7 +103,7 @@ d()->singleton('catalog_seo_data', function() {
 						$values_arr = array_unique($values_arr);
 						$str = array_pop($values_arr);
 						if (!empty($values_arr)) {
-							$title_arr[$field_name] = implode(', ', $values_arr) . ' и ' . $str;
+							$title_arr[$field_name] = implode(', ', $values_arr) . ' ' . t('и') . ' ' . $str;
 						} else {
 							$title_arr[$field_name] = $str;
 						}
@@ -149,20 +149,20 @@ d()->singleton('catalog_seo_data', function() {
 									$str .= ', ' . mb_strtolower(mb_substr($catalog_full_title, 0, 1)) . mb_substr($catalog_full_title, 1) . ' ';
 									$str2 = array_pop($values_arr);
 									if (!empty($values_arr)) {
-										$str2 = implode(', ', $values_arr) . ' и ' . $str2;
+										$str2 = implode(', ', $values_arr) . ' ' . t('и') . ' ' . $str2;
 									}
 								}
 								$special_title_arr[$field_name] = $str . $str2;
 							} else {
 								$str = array_pop($values_arr);
 								if (!empty($values_arr)) {
-									$title_arr[$field_name] = implode(', ', $values_arr) . ' и ' . $str;
+									$title_arr[$field_name] = implode(', ', $values_arr) . ' ' . t('и') . ' ' . $str;
 								}
 							}
 						} else {
 							$values_arr = $value;
 							$str = array_pop($values_arr);
-							$title_arr[$field_name] = implode(', ', $values_arr) . ' и ' . $str;
+							$title_arr[$field_name] = implode(', ', $values_arr) . ' ' . t('и') . ' ' . $str;
 						}
 					}
 					break;
@@ -172,7 +172,7 @@ d()->singleton('catalog_seo_data', function() {
 	}
 	if (!empty($flag_strs)) {
 		$last_flag_str = array_pop($flag_strs);
-		$title_arr[] = (!empty($flag_strs) ? implode(', ', $flag_strs) . ' и ' : '') . $last_flag_str;
+		$title_arr[] = (!empty($flag_strs) ? implode(', ', $flag_strs) . ' ' . t('и') . ' ' : '') . $last_flag_str;
 	}
 
 	#var_dump($special_title_arr);exit;
@@ -210,9 +210,9 @@ d()->singleton('catalog_seo_data', function() {
 	} else {
 		$result['title'] = $catalog_full_title . (!empty($title_arr) ? ' ' . implode(' ', $title_arr) : '');
 	}
-	$result['title'] .= ' - купить ' . d()->current_city->second_title;
+	$result['title'] .= ' - ' . t('купить') . ' ' . d()->current_city->second_title;
 	if (1 * $min_price > 1e-7) {
-		$result['title'] .= ' по цене от ' . $min_price . ' руб.';
+		$result['title'] .= ' ' . t('по цене от') . ' ' . $min_price . ' руб.';
 	}
 	$result['title'] .= ' | ' . d()->Option->common_title;
 	
@@ -223,9 +223,9 @@ d()->singleton('catalog_seo_data', function() {
 	} else {
 		$result['description'] = $catalog_full_title . (!empty($title_arr) ? ' ' . implode(' ', $title_arr) : '');
 	}
-	$result['description'] = '✔ ' . $result['description'] . ' купить ' . d()->current_city->second_title . ' по выгодной цене';
+	$result['description'] = '✔ ' . $result['description'] . ' ' . t('купить') . ' ' . d()->current_city->second_title . ' по выгодной цене';
 	if (1 * $min_price > 1e-7) {
-		$result['description'] .= ' от ' . $min_price . ' руб.';
+		$result['description'] .= ' ' . t('от') . ' ' . $min_price . ' руб.';
 	}
 	
 	// canonical

@@ -1,0 +1,25 @@
+<div class="control-group">
+    <label class="control-label">{title}</label>
+    <div class="controls">
+        <?php
+            $column = preg_replace('/[^a-zA-Z_]*/', '', d()->row_data['field_name']);
+            $values = d()->db->query('SELECT DISTINCT(' . $column . ') FROM products JOIN categories ON categories.id = products.category_id WHERE ' . $column . ' IS NOT NULL AND categories.title = "Часы"')->fetchAll(PDO::FETCH_COLUMN, 0);
+
+            $existing_values = [];
+
+            if (mb_strlen(d()->value) > 0) {
+                $existing_values = explode("\n", d()->value);
+                $existing_values = array_map(function ($value) {
+                    return mb_stristr($value, '=', true);
+                }, $existing_values);
+            }
+
+            $value = d()->value . "\n";
+
+            foreach (array_diff($values, $existing_values) as $new_value) {
+                $value .= $new_value . "=\n";
+            }
+        ?>
+        <textarea name="{name}" class="ui-widget-content ui-corner-all span3 js-admin-big" data-type="" style="height:200px;width:500px;"><?= h($value) ?></textarea>
+    </div>
+</div>

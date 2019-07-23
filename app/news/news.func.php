@@ -1,6 +1,6 @@
 <?php
-d()->rubrics_url_base = '/rubrics/';
-d()->news_url_base = '/news/';
+d()->rubrics_url_base = d()->langlink . '/rubrics/';
+d()->news_url_base = d()->langlink . '/news/';
 
 d()->route('/news', function () {
 	d()->use_page_model();

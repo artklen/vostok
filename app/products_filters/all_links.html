@@ -42,12 +42,12 @@ foreach (~products__fields as $field) {
 					<span class="{{active_if in_array($variant['value'], d()->get[$field_name])}}"><?= h($field['title']) ?><?php
 					if (in_array($variant['value'], d()->get[$field_name])) {
 						d()->get_tmp->delete("{$field_name}[]", $variant['value']);
-						?><a href="{{url_path}}{get_tmp}" class="x">×</a><?php
+						?><a href="{langlink}{{url_path}}{get_tmp}" class="x">×</a><?php
 					}
 					?></span>
 <?php
 				} else if ($count) { ?>
-					<a href="{{url_path}}{get_tmp}"><?= h($field['title']) ?></a>
+					<a href="{langlink}{{url_path}}{get_tmp}"><?= h($field['title']) ?></a>
 <?php
 				} else { ?>
 					<span><?= h($field['title']) ?></span>
@@ -64,12 +64,12 @@ foreach (~products__fields as $field) {
 			<span class="{{active_if in_array($variant['value'], d()->get[$field_name])}}"><?= h(d()->$table_name->where('id = ?', $variant['value'])->title) ?><?php
 					if (in_array($variant['value'], d()->get[$field_name])) {
 						d()->get_tmp->delete("{$field_name}[]", $variant['value']);
-						?><a href="{{url_path}}{get_tmp}" class="x">×</a><?php
+						?><a href="{langlink}{{url_path}}{get_tmp}" class="x">×</a><?php
 					}
 					?></span>
 			<?php
 				} else if ($count) { ?>
-			<a href="{{url_path}}{get_tmp}"><?= h(d()->$table_name->where('id = ?', $variant['value'])->title) ?></a>
+			<a href="{langlink}{{url_path}}{get_tmp}"><?= h(d()->$table_name->where('id = ?', $variant['value'])->title) ?></a>
 			<?php
 				} else { ?>
 			<span><?= h($variant['value']) ?></span>
@@ -81,12 +81,12 @@ foreach (~products__fields as $field) {
 					<span class="{{active_if in_array($variant['value'], d()->get[$field_name])}}"><?= h($variant['value']) ?><?php
 					if (in_array($variant['value'], d()->get[$field_name])) {
 						d()->get_tmp->delete("{$field_name}[]", $variant['value']);
-						?><a href="{{url_path}}{get_tmp}" class="x">×</a><?php
+						?><a href="{langlink}{{url_path}}{get_tmp}" class="x">×</a><?php
 					}
 					?></span>
 <?php
 				} else if ($count) { ?>
-					<a href="{{url_path}}{get_tmp}"><?= h($variant['value']) ?></a>
+					<a href="{langlink}{{url_path}}{get_tmp}"><?= h($variant['value']) ?></a>
 <?php
 				} else { ?>
 					<span><?= h($variant['value']) ?></span>

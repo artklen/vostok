@@ -14,8 +14,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1">
 				<div class="content">
-					<p>	Корзина пуста
-					</p>
+					<p>{"Корзина пуста"|t}</p>
 				</div>
 			</div>
 		</div>
@@ -30,10 +29,10 @@
 					<div class="title-1 hidden-xs">
 						<div class="row">
 							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Название</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Упаковка</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Кол-во</div>
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Сумма</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">{"Название"|t}</div>
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">{"Упаковка"|t}</div>
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">{"Кол-во"|t}</div>
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">{"Сумма"|t}</div>
 							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
 						</div>
 					</div>
@@ -49,16 +48,16 @@
 							{{edit d()->product}}{{delete d()->product}}
 							<div class="row">
 								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-									<a href="/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in250', 'in250');?>" alt=""/></a>
+									<a href="{langlink}/product/<?=d()->product->url?>" class="picture-1"><img src="<?=preview(d()->product->image, 'in250', 'in250');?>" alt=""/></a>
 								</div>
 								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-									<a href="/product/<?=d()->product->url?>" class="title-2">
+									<a href="{langlink}/product/<?=d()->product->url?>" class="title-2">
 										<?=d()->product->title?>
 									</a>
 
-									<div class="price-1"><?=d()->product->calc_price_format?> р.
+									<div class="price-1"><?=d()->product->calc_price_format?> {"р_"|t}
 										@ if (d()->product->discount) {
-											<span><?=d()->product->price_origin_format?> р.</span>
+											<span><?=d()->product->price_origin_format?> {"р_"|t}</span>
 										@ }
 									</div>
 								</div>
@@ -68,11 +67,11 @@
 										{{edit d()->products_variant}}{{delete d()->products_variant}}
 										<span class="picture-2 "><img src="<?=preview(d()->products_variant->image, '46', 'auto')?>" alt=""/></span>
 										<div class="material"><?=d()->products_variant->title?></div>
-										<div class="price-2"><?=d()->products_variant->price?> р.</div>
+										<div class="price-2"><?=d()->products_variant->price?> {"р_"|t}</div>
 									</div>
 								@ } else {
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-										<div class="material">Стандартная</div>
+										<div class="material">{"Стандартная"|t}</div>
 									</div>
 								@ }
 
@@ -84,7 +83,7 @@
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-									<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> р.</div>
+									<div class="price-3"><span class="js-basket-item-total-price">{basket_item.total_price|price_format}</span> {"р_"|t}</div>
 								</div>
 								<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
 									<a href="#" class="close js-basket-delete"></a>
@@ -98,17 +97,15 @@
 				<div class="right">
 					<div class="row grid-row">
 						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-							<div class="title-1">Итого</div>
+							<div class="title-1">{"Итого"|t}</div>
 						</div>
 						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 							<div class="price">
-								<span class="js-basket-total-price">{basket.total_price|price_format}
-								</span>
-								р.
+								<span class="js-basket-total-price">{basket.total_price|price_format}</span>{"р_"|t}
 							</div>
 						</div>
 						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-							<div class="title-2">Количество</div>
+							<div class="title-2">{"Количество"|t}</div>
 						</div>
 						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 							<div class="quantity"><span class="js-basket-total-number">{basket.total_number}</span> шт.</div>
@@ -120,31 +117,31 @@
 								<div class="fosv-2">
 									<div>
 										<div>
-											<input name="name" type="text" placeholder="Фамилия И. О." />
+											<input name="name" type="text" placeholder="{"Фамилия И__О_"|t}" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-											<input name="address" type="text" placeholder="Ваш адрес" />
+											<input name="address" type="text" placeholder="{"Ваш адрес"|t}" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-											<input name="phone" type="text" placeholder="Ваш телефон" />
+											<input name="phone" type="text" placeholder="{"Ваш телефон"|t}" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-											<input name="email" type="text" placeholder="Ваш email" />
+											<input name="email" type="text" placeholder="{"Ваш email"|t}" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-										<select name="delivery_type" class="js-sumoselect js-delivery" placeholder="Вариант доставки">
+										<select name="delivery_type" class="js-sumoselect js-delivery" placeholder="{"Вариант доставки"|t}">
 											<option class="hidden"></option>
 											<foreach Delivery_variant>
 												<option value="{.id}" data-price="{.price}" data-free_price="{.free_price}" data-message="{.text}" <?=($_SESSION['delivery_id']==d()->this->id)?"selected":""?>>{.title}</option>
@@ -154,10 +151,10 @@
 									</div>
 									<div>
 										<div>
-										<select name="pay_type" class="js-sumoselect" placeholder="Вариант оплаты">
+										<select name="pay_type" class="js-sumoselect" placeholder="{"Вариант оплаты"|t}">
 											<option class="hidden"></option>
-											<option value="1">Онлайн оплата</option>											
-											<option value="2" title="Наложенный платеж (+ 2% комиссия)">Наложенный платеж (+ 2% комиссия)</option>
+											<option value="1">{"Онлайн оплата"|t}</option>
+											<option value="2" title="{"Наложенный платеж (+ 2% комиссия)"|t}">{"Наложенный платеж (+ 2% комиссия)"|t}</option>
 										</select>
 										</div>
 									</div>
@@ -166,13 +163,13 @@
 									</div>
 									<div>
 										<div>
-											<textarea name="comment" placeholder="Ваш комментарий"></textarea>
+											<textarea name="comment" placeholder="{"Ваш комментарий"|t}"></textarea>
 										</div>
 									</div>
 
-									<span class="privacy">Нажимая на кнопку вы соглашаетсь на хранение и обработку <a href="/privacy-policy">ваших персональных данных</a></span>
+									<span class="privacy">{"privacy#Нажимая на кнопку вы соглашаетсь на хранение и обработку"|t} <a href="{langlink}/privacy-policy">{"privacy#ваших персональных данных"|t}</a></span>
 									@ if (iam() || true){
-										<input type="submit" class="send-10" value="Заказать"/>
+										<input type="submit" class="send-10" value="{"Заказать"|t}"/>
 									@ }
 								</div>
 							</div>

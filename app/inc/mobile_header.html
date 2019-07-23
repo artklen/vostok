@@ -5,11 +5,11 @@
 
 	<div class="mob_sidebar_head">
 	@ if(d()->Auth->is_guest) {
-		<a href="" class="mob_sidebar_login popup_btn-1">Вход <br>в личный кабинет</a>
+		<a href="{langlink}" class="mob_sidebar_login popup_btn-1">Вход <br>в личный кабинет</a>
 	@}else{
-		<a href="/cabinet/balls" class="points_link">У вас {Ball.show_amount}</a>
+		<a href="{langlink}/cabinet/balls" class="points_link">У вас {Ball.show_amount}</a>
 	@}
-		<a href="" class="close_sidebar">
+		<a href="{langlink}" class="close_sidebar">
 			<img src="/images/close_icon-orange.png" alt="">
 		</a>
 		
@@ -18,7 +18,7 @@
 {*	<div class="mob_sidebar_city_select">
 		<div class="ms_city_trigger">
 			<span>Ваш город:</span>
-			<a href="">Казань</a>
+			<a href="{langlink}">{"Казань"|t}</a>
 		</div>
 	
 	</div>
@@ -30,13 +30,13 @@
 		</foreach>
 	</ul>
 
-	{* <a href="" class="mob_sidebar_sellout">Распродажа</a> *}
+	{* <a href="{langlink}" class="mob_sidebar_sellout">{"Распродажа"|t}</a> *}
 
 	<ul class="mob_sidebar_nav_2">
-		<li><a href="/delivery">Доставка и оплата</a></li>
-		<li><a href="/actions/">Акции</a></li>
-		<li><a href="/ball-system">Балльная система</a></li>
-		<li><a href="/contacts">Контакты</a></li>
+		<li><a href="{langlink}/delivery">{"Оплата и доставка"|t}</a></li>
+		<li><a href="{langlink}/actions/">{"Акции"|t}</a></li>
+		<li><a href="{langlink}/ball-system">{"Балльная система"|t}</a></li>
+		<li><a href="{langlink}/contacts">{"Контакты"|t}</a></li>
 	</ul>
 
 	<a href="tel:+78432510130" class="mob_sidebar_phone">+7 (843) 251-01-30</a>
@@ -50,15 +50,15 @@
 
 	<div class="mob_sidebar_head">
 
-		<a href="" class="back_btn js-return-to-mobile-menu">Назад</a>
+		<a href="{langlink}" class="back_btn js-return-to-mobile-menu">{"Назад"|t}</a>
 
-		<a href="" class="close_sidebar">
+		<a href="{langlink}" class="close_sidebar">
 			<img src="/images/close_icon-orange.png" alt="">
 		</a>
 		
 	</div>
 
-	<a href="" class="sb_category_ttl">{.title}</a>
+	<a href="{langlink}" class="sb_category_ttl">{.title}</a>
 
 	<ul class="mob_sidebar_nav_2">
 	<?php 
@@ -68,34 +68,9 @@
 			}
 			?>
 			<foreach cats>
-				<li><a href="/catalog/{.url}">{.title}</a> </li>
+				<li><a href="{langlink}/catalog/{.url}">{.title}</a> </li>
 			</foreach>
 		
 	</ul>
-
-{*	
-	<ul class="sidebar_manuf_list">
-		<li><a href=""><img src="/images/manuf_ph-1.png" alt=""></a></li>
-		<li><a href=""><img src="/images/manuf_ph-2.png" alt=""></a></li>
-		<li><a href=""><img src="/images/manuf_ph-1.png" alt=""></a></li>
-		<li><a href=""><img src="/images/manuf_ph-3.png" alt=""></a></li>
-		<li><a href=""><img src="/images/manuf_ph-4.png" alt=""></a></li>
-		<li><a href=""><img src="/images/manuf_ph-3.png" alt=""></a></li>
-		<li><a href=""><img src="/images/manuf_ph-5.png" alt=""></a></li>
-		<li><a href=""><img src="/images/manuf_ph-6.png" alt=""></a></li>
-	</ul>
-
-	<ul class="sb_prod_type_list">
-
-		<li><a href="">Сухой корм</a></li>
-		<li><a href="">Влажный корм</a></li>
-		<li><a href="">С рыбой</a></li>
-		<li><a href="">Для кошек с массой 1 кг</a></li>
-		<li><a href="">Для британских кошек</a></li>
-		<li><a href="">С чувствительным пищеварением</a></li>
-		<li><a href="">Для старых кошек</a></li>
-
-	</ul>
-*}
 </div>
 </foreach>

@@ -6,17 +6,17 @@
 				{{render_field ~field['field_name'], ~field, '/products_filters/'}}
 			@ }
 		@ }
-		<button type="submit" class="send-8">Показать</button>
-		<a href="/catalog<?=d()->this_category->url ? '/'.d()->this_category->url : ''?>" class="send-9">Сбросить фильтр</a>
+		<button type="submit" class="send-8">{"Показать"|t}</button>
+		<a href="{langlink}/catalog<?=d()->this_category->url ? '/'.d()->this_category->url : ''?>" class="send-9">{"Сбросить фильтр"|t}</a>
 	</form>
 </div>
 
 <div class="item js-unfolding-container container-categories">
-	<span class="name also-available-title">Также в продаже:</span>
+	<span class="name also-available-title">{"Также в продаже"|t}:</span>
 	<div class="categories-list also-available-list">
 		<foreach Category>
 			@ if (d()->this_category->id != d()->this->id) {
-			<a href="/catalog/{.url}">{.title}</a><br>
+			<a href="{langlink}/catalog/{.url}">{.title}</a><br>
 			@ }
 		</foreach>
 	</div>

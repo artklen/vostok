@@ -1,5 +1,15 @@
 <!doctype html>
-<html>
+
+<?php switch(d()->lang) {
+	case 'en':
+		~active_lang = 'en';
+		break;
+	default:
+		~active_lang = 'ru';
+} ?>
+
+<html lang="<?= ~active_lang ?>">
+
 <head>
 	<meta charset="utf-8">
 @ if (d()->seo->title !== '') {
@@ -40,11 +50,11 @@
 	{{/inc/menu_mobile.html}}
 
 	<ul class="menu-4">
-		<li><a href="/payment">Оплата и доставка</a></li>
-		<li><a href="/news">Новости</a></li>
-		<li><a href="/about">О нас</a></li>
-		<li><a href="/faq">Вопрос-ответ</a></li>
-		<li><a href="/contacts">Контакты</a></li>
+		<li><a href="{langlink}/payment">{"Оплата и доставка"|t}</a></li>
+		<li><a href="{langlink}/news">{"Новости"|t}</a></li>
+		<li><a href="{langlink}/about">{"О нас"|t}</a></li>
+		<li><a href="{langlink}/faq">{"Вопрос-ответ"|t}</a></li>
+		<li><a href="{langlink}/contacts">{"Контакты"|t}</a></li>
 	</ul>
 </div>
 
@@ -52,30 +62,36 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-10 col-sm-7 col-md-6 col-lg-5">
-				<a href="/cities/select?url=%2F" class="city-selection hidden-xs js-feedback">{current_city.title|h}</a>
+				<a href="{langlink}/cities/select?url=%2F" class="city-selection hidden-xs js-feedback">{current_city.title|h}</a>
 				<div class="phone-position">
 					<div class="phone">
 						<a href="tel:{Option.number}">{Option.number}</a>
 					</div>
-					<a href="/feedback/call" class="call js-feedback">Заказать звонок</a>
+					<a href="{langlink}/feedback/call" class="call js-feedback">{"Заказать звонок"|t}</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 visible-lg">
 				<ul class="menu-1">
-					<li><a href="/payment" {{if ~url_path === '/payment', 'class="active"'}}>Оплата и доставка</a></li>
-					<?/*<li><a href="/news" {{if ~url_path === '/news', 'class="active"'}}>Новости</a></li>
-					<li><a href="/about" {{if ~url_path === '/about', 'class="active"'}}>О нас</a></li>*/?>
-					<li><a href="/faq" {{if ~url_path === '/faq', 'class="active"'}}>Вопрос-ответ</a></li>
-					<li><a href="/contacts" {{if ~url_path === '/contacts', 'class="active"'}}>Контакты</a></li>
+					<li><a href="{langlink}/payment" {{if ~url_path === '/payment', 'class="active"'}}>{"Оплата и доставка"|t}</a></li>
+					<?/*<li><a href="{langlink}/news" {{if ~url_path === '/news', 'class="active"'}}>{"Новости"|t}</a></li>
+					<li><a href="{langlink}/about" {{if ~url_path === '/about', 'class="active"'}}>{"О нас"|t}</a></li>*/?>
+					<li><a href="{langlink}/faq" {{if ~url_path === '/faq', 'class="active"'}}>{"Вопрос-ответ"|t}</a></li>
+					<li><a href="{langlink}/contacts" {{if ~url_path === '/contacts', 'class="active"'}}>{"Контакты"|t}</a></li>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 hidden-xs">
+			<div class="col-xs-11 col-sm-3 col-md-4 col-lg-2 hidden-xs">
 				<form method="get" action="/catalog">
 					<div class="search">
-						<input class="search-input" name="search" type="text" placeholder="Поиск по каталогу"/>
+						<input class="search-input" name="search" type="text" placeholder="{"Поиск по каталогу"|t}"/>
 						<button type="submit"></button>
 					</div>
 				</form>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 hidden-xs">
+				<div class="language">
+					<a href="{langlink}/" class="option {{active_if in_array(d()->lang, ['', 'ru'])}}">RUS</a>
+					<a href="/en/" class="option {{active_if d()->lang === 'en'}}">ENG</a>
+				</div>
 			</div>
 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-3 hidden-lg">
 				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs"></a>
@@ -87,11 +103,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-10 col-sm-2 col-md-3 col-lg-3" style="padding-right:0">
-				<a href="/" class="logo">
+				<a href="{langlink}/" class="logo">
 					<img src="/images/logo.png" alt=""/>
 				</a>
 				<span class="slogan hidden-sm hidden-md">
-					Оптовая и розничная продажа часов
+					{"Оптовая и розничная продажа часов"|t}
 				</span>
 			</div>
 			<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7 hidden-xs" style="padding-left:7px;padding-right:7px;">
@@ -126,29 +142,29 @@
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 				<div class="item">
 					<div class="picture"><img src="/images/icon-01.svg" class="icon-1" alt=""/></div>
-					<div class="title">Широкий ассортимент</div>
-					<div class="text">Большой выбор качественных наручных часов</div>
+					<div class="title">{"Широкий ассортимент"|t}</div>
+					<div class="text">{"Большой выбор качественных наручных часов"|t}</div>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 				<div class="item">
 					<div class="picture"><img src="/images/icon-02.svg" class="icon-2" alt=""/></div>
-					<div class="title">Бесплатная доставка</div>
-					<div class="text">При заказе от 2 000 руб.</div>
+					<div class="title">{"Бесплатная доставка"|t}</div>
+					<div class="text">{"При заказе от 2 000 руб"|t}</div>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 				<div class="item">
 					<div class="picture"><img src="/images/icon-09.svg" class="icon-3" alt=""/></div>
-					<div class="title">Гарантия на все</div>
-					<div class="text">Поддерживаем заводскую гарантию на часы</div>
+					<div class="title">{"Гарантия на все"|t}</div>
+					<div class="text">{"Поддерживаем заводскую гарантию на часы"|t}</div>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 				<div class="item">
 					<div class="picture"><img src="/images/icon-10.svg" class="icon-4" alt=""/></div>
-					<div class="title">Знаем о часах "Восток" все</div>
-					<div class="text">Находимся на площадке завода, имеем многолетний опыт продажи часов</div>
+					<div class="title">{"Знаем о часах \"Восток\" все"|t}</div>
+					<div class="text">{"Находимся на площадке завода, имеем многолетний опыт продажи часов"|t}</div>
 				</div>
 			</div>
 		</div>
@@ -168,7 +184,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-				<a href="#" class="send-3">Подписаться</a>
+				<a href="{langlink}#" class="send-3">{"Подписаться"|t}</a>
 			</div>
 		</div>
 	</div>
@@ -178,7 +194,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
 				<div class="item">
-					<div class="title">Каталог</div>
+					<div class="title">{"Каталог"|t}</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<ul class="left-1 left-1-xs">
@@ -186,7 +202,7 @@
 
 								<foreach d()->Custom_catalog_row->where('row = ?', 1)>
 									{{edit}}{{delete}}
-									<li><a href="/{.url}">{.title}</a></li>
+									<li><a href="{langlink}/{.url}">{.title}</a></li>
 								</foreach>
 							</ul>
 						</div>
@@ -195,7 +211,7 @@
 								{{add 'custom_catalog_rows', 'row' => 2}}
 								<foreach d()->Custom_catalog_row->where('row = ?', 2)>
 									{{edit}}{{delete}}
-									<li><a href="/{.url}">{.title}</a></li>
+									<li><a href="{langlink}/{.url}">{.title}</a></li>
 								</foreach>
 							</ul>
 						</div>
@@ -204,19 +220,19 @@
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4 col-sm-offset-2 col-md-offset-0">
 				<div class="item">
-					<div class="title">Информация</div>
+					<div class="title">{"Информация"|t}</div>
 					<ul class="left-2 left-2-xs">
 						{{add 'custom_info_rows', 'row' => 1}}
 						<foreach d()->Custom_info_row->where('row = ?', 1)>
 							{{edit}}{{delete}}
-							<li><a href="/{.url}">{.title}</a></li>
+							<li><a href="{langlink}/{.url}">{.title}</a></li>
 						</foreach>
 					</ul>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
 				<div class="item last">
-					<div class="title">Контакты</div>
+					<div class="title">{"Контакты"|t}</div>
 					<ul class="right">
 						<li>{Option.address}</li>
 						<li><a href="tel:{Option.number}">{Option.number}</a></li>
@@ -253,13 +269,11 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
 				<div class="left">
-					© 2018 ООО "Восток" <a href="/privacy-policy">Политика конфиденциальности</a>
+					© 2018 {"ООО \"Восток\""|t} <a href="{langlink}/privacy-policy">{"Политика конфиденциальности"|t}</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
-				<div class="right">
-					Сайт разработан в компании «<a href="https://artklen.ru" target="blank"/>ARTKLEN</a>»
-				</div>
+				<div class="right">{"dev_org#Сайт разработан в компании"|t} «<a href="https://artklen.ru" target="blank"/>ARTKLEN</a>»</div>
 				<div class="logo">
 					<a href="https://artklen.ru" class="hidden-xs" target="blank"><img src="/images/copyright.png" alt=""/></a>
 					<a href="https://artklen.ru" class="visible-xs" target="blank"><img src="/images/copyright-xs.png" alt=""/></a>
@@ -283,6 +297,7 @@
 <script type="text/javascript">
 window.site_main_domain = "<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>";
 window.cookie_lifetime = <?= (int) ini_get('session.cookie_lifetime') ?>;
+window.langlink = "<?= d()->langlink ?>"
 </script>
 
 <!-- Yandex.Metrika counter -->

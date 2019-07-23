@@ -1,7 +1,7 @@
 <?php
 
-d()->get('/cities/select', function() {
-	d()->set_page_title('Выбор города');
+d()->get(d()->langlink . '/cities/select', function() {
+	d()->set_page_title(t('Выбор города'));
 	d()->cities_list = d()->City->where('`is_global`=0')->order('`title`');
 	d()->current_url_path = $_GET['url'];
 	$result = d()->view->render('/cities/select.html');
@@ -12,7 +12,7 @@ d()->get('/cities/select', function() {
 	return $result;
 });
 
-d()->get('/cities/ajax_search', function() {
+d()->get(d()->langlink . '/cities/ajax_search', function() {
 	$city_query_part = isset($_GET['params'], $_GET['params']['city_id']) ? ' and `city_id`=' . e($_GET['params']['city_id']) : '';
 	$data = DBImport::read_all('select `id`, `title`, `realty_region_id`, `realty_area_id`, `kladr_type` from `realty_cities` where `title` like "%' . substr(e($_GET['q']), 1, -1) . '%"' . $city_query_part . ' order by `kladr_type`<>"Город", `title`' . ($_GET['limit'] ? ' limit ' . (1 * $_GET['limit']) : ''));
 	if (isset($_GET['limit']) && count($data) < $_GET['limit'] / 3 + 1e-7) {
