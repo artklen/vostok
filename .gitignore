@@ -1,0 +1,7 @@
+.idea/
+storage/
+sitemaps/
+/config.php
+/index.php
+/app/aquiring/certificate.pem
+/app/aquiring/privateKey.pem
