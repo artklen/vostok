@@ -567,7 +567,9 @@
       .city-form .city-top {
         padding: 45px 35px; }
       .city-form .city-bottom {
-        padding: 0 35px 0 35px; } }
+        padding: 0 35px 0 35px; }
+    .crumbs .marker {
+      padding: 0 4px; } }
 
 @media (min-width: 480px) and (max-width: 767px) {
   .slider-1 .slide {

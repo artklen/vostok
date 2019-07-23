@@ -1836,7 +1836,7 @@ input.list[type="checkbox"]:disabled:hover + span {
 				color: #292928;
 				font-weight: 700;
 				display: block;
-				padding: 0 10px 0 0;
+				/*padding: 0 10px 0 0;*/
 				span {
 					font-family: 'Roboto', sans-serif;
 					font-size: 14px;
@@ -1847,6 +1847,10 @@ input.list[type="checkbox"]:disabled:hover + span {
 				&.price-sale-color {
 					color: #d60000;
 				}
+			}
+			.in-stock {
+				color: #00f;
+				padding-bottom: 5px;
 			}
 		}
 	}
@@ -2804,18 +2808,21 @@ input.list[type="checkbox"]:disabled:hover + span {
 
 .action-1, .action-2 {
 	margin: 0 0 90px 0;
-	padding: 10px 0 25px 0;
+	padding: 25px 0;
 	background: url(/images/action-bg.jpg) no-repeat top center #292928;
 }
 .action-1 {
 	.watch-1 {
+		min-height: 320px;
+			display: flex;
+			align-items: center;
 		img {
 			/*width: 400px;*/
 		}
 		/*background: url(/images/watch.png) no-repeat center center;*/
 	}
 	.watch-2 {
-		margin: 60px 0 0 50px;
+		margin: 40px 0 40px 50px;
 		.title-1 {
 			font-family: 'Roboto', sans-serif;
 			font-size: 18px;

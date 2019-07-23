@@ -1429,7 +1429,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     color: #292928;
     font-weight: 700;
     display: block;
-    padding: 0 10px 0 0; }
+    /*padding: 0 10px 0 0;*/ }
   .slider-2 .slide .bottom .price span, .catalog-3 .slide .bottom .price span, .slider-2 .product .bottom .price span, .catalog-3 .product .bottom .price span {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
@@ -1438,6 +1438,9 @@ input.list[type="checkbox"]:disabled:hover + span {
     font-weight: 400; }
   .slider-2 .slide .bottom .price.price-sale-color, .catalog-3 .slide .bottom .price.price-sale-color, .slider-2 .product .bottom .price.price-sale-color, .catalog-3 .product .bottom .price.price-sale-color {
     color: #d60000; }
+  .slider-2 .slide .bottom .in-stock, .catalog-3 .slide .bottom .in-stock, .slider-2 .product .bottom .in-stock, .catalog-3 .product .bottom .in-stock {
+    color: #00f;
+    padding-bottom: 5px; }
   .slider-2 .button-bg-1, .catalog-3 .button-bg-1, .slider-2 .button-bg-2, .catalog-3 .button-bg-2 {
     display: flex;
     display: -ms-flexbox;
@@ -2205,14 +2208,18 @@ input.list[type="checkbox"]:disabled:hover + span {
 /* actions */
 .action-1, .action-2 {
   margin: 0 0 90px 0;
-  padding: 10px 0 25px 0;
+  padding: 25px 0;
   background: url(/images/action-bg.jpg) no-repeat top center #292928; }
 
 .action-1 .watch-1 {
-  /*width: 400px;*/
+  min-height: 320px;
+  display: flex;
+  align-items: center;
   /*background: url(/images/watch.png) no-repeat center center;*/ }
+  .action-1 .watch-1 img {
+    /*width: 400px;*/ }
   .action-1 .watch-2 {
-    margin: 60px 0 0 50px; }
+    margin: 40px 0 40px 50px; }
   .action-1 .watch-2 .title-1 {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
