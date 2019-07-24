@@ -65,7 +65,7 @@ d()->get(d()->langlink . '/basket', function() {
 d()->post(d()->langlink . '/basket/finish', function() {
 	if (AJAX) {
 		if (!isset(d()->basket->order)) {
-			print 'document.location.href="/basket/";';
+			print 'document.location.href="' . d()->langlink . '/basket/";';
 			exit;
 		}
 		if (d()->validate(d()->url_path)) {
@@ -95,7 +95,7 @@ d()->post(d()->langlink . '/basket/finish', function() {
 				print 'document.location.href="/aquiring/sber/payfororder/'.$order->secret.'";';
 			} else {
 				unset($_SESSION['delivery_id']);
-				print 'document.location.href="/thankyou"';
+				print 'document.location.href="' . d()->langlink . '/thankyou"';
 			}
 			exit;
 		}

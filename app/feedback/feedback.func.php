@@ -61,7 +61,7 @@ d()->post($url_base . ':name', function($name) {
 		}
 		
 		d()->notification->feedback($name);
-		$redirect = isset(d()->feedback_form[$name]['redirect']) ? d()->feedback_form[$name]['redirect'] : '/thankyou';
+		$redirect = d()->langlink . (isset(d()->feedback_form[$name]['redirect']) ? d()->feedback_form[$name]['redirect'] : '/thankyou');
 		if (AJAX) {
 			if (isset($_POST['is_modal'])) {
 				print 'fancybox_unlock();';
