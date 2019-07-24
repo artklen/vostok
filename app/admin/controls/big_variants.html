@@ -3,21 +3,28 @@
     <div class="controls">
         <?php
             $column = preg_replace('/[^a-zA-Z_]*/', '', d()->row_data['field_name']);
-            $values = d()->db->query('SELECT DISTINCT(' . $column . ') FROM products JOIN categories ON categories.id = products.category_id WHERE ' . $column . ' IS NOT NULL AND categories.title = "Часы"')->fetchAll(PDO::FETCH_COLUMN, 0);
 
-            $existing_values = [];
+            $value = d()->value;
 
-            if (mb_strlen(d()->value) > 0) {
-                $existing_values = explode("\n", d()->value);
-                $existing_values = array_map(function ($value) {
-                    return mb_stristr($value, '=', true);
-                }, $existing_values);
-            }
+            if (d()->db->query('SHOW COLUMNS FROM products LIKE "' . $column . '"')->fetch() !== false) {
+                $values = d()->db->query('SELECT DISTINCT(' . $column . ') FROM products JOIN categories ON categories.id = products.category_id WHERE ' . $column . ' IS NOT NULL AND categories.title = "Часы"')->fetchAll(PDO::FETCH_COLUMN, 0);
 
-            $value = d()->value . "\n";
+                $existing_values = [];
 
-            foreach (array_diff($values, $existing_values) as $new_value) {
-                $value .= $new_value . "=\n";
+                if (mb_strlen(d()->value) > 0) {
+                    $existing_values = explode("\n", d()->value);
+                    $existing_values = array_map(function ($value) {
+                        return mb_stristr($value, '=', true);
+                    }, $existing_values);
+                }
+
+                $value .= "\n";
+
+                foreach (array_diff($values, $existing_values) as $new_value) {
+                    if (mb_strlen(trim($new_value)) > 0) {
+                        $value .= $new_value . "=\n";
+                    }
+                }
             }
         ?>
         <textarea name="{name}" class="ui-widget-content ui-corner-all span3 js-admin-big" data-type="" style="height:200px;width:500px;"><?= h($value) ?></textarea>
