@@ -45,6 +45,10 @@
 <div class="bg-1 js-bg-1 hidden-lg"></div>
 <div class="bg-2 js-bg-2 hidden-sm hidden-md hidden-lg"></div>
 <div class="menu-2-xs js-menu-2-xs hidden-lg">
+	<div class="language mobile">
+		<a href="/" class="option {{active_if in_array(d()->lang, ['', 'ru'])}}">RUS</a>
+		<a href="/en/" class="option {{active_if d()->lang === 'en'}}">ENG</a>
+	</div>
 	<a href="javascript:void(0);" class="close js-close"></a>
 
 	{{/inc/menu_mobile.html}}
@@ -89,7 +93,7 @@
 			</div>
 			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 hidden-xs">
 				<div class="language">
-					<a href="{langlink}/" class="option {{active_if in_array(d()->lang, ['', 'ru'])}}">RUS</a>
+					<a href="/" class="option {{active_if in_array(d()->lang, ['', 'ru'])}}">RUS</a>
 					<a href="/en/" class="option {{active_if d()->lang === 'en'}}">ENG</a>
 				</div>
 			</div>

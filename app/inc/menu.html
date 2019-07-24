@@ -18,9 +18,9 @@
 						$count = d()->Menu_element->where('menu_main_element_id = ?', d()->this->id)->count;
 						$countPer = (int)($count / $max);
 					?>
-					 
-				
-					
+
+
+
 						<!--foreach Product->where('collection_id = ?', d()->this->id)>
 						<li>
 							<a href="{langlink}/product/{.url}">
@@ -40,7 +40,7 @@
 									<span class="sub-2">{.series} <span class="sub-3">{.cnt}</span></span>
 								</a>
 							</li>
-						</foreach>--> 
+						</foreach>-->
 						<?php
 							d()->menu_elemenents = d()->Menu_element->where('menu_main_element_id = ?', d()->this->id );
 							$all_count = d()->menu_elemenents->count();
@@ -50,7 +50,7 @@
 							//11 - 4
 						?>
 						<foreach menu_elemenents->slice($slice )>
-							<ul class="last-3" >	
+							<ul class="last-3" >
 							<foreach this>
 							<li>
 								{{edit}}{{delete}}
@@ -129,7 +129,7 @@
 							</li>
 
 							</foreach>
-						</ul>	
+						</ul>
 						</foreach>
 
 						<!--<foreach Product->select('count(id) cnt, carcas')->where('collection_id = ?', d()->this->id)->group_by('carcas')>
@@ -143,8 +143,8 @@
 								</a>
 							</li>
 						</foreach>-->
-					
-					 
+
+
 				</li>
 			</ul>
 		</div>

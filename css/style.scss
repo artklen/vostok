@@ -4351,6 +4351,14 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .language {
+	&.mobile {
+		margin-top: 16px;
+		margin-left: 19px;
+
+		.active {
+			color: #171715 !important;
+		}
+	}
 	.option {
 		color: #d39a6e;
 		height: 16px;
