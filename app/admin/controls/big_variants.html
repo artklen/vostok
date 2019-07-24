@@ -8,6 +8,9 @@
 
             if (d()->db->query('SHOW COLUMNS FROM products LIKE "' . $column . '"')->fetch() !== false) {
                 $values = d()->db->query('SELECT DISTINCT(' . $column . ') FROM products JOIN categories ON categories.id = products.category_id WHERE ' . $column . ' IS NOT NULL AND categories.title = "Часы"')->fetchAll(PDO::FETCH_COLUMN, 0);
+                $values = array_filter($values, function ($item) {
+                    return mb_strlen(trim($item)) > 0;
+                });
 
                 $existing_values = [];
 
