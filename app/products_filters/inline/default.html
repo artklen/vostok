@@ -1,0 +1,79 @@
+<div class="pseudo-filter">
+    @ $field_name = ~field['field_name'];
+    @ if (!empty(~fields_filtered_data[$field_name]) && !in_array(~field['type'], ['interval', 'range', 'colors', 'table'])) {
+        <div class="filter_form_item">
+            @ $links = [];
+            <?php foreach (~fields_data[$field_name] as $variant) {
+                d()->get_tmp = new Get('');
+
+                foreach (~products__fields as $field2) {
+                    if ($field2['field_name'] !== $field_name) {
+                        if (isset(d()->get->{$field2['field_name']})) {
+                            foreach (d()->get->{$field2['field_name']} as $field_value) {
+                                d()->get_tmp->add($field2['field_name'] . '[]', str_replace('%20', '+', urlencode($field_value)));
+                            }
+                        }
+                    } else {
+                        foreach (~fields_filtered_data[$field_name] as $variant2) {
+                            $is_now = isset(d()->get[$field_name]) && in_array($variant2['value'], d()->get[$field_name]);
+                            if (/*(($variant2['value'] !== $variant['value']) && $is_now) ||*/ (($variant2['value'] === $variant['value']) && ($variant2['count']) && !$is_now)) {
+                                d()->get_tmp->add($field2['field_name'] . '[]', str_replace('%20', '+', urlencode($variant2['value'])));
+                            }
+                        }
+                    }
+                }
+
+                $count = 0;
+
+                foreach (~fields_filtered_data[$field_name] as $variant2) {
+                    if ($variant2['value'] === $variant['value']) {
+                        $count = 1 * $variant2['count'];
+                    }
+                }
+
+                d()->title = isset($variant['title']) ? $variant['title'] : $variant['value'];
+
+                if (isset(d()->get[$field_name])) {
+                    if (in_array($variant['value'], d()->get[$field_name])) {
+                        d()->get_tmp->delete("{$field_name}[]", $variant['value']);
+                    }
+                }
+
+                if (!$count) {
+                    $links[] = [
+                        'title' => d()->title,
+                        'current' => true
+                    ];
+                } else if (isset(d()->get[$field_name])) {
+                    $links[] = [
+                        'title' => d()->title,
+                        'link' => d()->url_path() . d()->get_tmp,
+                        'current' => (in_array($variant['value'], d()->get[$field_name]))
+                    ];
+                } else if ($count) {
+                    $links[] = [
+                        'title' => d()->title,
+                        'link' => d()->url_path() . d()->get_tmp,
+                        'current' => false
+                    ];
+                }
+            } ?>
+
+            @ if (count($links) > 0) {
+                @ if (iam()) {
+                    <div style="position: absolute; margin-left: -18px;">{{edit ~field}}</div>
+                @ }
+
+                <div><h2><?= h(~field['title']) ?></h2></div>
+            @ }
+
+            @ foreach ($links as $item) {
+                @ if ($item['current']) {
+                    <span><?= h($item['title']) ?></span>
+                @ } else {
+                    <a href="<?= h($item['link']) ?>"><?= h($item['title']) ?></a>
+                @ }
+            @ }
+        </div>
+    @ }
+</div>

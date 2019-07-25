@@ -154,6 +154,44 @@ d()->route(d()->langlink . '/catalog', function ()
 	d()->fields_data = $fields_data;
 	d()->fields_filtered_data = $fields_filtered_data;
 
+    if (! in_array(d()->lang, ['', 'ru'])) {
+        $column = d()->lang . '_variants';
+
+        for ($i = 0; $i < count(d()->fields_filtered_data); $i++) {
+            if (mb_strlen(trim(d()->products__fields[$i]->{$column})) <= 0) {
+                continue;
+            }
+
+            $variants = [];
+            $all_variants = explode("\n", d()->products__fields[$i]->{$column});
+
+            foreach ($all_variants as $variant) {
+                if (mb_strlen(trim($variant)) <= 0) {
+                    continue;
+                }
+
+                $variant_value = explode("=", $variant);
+
+                if (mb_strlen(trim($variant_value[1])) < 1) {
+                    continue;
+                }
+
+                $variants[$variant_value[0]] = $variant_value[1];
+            }
+
+            foreach (d()->fields_filtered_data[d()->products__fields[$i]->field_name] as $key => $field) {
+                if (isset($variants[$field['value']])) {
+                    $value = $variants[$field['value']];
+                } else {
+                    $value = $field['value'];
+                }
+
+                d()->fields_filtered_data[d()->products__fields[$i]->field_name][$key]['title'] = $value;
+                d()->fields_data[d()->products__fields[$i]->field_name][$key]['title'] = $value;
+            }
+        }
+    }
+
 	#var_dump(d()->fields_filtered_data);die;
 
 	#var_dump(d()->fields_filtered_data);die;
@@ -338,7 +376,7 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
 	if (! in_array(d()->lang, ['', 'ru'])) {
 	    $column = d()->lang . '_variants';
 
-        for ($i = 0; $i < count(d()->fields_data); $i++) {
+        for ($i = 0; $i < count(d()->fields_filtered_data); $i++) {
             if (mb_strlen(trim(d()->products__fields[$i]->{$column})) <= 0) {
                 continue;
             }
@@ -360,14 +398,15 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
                 $variants[$variant_value[0]] = $variant_value[1];
             }
 
-            foreach (d()->fields_data[d()->products__fields[$i]->field_name] as $key => $field) {
+            foreach (d()->fields_filtered_data[d()->products__fields[$i]->field_name] as $key => $field) {
                 if (isset($variants[$field['value']])) {
                     $value = $variants[$field['value']];
                 } else {
                     $value = $field['value'];
                 }
 
-                d()->fields_data[d()->products__fields[$i]->field_name][$key]['value'] = $value;
+                d()->fields_filtered_data[d()->products__fields[$i]->field_name][$key]['title'] = $value;
+                d()->fields_data[d()->products__fields[$i]->field_name][$key]['title'] = $value;
             }
         }
     }

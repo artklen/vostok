@@ -1,0 +1,7 @@
+@ foreach (~products__fields as ~field) {
+	@ if (!empty(~fields_data[~field['field_name']]) && ~field['is_above_filter'] === '1' && (! isset(~field['is_noindex']) || ~field['is_noindex'] !== '1')) {
+		@ if (isset(d()->get['series'])) { // Это костыль, но так захотел заказчик
+			{{render_field ~field['field_name'], ~field, '/products_filters/inline/'}}
+		@ }
+	@ }
+@ }

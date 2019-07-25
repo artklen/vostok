@@ -26,7 +26,7 @@
 							{{checked_if !empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])}}
 							class="list"
 						/>
-						<span></span>{{if ~data['value'], 'Да', 'Нет'}}<span class="sub"> {data.count|h}</span>
+						<span></span>{{if ~data['value'], t('Да'), t('Нет')}}<span class="sub"> {data.count|h}</span>
 					</label>
 				</div>
 				@ } else {
@@ -34,10 +34,10 @@
 					<label class="disabled">
 						@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
 						<input type="checkbox" class="list" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list" />
-						<span></span><span class="sub">{{if ~data['value'], 'Да', 'Нет'}}</span>
+						<span></span><span class="sub">{{if ~data['value'], t('Да'), t('Нет')}}</span>
 						@ } else {
 						<input type="checkbox" class="list" name="{name|h}[]" value="{data.value|h}" disabled="disabled" class="list" />
-						<span></span><span class="sub">{{if ~data['value'], 'Да', 'Нет'}}</span>
+						<span></span><span class="sub">{{if ~data['value'], t('Да'), t('Нет')}}</span>
 						@ }
 					</label>
 				</div>

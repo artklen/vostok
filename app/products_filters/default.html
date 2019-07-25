@@ -17,11 +17,12 @@
 							<?php $inWrap = true;?>
 				@ }
 
+				@ d()->title = isset(d()->data['title']) ? d()->data['title'] : d()->data['value'];
 				@ if (~data['count'] > 0) {
 					<div class="box <?=$inWrap ? 'box-side' : ''?>">
 						<label>
 							<input type="checkbox" name="{name|h}[]" value="{data.value|h}" {{checked_if !empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])}} class="list"/>
-							<span></span><?= h(~fields_data[~name][~key]['value']) ?><span class="sub"> {data.count|h}</span>
+							<span></span>{title|h}<span class="sub"> {data.count|h}</span>
 						</label>
 					</div>
 				@ } else {
@@ -29,10 +30,10 @@
 						<label class="disabled">
 						@ if (!empty(~get[~name]) && is_array(~get[~name]) && in_array(~data['value'], ~get[~name])) {
 							<input type="checkbox" name="{name|h}[]" value="{data.value|h}" checked="checked" class="list" />
-							<span></span><?= h(~fields_data[~name][~key]['value']) ?>
+							<span></span>{title|h}
 						@ } else {
 							<input type="checkbox" name="{name|h}[]" value="{data.value|h}" disabled="disabled" class="list" />
-							<span></span><?= h(~fields_data[~name][~key]['value']) ?>
+							<span></span>{title|h}
 						@ }
 						</label>
 					</div>
