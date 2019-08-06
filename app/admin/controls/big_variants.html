@@ -21,11 +21,16 @@
                     }, $existing_values);
                 }
 
-                $value .= "\n";
+                //$value .= "\n";
 
-                foreach (array_diff($values, $existing_values) as $new_value) {
-                    if (mb_strlen(trim($new_value)) > 0) {
-                        $value .= $new_value . "=\n";
+                $diff = array_diff($values, $existing_values);
+                for ($i = 0; $i < count($diff); $i++) {
+                    if (mb_strlen(trim($diff[$i])) > 0) {
+                        $value .= $diff[$i] . '=';
+
+                        if ($i + 1 < count($diff)) {
+                            $value .= "\n";
+                        }
                     }
                 }
             }

@@ -229,6 +229,7 @@
 						<foreach Products__field>
 							@ if (!in_array(d()->this_product->category_id, d()->this->categories->fast_all_of('id'))) continue;
 							@ ~value = ~this->value_of(~this_product);
+
 							@ if (~value !== '') {
 							<div class="item">
 								<div class="left">
@@ -237,7 +238,7 @@
 									@ if (d()->this->type == 'boolean') {
 										<?= ((int) d()->value) ? t('Да') : t('Нет') ?>
 									@ } else {
-										{value|h}
+										<?= ~this->get_text(~this_product) ?>
 									@ }
 								</span></div>
 							</div>

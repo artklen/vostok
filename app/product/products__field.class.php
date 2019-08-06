@@ -23,7 +23,6 @@ class Products__field extends ActiveRecord
 	
 	function variants_list()
 	{
-		$result = array();
 		$strs = explode("\n", trim($this->variants));
 		foreach ($strs as $str) {
 			$result[] = array('title' => trim($str));
@@ -35,6 +34,43 @@ class Products__field extends ActiveRecord
 	{
 		return $object->get($this->field_name);
 	}
+
+	public function get_text($object) {
+        if (in_array(d()->lang, ['', 'ru'])) {
+            return trim($this->value_of($object));
+        }
+
+	    $original_text = trim($this->value_of($object));
+
+	    if (mb_strlen($original_text) <= 0) {
+	        return null;
+        }
+
+        $column = d()->lang . '_variants';
+
+        if (mb_strlen($this->{$column}) <= 0) {
+	        return $original_text;
+        }
+
+	    $en_variants = explode("\n", trim($this->{$column}));
+        foreach ($en_variants as $en_variant) {
+            if (mb_stristr($en_variant, $original_text . '=') !== false) {
+                $result = mb_substr($en_variant, mb_stripos($en_variant, '=') + 1, -1);
+
+                if (mb_strlen(trim($result)) > 0) {
+                    return $result;
+                } else {
+                    return $original_text;
+                }
+            }
+        }
+
+        return $original_text;
+    }
+
+	public function getText2($field_name) {
+        $this->where('field_name = ?', $field_name);
+    }
 	
 	function show_value_of($object)
 	{
