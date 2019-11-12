@@ -4358,6 +4358,18 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 	padding: 0;
 }
 
+.free-delivery {
+	padding-top: 20px;
+	border-color: #e69b6c;
+	border-style: solid;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-size: 15px;
+	text-align: center;
+	color: #292928;
+	font-weight: 300;
+	margin-bottom: 25px;
+}
+
 .language {
 	&.mobile {
 		margin-top: 16px;
