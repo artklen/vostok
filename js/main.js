@@ -244,13 +244,13 @@ $(function(){
 			}
 		]
 	});
-	if (is_custom_sliders_relation) {
-		$('.js-slider-nav').on('setPosition', function(event, slick) {
-			if ($('.js-slider-nav').slick('slickCurrentSlide') !== 0) {
-				$('.js-slider-nav').slick('slickGoTo', 0);
-			}
-		});
-	}
+	//if (is_custom_sliders_relation) {
+	//	$('.js-slider-nav').on('setPosition', function(event, slick) {
+	//		if ($('.js-slider-nav').slick('slickCurrentSlide') !== 0) {
+	//			$('.js-slider-nav').slick('slickGoTo', 0);
+	//		}
+	//	});
+	//}
 	
 });
 

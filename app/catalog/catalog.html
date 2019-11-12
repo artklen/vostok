@@ -134,8 +134,17 @@
 									{this_products|custom_pagination "/components/pagination.html"}
 								</div>
 							</div>
+							@ if (! d()->show_seo_text && ! empty((string) d()->seo->text)) {		
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="text catalog-text-wrapper" id="footer-text">
+										{seo.text}
+									</div>
+								</div>
+							@ }
 						</div>
+						
 					</div>
+					
 				</div>
 			</div>
 		</div>

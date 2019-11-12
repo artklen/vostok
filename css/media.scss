@@ -21,11 +21,23 @@
 	}
 	.menu-2 {
 		margin: 0;
+		> li {
+			a {
+				font-size: 13px;		
+			}
+			&.arrow {
+				background: url(/images/arrow-10.svg) no-repeat top 7px right 4px;
+				background-size: 7px 4px;
+			}
+		}
 	}
 	.menu-2-xs {
 		.close {
 			top: 20px;
 		}
+	}
+	.main-menu-wrapper {
+		text-align: center;
 	}
 	.header-bottom {
 		
@@ -146,9 +158,11 @@
 
 		> li {
 			a {
-				font-size: 12px;
+				font-size: 11px;
 			}
 			&.arrow {
+				background: url(/images/arrow-10.svg) no-repeat top 5px right 4px;
+				background-size: 7px 4px;
 				.last-1 {
 					.last-2 {
 						/*min-width: 569px;
@@ -431,6 +445,12 @@
 	}
 	.city-selection {
 		max-width: 130px;
+	}
+	.language {
+		.option {
+			font-size: 10px;
+			height: 14px;	
+		}
 	}
 }
 

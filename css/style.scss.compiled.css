@@ -662,7 +662,7 @@ input.list[type="checkbox"]:disabled:hover + span {
   .menu-2 > li {
     list-style: none;
     display: inline-block;
-    margin: 0 8px 0 0;
+    margin: 0 5px 0 0;
     /*position: relative;*/ }
     .menu-2 > li > a {
       font-family: 'Roboto Condensed', sans-serif;
@@ -686,7 +686,7 @@ input.list[type="checkbox"]:disabled:hover + span {
     .menu-2 > li.arrow {
       /*padding: 0 15px 0 0;
        margin: 0 10px 0 0;*/
-      padding: 0 15px 0 10px;
+      padding: 0 15px 0 5px;
       margin: 0;
       background: url(/images/arrow-10.svg) no-repeat top 8px right 4px;
       background-size: 7px 4px;
@@ -845,6 +845,9 @@ input.list[type="checkbox"]:disabled:hover + span {
       text-decoration: none; }
     .menu-4 li:last-child {
       padding: 0; }
+
+.main-menu-wrapper {
+  text-align: right; }
 /* mobile menu */
 .menu-1-xs {
   width: 24px;
@@ -852,7 +855,7 @@ input.list[type="checkbox"]:disabled:hover + span {
   display: block;
   position: relative;
   float: right;
-  margin: 5px 0 0 0; }
+  margin: 7px 0 0 0; }
   .menu-1-xs:before {
     content: '';
     width: 24px;
@@ -1752,6 +1755,9 @@ input.list[type="checkbox"]:disabled:hover + span {
     margin: 0 0 50px 0; }
   .catalog-3 .product .title {
     padding: 0; }
+
+.catalog-text-wrapper {
+  padding-top: 20px; }
 /* tovar */
 .tovar {
   padding: 40px 0 100px 0; }
@@ -3347,6 +3353,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     padding-left: 5px;
     font-weight: 600; }
   .language .option:first-child {
+    padding-left: 0;
     padding-right: 5px;
     border-right: 1px solid #d39a6e; }
   .language .option.active {

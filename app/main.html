@@ -91,14 +91,14 @@
 					</div>
 				</form>
 			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 hidden-xs">
-				<div class="language">
+			
+			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-1">
+				<div class="language hidden-xs">
 					<a href="<?= substr($_SERVER['REQUEST_URI'], strlen(d()->langlink)) ?>" class="option {{active_if in_array(d()->lang, ['', 'ru'])}}">RUS</a>
 					<a href="/en<?= substr($_SERVER['REQUEST_URI'], strlen(d()->langlink)) ?>" class="option {{active_if d()->lang === 'en'}}">ENG</a>
 				</div>
-			</div>
-			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-3 hidden-lg">
-				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs"></a>
+			
+				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs hidden-lg"></a>
 			</div>
 		</div>
 	</div>
@@ -114,8 +114,8 @@
 					{"Оптовая и розничная продажа часов"|t}
 				</span>
 			</div>
-			<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7 hidden-xs" style="padding-left:7px;padding-right:7px;">
-				{{/inc/menu.html}}
+			<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7 hidden-xs" style="padding-left:7px; padding-right:7px;">
+				<div class="main-menu-wrapper">{{/inc/menu.html}}</div>
 			</div>
 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-2" style="padding-left:0">
 				<div class="js-basket-widget" data-basket-widget-type="header">
@@ -128,7 +128,7 @@
 
 {content}
 
-@ if (! d()->show_seo_text && ! empty((string) d()->seo->text)) {
+@ if (! d()->show_seo_text && ! empty((string) d()->seo->text) && !sbs(~url_path, '/catalog/')) {
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

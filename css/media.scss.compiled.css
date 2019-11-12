@@ -14,9 +14,17 @@
 
   .menu-2 {
     margin: 0; }
+    .menu-2 > li a {
+      font-size: 13px; }
+      .menu-2 > li.arrow {
+        background: url(/images/arrow-10.svg) no-repeat top 7px right 4px;
+        background-size: 7px 4px; }
 
   .menu-2-xs .close {
     top: 20px; }
+
+  .main-menu-wrapper {
+    text-align: center; }
 
   .header-bottom .logo {
     margin: 9px 10px 0 0; }
@@ -94,14 +102,17 @@
     .menu-2 > li {
       margin: 0 4px 0 0; }
       .menu-2 > li a {
-        font-size: 12px; }
-      .menu-2 > li.arrow .last-1 {
-        /*min-width: 569px;
-         margin: -2px 0 0 0;*/ }
-        .menu-2 > li.arrow:last-child .last-1 {
-          /*margin: -2px 0 0 0;*/ }
-          .menu-2 > li:last-child {
-            margin: 0 0 0 4px; }
+        font-size: 11px; }
+      .menu-2 > li.arrow {
+        background: url(/images/arrow-10.svg) no-repeat top 5px right 4px;
+        background-size: 7px 4px; }
+        .menu-2 > li.arrow .last-1 {
+          /*min-width: 569px;
+           margin: -2px 0 0 0;*/ }
+          .menu-2 > li.arrow:last-child .last-1 {
+            /*margin: -2px 0 0 0;*/ }
+            .menu-2 > li:last-child {
+              margin: 0 0 0 4px; }
 
   .menu-2-xs .close {
     top: 20px; }
@@ -219,12 +230,12 @@
     min-height: 30px; }
     .advantages .item .picture img.icon-1 {
       width: 55px; }
-    .advantages .item .picture img.icon-2 {
-      width: 60px; }
-    .advantages .item .picture img.icon-3 {
-      width: 36px; }
-    .advantages .item .picture img.icon-4 {
-      width: 30px; }
+      .advantages .item .picture img.icon-2 {
+        width: 60px; }
+      .advantages .item .picture img.icon-3 {
+        width: 36px; }
+      .advantages .item .picture img.icon-4 {
+        width: 30px; }
     .advantages .item .title {
       font-size: 13px;
       padding: 0 0 4px 0; }
@@ -261,7 +272,11 @@
     width: 680px; }
 
   .city-selection {
-    max-width: 130px; } }
+    max-width: 130px; }
+
+  .language .option {
+    font-size: 10px;
+    height: 14px; } }
 
 @media (max-width: 767px) {
   /*.wrap-6 {
