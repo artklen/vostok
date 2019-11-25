@@ -175,19 +175,20 @@
 						<input type="radio" id="list-s" class="list-1" name="material" data-products_variant_id="0" checked hidden/>
 					@ }
 
-					@ if (d()->price > d()->Option->delivery_free_min_price) {
-						<div class="free-delivery">{Option.delivery_free_text}</div>
-					@ }
-
-					@ if (d()->this->is_quantity){
-						@ d()->in_basket = d()->basket->product_items(d()->this->id)->count > 0;
-						<a href="javascript:void(0);" class="send-6 js-basket-add-without-hide">{"Добавить в корзину"|t}</a>
-						<a href="{langlink}/basket" class="send-2 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">{"Перейти в корзину"|t}</a>
-					@ } elseif (d()->this->is_quantity === false) {
+					@ if (d()->this->is_quantity === false) {
 						<div class="info">{"info#Товар снят с производства"|t}<br/>{"info#Извините!_Эта_модель_снята_с_производства__Ознакомьтесь_с"|t} <a href="#to_show">{"info#похожей продукцией"|t}</a>.</div>
 					@ } else {
-						<div class="info">{"info#Данный товар вы можете"|t}</br>{"info#приобрести под заказ"|t}</div>
-						<a href="{langlink}/feedback/order?id={.id}" class="send-6 js-feedback">{"Заказать"|t}</a>
+						@ if (d()->price > d()->Option->delivery_free_min_price) {
+							<div class="free-delivery">{Option.delivery_free_text}</div>
+						@ }
+						@ if (d()->this->is_quantity){
+							@ d()->in_basket = d()->basket->product_items(d()->this->id)->count > 0;
+							<a href="javascript:void(0);" class="send-6 js-basket-add-without-hide">{"Добавить в корзину"|t}</a>
+							<a href="{langlink}/basket" class="send-2 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">{"Перейти в корзину"|t}</a>
+						@ } else {
+							<div class="info">{"info#Данный товар вы можете"|t}</br>{"info#приобрести под заказ"|t}</div>
+							<a href="{langlink}/feedback/order?id={.id}" class="send-6 js-feedback">{"Заказать"|t}</a>
+						@ }
 					@ }
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3 visible-xs">
