@@ -3369,3 +3369,31 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     border-right: 1px solid #d39a6e; }
   .language .option.active {
     color: #fff; }
+
+.ribbon-container {
+  position: absolute;
+  left: 79px;
+  z-index: 9; }
+  .ribbon-container .ribbon {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 0 0 30px 18px;
+    text-align: left;
+    background: #d60000; }
+  .ribbon-container .ribbon:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    z-index: 10;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    background: -moz-linear-gradient(45deg, #fff 0%, #fff 50%, #d60000 50%, #d60000 50%, #d60000 55%, #d60000 100%);
+    background: -webkit-linear-gradient(45deg, #fff 0%, #fff 50%, #d60000 50%, #d60000 50%, #d60000 55%, #d60000 100%);
+    background: linear-gradient(45deg, #fff 0%, #fff 50%, #d60000 50%, #d60000 50%, #d60000 55%, #d60000 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d60000',GradientType=1); }

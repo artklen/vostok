@@ -14,6 +14,15 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-7 col-md-5 col-lg-5">
 					{{add 'products_images', 'product_id'=>d()->this->id}}{{edit}}
+					<div class="ribbon-container">
+						@ if (d()->this->is_action) {
+							@ if (d()->this->label->is_not_empty) {
+							<span class="ribbon"><?= h(d()->this->label->title) ?></span>
+							@ }
+						@ } else if (d()->this->discount) {
+							<span class="ribbon">{"Скидка"|t}</span>
+						@ }
+					</div>
 					<div class="slider-3">
 						<div class="slider-for js-slider-for">
 							<?/*<div><a href="{this.required_image|preview '1000', 'auto', 'watermark' => '/images/watermark-4x.png'}" class="js-fancybox" data-fancybox-group="product"><img src="{this.required_image|preview 'in389', 'in387', 'watermark' => '/images/watermark-2x.png'}" alt=""/></a></div>*/?>
