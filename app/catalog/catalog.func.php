@@ -250,6 +250,12 @@ d()->route('/catalog/vk_yml', function() {
     exit;
 });
 
+d()->route('/catalog/merchant', function() {
+    header('Content-type:application/xml; charset=utf-8');
+    print d()->view->render('/catalog/merchant.html');
+    exit;
+});
+
 d()->route(d()->langlink . '/catalog/:category', function ($category)
 {
 	$per_page = 18;

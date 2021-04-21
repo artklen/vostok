@@ -1,0 +1,39 @@
+<<?php /* */ ?>?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+	<channel>
+		<title>{Option.common_title|h}</title>
+		<link>https://<?= $_SERVER['HTTP_HOST'] ?>/</link>
+		<description>{Option.common_title|h}</description>
+<?php
+		d()->products__fields_list = d()->Products__field; ?>
+		<foreach Product->where('`is_merchanthidden`=0 and `quantity`<>"Снят с производства"')>
+<?php
+		if (1 * d()->this->price > 1e-7) { ?>
+		<item>
+			<g:id>{.id}</g:id>
+			<g:title>{.title|h}</g:title>
+			<g:description><?php 
+			$result = array();
+			foreach (d()->products__fields_list as $row) {
+				if (($value = $row->value_of(d()->this)) !== '') {
+					$result []= $row->title . ': '.$value;
+				}  
+			}
+			print h((implode(', ', $result)));
+			?></g:description>
+			<g:brand>{{if ~this->collection_id === '168', 'Vostok Europe', 'Восток'}}</g:brand>
+			<g:link>https://<?= h($_SERVER['HTTP_HOST']) ?>{this|h_url_for}</g:link>
+			<g:image_link>https://<?= h($_SERVER['HTTP_HOST']) ?>{.image|h}</g:image_link>
+			<g:condition>new</g:condition>
+			<g:availability>{{if 1 * d()->this->quantity, 'in stock', 'preorder'}}</g:availability>
+			<g:price><?= 1 * d()->this->price ?> RUB</g:price>
+		
+			
+			<g:google_product_category>{.category.google_product_category}</g:google_product_category>
+			{* <g:product_type>Кровельные и фасадные материалы</g:product_type> *}
+		</item>
+		
+		<?php } ?>
+     </foreach>
+	</channel>
+</rss>
