@@ -1,0 +1,21 @@
+<div class="popup-wrapper">
+    <div class="js-basket-cdek-point-select-city">
+        @ ~input_id = ~unique_input_id();
+        <label for="{input_id|h}">{"Выберите город получения"|t}</label>
+
+        <input type="text" name="city" value="{basket.delivery_cdek_point_city_title|h}" id="{input_id|h}" />
+        <input type="hidden" name="city_code" value="{basket.delivery_cdek_point_city_code|h}" />
+    </div>
+
+    <div class="js-basket-cdek-point-map" data-selected-point="{basket.delivery_cdek_point_code|h}"></div>
+
+    <button type="button" class="send-10" onclick="$.fancybox.close();" style="margin-top: 20px;">{"Сохранить"|t}</button>
+</div>
+
+<script>
+Basket.cdek_point_select(
+    $('.js-basket-cdek-point-select-city :input[name="city"]'),
+    $('.js-basket-cdek-point-select-city :input[name="city_code"]'),
+    $('.js-basket-cdek-point-map')
+);
+</script>

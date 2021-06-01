@@ -69,7 +69,7 @@
 					$count = d()->Product->select('count(id) cnt '.($existsParamsSql ? ' , '.$existsParamsSql : ''));
 
 					if ($placeholders)
-					$count->where($placeholders)->group_by($existsParamsSql);
+					$count->where($placeholders)->group_by($existsParamsSql)->order('');
 
 					$count = $count->cnt;
 					$count = $count ? $count : 0;

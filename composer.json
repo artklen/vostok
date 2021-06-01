@@ -8,5 +8,9 @@
             "email": "ainu.sky@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "ext-json": "*",
+        "ext-pdo": "*"
+    }
 }

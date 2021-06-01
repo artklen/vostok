@@ -138,26 +138,6 @@ $( ".weight-range" ).slider({
 $( ".weight-min" ).val( $( ".weight-range" ).slider( "values", 0 ) );
 $( ".weight-max" ).val( $( ".weight-range" ).slider( "values", 1 ) );
 
-$('ul.tabs__caption.js-tabs').on('click', 'li:not(.active)', function() {
-    $(this)
-      .addClass('active').siblings().removeClass('active')
-      .closest('div.tabs').find('div.tabs__content').removeClass('active').eq($(this).index()).addClass('active');
-  });
- 
-
-$('ul.tabs__caption:not(.js-tabs) li').on('click',   function() {
-	
-	$('ul.tabs__caption li').each(function(){
-		$('.js-order-scenarios').removeClass($(this).data('scenario'))
-	});
-	$('.js-order-scenarios').addClass($(this).data('scenario'))
-	$('.js-delivery-type').val($(this).data('type'))
-	
-    $(this)
-      .addClass('active').siblings().removeClass('active');
-    //  .closest('div.tabs').find('div.tabs__content').removeClass('active').eq($(this).index()).addClass('active');
-  });
-	$('ul.tabs__caption li.active').click();
 // Фиксированная шапка
 
 $(window).scroll(function() {

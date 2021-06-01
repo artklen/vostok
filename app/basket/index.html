@@ -95,7 +95,40 @@
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
 				<div class="right">
-					<div class="row grid-row">
+					<div class="row">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<div class="basket-summary-line-title">{"Товары"|t}</div>
+						</div>
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<div class="basket-summary-line-price">
+								<span class="js-basket-products-price">{basket.products_price|price_format}</span>{"р_"|t}
+							</div>
+						</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="title-2">{"Количество"|t}</div>
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <div class="quantity"><span class="js-basket-total-number">{basket.total_number}</span> шт.</div>
+                        </div>
+                    </div>
+                    <div class="row js-basket-delivery-price-container" {{show_if ~basket->delivery_price > 1e-7}}>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="basket-summary-line-title">{"Доставка"|t}</div>
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <div class="basket-summary-line-price">
+                                <span class="js-basket-delivery-price">{basket.delivery_price|price_format}</span>{"р_"|t}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row js-basket-is-free-delivery-container" {{show_if ~basket->is_free_delivery}}>
+                        <div class="col-xs-12">
+                            <div class="basket-summary-line-title">{"Доставка бесплатно"|t}</div>
+                        </div>
+                    </div>
+					<div class="row">
 						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 							<div class="title-1">{"Итого"|t}</div>
 						</div>
@@ -104,13 +137,7 @@
 								<span class="js-basket-total-price">{basket.total_price|price_format}</span>{"р_"|t}
 							</div>
 						</div>
-						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-							<div class="title-2">{"Количество"|t}</div>
-						</div>
-						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-							<div class="quantity"><span class="js-basket-total-number">{basket.total_number}</span> шт.</div>
-						</div>
-					</div>
+                    </div>
 					<div class="row">
 						{{simple_ajax_form d()->langlink . '/basket/finish'}}
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -118,12 +145,6 @@
 									<div>
 										<div>
 											<input name="name" type="text" placeholder="{"Фамилия И__О_"|t}" />
-										</div>
-									</div>
-
-									<div>
-										<div>
-											<input name="address" type="text" placeholder="{"Ваш адрес"|t}" />
 										</div>
 									</div>
 
@@ -139,16 +160,25 @@
 										</div>
 									</div>
 
-									<div>
+									<div class="js-basket-delivery-type-container">
 										<div>
-										<select name="delivery_type" class="js-sumoselect js-delivery" placeholder="{"Вариант доставки"|t}">
+										<select name="delivery_type" class="js-sumoselect js-delivery-type-select" placeholder="{"Вариант доставки"|t}">
 											<option class="hidden"></option>
-											<foreach Delivery_variant>
-												<option value="{.id}" data-price="{.price}" data-free_price="{.free_price}" data-message="{.text}" <?=($_SESSION['delivery_id']==d()->this->id)?"selected":""?>>{.title}</option>
+											<foreach basket->delivery_variants>
+												<option value="{.id}" data-price="{.price}" data-free_price="{.free_price}" data-message="{.text}" {{selected_if ~basket->delivery_type === ~this->id}}>{.title}</option>
 											</foreach>
 										</select>
 										</div>
+
+                                        <?php
+                                        foreach (DeliveryType::checkoutTemplates() as $type => $template) { ?>
+                                            <div class="basket-delivery-type-details js-basket-delivery-type-details hidden" data-basket-delivery-type="<?= h($type) ?>">
+                                                <?= d()->View->partial($template) ?>
+                                            </div>
+                                            <?php
+                                        } ?>
 									</div>
+
 									<div>
 										<div>
 										<select name="pay_type" class="js-sumoselect" placeholder="{"Вариант оплаты"|t}">
@@ -159,7 +189,7 @@
 										</div>
 									</div>
 									<div class="delivery_message">
-										<?=(isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!="" && d()->Delivery_variant->find_by_id($_SESSION['delivery_id'])->ne)?d()->Delivery_variant->find_by_id($_SESSION['delivery_id'])->text:""?>
+                                        {basket.delivery_variant.text}
 									</div>
 									<div>
 										<div>
@@ -167,10 +197,11 @@
 										</div>
 									</div>
 
+                                    <div class="js-basket-errors">{basket.errors_html}</div>
+
 									<span class="privacy">{"privacy#Нажимая на кнопку вы соглашаетсь на хранение и обработку"|t} <a href="{langlink}/privacy-policy">{"privacy#ваших персональных данных"|t}</a></span>
-									@ if (iam() || true){
-										<input type="submit" class="send-10" value="{"Заказать"|t}"/>
-									@ }
+
+									<input type="submit" class="send-10" value="{"Заказать"|t}"/>
 								</div>
 							</div>
 						{{/form}}

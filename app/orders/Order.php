@@ -1,5 +1,38 @@
 <?php
 
+/**
+ * @property-read Orders_item orders_items
+ *
+ * @property string delivery_type
+ * @property string delivery_cdek_point_city_title
+ * @property string delivery_cdek_point_city_code
+ * @property string delivery_cdek_point_code
+ * @property string delivery_cdek_point_title
+ * @property string delivery_cdek_point_price
+ * @property string delivery_cdek_courier_city_title
+ * @property string delivery_cdek_courier_city_subtitle
+ * @property string delivery_cdek_courier_city_code
+ * @property string delivery_cdek_courier_city_fias
+ * @property string delivery_cdek_courier_address
+ * @property string delivery_cdek_courier_address_dadata
+ * @property string delivery_cdek_courier_price
+ * @property string delivery_post_address
+ * @property string delivery_post_index
+ * @property string delivery_post_address_dadata
+ * @property string delivery_post_price
+ * @property string delivery_price
+ * @property string ordered_at
+ * @property string status_id
+ * @property string name
+ * @property string phone
+ * @property string address
+ * @property string email
+ * @property string comment
+ * @property string pay_type
+ * @property string secret
+ * @property string errors
+ * @property string session_key
+ */
 class Order extends ActiveRecord
 {
 	const STARTED    = 0;
@@ -96,35 +129,27 @@ class Order extends ActiveRecord
 	}
 	
 	function products_price() {
-		$result = 1 * $this->get(__FUNCTION__);
-		if ($result < 1e-7) {
-			$result = 0;
-			foreach ($this->orders_items as $item) {
-				$result += $item->number * $item->price;
-			}
-			if ($this->get('delivery_type')!= ""){
-				$delivery = d()->Delivery_variant->find_by_id($this->get('delivery_type'));
-				if ($delivery->ne){
-					if ($delivery->free_price != "" && $delivery->free_price*1 <= $result){
-						return $result;
-					}
-					if ($delivery->price != "" && $delivery->price*1 >0){
-						return ($result+$delivery->price);
-					}
-				}
-			}
-		}
-		
-		return $result;
-	}
+		$result = 1. * $this->get(__FUNCTION__);
+		if ($result > 1e-7) {
+            return $result;
+        }
+
+        $result = 0;
+        /** @var Orders_item $item */
+        foreach ($this->orders_items as $item) {
+            $result += $item->total_price();
+        }
+        return $result;
+    }
 	
 	function order_price() {
 		$result = 1 * $this->get(__FUNCTION__);
-		if ($result < 1e-7) {
-			$result = $this->products_price();
-		}
-		return $result;
-	}
+		if ($result > 1e-7) {
+            return $result;
+        }
+
+        return $this->products_price() + (float) $this->delivery_price;
+    }
 	
 	function total_price() {
 		return $this->products_price();
@@ -185,25 +210,23 @@ class Order extends ActiveRecord
 		}
 		return $this;
 	}
-	
-	function lock_data() {
-		foreach ($this->orders_items->all as $order_product) {
-			$order_product->link        = $order_product->link;
-			$order_product->title       = $order_product->title;
-			$order_product->weight      = $order_product->weight;
-			$order_product->image       = $order_product->image;
-			$order_product->price       = $order_product->price;
-			$order_product->total_price = $order_product->total_price;
-			$order_product->sku_dealer       = $order_product->sku_dealer;
-			$order_product->sku_nomenclature       = $order_product->sku_nomenclature; 
-			$order_product->sku_producer        = $order_product->sku_producer;
-			$order_product->save();
-		}
-		$this->products_price = $this->products_price;
-		$this->payed_balls    = $this->payed_balls ;
-		$this->order_price    = $this->order_price - $this->payed_balls;
-		$this->save();
-	}
+
+    function lock_data()
+    {
+        /** @var Orders_item $order_product */
+        foreach ($this->orders_items->all as $order_product) {
+            $order_product->link = $order_product->link();
+            $order_product->title = $order_product->title();
+            $order_product->weight = $order_product->weight();
+            $order_product->image = $order_product->image();
+            $order_product->price = $order_product->price();
+            $order_product->total_price = $order_product->total_price();
+            $order_product->save();
+        }
+        $this->products_price = $this->products_price();
+        $this->order_price = $this->order_price();
+        $this->save();
+    }
 
 	function show_delivery() {
 		if(d()->Delivery_variant->find_by_id($this->delivery_type)->ne){

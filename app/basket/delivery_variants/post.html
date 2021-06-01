@@ -1,0 +1,7 @@
+<div class="js-basket-delivery-post-address-container" {{show_if ~basket->delivery_post_address !== ''}}>
+    <p>Адрес: <span class="js-basket-delivery-post-address">{basket.delivery_post_address|h}</span></p>
+</div>
+
+<p>
+    <a href="javascript:void(0);" class="js-fancybox-modal" data-fancybox-href="/basket/change_post_delivery">{"Указать адрес"|t}</a>
+</p>

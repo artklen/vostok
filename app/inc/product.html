@@ -57,7 +57,7 @@
 
 	@ if (1 * ~this->quantity > 0) {
 		@ d()->in_basket = d()->basket->product_items(d()->this->id)->count > 0;
-		<a href="javascript:void(0);" class="send-9 js-basket-add <?= (! d()->in_basket ?: 'hide') ?>" style="margin-top:5px">{"Добавить в корзину"|t}</a>
-		<a href="{langlink}/basket" class="send-8 js-in-basket <?= (d()->in_basket ?: 'hide') ?>" style="margin-top:5px">{"Перейти в корзину"|t}</a>
+		<a href="javascript:void(0);" class="send-9 js-basket-add <?= d()->in_basket ? 'hide' : '' ?>" data-product_id="{.id|h}" style="margin-top:5px">{"Добавить в корзину"|t}</a>
+		<a href="{langlink}/basket" class="send-8 js-in-basket <?= d()->in_basket ? '' : 'hide' ?>" style="margin-top:5px">{"Перейти в корзину"|t}</a>
 	@ }
 </div>

@@ -1,0 +1,75 @@
+{{/dadata/_suggestions_plugin.html}}
+<script>
+(function() {
+    const city = <?= d()->to_json(d()->city) ?>;
+    const addressInput = $('#<?= d()->input_id ?>');
+    const token = <?= d()->to_json($_ENV['DADATA_TOKEN']) ?>;
+
+    cityRequest(cityInput(city));
+
+    function cityRequest(input) {
+        input.suggestions({
+            token: token,
+            type: 'ADDRESS',
+            bounds: 'city-settlement',
+            geoLocation: false,
+            onSelect: initAddressSuggestions,
+            onSelectNothing: initAddressSuggestions
+        });
+
+        input.suggestions().fixData();
+    }
+
+    function cityInput(value) {
+        return $(document.createElement('input'))
+            .attr('style', 'width:0;height:0;border:none;position:absolute;')
+            .val(value)
+            .appendTo('body');
+    }
+
+    function initAddressSuggestions(citySuggestion) {
+        addressInput.suggestions(Object.assign(
+            common(),
+            location(kladrId(citySuggestion))
+        ));
+
+        function common() {
+            return {
+                token: token,
+                type: 'ADDRESS',
+                onSelect: addressSelectHandler
+            };
+        }
+
+        function location(kladrId) {
+            if (! kladrId) {
+                return {constraints: city};
+            }
+
+            return {
+                constraints: {
+                    locations: {
+                        kladr_id: kladrId
+                    }
+                },
+                restrict_value: true
+            }
+        }
+
+        function kladrId(suggestion) {
+            if (! suggestion) {
+                return null;
+            }
+            return suggestion.data.kladr_id;
+        }
+    }
+
+    /** @this HTMLInputElement */
+    function addressSelectHandler(suggestion) {
+        $(this)
+            .data('dadata-source', $(this).val())
+            .data('dadata', suggestion)
+            .change();
+    }
+}());
+</script>

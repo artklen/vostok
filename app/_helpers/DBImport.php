@@ -131,7 +131,7 @@ class DBImport {
 		if (is_array($index_value)) {
 			$index_value = static::$keys_delimeter . implode(static::$keys_delimeter, $index_value);
 		}
-		if (isset($this->indexes[$index_name], $this->indexes[$index_name][$index_value]) || ($index_name === 'id' && isset($this->data[$index_value]))) {
+		if (isset($this->indexes[$index_name][$index_value]) || ($index_name === 'id' && isset($this->data[$index_value]))) {
 			$this->update_row($index_name, $index_value, $row);
 		} else {
 			$this->insert_row($index_name, $index_value, $row);

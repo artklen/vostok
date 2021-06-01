@@ -1,4 +1,4 @@
-<p>Поступил новый заказ.</p>
+<p xmlns="http://www.w3.org/1999/html">Поступил новый заказ.</p>
 <table border="1">
 	<tr><th align="left">№</th>
 		<td>{order.id}</td></tr>
@@ -19,22 +19,75 @@
 <table border="1" width="100%">
 	<tr><th align="left">Имя</th>
 		<td>{order.name|h}</td></tr>
+
 	<tr><th align="left">E-mail</th>
 		<td>{order.email|h}</td></tr>
-		
-		
+
 	<tr><th align="left">Телефон</th>
 		<td>{order.phone|h}</td></tr>
 		
-	@ if (d()->order['address']) {
-	<tr><th align="left">Адрес</th>
-		<td>{order.address|h}</td></tr>
-	@ }
 	<tr><th align="left">Комментарий</th>
 		<td>{order.comment|hnl2br}</td></tr>
 		
 </table>
 <p>&nbsp;</p>
+
+<p>Доставка:</p>
+<table border="1" width="100%">
+<?php
+switch (d()->order->delivery_type) {
+    case DeliveryType::POST: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>Почта России</td></tr>
+        <tr><th align="left">Адрес доставки</th>
+            <td>{order.delivery_post_address|h}</td></tr>
+        <tr><th align="left">Почтовый индекс</th>
+            <td>{order.delivery_post_index|h}</td></tr>
+<?php
+        break;
+
+    case DeliveryType::CDEK_POINT: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>Доставка до пункта выдачи СДЭК</td></tr>
+        <tr><th align="left">Город</th>
+            <td>{order.delivery_cdek_point_city_title|h}</td></tr>
+        <tr><th align="left">Пункт выдачи</th>
+            <td>{order.delivery_cdek_point_title|h} ({order.delivery_cdek_point_code|h})</td></tr>
+<?php
+        break;
+
+    case DeliveryType::CDEK_COURIER: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>Доставка курьером СДЭК</td></tr>
+        <tr><th align="left">Город</th>
+            <td>{order.delivery_cdek_courier_city_title|h}</td></tr>
+        <tr><th align="left">Адрес</th>
+            <td>{order.delivery_cdek_courier_address|h}</td></tr>
+<?php
+        break;
+
+    case DeliveryType::EMS: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>EMS посылка</td></tr>
+        <tr><th align="left">Адрес</th>
+            <td>{order.address|h}</td></tr>
+<?php
+        break;
+}
+
+if (d()->order->is_free_delivery) { ?>
+    <tr><th align="left">Стоимость доставки</th>
+        <td>бесплатно</td></tr>
+<?php
+} else { ?>
+    <tr><th align="left">Стоимость доставки</th>
+        <td>{order.delivery_price|h}</td></tr>
+<?php
+}
+
+?>
+</table>
+
 <p>Товары:</p>
 <table border="1" width="100%">
 	<tr>
@@ -49,7 +102,7 @@
 <foreach order->orders_items->all>
 	<tr>
 		<td><?=$i++;?></td>
-		<td><a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>{this|h_url_for}" target="_blank">{.title|h}</a></td>
+		<td><a href="https://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>{this|h_url_for}" target="_blank">{.title|h}</a></td>
 		<td>{.netto|h}</td>
 		<td>{.sku_dealer|h}</td>
 		<td>{.number|h} шт.</td>
@@ -72,3 +125,11 @@ if ($delivery->ne){
 	}
 }?></p>
 
+<?php
+if (d()->order->errors !== '') {
+    $errors = json_decode(d()->order->errors, true); ?>
+    <p>Ошибки при оформлении заказа:</p>
+    <p><?= implode('<br>', array_map('h', $errors)) ?></p>
+    <?php
+}
+?>

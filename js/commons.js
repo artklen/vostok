@@ -158,3 +158,7 @@ function set_cookie(name, value, options) {
 	}
 	document.cookie = updatedCookie;
 }
+
+function stringToCoords(value) {
+	return value.split(',').map(function(x) { return 1 * x.replace(/^\s+|\s+$/g, ''); })
+}

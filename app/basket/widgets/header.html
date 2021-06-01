@@ -2,7 +2,7 @@
 	<ul class="menu-2">
 		<li class="arrow">
 			<div class="js-basket-not-empty" {{if_basket_not_empty}}>
-				<span>
+				<a href="/basket">
 					<span class="left">
 						<span class="num js-basket-total-number"><?= h(d()->basket_total_number) ?></span>
 					</span>
@@ -10,7 +10,7 @@
 						<span class="title">{"Сумма"|t}</span>
 						<span class="sum js-basket-total-price"><?= d()->price_format(d()->basket->order_price) ?></span> <span class="sum">{"р_"|t}</span>
 					</span>
-				</span>
+				</a>
 				<div class="last-1">
 					<ul class="last-2 js-basket-not-empty" {{if_basket_not_empty}}>
 						<li>
@@ -30,7 +30,7 @@
 											</span>
 											</div>
 											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-												<a href="#" class="close js-basket-delete"></a>
+												<a href="javascript:void(0);" class="close js-basket-delete"></a>
 											</div>
 										</div>
 										<a href="{langlink}/product/<?=d()->product->url?>" class="inner"></a>

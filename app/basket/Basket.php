@@ -2,41 +2,39 @@
 
 class Basket extends UniversalSingletoneHelper
 {
-	
+	/** @var Order */
 	public $order = null;
-	
+
 	protected function init_order()
 	{
 		$order = d()->Order->where('`session_key`=? and `status_id` is null', session_id())->order('`created_at` desc')->limit(1);
-		if ($order->ne) {
+		if ($order->ne()) {
 			$this->order = $order;
 		}
 	}
 	
 	function current()
 	{
-		if (!isset($this->order)) {
+		if (! isset($this->order)) {
 			$this->init_order();
 		}
+
 		return $this;
 	}
 	
 	function create_order_if_not_exists()
 	{
-		if (!isset($this->order)) {
-			$order = d()->Order->new;
-			$order->session_key = session_id();
-			$order->save();
-			$this->order = d()->Order->find_by('id', $order->insert_id);
-		}
-	}
-	function delivery($params)
-	{
-		if (isset($params['delivery_id']) && $params['delivery_id']!= ""){
-			$_SESSION['delivery_id'] = $params['delivery_id'];
-		}
-	}
-	
+        if (isset($this->order)) {
+            return;
+        }
+
+        /** @var Order $order */
+        $order = d()->Order->new;
+        $order->session_key = session_id();
+        $order->save();
+        $this->order = d()->Order->find_by('id', $order->insert_id);
+    }
+
 	function add_item($params, $number = null)
 	{
 		$item_key = $this->item_key_of($params);
@@ -147,7 +145,6 @@ class Basket extends UniversalSingletoneHelper
 		if (isset($this->order)) {
 			d()->db->exec('delete from `orders_items` where `order_id`=' . d()->db->quote($this->order->id));
 		}
-		unset($_SESSION['delivery_id']);
 	}
 		
 	function total_number($item_key = null)
@@ -165,51 +162,31 @@ class Basket extends UniversalSingletoneHelper
 
 	function total_price($item_key = null)
 	{
-		$result = 0;
-		$delivery_bool = false;
-		if ($item_key == null){
-			$delivery_bool = true;
-		}
-		if (is_array($item_key) || is_object($item_key)) {
-			$item_key = $this->item_key_of($item_key);
-		}
-		$items = $this->items($item_key);
-		#var_dump($items->all);die;
-		foreach ($items as $item) {
-			$result += $item->number * $item->price;
-		}
-		if ($delivery_bool) {
-			if (isset($_SESSION['delivery_id']) && $_SESSION['delivery_id']!= ""){
-				$delivery = d()->Delivery_variant->find_by_id($_SESSION['delivery_id']);
-				if ($delivery->ne){
-					if ($delivery->free_price != "" && $delivery->free_price*1 <= $result){
-						return $result;
-					}
-					if ($delivery->price != "" && $delivery->price*1 >0){
-						return ($result+$delivery->price);
-					}
-				}
-			}
-		}
-		return $result;
+	    if (! isset($item_key)) {
+            return $this->order_price();
+        }
+
+	    $result = 0;
+        /** @var Orders_item $item */
+        foreach ($this->items($item_key) as $item) {
+            $result += $item->total_price();
+        }
+        return $result;
 	}
 	
 	function products_price()
 	{
-		static $result;
-		if (!isset($result)) {
-			$result = $this->total_price();
-		}
-		return $result;
+	    $result = 0;
+	    /** @var Orders_item $item */
+        foreach ($this->orders_items() as $item) {
+            $result += $item->total_price();
+        }
+        return $result;
 	}
 	
 	function order_price()
 	{
-		static $result;
-		if (!isset($result)) {
-			$result = $this->products_price();
-		}
-		return $result;
+		return $this->products_price() + $this->delivery_price();
 	}
 
 	function total_weight($item_key = null)
@@ -256,14 +233,14 @@ class Basket extends UniversalSingletoneHelper
 	}
 	
 	function items($item_key = null) {
-		$result = $this->orders_items;
-		if (isset($item_key)) {
-			if (is_array($item_key) || is_object($item_key)) {
-				$item_key = $this->item_key_of($item_key);
-			}
-			$result->where('`item_key`=?', $item_key);
-		}
-		return $result;
+        if (! isset($item_key)) {
+            return $this->orders_items();
+        }
+
+        if (is_array($item_key) || is_object($item_key)) {
+            $item_key = $this->item_key_of($item_key);
+        }
+        return $this->orders_items()->where('`item_key`=?', $item_key);
 	}
 	
 	function product_items($product_id) {
@@ -272,7 +249,7 @@ class Basket extends UniversalSingletoneHelper
 		} else if (is_object($product_id)) {
 			$product_id = $product_id->id;
 		}
-		return $this->orders_items->where('`product_id`=?', $product_id);
+		return $this->orders_items()->where('`product_id`=?', $product_id);
 	}
 	
 	function products_items($products) {
@@ -287,7 +264,7 @@ class Basket extends UniversalSingletoneHelper
 			}
 			$ids[$id] = $id;
 		}
-		return $this->orders_items->where('`product_id` in (?)', $ids);
+		return $this->orders_items()->where('`product_id` in (?)', $ids);
 	}
 	
 	public function item_keys() {
@@ -310,5 +287,425 @@ class Basket extends UniversalSingletoneHelper
 		}
 		return $result;
 	}
-	
+
+	/** array<Delivery_variant> */
+    public function delivery_variants(): array
+    {
+        return d()->Delivery_variant->all();
+	}
+
+    public function delivery_type(): string
+    {
+        return $this->order->delivery_type ?? '';
+	}
+
+    public function delivery_variant(): Delivery_variant
+    {
+        $delivery_type = $this->delivery_type();
+        if ($delivery_type === '') {
+            return d()->Delivery_variant->where('false');
+        }
+
+        return (new DeliveryType($delivery_type))->variant();
+    }
+
+    public function set_delivery_type(array $params): void
+    {
+        $this->create_order_if_not_exists();
+
+        $this->order->delivery_type = $params['delivery_type'];
+
+        $this->order = $this->order->save_and_load();
+	}
+
+    public function set_delivery_cdek_city(array $params): void
+    {
+        $this->create_order_if_not_exists();
+
+        $this->order->delivery_cdek_point_city_title = $params['title'];
+        $this->order->delivery_cdek_point_city_code = $params['code'];
+
+        $this->order->delivery_cdek_point_price = d()->Cdek->pointCost((int) $params['code']);
+
+        $this->order->delivery_cdek_point_title = '';
+        $this->order->delivery_cdek_point_code = '';
+
+        $this->order = $this->order->save_and_load();
+    }
+
+    public function set_delivery_cdek_point(array $params): void
+    {
+        $this->create_order_if_not_exists();
+
+        $this->order->delivery_cdek_point_title = $params['title'];
+        $this->order->delivery_cdek_point_code = $params['code'];
+
+        $this->order = $this->order->save_and_load();
+    }
+
+    public function delivery_cdek_point_city_title(): string
+    {
+        return $this->order->delivery_cdek_point_city_title ?? '';
+    }
+
+    public function delivery_cdek_point_city_code(): string
+    {
+        return $this->order->delivery_cdek_point_city_code ?? '';
+    }
+
+    public function delivery_cdek_point_code(): string
+    {
+        return $this->order->delivery_cdek_point_code ?? '';
+    }
+
+    public function delivery_cdek_point_title(): string
+    {
+        return $this->order->delivery_cdek_point_title ?? '';
+    }
+
+    public function delivery_price(): float
+    {
+        if (! isset($this->order)) {
+            return 0.;
+        }
+
+        if ($this->is_free_delivery()) {
+            return 0.;
+        }
+
+        $variant_price = $this->delivery_variant_price();
+
+        switch ($this->delivery_type()) {
+            default:
+                return $variant_price;
+
+            case DeliveryType::CDEK_POINT:
+                return (float) ($this->order->delivery_cdek_point_price ?? 0.);
+
+            case DeliveryType::CDEK_COURIER:
+                return (float) ($this->order->delivery_cdek_courier_price ?? 0.);
+
+            case DeliveryType::POST:
+                return (float) ($this->order->delivery_post_price ?? 0.);
+        }
+    }
+
+    public function is_free_delivery(): bool
+    {
+        $variant = $this->delivery_variant();
+        if ($variant->is_empty()) {
+            return false;
+        }
+
+        if ($variant->free_price === '') {
+            return false;
+        }
+
+        return $this->products_price() > (float) $variant->free_price - 1e-7;
+    }
+
+    private function delivery_variant_price(): float
+    {
+        $variant = $this->delivery_variant();
+        if ($variant->is_empty()) {
+            return 0.;
+        }
+
+        return (float) $variant->price;
+    }
+
+    public function calculate_delivery_price(): float
+    {
+        if (! isset($this->order)) {
+            return 0.;
+        }
+
+        if ($this->is_free_delivery()) {
+            return 0.;
+        }
+
+        $variant_price = $this->delivery_variant_price();
+
+        switch ($this->delivery_type()) {
+            default:
+                return $variant_price;
+
+            case DeliveryType::CDEK_POINT:
+                return d()->Cdek->pointCost((int) $this->order->delivery_cdek_point_city_code);
+
+            case DeliveryType::CDEK_COURIER:
+                return d()->Cdek->courierCost((int) $this->order->delivery_cdek_courier_city_code);
+
+            case DeliveryType::POST:
+                return d()->RussianPost->cost($this->order->delivery_post_index, $this->products_price());
+        }
+    }
+
+    public function delivery_cdek_courier_city(): Cdek_city
+    {
+        if (! isset($this->order)) {
+            return d()->Cdek_city->where('false');
+        }
+
+        return d()->Cdek_city->f($this->order->delivery_cdek_courier_city_code);
+    }
+
+    public function set_delivery_cdek_courier_city(array $params): void
+    {
+        $this->create_order_if_not_exists();
+
+        if ($this->order->delivery_cdek_courier_city_code === $params['code']) {
+            return;
+        }
+
+        $this->order->delivery_cdek_courier_city_code = $params['code'];
+
+        $this->order->delivery_cdek_courier_price = d()->Cdek->courierCost((int) $params['code']);
+
+        $this->clear_delivery_cdek_courier_address();
+
+        $this->order = $this->order->save_and_load();
+    }
+
+    private function clear_delivery_cdek_courier_address(): void
+    {
+        $this->order->delivery_cdek_courier_address = '';
+        $this->order->delivery_cdek_courier_address_dadata = '';
+    }
+
+    public function delivery_cdek_courier_address_dadata(): string
+    {
+        if (! isset($this->order) || $this->order->delivery_cdek_courier_address_dadata === '') {
+            return '{}';
+        }
+        return $this->order->delivery_cdek_courier_address_dadata;
+    }
+
+    public function delivery_cdek_courier_address(): string
+    {
+        return $this->order->delivery_cdek_courier_address ?? '';
+    }
+
+    public function set_delivery_cdek_courier_address($params): void
+    {
+        $this->create_order_if_not_exists();
+
+        $this->order->delivery_cdek_courier_address = $params['address'] ?? '';
+        $this->order->delivery_cdek_courier_address_dadata = $params['dadata'] ?? '';
+
+        $this->order = $this->order->save_and_load();
+    }
+
+    public function set_delivery_post_address($params): void
+    {
+        $this->create_order_if_not_exists();
+
+        $this->order->delivery_post_address = $params['address'] ?? '';
+        $this->order->delivery_post_index = $params['index'] ?? '';
+        $this->order->delivery_post_address_dadata = $params['dadata'] ?? '';
+
+        $this->order->delivery_post_price = d()->RussianPost->cost($params['index'] ?? '', $this->products_price());
+
+        $this->order = $this->order->save_and_load();
+    }
+
+    public function delivery_post_address(): string
+    {
+        return $this->order->delivery_post_address ?? '';
+    }
+
+    public function errors(): array
+    {
+        if ($this->isCdekPointDeliveryCostInvalid()) {
+            $errors[] = t('Не удалось рассчитать стоимость доставки до пункта выдачи СДЭК');
+        }
+
+        if ($this->isCdekCourierDeliveryCostInvalid()) {
+            $errors[] = t('Не удалось рассчитать стоимость доставки курьером СДЭК');
+        }
+
+        if ($this->isPostDeliveryCostInvalid()) {
+            $errors[] = t('Не удалось рассчитать стоимость доставки Почтой России');
+        }
+
+        return $errors ?? [];
+    }
+
+    public function errors_html(): string
+    {
+        $errors = $this->errors();
+        if (empty($errors)) {
+            return '';
+        }
+
+        return '<ul class="alert alert-danger"><li>' . implode('</li><li>', array_map('h', $errors)) . '</li></ul>';
+    }
+
+    private function isCdekPointDeliveryCostInvalid(): bool
+    {
+        if ($this->delivery_type() !== DeliveryType::CDEK_POINT) {
+            return false;
+        }
+
+        if ($this->is_free_delivery()) {
+            return false;
+        }
+
+        if ($this->delivery_cdek_point_city_code() === '') {
+            return false;
+        }
+
+        return ((float) ($this->order->delivery_cdek_point_price ?? 0.)) < 1e-7;
+    }
+
+    private function isCdekCourierDeliveryCostInvalid(): bool
+    {
+        if ($this->delivery_type() !== DeliveryType::CDEK_COURIER) {
+            return false;
+        }
+
+        if ($this->is_free_delivery()) {
+            return false;
+        }
+
+        if ($this->delivery_cdek_courier_city()->is_empty()) {
+            return false;
+        }
+
+        return ((float) ($this->order->delivery_cdek_courier_price ?? 0.)) < 1e-7;
+    }
+
+    private function isPostDeliveryCostInvalid(): bool
+    {
+        if ($this->delivery_type() !== DeliveryType::POST) {
+            return false;
+        }
+
+        if ($this->is_free_delivery()) {
+            return false;
+        }
+
+        if ($this->delivery_post_address() === '') {
+            return false;
+        }
+
+        return ((float) ($this->order->delivery_post_price ?? 0.)) < 1e-7;
+    }
+
+    public function validate_delivery(): bool
+    {
+        switch ($this->delivery_type()) {
+            default:
+                d()->add_notice('Выберите способ доставки', 'delivery_type');
+                return false;
+
+            case DeliveryType::PICKUP:
+                return true;
+
+            case DeliveryType::EMS:
+                if ($this->order->address === '') {
+                    d()->add_notice('Укажите адрес доставки', 'address');
+                    return false;
+                }
+                return true;
+
+            case DeliveryType::POST:
+                if ($this->delivery_post_address() === '') {
+                    d()->add_notice('Укажите адрес доставки', 'delivery_type');
+                    return false;
+                }
+
+                return true;
+
+            case DeliveryType::CDEK_POINT:
+                if ($this->delivery_cdek_point_city_code() === '') {
+                    d()->add_notice('Укажите город доставки', 'delivery_type');
+                    return false;
+                }
+
+                if ($this->delivery_cdek_point_code() === '') {
+                    d()->add_notice('Укажите пункт выдачи', 'delivery_type');
+                    return false;
+                }
+
+                return true;
+
+            case DeliveryType::CDEK_COURIER:
+                if ($this->delivery_cdek_courier_city()->is_empty()) {
+                    d()->add_notice('Укажите город доставки', 'delivery_type');
+                    return false;
+                }
+
+                if ($this->delivery_cdek_courier_address() === '') {
+                    d()->add_notice('Укажите адрес доставки', 'delivery_type');
+                    return false;
+                }
+
+                return true;
+        }
+    }
+
+    public function lock_delivery_data(): void
+    {
+        if ($this->delivery_type() === DeliveryType::CDEK_COURIER) {
+            $city = $this->delivery_cdek_courier_city();
+            $this->order->delivery_cdek_courier_city_title = $city->title;
+            $this->order->delivery_cdek_courier_city_subtitle = $city->subtitle;
+            $this->order->delivery_cdek_courier_city_fias = $city->fias;
+        }
+    }
+
+    public function clear_irrelevant_delivery_data(): void
+    {
+        switch ($this->delivery_type()) {
+            default:
+                $this->clear_post_delivery_data();
+                $this->clear_cdek_point_delivery_data();
+                $this->clear_cdek_courier_delivery_data();
+                return;
+
+            case DeliveryType::POST:
+                $this->clear_cdek_point_delivery_data();
+                $this->clear_cdek_courier_delivery_data();
+                return;
+
+            case DeliveryType::CDEK_POINT:
+                $this->clear_post_delivery_data();
+                $this->clear_cdek_courier_delivery_data();
+                return;
+
+            case DeliveryType::CDEK_COURIER:
+                $this->clear_post_delivery_data();
+                $this->clear_cdek_point_delivery_data();
+                return;
+        }
+    }
+
+    private function clear_post_delivery_data(): void
+    {
+        $this->order->delivery_post_address = '';
+        $this->order->delivery_post_index = '';
+        $this->order->delivery_post_address_dadata = '';
+        $this->order->delivery_post_price = '';
+    }
+
+    private function clear_cdek_point_delivery_data(): void
+    {
+        $this->order->delivery_cdek_point_city_title = '';
+        $this->order->delivery_cdek_point_city_code = '';
+        $this->order->delivery_cdek_point_code = '';
+        $this->order->delivery_cdek_point_title = '';
+        $this->order->delivery_cdek_point_price = '';
+    }
+
+    private function clear_cdek_courier_delivery_data(): void
+    {
+        $this->order->delivery_cdek_courier_city_title = '';
+        $this->order->delivery_cdek_courier_city_subtitle = '';
+        $this->order->delivery_cdek_courier_city_code = '';
+        $this->order->delivery_cdek_courier_city_fias = '';
+        $this->order->delivery_cdek_courier_address = '';
+        $this->order->delivery_cdek_courier_address_dadata = '';
+        $this->order->delivery_cdek_courier_price = '';
+    }
 }

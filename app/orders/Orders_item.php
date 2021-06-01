@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @property string number
+ */
 class Orders_item extends ActiveRecord {
 	
 	protected function get_own_or_products_variant_or_product_value($name) {
@@ -85,23 +88,7 @@ class Orders_item extends ActiveRecord {
 	function price() {
 		return 1 * $this->product->price + 1 * $this->products_variant->price;
 	}
-	function sku_dealer() {
-		return $this->get_own_or_products_variant_or_product_value(__FUNCTION__);
-	}
-	function sku_producer() {
-		return $this->get_own_or_products_variant_or_product_value(__FUNCTION__);
-	}
-	function show_item_source() {
-		$id = $this->product->source;
-		if($id == "1"){
-			return 'Валта';
-		}
-		if($id == "2"){
-			return 'Роял Канин';
-		}
-		return "Неизвестно";
-	}
-	
+
 	function total_price() {
 		$result = 1 * $this->get(__FUNCTION__);
 		if ($result < 1e-7) {

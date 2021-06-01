@@ -1,0 +1,25 @@
+<div class="popup-wrapper">
+    <div class="js-basket-post-select-container">
+        @ ~input_id = ~unique_input_id();
+        <label for="{input_id|h}">{"Укажите адрес"|t}</label>
+        <input
+            type="text"
+            name="address"
+            value="{basket.delivery_post_address|h}"
+            id="{input_id|h}"
+            data-dadata="{basket.delivery_post_address_dadata|h}"
+        />
+
+        <button type="button" class="send-10" onclick="$.fancybox.close();">{"Сохранить"|t}</button>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const container = $('.js-basket-post-select-container');
+        Basket.postSelect(
+            $(':input[name="address"]', container),
+            <?= json_encode($_ENV['DADATA_TOKEN']) ?>
+        );
+    })();
+</script>

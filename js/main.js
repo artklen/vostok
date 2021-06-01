@@ -379,14 +379,14 @@ function fancybox_common_params() {
 	
 	return {
 		padding: 0,
-		 
+
 		helpers : {
 			overlay : {
 				locked : true
 			}
 		},
 		tpl: {
-			closeBtn : '<a title="close" class="close" href="javascript:;"></a>'
+			closeBtn : '<a class="close" href="javascript:void(0);" onclick="$.fancybox.close();"></a>'
 		}
 	};
 }
@@ -464,4 +464,37 @@ $(function(){
 			"bottom": "0"
 		});
 	})();
+});
+
+$(function () {
+	const commonParams = fancybox_common_params();
+
+	const params = {
+		type: 'ajax',
+		tpl: {
+			wrap: wrap()
+		}
+	};
+
+	const deepMergedParams = $.extend(true, {}, commonParams, params);
+
+	$('.js-fancybox-modal').fancybox(deepMergedParams);
+
+	function wrap() {
+		const deepMergedDefaults = $.extend(true, {}, $.fancybox.defaults, commonParams);
+
+		const
+			wrap = $(deepMergedDefaults.tpl.wrap),
+			closeBtn = $(deepMergedDefaults.tpl.closeBtn);
+
+		$('.fancybox-inner', wrap).addClass('fancybox-inner-modal');
+		$('.fancybox-skin', wrap).append(closeBtn);
+
+		return wrap.html();
+	}
+});
+
+$(document).on('change input', '.error :input', function() {
+	$(this).closest('.error').removeClass('error');
+	$(this).closest('.has-error').removeClass('has-error');
 });

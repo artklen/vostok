@@ -1,0 +1,11 @@
+<div class="js-basket-delivery-cdek-point-city-title-container" {{show_if ~basket->delivery_cdek_point_city_title !== ''}}>
+    <p>Город: <span class="js-basket-delivery-cdek-point-city-title">{basket.delivery_cdek_point_city_title|h}</span></p>
+</div>
+
+<div class="js-basket-delivery-cdek-point-title-container" {{show_if ~basket->delivery_cdek_point_title !== ''}}>
+    <p>Пункт выдачи: <span class="js-basket-delivery-cdek-point-title">{basket.delivery_cdek_point_title|h}</span></p>
+</div>
+
+<p>
+    <a href="javascript:void(0);" class="js-fancybox-modal" data-fancybox-href="/basket/change_cdek_delivery_point">{"Выбрать пункт выдачи"|t}</a>
+</p>

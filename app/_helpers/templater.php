@@ -122,3 +122,17 @@ d()->if = function($condition, $then = '', $else = '') {
 	} 
 	return $condition ? $then : $else;
 };
+
+d()->hide_if = function($condition) {
+    if (is_array($condition)) {
+        $condition = reset($condition);
+    }
+    return $condition ? ' style="display:none" ' : '';
+};
+
+d()->show_if = function($condition) {
+    if (is_array($condition)) {
+        $condition = reset($condition);
+    }
+    return $condition ? '' : ' style="display:none" ';
+};

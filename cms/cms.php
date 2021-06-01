@@ -1216,7 +1216,7 @@ foreach($tmparr as $key=>$subval)
 	/**
 	 * Добавляет сообщение об ошибке валидации формы в существующий список
 	 *
-	 * @param $text Текст ошибки
+	 * @param string $text Текст ошибки
 	 */
 	public function add_notice($text,$element=false)
 	{

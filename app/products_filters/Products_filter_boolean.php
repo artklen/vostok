@@ -9,6 +9,7 @@ class Products_filter_boolean extends Products_filter
 		$clone = clone $object;
 		$clone->select('count(*) as `c`')
 			  ->where("`{$name}` is not null and 1*`{$name}`<>0")
+              ->order('')
 			  ->group_by("1*`{$name}`<>0");
 		$result = [];
 		foreach ($clone as $row) {

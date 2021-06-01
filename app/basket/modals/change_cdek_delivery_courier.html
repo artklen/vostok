@@ -1,0 +1,41 @@
+<?php
+
+d()->cdek_city = d()->basket->delivery_cdek_courier_city();
+?>
+
+<div class="popup-wrapper">
+    <div class="js-basket-cdek-courier-select-city">
+        @ ~input_id = ~unique_input_id();
+        <label for="{input_id|h}">{"Выберите город получения"|t}</label>
+        <input type="text" name="city" value="{cdek_city.title|h}" id="{input_id|h}"/>
+
+        <input type="hidden" name="city_code" value="{cdek_city.id|h}"/>
+
+        <input type="hidden" name="fias_code" value="{cdek_city.fias|h}"/>
+
+        @ ~input_id = ~unique_input_id();
+        <label for="{input_id|h}">{"Укажите адрес"|t}</label>
+        <input
+            type="text"
+            name="address"
+            value="{basket.delivery_cdek_courier_address|h}"
+            id="{input_id|h}"
+            data-dadata="{basket.delivery_cdek_courier_address_dadata|h}"
+        />
+
+        <button type="button" class="send-10" onclick="$.fancybox.close();">{"Сохранить"|t}</button>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const container = $('.js-basket-cdek-courier-select-city');
+        Basket.cdek_courier_select(
+            $(':input[name="city"]', container),
+            $(':input[name="city_code"]', container),
+            $(':input[name="fias_code"]', container),
+            $(':input[name="address"]', container),
+            <?= json_encode($_ENV['DADATA_TOKEN']) ?>
+        );
+    })();
+</script>
