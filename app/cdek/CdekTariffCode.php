@@ -9,4 +9,20 @@ final class CdekTariffCode extends BasicEnum
     public const WAREHOUSE_DOOR_PARCEL = 137;
     public const WAREHOUSE_DOOR_ECONOMICAL_PARCEL = 233;
     public const WAREHOUSE_WAREHOUSE_ECONOMICAL_PARCEL = 234;
+
+    public static function codesForPoint(): array
+    {
+        return [
+            self::WAREHOUSE_WAREHOUSE_PARCEL,
+            self::WAREHOUSE_WAREHOUSE_ECONOMICAL_PARCEL,
+        ];
+    }
+
+    public static function codesForCourier(): array
+    {
+        return [
+            self::WAREHOUSE_DOOR_PARCEL,
+            self::WAREHOUSE_DOOR_ECONOMICAL_PARCEL,
+        ];
+    }
 }

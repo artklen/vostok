@@ -43,6 +43,9 @@
  *
  * @property callable unique_input_id
  * @method string unique_input_id()
+ *
+ * @property callable price_format
+ * @method string price_format($price, $otherwise = null)
  */
 class doitClass
 {

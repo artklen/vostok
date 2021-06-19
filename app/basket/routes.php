@@ -15,7 +15,8 @@ d()->basket_ajax_refresh = function() {
 		'total_price' => d()->basket_total_price,
 		'total_weight' => d()->basket_total_weight,
 		'order_price' => d()->basket_order_price,
-		'delivery_price' => $basket->delivery_price(),
+		'delivery_price' => d()->price_format($basket->delivery_price()),
+		'delivery_working_days' => $basket->delivery_working_days_description(),
 		'is_free_delivery' => $basket->is_free_delivery(),
 		'items' => [],
 		'items_total_price' => array(),
@@ -96,7 +97,6 @@ d()->post(d()->langlink . '/basket/finish', function() {
     $order->email = d()->params['email'];
     $order->comment = d()->params['comment'];
     $order->delivery_type = d()->params['delivery_type'];
-    $order->pay_type = d()->params['pay_type'];
 
     $order->delivery_price = $basket->calculate_delivery_price();
     $basket->lock_delivery_data();
@@ -114,7 +114,7 @@ d()->post(d()->langlink . '/basket/finish', function() {
     $order = d()->Order->find_by('id', $order->id);
 
     d()->notification->new_order($order);
-    if (d()->params['pay_type'] === 1) {
+    if ($order->pay_type === PaymentType::ONLINE) {
         print 'document.location.href="/aquiring/sber/payfororder/' . $order->secret . '";';
     } else {
         print 'document.location.href="' . d()->langlink . '/thankyou"';
@@ -298,7 +298,7 @@ d()->get(d()->langlink . '/basket/load_cdek_delivery_cities', function () {
 });
 
 d()->post(d()->langlink . '/basket/set_delivery_cdek_city', function () {
-    d()->basket->set_delivery_cdek_city($_POST);
+    d()->basket->set_delivery_cdek_point_city($_POST);
     print d()->basket_ajax_refresh();
     exit();
 });
@@ -339,6 +339,12 @@ d()->get(d()->langlink . '/basket/change_post_delivery', function () {
 
 d()->post(d()->langlink . '/basket/set_delivery_post_address', function () {
     d()->basket->set_delivery_post_address($_POST);
+    print d()->basket_ajax_refresh();
+    exit();
+});
+
+d()->post(d()->langlink . '/basket/set_pay_type', function () {
+    d()->basket->set_pay_type($_POST);
     print d()->basket_ajax_refresh();
     exit();
 });

@@ -9,6 +9,8 @@
  * @property string delivery_cdek_point_code
  * @property string delivery_cdek_point_title
  * @property string delivery_cdek_point_price
+ * @property string delivery_cdek_point_delivery_working_days_min
+ * @property string delivery_cdek_point_delivery_working_days_max
  * @property string delivery_cdek_courier_city_title
  * @property string delivery_cdek_courier_city_subtitle
  * @property string delivery_cdek_courier_city_code
@@ -16,6 +18,8 @@
  * @property string delivery_cdek_courier_address
  * @property string delivery_cdek_courier_address_dadata
  * @property string delivery_cdek_courier_price
+ * @property string delivery_cdek_courier_delivery_working_days_min
+ * @property string delivery_cdek_courier_delivery_working_days_max
  * @property string delivery_post_address
  * @property string delivery_post_index
  * @property string delivery_post_address_dadata
@@ -148,7 +152,7 @@ class Order extends ActiveRecord
             return $result;
         }
 
-        return $this->products_price() + (float) $this->delivery_price;
+        return ($this->products_price() + (float) $this->delivery_price) * $this->payment_type_commission_coefficient();
     }
 	
 	function total_price() {
@@ -225,6 +229,7 @@ class Order extends ActiveRecord
         }
         $this->products_price = $this->products_price();
         $this->order_price = $this->order_price();
+        $this->payment_type_commission_coefficient = $this->payment_type_commission_coefficient();
         $this->save();
     }
 
@@ -252,10 +257,10 @@ class Order extends ActiveRecord
 	function show_pay_type() {
 		$result = "";
 		switch ($this->pay_type) {
-		case '1':
+		case PaymentType::ONLINE:
 			$result .= 'Онлайн оплата';
 			break;
-		case '2':
+		case PaymentType::COD:
 			$result .= 'Наличными или перечислением';
 			break;
 		}
@@ -264,7 +269,7 @@ class Order extends ActiveRecord
 	function pay_info() {
 		$result = "";
 		switch ($this->pay_type) {
-		case '1':
+		case PaymentType::ONLINE:
 			$result .= 'Онлайн оплата';
 			if ($this->is_paid){
 				$result .= ' <span style="color:green">[Оплачено]</span>';
@@ -275,11 +280,35 @@ class Order extends ActiveRecord
 				}
 			}
 			break;
-		case '2':
+		case PaymentType::COD:
 			$result .= 'Наличными или перечислением';
 			break;
 		}
 		return $result;
 	}
 
+    public function payment_type_commission_coefficient(): float
+    {
+        $storedValue = $this->get(__FUNCTION__);
+        if ($storedValue !== '') {
+            return (float) $storedValue;
+        }
+
+        if ($this->pay_type === PaymentType::COD) {
+            switch ($this->delivery_type) {
+                default:
+                    return 1.;
+
+                case DeliveryType::POST:
+                case DeliveryType::EMS:
+                    return 1.02;
+
+                case DeliveryType::CDEK_POINT:
+                case DeliveryType::CDEK_COURIER:
+                    return 1.03;
+            }
+        }
+
+        return 1.;
+    }
 }

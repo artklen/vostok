@@ -186,8 +186,11 @@ class Basket extends UniversalSingletoneHelper
 	
 	function order_price()
 	{
-		$result = $this->products_price() + $this->delivery_price();
-        return $result;
+	    if (! isset($this->order)) {
+	        return 0.;
+        }
+
+        return ($this->products_price() + $this->delivery_price()) * $this->order->payment_type_commission_coefficient();
 	}
 
 	function total_weight($item_key = null)
@@ -272,7 +275,7 @@ class Basket extends UniversalSingletoneHelper
 		return $this->items->fast_all_of('item_key');
 	}
 	
-	/*
+	/**
 	 * Определения уникального ключа, идентифицирующего товар в корзине
 	 */
 	function item_key_of($params) {
@@ -319,14 +322,28 @@ class Basket extends UniversalSingletoneHelper
         $this->order = $this->order->save_and_load();
 	}
 
-    public function set_delivery_cdek_city(array $params): void
+    public function set_delivery_cdek_point_city(array $params): void
     {
         $this->create_order_if_not_exists();
+
+        if ($this->order->delivery_cdek_point_city_code === $params['code']) {
+            return;
+        }
 
         $this->order->delivery_cdek_point_city_title = $params['title'];
         $this->order->delivery_cdek_point_city_code = $params['code'];
 
-        $this->order->delivery_cdek_point_price = d()->Cdek->pointCost((int) $params['code']);
+        $tariffs = d()->Cdek->pointTariff((int) $params['code'], $this->products_price());
+        $tariff = $this->get_cdek_tariff_with_smallest_sum($tariffs);
+        if (isset($tariff)) {
+            $this->order->delivery_cdek_point_price = $tariff->sum;
+            $this->order->delivery_cdek_point_delivery_working_days_min = $tariff->deliveryWorkingDaysMin;
+            $this->order->delivery_cdek_point_delivery_working_days_max = $tariff->deliveryWorkingDaysMax;
+        } else {
+            $this->order->delivery_cdek_point_price = '';
+            $this->order->delivery_cdek_point_delivery_working_days_min = '';
+            $this->order->delivery_cdek_point_delivery_working_days_max = '';
+        }
 
         $this->order->delivery_cdek_point_title = '';
         $this->order->delivery_cdek_point_code = '';
@@ -391,6 +408,57 @@ class Basket extends UniversalSingletoneHelper
         }
     }
 
+    public function delivery_working_days_description(): string
+    {
+        $min = $this->delivery_working_days_min();
+        $max = $this->delivery_working_days_max();
+
+        if ($min === $max && $min !== 0) {
+            return $min . ' ' . t(declOfNum($min, 'рабочий день', 'рабочих дня', 'рабочих дней'));
+        }
+
+        if ($min !== 0) {
+            $parts[] = t('от') . ' ' . $min;
+        }
+        if ($max !== 0) {
+            $parts[] = t('до') . ' ' . $max;
+        }
+
+        if (! isset($parts)) {
+            return '';
+        }
+
+        return implode(' ', $parts) . ' ' . t('рабочих дней');
+    }
+
+    public function delivery_working_days_min(): int
+    {
+        switch ($this->delivery_type()) {
+            default:
+                return 0;
+
+            case DeliveryType::CDEK_POINT:
+                return (int) $this->order->delivery_cdek_point_delivery_working_days_min;
+
+            case DeliveryType::CDEK_COURIER:
+                return (int) $this->order->delivery_cdek_courier_delivery_working_days_min;
+        }
+    }
+
+    public function delivery_working_days_max(): int
+    {
+        switch ($this->delivery_type()) {
+            default:
+                return 0;
+
+            case DeliveryType::CDEK_POINT:
+                return (int) $this->order->delivery_cdek_point_delivery_working_days_max;
+
+            case DeliveryType::CDEK_COURIER:
+                return (int) $this->order->delivery_cdek_courier_delivery_working_days_max;
+        }
+    }
+
     public function is_free_delivery(): bool
     {
         $variant = $this->delivery_variant();
@@ -425,21 +493,45 @@ class Basket extends UniversalSingletoneHelper
             return 0.;
         }
 
-        $variant_price = $this->delivery_variant_price();
-
         switch ($this->delivery_type()) {
             default:
-                return $variant_price;
+                return $this->delivery_variant_price();
 
             case DeliveryType::CDEK_POINT:
-                return d()->Cdek->pointCost((int) $this->order->delivery_cdek_point_city_code);
+                $tariffs = d()->Cdek->pointTariff(
+                    (int) $this->order->delivery_cdek_point_city_code,
+                    $this->products_price()
+                );
+                $tariff = $this->get_cdek_tariff_with_smallest_sum($tariffs);
+                return $tariff->sum ?? 0.;
 
             case DeliveryType::CDEK_COURIER:
-                return d()->Cdek->courierCost((int) $this->order->delivery_cdek_courier_city_code);
+                $tariffs = d()->Cdek->courierTariff(
+                    (int) $this->order->delivery_cdek_courier_city_code,
+                    $this->products_price()
+                );
+                $tariff = $this->get_cdek_tariff_with_smallest_sum($tariffs);
+                return $tariff->sum ?? 0.;
 
             case DeliveryType::POST:
                 return d()->RussianPost->cost($this->order->delivery_post_index, $this->products_price());
         }
+    }
+
+    private function get_cdek_tariff_with_smallest_sum(array $tariffs): ?CdekTariff
+    {
+        if (empty($tariffs)) {
+            return null;
+        }
+
+        usort(
+            $tariffs,
+            static function (CdekTariff $a, CdekTariff $b): int {
+                return $a->sum <=> $b->sum;
+            }
+        );
+
+        return reset($tariffs);
     }
 
     public function delivery_cdek_courier_city(): Cdek_city
@@ -461,7 +553,17 @@ class Basket extends UniversalSingletoneHelper
 
         $this->order->delivery_cdek_courier_city_code = $params['code'];
 
-        $this->order->delivery_cdek_courier_price = d()->Cdek->courierCost((int) $params['code']);
+        $tariffs = d()->Cdek->courierTariff((int) $params['code'], $this->products_price());
+        $tariff = $this->get_cdek_tariff_with_smallest_sum($tariffs);
+        if (isset($tariff)) {
+            $this->order->delivery_cdek_courier_price = $tariff->sum;
+            $this->order->delivery_cdek_courier_delivery_working_days_min = $tariff->deliveryWorkingDaysMin;
+            $this->order->delivery_cdek_courier_delivery_working_days_max = $tariff->deliveryWorkingDaysMax;
+        } else {
+            $this->order->delivery_cdek_courier_price = '';
+            $this->order->delivery_cdek_courier_delivery_working_days_min = '';
+            $this->order->delivery_cdek_courier_delivery_working_days_max = '';
+        }
 
         $this->clear_delivery_cdek_courier_address();
 
@@ -710,22 +812,6 @@ class Basket extends UniversalSingletoneHelper
         $this->order->delivery_cdek_courier_price = '';
     }
 
-    public function cash_on_delivery_commission_coefficient(): float
-    {
-        switch ($this->delivery_type()) {
-            default:
-                return 1.;
-
-            case DeliveryType::POST:
-            case DeliveryType::EMS:
-                return 1.02;
-
-            case DeliveryType::CDEK_POINT:
-            case DeliveryType::CDEK_COURIER:
-                return 1.03;
-        }
-    }
-
     public function cash_on_delivery_title(): string
     {
         switch ($this->delivery_type()) {
@@ -740,5 +826,19 @@ class Basket extends UniversalSingletoneHelper
             case DeliveryType::CDEK_COURIER:
                 return t('Наложенный платеж (+ 3% комиссия)');
         }
+    }
+
+    public function set_pay_type($params): void
+    {
+        $this->create_order_if_not_exists();
+
+        $this->order->pay_type = $params['pay_type'];
+
+        $this->order = $this->order->save_and_load();
+    }
+
+    public function pay_type(): string
+    {
+        return $this->order->pay_type ?? '';
     }
 }

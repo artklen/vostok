@@ -117,22 +117,9 @@ class Cdek
         return $result ?? [];
     }
 
-    public function pointCost(int $to_location_code): float
-    {
-        $tariffList = $this->pointTariffList($to_location_code);
-        return $this->smallestSumOfTariffList($tariffList);
-    }
-
     /**
-     * @param int $to_location_code
-     * @return array<CdekTariff>
-     */
-    public function pointTariffList(int $to_location_code): array
-    {
-        return array_filter($this->tariffList($to_location_code), [$this, 'isTariffForPoint']);
-    }
-
-    /**
+     * Вместо него теперь используется {@link tariffList}, потому что этот метод не поддерживает услуги, а нам нужен
+     * расчёт страхования полной стоимости.
      * @param int $to_location_code
      * @return array<CdekTariff>
      * @see https://confluence.cdek.ru/pages/viewpage.action?pageId=63345519
@@ -169,9 +156,6 @@ class Cdek
         foreach ($response['tariff_codes'] ?? [] as $item) {
             $result[] = ((new CdekTariff())
                 ->code($item['tariff_code'])
-                ->name($item['tariff_name'])
-                ->description($item['tariff_description'] ?? '')
-                ->deliveryMode($item['delivery_mode'])
                 ->sum($item['delivery_sum'])
                 ->deliveryWorkingDaysMin($item['period_min'])
                 ->deliveryWorkingDaysMax($item['period_max'])
@@ -202,58 +186,29 @@ class Cdek
         return [];
     }
 
-    /**
-     * @param array<CdekTariff> $tariffList
-     * @return float
-     */
-    private function smallestSumOfTariffList(array $tariffList): float
+    /** @return array<CdekTariff> */
+    public function pointTariff(int $to_location_code, float $products_price): array
     {
-        foreach ($tariffList as $tariff) {
-            if (isset($result) && $result < $tariff->sum) {
-                continue;
+        return $this->requestTariffsByCodes(CdekTariffCode::codesForPoint(), $to_location_code, $products_price);
+    }
+
+    /** @return array<CdekTariff> */
+    private function requestTariffsByCodes(array $tariff_codes, int $to_location_code, float $products_price): array
+    {
+        foreach ($tariff_codes as $tariff_code) {
+            $tariff = $this->requestTariff($tariff_code, $to_location_code, $products_price);
+            if (isset($tariff)) {
+                $tariffs[] = $tariff;
             }
-            $result = $tariff->sum;
         }
 
-        return $result ?? 0.;
-    }
-
-    public function courierCost(int $to_location_code): float
-    {
-        $tariffList = $this->courierTariffList($to_location_code);
-        return $this->smallestSumOfTariffList($tariffList);
+        return $tariffs ?? [];
     }
 
     /**
-     * @param int $to_location_code
-     * @return array<CdekTariff>
-     */
-    public function courierTariffList(int $to_location_code): array
-    {
-        return array_filter($this->tariffList($to_location_code), [$this, 'isTariffForCourier']);
-    }
-
-    public function isTariffForPoint(CdekTariff $tariff): bool
-    {
-        return (
-            $tariff->code === CdekTariffCode::WAREHOUSE_WAREHOUSE_PARCEL ||
-            $tariff->code === CdekTariffCode::WAREHOUSE_WAREHOUSE_ECONOMICAL_PARCEL
-        );
-    }
-
-    public function isTariffForCourier(CdekTariff $tariff): bool
-    {
-        return (
-            $tariff->code === CdekTariffCode::WAREHOUSE_DOOR_PARCEL ||
-            $tariff->code === CdekTariffCode::WAREHOUSE_DOOR_ECONOMICAL_PARCEL
-        );
-    }
-
-    /**
-     * Вместо него решили использовать {@link tariffList}
      * @see https://confluence.cdek.ru/pages/viewpage.action?pageId=63345430
      */
-    private function cost(int $to_location_code, int $tariff_code): float
+    private function requestTariff(int $tariff_code, int $to_location_code, float $products_price): ?CdekTariff
     {
         $this->authorize();
 
@@ -279,16 +234,31 @@ class Cdek
                     'height' => $package_height,
                 ]
             ],
-            // todo расчёт страховки, не проверялось
-            //'services' => [
-            //    [
-            //        "code" => "INSURANCE",
-            //        "parameter" => d()->basket->products_price(),
-            //    ]
-            //],
+            'services' => [
+                [
+                    'code' => 'INSURANCE',
+                    'parameter' => $products_price,
+                ]
+            ],
         ];
 
         $response = $this->postQuery('calculator/tariff', $request);
-        return $response['total_sum'] ?? 0.;
+        $sum = (float) ($response['total_sum'] ?? 0.);
+        if ($sum < 1e-7) {
+            return null;
+        }
+
+        return ((new CdekTariff())
+            ->code($tariff_code)
+            ->sum($sum)
+            ->deliveryWorkingDaysMin((int) ($response['period_min'] ?? 0))
+            ->deliveryWorkingDaysMax((int) ($response['period_max'] ?? 0))
+        );
+    }
+
+    /** @return array<CdekTariff> */
+    public function courierTariff(int $to_location_code, float $products_price): array
+    {
+        return $this->requestTariffsByCodes(CdekTariffCode::codesForCourier(), $to_location_code, $products_price);
     }
 }

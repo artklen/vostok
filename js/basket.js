@@ -12,6 +12,7 @@ Basket = (function () {
         set_delivery_cdek_courier_city: callback('set_delivery_cdek_courier_city'),
         set_delivery_cdek_courier_address: callback('set_delivery_cdek_courier_address'),
         set_delivery_post_address: callback('set_delivery_post_address'),
+        set_pay_type: callback('set_pay_type'),
         refresh: refresh,
         popup: popup,
         cdek_point_select: cdekPointSelect,
@@ -93,7 +94,9 @@ Basket = (function () {
                 $('.js-basket-order-price').text(data.order_price);
                 $('.js-basket-products-price').text(data.products_price);
                 $('.js-basket-delivery-price').text(data.delivery_price);
-                $('.js-basket-delivery-price-container').toggle(data.delivery_price > 1e-7);
+                $('.js-basket-delivery-price-container').toggle(data.delivery_price !== '0');
+                $('.js-basket-delivery-working-days').text(data.delivery_working_days);
+                $('.js-basket-delivery-working-days-container').toggle(data.delivery_working_days !== '');
                 $('.js-basket-is-free-delivery-container').toggle(data.is_free_delivery);
                 $('.js-basket-errors-container').toggle(data.errors.length !== 0);
                 $('.js-basket-errors').html(errorsHtml(data.errors));
@@ -787,6 +790,13 @@ $(function () {
             delivery_type: $(this).val()
         };
         Basket.set_delivery_type(params, this);
+    });
+
+    $(document).on('change keyup', '.js-pay-type-select', function () {
+        const params = {
+            pay_type: $(this).val()
+        };
+        Basket.set_pay_type(params, this);
     });
 });
 

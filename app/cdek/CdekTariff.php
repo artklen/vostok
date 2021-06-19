@@ -5,15 +5,6 @@ class CdekTariff
     /** @var int */
     public $code;
 
-    /** @var string */
-    public $name;
-
-    /** @var string */
-    public $description;
-
-    /** @var int */
-    public $deliveryMode;
-
     /** @var float */
     public $sum;
 
@@ -26,24 +17,6 @@ class CdekTariff
     public function code(int $code): self
     {
         $this->code = $code;
-        return $this;
-    }
-
-    public function name(string $name): self
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    public function description(string $description): self
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    public function deliveryMode(int $deliveryMode): self
-    {
-        $this->deliveryMode = $deliveryMode;
         return $this;
     }
 

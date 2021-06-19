@@ -1276,7 +1276,8 @@ input.list[type="checkbox"]:disabled:hover + span {
     .basket-2 .right .quantity {
       font-size: 13px;
       color: #5f5f5e;
-      text-align: right; }
+      text-align: right;
+      margin-left: -15px; }
 /* slider */
 .slider-1 {
   margin: 0 0 40px 0;

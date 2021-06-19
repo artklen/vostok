@@ -123,6 +123,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row js-basket-delivery-working-days-container" {{show_if ~basket->delivery_working_days_description !== ''}}>
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            <div class="title-2">{"Срок доставки"|t}</div>
+                        </div>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                            <div class="quantity"><span class="js-basket-delivery-working-days">{basket.delivery_working_days_description}</span></div>
+                        </div>
+                    </div>
                     <div class="row js-basket-is-free-delivery-container" {{show_if ~basket->is_free_delivery}}>
                         <div class="col-xs-12">
                             <div class="basket-summary-line-title">{"Доставка бесплатно"|t}</div>
@@ -187,10 +195,10 @@
 
 									<div>
 										<div>
-										<select name="pay_type" class="js-sumoselect" placeholder="{"Вариант оплаты"|t}">
+										<select name="pay_type" class="js-sumoselect js-pay-type-select" placeholder="{"Вариант оплаты"|t}">
 											<option class="hidden"></option>
-											<option value="1">{"Онлайн оплата"|t}</option>
-											<option value="2" title="{basket.cash_on_delivery_title|h}" class="js-basket-cash-on-delivery-title">{basket.cash_on_delivery_title|h}</option>
+											<option value="<?= h(PaymentType::ONLINE) ?>" {{selected_if ~basket->pay_type === PaymentType::ONLINE}}>{"Онлайн оплата"|t}</option>
+											<option value="<?= h(PaymentType::COD) ?>" {{selected_if ~basket->pay_type === PaymentType::COD}} title="{basket.cash_on_delivery_title|h}" class="js-basket-cash-on-delivery-title">{basket.cash_on_delivery_title|h}</option>
 										</select>
 										</div>
 									</div>
