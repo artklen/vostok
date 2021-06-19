@@ -27,6 +27,7 @@ d()->basket_ajax_refresh = function() {
         'delivery_cdek_courier_city' => $basket->delivery_cdek_courier_city()->to_array(),
         'delivery_cdek_courier_address' => $basket->delivery_cdek_courier_address(),
         'delivery_post_address' => $basket->delivery_post_address(),
+        'cash_on_delivery_title' => $basket->cash_on_delivery_title(),
 	);
 	foreach (d()->params['widgets'] as $widget_id => $widget_type) {
 		if (!isset($result['widgets'][$widget_type])) {

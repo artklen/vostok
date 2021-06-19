@@ -144,7 +144,7 @@
 								<div class="fosv-2">
 									<div>
 										<div>
-											<input name="name" type="text" placeholder="{"Фамилия И__О_"|t}" />
+											<input name="name" type="text" placeholder="{"Фамилия Имя Отчество (полностью)"|t}" />
 										</div>
 									</div>
 
@@ -165,7 +165,13 @@
 										<select name="delivery_type" class="js-sumoselect js-delivery-type-select" placeholder="{"Вариант доставки"|t}">
 											<option class="hidden"></option>
 											<foreach basket->delivery_variants>
+											@ if ($_ENV['SITE_MAIN_DOMAIN'] === 'shop-vostok.artklen-dev.ru' && d()->this->id === '3') {
+												@ d()->this->title = 'Доставка службой СДЭК до склада';
+											@ }
 												<option value="{.id}" data-price="{.price}" data-free_price="{.free_price}" data-message="{.text}" {{selected_if ~basket->delivery_type === ~this->id}}>{.title}</option>
+											@ if ($_ENV['SITE_MAIN_DOMAIN'] === 'shop-vostok.artklen-dev.ru' && d()->this->id === '3') {
+												<option value="5" data-price="" data-free_price="" data-message="" {{selected_if ~basket->delivery_type === '5'}}>Доставка службой СДЭК до двери</option>
+											@ }
 											</foreach>
 										</select>
 										</div>
@@ -184,7 +190,7 @@
 										<select name="pay_type" class="js-sumoselect" placeholder="{"Вариант оплаты"|t}">
 											<option class="hidden"></option>
 											<option value="1">{"Онлайн оплата"|t}</option>
-											<option value="2" title="{"Наложенный платеж (+ 2% комиссия)"|t}">{"Наложенный платеж (+ 2% комиссия)"|t}</option>
+											<option value="2" title="{basket.cash_on_delivery_title|h}" class="js-basket-cash-on-delivery-title">{basket.cash_on_delivery_title|h}</option>
 										</select>
 										</div>
 									</div>

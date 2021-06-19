@@ -186,7 +186,8 @@ class Basket extends UniversalSingletoneHelper
 	
 	function order_price()
 	{
-		return $this->products_price() + $this->delivery_price();
+		$result = $this->products_price() + $this->delivery_price();
+        return $result;
 	}
 
 	function total_weight($item_key = null)
@@ -707,5 +708,37 @@ class Basket extends UniversalSingletoneHelper
         $this->order->delivery_cdek_courier_address = '';
         $this->order->delivery_cdek_courier_address_dadata = '';
         $this->order->delivery_cdek_courier_price = '';
+    }
+
+    public function cash_on_delivery_commission_coefficient(): float
+    {
+        switch ($this->delivery_type()) {
+            default:
+                return 1.;
+
+            case DeliveryType::POST:
+            case DeliveryType::EMS:
+                return 1.02;
+
+            case DeliveryType::CDEK_POINT:
+            case DeliveryType::CDEK_COURIER:
+                return 1.03;
+        }
+    }
+
+    public function cash_on_delivery_title(): string
+    {
+        switch ($this->delivery_type()) {
+            default:
+                return t('Оплата при получении');
+
+            case DeliveryType::POST:
+            case DeliveryType::EMS:
+                return t('Наложенный платеж (+ 2% комиссия)');
+
+            case DeliveryType::CDEK_POINT:
+            case DeliveryType::CDEK_COURIER:
+                return t('Наложенный платеж (+ 3% комиссия)');
+        }
     }
 }

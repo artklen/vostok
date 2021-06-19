@@ -106,6 +106,13 @@ Basket = (function () {
                 $('.js-basket-delivery-cdek-courier-address').text(data.delivery_cdek_courier_address);
                 $('.js-basket-delivery-cdek-courier-address-container').toggle(data.delivery_cdek_courier_address !== '');
 
+                $('.js-basket-cash-on-delivery-title')
+                    .text(data.cash_on_delivery_title)
+                    .attr('title', data.cash_on_delivery_title)
+                    .closest('.js-sumoselect').each(function() {
+                        this.sumo && this.sumo.reload();
+                    })
+
                 const delivery_cdek_courier_city = data.delivery_cdek_courier_city[0];
                 if (delivery_cdek_courier_city !== void 0) {
                     $('.js-basket-delivery-cdek-courier-city-title-container').show();

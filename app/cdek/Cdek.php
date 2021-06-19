@@ -170,7 +170,7 @@ class Cdek
             $result[] = ((new CdekTariff())
                 ->code($item['tariff_code'])
                 ->name($item['tariff_name'])
-                ->description($item['tariff_description'])
+                ->description($item['tariff_description'] ?? '')
                 ->deliveryMode($item['delivery_mode'])
                 ->sum($item['delivery_sum'])
                 ->deliveryWorkingDaysMin($item['period_min'])
@@ -279,6 +279,13 @@ class Cdek
                     'height' => $package_height,
                 ]
             ],
+            // todo расчёт страховки, не проверялось
+            //'services' => [
+            //    [
+            //        "code" => "INSURANCE",
+            //        "parameter" => d()->basket->products_price(),
+            //    ]
+            //],
         ];
 
         $response = $this->postQuery('calculator/tariff', $request);
