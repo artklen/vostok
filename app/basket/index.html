@@ -173,6 +173,9 @@
 										<select name="delivery_type" class="js-sumoselect js-delivery-type-select" placeholder="{"Вариант доставки"|t}">
 											<option class="hidden"></option>
 											<foreach basket->delivery_variants>
+											@ if ($_ENV['SITE_MAIN_DOMAIN'] === 'shop-vostok.artklen-dev.ru' && d()->this->id === '2') {
+												@ continue;
+											@ }
 											@ if ($_ENV['SITE_MAIN_DOMAIN'] === 'shop-vostok.artklen-dev.ru' && d()->this->id === '3') {
 												@ d()->this->title = 'Доставка службой СДЭК до склада';
 											@ }
