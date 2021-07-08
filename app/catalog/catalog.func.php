@@ -30,6 +30,7 @@ d()->route(d()->langlink . '/catalog', function ()
 			$tt['title'] = d()->Product->where('id = ?', $tt['id'])->title;
 			$tt['link'] = '/product/'.$tt['url'];
 		}
+		unset($tt);
 
 		print json_encode($this_products_array);
 		#var_dump(d()->this_products->all);die;
@@ -118,8 +119,9 @@ d()->route(d()->langlink . '/catalog', function ()
 		  string(6) "500000"
 		}
 		 */
-		if (!isset($fields_filtered[0]))
-			continue;
+		if (!isset($fields_filtered[0])) {
+            continue;
+        }
 
 		foreach ($fields_filtered as $key => &$value)
 		{
@@ -133,20 +135,23 @@ d()->route(d()->langlink . '/catalog', function ()
 				continue;
 			}
 
-			if ((is_array(d()->get[$name]) && in_array($value['value'], d()->get[$name]) || (d()->get[$name] == $value['value'])))
+			if (((is_array(d()->get[$name]) && in_array($value['value'], d()->get[$name])) || (d()->get[$name] == $value['value'])))
 			{
 				$selected[$name][] = $fields_filtered[$key];
 				unset($fields_filtered[$key]);
 			}
 		}
+		unset($value);
 	}
-
+    unset($fields_filtered);
 
 	#var_dump($selected);die;
 
-	foreach ($selected as $name => $value)
-		foreach ($value as $v)
-		array_unshift($fields_filtered_data[$name], $v);
+	foreach ($selected as $name => $value) {
+        foreach ($value as $v) {
+            array_unshift($fields_filtered_data[$name], $v);
+        }
+    }
 
 	#var_dump($fields_filtered_data);die;
 
@@ -157,7 +162,8 @@ d()->route(d()->langlink . '/catalog', function ()
     if (! in_array(d()->lang, ['', 'ru'])) {
         $column = d()->lang . '_variants';
 
-        for ($i = 0; $i < count(d()->fields_filtered_data); $i++) {
+        $c = count(d()->fields_filtered_data);
+        for ($i = 0; $i < $c; $i++) {
             if (mb_strlen(trim(d()->products__fields[$i]->{$column})) <= 0) {
                 continue;
             }
@@ -200,10 +206,11 @@ d()->route(d()->langlink . '/catalog', function ()
 	#d()->canonical = d()->categories_seo_data['canonical'];
 	#d()->seo_from_object(d()->this, d()->categories_seo_params);
 
-	if ($_REQUEST['order'] == 'price_to_min')
-		d()->this_products->order('1*price desc');
-	else
-		d()->this_products->order('1*price asc');
+	if ($_GET['order'] === 'price_to_min') {
+        d()->this_products->order('1*price desc');
+    } else {
+        d()->this_products->order('1*price asc');
+    }
 
 	d()->count_this_products = d()->this_products->count;
 	d()->this_products->paginate($per_page);
@@ -215,7 +222,7 @@ d()->route(d()->langlink . '/catalog', function ()
 
 	d()->this = d()->this_products;
 
-	if (d()->get->collection_id && count(d()->get->collection_id === 1)) {
+	if (d()->get->collection_id && count(d()->get->collection_id) === 1) {
 		d()->this_page = d()->Collection->f(d()->get->collection_id);
 	}
 	if (!d()->this_page || d()->this_page->is_empty) {
@@ -296,8 +303,10 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
 		d()->this_products = $this_products;
 		$this_products_array = d()->this_products->to_array();
 
-		foreach ($this_products_array as &$tt)
-			$tt['link'] = '/watchband/'.$tt['url'];
+		foreach ($this_products_array as &$tt) {
+            $tt['link'] = '/watchband/' . $tt['url'];
+        }
+		unset($tt);
 
 		print json_encode($this_products_array);
 		exit;
@@ -336,15 +345,7 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
 
 	d()->unfiltered_products_list = $this_products;
 
-	list(
-		d()->this_products,
-		$fields_data,
-		$fields_filtered_data
-		) = d()->facets(
-		$this_products,
-		$products__fields,
-		d()->get
-	);
+    list(d()->this_products, $fields_data, $fields_filtered_data) = d()->facets($this_products, $products__fields, d()->get);
 
 	$selected = [];
 	# поднимаем вверх выбранные элементы
@@ -361,7 +362,7 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
 				continue;
 			}
 
-			if ((is_array(d()->get[$name]) && in_array($value['value'], d()->get[$name]) || (d()->get[$name] == $value['value'])))
+			if (((is_array(d()->get[$name]) && in_array($value['value'], d()->get[$name])) || (d()->get[$name] == $value['value'])))
 			{
 				$selected[$name][] = $fields_filtered[$key];
 				unset($fields_filtered[$key]);
@@ -370,10 +371,13 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
 
 		unset($value);
 	}
+    unset($fields_filtered);
 
-	foreach ($selected as $name => $value)
-		foreach ($value as $v)
-			array_unshift($fields_filtered_data[$name], $v);
+	foreach ($selected as $name => $value) {
+        foreach ($value as $v) {
+            array_unshift($fields_filtered_data[$name], $v);
+        }
+    }
 
 	d()->products__fields = $products__fields;
 	d()->fields_data = $fields_data;
@@ -382,7 +386,8 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
 	if (! in_array(d()->lang, ['', 'ru'])) {
 	    $column = d()->lang . '_variants';
 
-        for ($i = 0; $i < count(d()->fields_filtered_data); $i++) {
+	    $c = count(d()->fields_filtered_data);
+        for ($i = 0; $i < $c; $i++) {
             if (mb_strlen(trim(d()->products__fields[$i]->{$column})) <= 0) {
                 continue;
             }
@@ -417,7 +422,7 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
         }
     }
 
-	if ($_REQUEST['order'] == 'price_to_min')
+	if ($_GET['order'] === 'price_to_min')
 		d()->this_products->order('1*price desc');
 	else
 		d()->this_products->order('1*price asc');
@@ -434,7 +439,7 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
 
 	d()->this = d()->this_products;
 
-	if (d()->get->collection_id && count(d()->get->collection_id === 1)) {
+	if (d()->get->collection_id && count(d()->get->collection_id) === 1) {
 		d()->this_page = d()->Collection->f(d()->get->collection_id);
 	}
 	if (!d()->this_page || d()->this_page->is_empty) {

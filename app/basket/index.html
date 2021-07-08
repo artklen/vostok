@@ -173,16 +173,7 @@
 										<select name="delivery_type" class="js-sumoselect js-delivery-type-select" placeholder="{"Вариант доставки"|t}">
 											<option class="hidden"></option>
 											<foreach basket->delivery_variants>
-											@ if ($_ENV['SITE_MAIN_DOMAIN'] === 'shop-vostok.artklen-dev.ru' && d()->this->id === '2') {
-												@ continue;
-											@ }
-											@ if ($_ENV['SITE_MAIN_DOMAIN'] === 'shop-vostok.artklen-dev.ru' && d()->this->id === '3') {
-												@ d()->this->title = 'Доставка службой СДЭК до склада';
-											@ }
 												<option value="{.id}" data-price="{.price}" data-free_price="{.free_price}" data-message="{.text}" {{selected_if ~basket->delivery_type === ~this->id}}>{.title}</option>
-											@ if ($_ENV['SITE_MAIN_DOMAIN'] === 'shop-vostok.artklen-dev.ru' && d()->this->id === '3') {
-												<option value="5" data-price="" data-free_price="" data-message="" {{selected_if ~basket->delivery_type === '5'}}>Доставка службой СДЭК до двери</option>
-											@ }
 											</foreach>
 										</select>
 										</div>
