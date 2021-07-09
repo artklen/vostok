@@ -347,6 +347,7 @@ class Basket extends UniversalSingletoneHelper
 
         $this->order->delivery_cdek_point_title = '';
         $this->order->delivery_cdek_point_code = '';
+        $this->order->delivery_cdek_point_address = '';
 
         $this->order = $this->order->save_and_load();
     }
@@ -357,6 +358,7 @@ class Basket extends UniversalSingletoneHelper
 
         $this->order->delivery_cdek_point_title = $params['title'];
         $this->order->delivery_cdek_point_code = $params['code'];
+        $this->order->delivery_cdek_point_address = $params['address'];
 
         $this->order = $this->order->save_and_load();
     }
@@ -379,6 +381,11 @@ class Basket extends UniversalSingletoneHelper
     public function delivery_cdek_point_title(): string
     {
         return $this->order->delivery_cdek_point_title ?? '';
+    }
+
+    public function delivery_cdek_point_address(): string
+    {
+        return $this->order->delivery_cdek_point_address ?? '';
     }
 
     public function delivery_price(): float
@@ -798,6 +805,7 @@ class Basket extends UniversalSingletoneHelper
         $this->order->delivery_cdek_point_city_code = '';
         $this->order->delivery_cdek_point_code = '';
         $this->order->delivery_cdek_point_title = '';
+        $this->order->delivery_cdek_point_address = '';
         $this->order->delivery_cdek_point_price = '';
     }
 

@@ -52,7 +52,7 @@ switch (d()->order->delivery_type) {
         <tr><th align="left">Город</th>
             <td>{order.delivery_cdek_point_city_title|h}</td></tr>
         <tr><th align="left">Пункт выдачи</th>
-            <td>{order.delivery_cdek_point_title|h} ({order.delivery_cdek_point_code|h})</td></tr>
+            <td>{order.delivery_cdek_point_address|h} ({order.delivery_cdek_point_code|h}, {order.delivery_cdek_point_title|h})</td></tr>
 <?php
         break;
 

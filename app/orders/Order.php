@@ -8,6 +8,7 @@
  * @property string delivery_cdek_point_city_code
  * @property string delivery_cdek_point_code
  * @property string delivery_cdek_point_title
+ * @property string delivery_cdek_point_address
  * @property string delivery_cdek_point_price
  * @property string delivery_cdek_point_delivery_working_days_min
  * @property string delivery_cdek_point_delivery_working_days_max

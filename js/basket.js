@@ -422,19 +422,21 @@ Basket = (function () {
             }
 
             function savePoint(code) {
+                const point = findPoint(code) || {};
                 const params = {
                     code: code,
-                    title: pointTitle(code)
+                    title: point.name || '',
+                    address: point.address || ''
                 };
                 Basket.set_delivery_cdek_point(params, map);
 
-                function pointTitle(code) {
-                    return points.reduce(function (result, point) {
+                function findPoint(code) {
+                    return points.reduce(function(result, point) {
                         if (point.code === code) {
-                            return point.name;
+                            return point;
                         }
                         return result;
-                    }, '');
+                    }, null);
                 }
             }
         }
