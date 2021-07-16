@@ -81,6 +81,21 @@
 						<a href="javascript:void(0);" class="facets-2 js-facets-2">{"Показать фильтр"|t}</a>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-12 <?= $_GET['search'] ? 'col-lg-12' : 'col-lg-9'?>">
+                        @ if (is_array(d()->get->series) && isset(d()->get->series[0]) && count(d()->get->series) === 1) {
+                            @ if (iam()) {
+                                {{edit 'href' => '/admin/edit/series_banners/' . h(d()->get->series[0])}} Баннер серии
+                            @ }
+                            @ if ((d()->series_banner = d()->Series_banner->find(d()->get->series[0])) && d()->series_banner->ne) {
+                                @ if (d()->series_banner->link !== '') {
+                                    <a href="{series_banner.link|h}">
+                                        <img src="{series_banner.image|h}" style="width:100%" alt="" />
+                                    </a>
+                                @ } else {
+                                    <img src="{series_banner.image|h}" style="width:100%" alt="" />
+                                @ }
+                            @ }
+                        @ }
+
 						<div class="wrap-2">
 							<div class="row">
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
