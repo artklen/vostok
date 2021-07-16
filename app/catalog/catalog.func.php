@@ -422,6 +422,23 @@ d()->route(d()->langlink . '/catalog/:category', function ($category)
         }
     }
 
+    d()->current_series = '';
+    if (is_array(d()->get->series) && isset(d()->get->series[0]) && count(d()->get->series) === 1) {
+        d()->current_series = d()->get->series[0];
+    } elseif (! empty(d()->fields_filtered_data['series'])) {
+        $series_count = 0;
+        $value = '';
+        foreach (d()->fields_filtered_data['series'] as $item) {
+            if ($item['count'] > 0) {
+                $series_count++;
+                $value = $item['value'];
+            }
+        }
+        if ($series_count === 1) {
+            d()->current_series = $value;
+        }
+    }
+
 	if ($_GET['order'] === 'price_to_min')
 		d()->this_products->order('1*price desc');
 	else
