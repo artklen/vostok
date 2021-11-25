@@ -44,9 +44,117 @@
 	@ }
 	</tbody>
 </table>
-<?php/*
-<div class="form-actions">
-	<a class="btn" href="/admin/orders/add_product/{order.id}" target="_blank"><i class="icon-plus"></i> Добавить</a>	
-	<a class="btn" href="/admin/orders/history/{order.id}" target="_blank"> История изменений</a>	
-</div>
-*/?>
+
+<p>Всего товаров: <b>{order.number|h} шт.</b>, к оплате: <b>{order.order_price|price_format} руб.</b>
+<?php $delivery = d()->Delivery_variant->find_by_id(d()->order->delivery_type);
+if ($delivery->ne){
+	if ($delivery->price != "" && $delivery->price*1 >0){
+		if ($delivery->free_price!= "" && $delivery->free_price >= d()->order->order_price - $delivery->price*1){
+			print "В том числе доставка: <b>".$delivery->price." руб.</b>";
+		}elseif ($delivery->free_price==""){
+			print "В том числе доставка: <b>".$delivery->price." руб.</b>";
+		}
+	}
+}?></p>
+<p>&nbsp;</p>
+
+<h4>Информация о заказе:</h4>
+<table class="table table-striped table-bordered table-condensed" style="width:auto">
+	<tr><th align="left">№</th>
+		<td>{order.id}</td></tr>
+	<tr><th align="left">Дата</th>
+		<td>{order.ordered_at|userdate}</td></tr>
+	<tr><th align="left">Статус</th>
+		<td>{order.show_status_id}</td></tr>
+		
+	<tr><th align="left">Статус оплаты</th>
+		<td>{order.show_is_payed}</td></tr>	
+	<tr><th align="left">Способ получения</th>
+		<td>{order.show_delivery}</td></tr>
+	<tr><th align="left">Способ оплаты</th>
+		<td>{order.show_pay_type}</td></tr>
+</table>
+<p>&nbsp;</p>
+
+<h4>Информация о покупателе:</h4>
+<table class="table table-striped table-bordered table-condensed" style="width:auto">
+	<tr><th align="left">Имя</th>
+		<td>{order.name|h}</td></tr>
+
+	<tr><th align="left">E-mail</th>
+		<td>{order.email|h}</td></tr>
+
+	<tr><th align="left">Телефон</th>
+		<td>{order.phone|h}</td></tr>
+		
+	<tr><th align="left">Комментарий</th>
+		<td>{order.comment|hnl2br}</td></tr>
+		
+</table>
+<p>&nbsp;</p>
+
+<h4>Доставка:</h4>
+<table class="table table-striped table-bordered table-condensed" style="width:auto">
+<?php
+switch (d()->order->delivery_type) {
+    case DeliveryType::POST: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>Почта России</td></tr>
+        <tr><th align="left">Адрес доставки</th>
+            <td>{order.delivery_post_address|h}</td></tr>
+        <tr><th align="left">Почтовый индекс</th>
+            <td>{order.delivery_post_index|h}</td></tr>
+<?php
+        break;
+
+    case DeliveryType::CDEK_POINT: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>Доставка до пункта выдачи СДЭК</td></tr>
+        <tr><th align="left">Город</th>
+            <td>{order.delivery_cdek_point_city_title|h}</td></tr>
+        <tr><th align="left">Пункт выдачи</th>
+            <td>{order.delivery_cdek_point_address|h} ({order.delivery_cdek_point_code|h}, {order.delivery_cdek_point_title|h})</td></tr>
+<?php
+        break;
+
+    case DeliveryType::CDEK_COURIER: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>Доставка курьером СДЭК</td></tr>
+        <tr><th align="left">Город</th>
+            <td>{order.delivery_cdek_courier_city_title|h}</td></tr>
+        <tr><th align="left">Адрес</th>
+            <td>{order.delivery_cdek_courier_address|h}</td></tr>
+<?php
+        break;
+
+    case DeliveryType::EMS: ?>
+        <tr><th align="left">Способ доставки</th>
+            <td>EMS посылка</td></tr>
+        <tr><th align="left">Адрес</th>
+            <td>{order.address|h}</td></tr>
+<?php
+        break;
+}
+
+if (d()->order->is_free_delivery) { ?>
+    <tr><th align="left">Стоимость доставки</th>
+        <td>бесплатно</td></tr>
+<?php
+} else { ?>
+    <tr><th align="left">Стоимость доставки</th>
+        <td>{order.delivery_price|h}</td></tr>
+<?php
+}
+
+?>
+</table>
+
+
+<?php
+if (d()->order->errors !== '') {
+    $errors = json_decode(d()->order->errors, true); ?>
+    <p>Ошибки при оформлении заказа:</p>
+    <p><?= implode('<br>', array_map('h', $errors)) ?></p>
+    <?php
+}
+?>

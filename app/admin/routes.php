@@ -3,7 +3,7 @@
 d()->route('/admin/order_products/:id', function($id) {
 	#var_dump($id);die;
 	#d()->this = d()->Order->f($id);
-	d()->this = d()->Order->where('id = ?', $id);
+	d()->this = d()->order = d()->Order->where('id = ?', $id);
 	d()->orders_items = d()->this->orders_items;
 	d()->delivery = d()->Delivery_variant->find_by_id(d()->this->delivery_type);
 	d()->delivery_bool = false;

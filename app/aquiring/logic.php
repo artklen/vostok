@@ -52,28 +52,40 @@ d()->on('aquiring.successfull_paid',function($param){
 				"Description"=> $order_item->title,
 			);
 		}
-		$delivery = d()->Delivery_variant->find_by_id(d()->order_t->delivery_type);
-		if ($delivery->ne){
-			if ($delivery->price != "" && $delivery->price*1 >0){
-				if ($delivery->free_price!= "" && $delivery->free_price >= d()->order_t->order_price - $delivery->price*1){
-					$datas['Lines'][]=array(
-						"Qty" => 1000,
-						"Price" => $delivery->price * 100,
-						"PayAttribute" => 1,
-						"TaxId" => 4,
-						"Description"=> "Доставка " . $delivery->title,
-					);
-				}elseif ($delivery->free_price==""){
-					$datas['Lines'][]=array(
-						"Qty" => 1000,
-						"Price" => $delivery->price * 100,
-						"PayAttribute" => 1,
-						"TaxId" => 4,
-						"Description"=> "Доставка " . $delivery->title,
-					);
-				}
-			}
+		
+		//$delivery = d()->Delivery_variant->find_by_id(d()->order_t->delivery_type);
+		//if ($delivery->ne){
+		//	if ($delivery->price != "" && $delivery->price*1 >0){
+		//		if ($delivery->free_price!= "" && $delivery->free_price >= d()->order_t->order_price - $delivery->price*1){
+		//			$datas['Lines'][]=array(
+		//				"Qty" => 1000,
+		//				"Price" => $delivery->price * 100,
+		//				"PayAttribute" => 1,
+		//				"TaxId" => 4,
+		//				"Description"=> "Доставка " . $delivery->title,
+		//			);
+		//		}elseif ($delivery->free_price==""){
+		//			$datas['Lines'][]=array(
+		//				"Qty" => 1000,
+		//				"Price" => $delivery->price * 100,
+		//				"PayAttribute" => 1,
+		//				"TaxId" => 4,
+		//				"Description"=> "Доставка " . $delivery->title,
+		//			);
+		//		}
+		//	}
+		//}
+		
+		if (1. * d()->order_t->delivery_price > 0) {
+			$datas['Lines'][]=array(
+				"Qty" => 1000,
+				"Price" => ceil(d()->order_t->delivery_price * 100.),
+				"PayAttribute" => 1,
+				"TaxId" => 4,
+				"Description"=> "Доставка",
+			);
 		}
+		
 		d()->order_ch = d()->Order->find_by_id($order->id);
 		$mydatas = json_encode($datas);
 		d()->order_ch->chek_data = $mydatas;

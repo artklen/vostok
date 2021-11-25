@@ -402,17 +402,22 @@ class Basket extends UniversalSingletoneHelper
 
         switch ($this->delivery_type()) {
             default:
-                return $variant_price;
+                return $this->roundPrice($variant_price);
 
             case DeliveryType::CDEK_POINT:
-                return (float) ($this->order->delivery_cdek_point_price ?? 0.);
+                return $this->roundPrice($this->order->delivery_cdek_point_price ?? 0.);
 
             case DeliveryType::CDEK_COURIER:
-                return (float) ($this->order->delivery_cdek_courier_price ?? 0.);
+                return $this->roundPrice($this->order->delivery_cdek_courier_price ?? 0.);
 
             case DeliveryType::POST:
-                return (float) ($this->order->delivery_post_price ?? 0.);
+                return $this->roundPrice($this->order->delivery_post_price ?? 0.);
         }
+    }
+
+    private function roundPrice(float $price): float
+    {
+        return max(ceil($price - 1e-7), 0);
     }
 
     public function delivery_working_days_description(): string
@@ -502,7 +507,7 @@ class Basket extends UniversalSingletoneHelper
 
         switch ($this->delivery_type()) {
             default:
-                return $this->delivery_variant_price();
+                return $this->roundPrice($this->delivery_variant_price());
 
             case DeliveryType::CDEK_POINT:
                 $tariffs = d()->Cdek->pointTariff(
@@ -510,7 +515,7 @@ class Basket extends UniversalSingletoneHelper
                     $this->products_price()
                 );
                 $tariff = $this->get_cdek_tariff_with_smallest_sum($tariffs);
-                return $tariff->sum ?? 0.;
+                return $this->roundPrice($tariff->sum ?? 0.);
 
             case DeliveryType::CDEK_COURIER:
                 $tariffs = d()->Cdek->courierTariff(
@@ -518,10 +523,10 @@ class Basket extends UniversalSingletoneHelper
                     $this->products_price()
                 );
                 $tariff = $this->get_cdek_tariff_with_smallest_sum($tariffs);
-                return $tariff->sum ?? 0.;
+                return $this->roundPrice($tariff->sum ?? 0.);
 
             case DeliveryType::POST:
-                return d()->RussianPost->cost($this->order->delivery_post_index, $this->products_price());
+                return $this->roundPrice(d()->RussianPost->cost($this->order->delivery_post_index, $this->products_price()));
         }
     }
 
