@@ -10,11 +10,20 @@ d()->on('aquiring.error',function($x){
 	exit;
 });
 
+/** @see https://www.chekonline.ru/docs/cloudapi_complex.pdf */
 d()->on('aquiring.successfull_paid',function($param){
+    $testMode = iam('developer') && $_SERVER['REQUEST_URI'] === '/test_payment';
+
 	$order = $param[0];
 	if($order->is_paid){
 		d()->order_t = d()->Order->find_by_id($order->id);
-		$emails = explode(',', d()->Option->feedback_email);
+
+        if ($testMode) {
+            $emails = [];
+        } else {
+            $emails = explode(',', d()->Option->feedback_email);
+        }
+
 		foreach ($emails as $email){
 			$message = d()->letter->render('order/manager');
 			$email = trim($email);		
@@ -48,6 +57,7 @@ d()->on('aquiring.successfull_paid',function($param){
 				"Qty" => $order_item->number * 1000,
 				"Price" => $order_item->price * 100,
 				"PayAttribute" => 1,
+                "LineAttribute" => 1,
 				"TaxId" => 4,
 				"Description"=> $order_item->title,
 			);
@@ -81,6 +91,7 @@ d()->on('aquiring.successfull_paid',function($param){
 				"Qty" => 1000,
 				"Price" => ceil(d()->order_t->delivery_price * 100.),
 				"PayAttribute" => 1,
+                "LineAttribute" => 4,
 				"TaxId" => 4,
 				"Description"=> "Доставка",
 			);
@@ -98,10 +109,19 @@ d()->on('aquiring.successfull_paid',function($param){
 		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $mydatas);
 		curl_setopt($curl, CURLOPT_URL,$url);
-		// Сертификат
-		curl_setopt($curl,CURLOPT_SSLCERT, getcwd().'/app/aquiring/certificate.pem');
-		// Закрытый ключ
-		curl_setopt($curl,CURLOPT_SSLKEY, getcwd().'/app/aquiring/privateKey.pem');
+
+        if ($testMode) {
+            // Сертификат
+            curl_setopt($curl,CURLOPT_SSLCERT, getcwd().'/app/aquiring/test/certificate.pem');
+            // Закрытый ключ
+            curl_setopt($curl,CURLOPT_SSLKEY, getcwd().'/app/aquiring/test/privateKey.pem');
+        } else {
+            // Сертификат
+            curl_setopt($curl, CURLOPT_SSLCERT, getcwd() . '/app/aquiring/certificate.pem');
+            // Закрытый ключ
+            curl_setopt($curl, CURLOPT_SSLKEY, getcwd() . '/app/aquiring/privateKey.pem');
+        }
+
 		$json_response = curl_exec($curl);
 		d()->order_ch->chek_response = $json_response;
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);

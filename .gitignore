@@ -5,3 +5,5 @@ sitemaps/
 /index.php
 /app/aquiring/certificate.pem
 /app/aquiring/privateKey.pem
+/app/aquiring/test/certificate.pem
+/app/aquiring/test/privateKey.pem
