@@ -62,14 +62,10 @@
 </table>
 
 <p>{"letter_client#Всего товаров"|t}: <b>{order_t.number|h} шт.</b>, {"letter_client#оплачено"|t}: <b>{order_t.order_price|price_format} руб.</b>
-<?php $delivery = d()->Delivery_variant->find_by_id(d()->order_t->delivery_type);
-if ($delivery->ne){
-	if ($delivery->price != "" && $delivery->price*1 >0){
-		if ($delivery->free_price!= "" && $delivery->free_price >= d()->order_t->payed_amount - $delivery->price*1){
-			print t("В том числе доставка") . ": <b>".$delivery->price." руб.</b>";
-		}elseif ($delivery->free_price==""){
-			print t("В том числе доставка") . ": <b>".$delivery->price." руб.</b>";
-		}
-	}
-}?></p>
+<?php
+if (1 * d()->order_t->delivery_price > 1e-7) {
+    print t("В том числе доставка") . ": <b>" . d()->price_format(d()->order_t->delivery_price) . " руб.</b>";
+}
+?>
+</p>
 

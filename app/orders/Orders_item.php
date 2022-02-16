@@ -86,6 +86,11 @@ class Orders_item extends ActiveRecord {
 	}
 	
 	function price() {
+        $result = 1 * $this->get(__FUNCTION__);
+        if ($result > 1e-7) {
+            return $result;
+        }
+
 		return 1 * $this->product->price + 1 * $this->products_variant->price;
 	}
 
