@@ -12,7 +12,7 @@ d()->on('aquiring.error',function($x){
 
 /** @see https://www.chekonline.ru/docs/cloudapi_complex.pdf */
 d()->on('aquiring.successfull_paid',function($param){
-    $testMode = iam('developer') && $_SERVER['REQUEST_URI'] === '/test_payment';
+    $testMode = iam('developer') && d()->url_path === '/test_payment';
 
 	$order = $param[0];
 	if($order->is_paid){
