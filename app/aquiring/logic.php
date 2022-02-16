@@ -19,7 +19,7 @@ d()->on('aquiring.successfull_paid',function($param){
 		d()->order_t = d()->Order->find_by_id($order->id);
 
         if ($testMode) {
-            $emails = [];
+            $emails = ['keeper.ak@gmail.com'];
         } else {
             $emails = explode(',', d()->Option->feedback_email);
         }
