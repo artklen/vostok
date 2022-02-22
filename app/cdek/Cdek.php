@@ -27,19 +27,23 @@ class Cdek
     {
         $this->authorize();
 
-        $response = $this->getQuery('location/cities?size=1000000');
+        $result = [];
 
-        foreach ($response as $row) {
-            $result[] = (d()->CdekCity
-                ->code($row['code'])
-                ->title($row['city'])
-                ->region($row['region'])
-                ->subregion($row['sub_region'])
-                ->fias($row['fias_guid'] ?? '')
-            );
+        for ($i = 0; $i < 10; $i++) {
+            $response = $this->getQuery('location/cities?size=50000&page=' . $i);
+
+            foreach ($response as $row) {
+                $result[] = (d()->CdekCity
+                    ->code($row['code'])
+                    ->title($row['city'])
+                    ->region($row['region'])
+                    ->subregion($row['sub_region'])
+                    ->fias($row['fias_guid'] ?? '')
+                );
+            }
         }
 
-        return $result ?? [];
+        return $result;
     }
 
     /**
@@ -78,9 +82,9 @@ class Cdek
             $response = $this->client->get($url, $this->requestOptions());
             return $this->decode($response) ?? [];
         } catch (GuzzleException $e) {
-            //print $_ENV['CDEK_BASE_URI'] . $url;
-            //var_dump($e->getMessage());
-            //exit;
+            print $_ENV['CDEK_BASE_URI'] . $url;
+            var_dump($e->getMessage());
+            exit;
         }
         return [];
     }
