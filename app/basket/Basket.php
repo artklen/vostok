@@ -415,7 +415,7 @@ class Basket extends UniversalSingletoneHelper
         }
     }
 
-    private function roundPrice(float $price): float
+    private function roundPrice($price): float
     {
         return max(ceil($price - 1e-7), 0);
     }

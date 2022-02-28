@@ -2779,6 +2779,10 @@ input.list[type="checkbox"]:disabled:hover + span {
     background-size: 17px 17px;
     padding: 0 0 0 30px; }
   .footer-1 .item .right li:nth-child(3) {
+    background: url(/images/whatsapp-icon@2x.png) no-repeat left center;
+    background-size: 17px 17px;
+    padding: 0 0 0 30px; }
+  .footer-1 .item .right li:nth-child(4) {
     background: url(/images/icon-05.svg) no-repeat left center;
     background-size: 19px 13px;
     padding: 0 0 0 30px; }
