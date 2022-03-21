@@ -31,6 +31,9 @@ class Basket extends UniversalSingletoneHelper
         /** @var Order $order */
         $order = d()->Order->new;
         $order->session_key = session_id();
+        if (d()->Auth->is_authorised){
+            $order->user_id = d()->Auth->user->id;
+        }
         $order->save();
         $this->order = d()->Order->find_by('id', $order->insert_id);
     }
@@ -575,10 +578,9 @@ class Basket extends UniversalSingletoneHelper
             $this->order->delivery_cdek_courier_price = '';
             $this->order->delivery_cdek_courier_delivery_working_days_min = '';
             $this->order->delivery_cdek_courier_delivery_working_days_max = '';
-        }
-
-        $this->clear_delivery_cdek_courier_address();
-
+        }		
+        $this->order->delivery_cdek_courier_address = $params['address'] ?? '';
+        $this->order->delivery_cdek_courier_address_dadata = $params['dadata'] ?? '';
         $this->order = $this->order->save_and_load();
     }
 

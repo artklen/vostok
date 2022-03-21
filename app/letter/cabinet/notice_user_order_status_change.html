@@ -1,0 +1,9 @@
+<div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#252829">Восстановление пароля</div>
+<br>
+<div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#252829">
+@ if (isset(~user['name']) && ~user['name'] !== '') {
+	Здравствуйте, {user.name|h}!
+@ }
+	Статус вашего заказа №{Oreder.id} на сайте <a href="{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/" target="_blank" rel="nofollow">{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/</a>
+	<br>
+	изменент на: {order.show_status_id}

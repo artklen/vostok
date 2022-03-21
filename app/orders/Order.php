@@ -197,6 +197,19 @@ class Order extends ActiveRecord
 		}
 		return $result;
 	}
+
+	function show_address(){
+        switch ($this->get('delivery_type')) {
+            case DeliveryType::POST:
+                return $this->get('delivery_post_address');
+            case DeliveryType::CDEK_POINT:
+                return $this->get('delivery_cdek_point_city_title') . ", " .  $this->get('delivery_cdek_point_address') . " " . $this->get('delivery_cdek_point_code') . ", " . $this->get('delivery_cdek_point_title');
+            case DeliveryType::CDEK_COURIER:
+                return $this->get('delivery_cdek_courier_city_title') . ", " . $this->get('delivery_cdek_courier_address');
+            case DeliveryType::EMS:
+                return $this->get('address');
+        }
+    }
 	
 	function show_products_price() {
 		$products_price = $this->products_price;

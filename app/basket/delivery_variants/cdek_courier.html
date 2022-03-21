@@ -1,12 +1,3 @@
-<?php
-
-d()->cdek_city = d()->basket->delivery_cdek_courier_city();
-?>
-
-<div class="js-basket-delivery-cdek-courier-city-title-container" {{show_if ~cdek_city->ne}}>
-    <p>Город: <span class="js-basket-delivery-cdek-courier-city-title">{cdek_city.title|h}</span></p>
-</div>
-
 <div class="js-basket-delivery-cdek-courier-address-container" {{show_if ~basket->delivery_cdek_courier_address !== ''}}>
     <p>Адрес: <span class="js-basket-delivery-cdek-courier-address">{basket.delivery_cdek_courier_address|h}</span></p>
 </div>

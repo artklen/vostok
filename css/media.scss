@@ -26,7 +26,8 @@
 				font-size: 13px;		
 			}
 			&.arrow {
-				background: url(/images/arrow-10.svg) no-repeat top 7px right 4px;
+				/*background: url(/images/arrow-10.svg) no-repeat top 7px right 4px;*/
+				background: url(/images/arrow-10.svg) no-repeat center right 4px;
 				background-size: 7px 4px;
 			}
 		}
@@ -40,13 +41,9 @@
 		text-align: center;
 	}
 	.header-bottom {
-		
-		.logo {
-		
-			
-			margin: 9px 10px 0 0;
-			
-		}
+		/*.logo {	
+			margin: 9px 10px 0 0;		
+		}*/
 	}
 	.basket-1 {
 		.left {
@@ -192,10 +189,9 @@
 	.header-bottom {
 		padding: 10px 0 10px 0;
 		.logo {
-			/*margin: 0;*/
 			width: 106px;
 			height: 23px;
-			margin: 10px 10px 0 0;
+			/*margin: 10px 10px 0 0;*/
 			img {
 				width: 106px;
 				height: 23px;
@@ -458,9 +454,9 @@
 	.wrap-5 {
 		top: -58px;
 	}
-	/*.wrap-6 {
-		margin: 0 0 15px 0;
-	}*/
+	.popup-wrapper {
+		width: 100%;
+	}
 	input[type='submit'].send-1, .send-1, a.send-1 {
 		padding: 8px 25px 8px 25px;
 		font-size: 10px;
@@ -533,7 +529,7 @@
 			width: 106px;
 			height: 23px;
 			display: inline-block;
-			margin: 10px 10px 0 0;
+			/*margin: 10px 10px 0 0;*/
 			img {
 				width: 106px;
 				height: 23px;

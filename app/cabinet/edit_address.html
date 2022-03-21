@@ -1,0 +1,98 @@
+<div class="popup-wrapper">
+    <div class="js-basket-post-select-container">
+	{{simple_ajax_form ~url_path}}
+        @ ~input_id = ~unique_input_id();
+		<div class="popup-label-container">
+			<label for="{input_id|h}">{"Укажите адрес"|t}</label>
+        </div>		
+		<input
+            type="text"
+            name="address"
+            value="{address.title}"
+            id="{input_id|h}"
+            data-dadata="{basket.delivery_post_address_dadata|h}"
+			placeholder="Новый адрес"
+			class="js-input-address-save-disabled"
+        />
+		<input type="hidden" class="js-full-addr" name="full_addr">		
+		<input type="hidden" class="js-dadata" name="dadata">
+        <button type="button" class="send-12 js-button-address-save-disabled" onclick="$(this).closest('form').submit();$.fancybox.close();" disabled>{"Сохранить"|t}</button>
+	{{/form}}
+    </div>
+</div>
+<script>
+    (function () {
+			$('.js-input-address-save-disabled').suggestions({
+				token: <?= json_encode($_ENV['DADATA_TOKEN']) ?>,
+				type: 'ADDRESS',
+				onSelect: addressSelectHandler
+			});
+			$('.js-input-address-save-disabled').change(addressChange);
+			/** @this HTMLInputElement */
+			function addressSelectHandler(suggestion) {
+				$(this)
+					.data('dadata-source', $(this).val())
+					.data('dadata', suggestion)
+					.change()
+			}
+			function addressChange() {
+				const dadata = inputDadata($('.js-input-address-save-disabled'));
+				const index = resolvePostIndex(dadata);
+				const city = resolveCity(dadata);
+				const street = resolveStreet(dadata);
+				const street = resolveStreet(dadata);
+				$('.js-full-addr').val(index + "@" + city + "@" + street);
+				$('.js-dadata').val(JSON.stringify(dadata));
+				$('.js-button-address-save-disabled').removeAttr('disabled');
+			}
+			function inputDadata(input) {
+				if (!isValueSelectedFromSuggestion()) {
+					return void 0;
+				}
+				return input.data('dadata');
+
+				function isValueSelectedFromSuggestion() {
+					return input.val() === input.data('dadata-source');
+				}
+			}
+			function resolvePostIndex(dadata) {
+				if (!dadata || !dadata.data || !dadata.data.postal_code) {
+					return '';
+				}
+				return dadata.data.postal_code;
+			}
+			function resolveCity(dadata) {
+				if (!dadata || !dadata.data || !dadata.data.city_with_type) {
+					return '';
+				}
+				return dadata.data.city_with_type;
+			}
+			function resolveStreet(dadata) {
+				if (!dadata || !dadata.data || !dadata.data.street_with_type) {
+					street_with_type = '';
+				}else{
+					street_with_type = dadata.data.street_with_type;
+				}
+				if (!dadata || !dadata.data || !dadata.data.house) {
+					house =  '';
+				}else{
+					house = dadata.data.house_type + " " + dadata.data.house;
+				}
+				if (!dadata || !dadata.data || !dadata.data.flat) {
+					flat = '';
+				}else{
+					flat = dadata.data.flat_type + " " + dadata.data.flat;
+				}
+				if (street_with_type != ""){
+					if (house != ""){
+						street_with_type = street_with_type + ", " + house;
+						if (flat != ""){
+							street_with_type = street_with_type + ", " + flat;
+						}
+					}
+				}
+				return street_with_type;
+			}
+		}
+    )();
+</script>

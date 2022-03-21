@@ -1,0 +1,37 @@
+<div class="form-container">
+	<div class="container">
+		<div class="wrapper-position">
+			<div class="form-wrapper">
+				<div class="form-content">	
+					{{simple_ajax_form "/cabinet/restore_finish"}}
+					<input type="hidden" name="key" value="{key}">
+						<div class="form-title">Восстановление паролля</div>
+						<p>Для для установки пароля, пожалуйста введите новый пароль и повторите его в соответствующих полях.</p>
+						<div class="notice js-notice">
+						</div>
+						<div class="js-clear-on-success">
+							<div class="field-item">
+								<div class="field-title-container">
+									<div class="field-title">Пароль</div>
+								</div>
+								<input class="field-container field-form-container" placeholder="Введите пароль" type="password" name="password">
+							</div>
+							<div class="field-item">
+								<div class="field-title-container">
+									<div class="field-title">Повтор пароля</div>
+								</div>
+								<input class="field-container field-form-container" placeholder="Введите пароль еще раз" type="password" name="password_confirmation">
+							</div>
+							<div class="form-button-container">
+								<button class="button form-button">Сбросить пароль</button>
+							</div>
+						</div>
+						<div class="js-success">
+						</div>
+					{{/form}}
+					<div class="form-button-container hidden js-view-success"><a href="/cabinet/login"><button class="button form-button">Войти с новым паролем</button></a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

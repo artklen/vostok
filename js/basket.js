@@ -442,66 +442,55 @@ Basket = (function () {
         }
     }
 
-    function cdekCourierSelect(cityInput, cityCodeInput, cityFiasInput, addressInput, token) {
-        cdekCityTypeahead(cityInput, cityCodeInput, cityFiasInput);
-        cityCodeInput.change(onChangeCity);
-        if (cityCodeInput.val()) {
-            initAddressSuggestions();
-        }
+    function cdekCourierSelect( addressInput, token) {
+
+        initAddressSuggestions();
+		$('.js-select-address').click(function(){
+			$(".js-input-address-save-disabled").val($(this).data('title'));
+			$('.js-button-address-save-disabled').removeAttr('disabled');
+			Basket.set_delivery_cdek_courier_city({
+                address: $(this).data('title'),
+                code: $(this).data('code'),
+                dadata: $(this).data('mdadata')
+            }, $(':input[name="address"]', container));
+		});
         addressInput.change(onChangeAddress);
         return true;
 
-        function onChangeCity() {
-            Basket.set_delivery_cdek_courier_city({
-                code: cityCodeInput.val()
-            }, this);
+        function onChangeCity_cdek(cdek_id) {
+						const
+                address = addressInput.val(),
+                dadata = inputDadata(addressInput),
 
-            clearAddress();
-            initAddressSuggestions();
-        }
-
-        function clearAddress() {
-            addressInput.val('');
-
-            const suggestions = addressInput.suggestions();
-            if (suggestions) {
-                suggestions.clear();
-                suggestions.clearCache();
-                suggestions.dispose();
-            }
+                params = addressParams(address, dadata, cdek_id);			
+            Basket.set_delivery_cdek_courier_city(params, this);
+            const index = resolvePostIndex(dadata);
+			const city = resolveCity(dadata);
+			const street = resolveStreet(dadata);
+			full_addr = index + "@" + city + "@" + street + "@" + cdek_id;
+			$.ajax({
+				type: 'post',
+				url: '/cabinet/add_address',
+				data: {
+					_element : 'data',
+					_action : '/cabinet/add_address',
+					_is_simple_names : '1',
+					full_addr : full_addr,
+					dadata : JSON.stringify(dadata),
+					address : addressInput.val()
+				},
+				dataType: 'json',
+				success: function (data) {
+				}
+			});
         }
 
         function initAddressSuggestions() {
-            addressInput.suggestions(Object.assign(
-                {},
-                common(),
-                location()
-            ));
-
-            function common() {
-                return {
-                    token: token,
-                    type: 'ADDRESS',
-                    onSelect: addressSelectHandler
-                };
-            }
-
-            function location() {
-                const fiasId = cityFiasInput.val();
-
-                if (!fiasId) {
-                    return {constraints: cityInput.val()};
-                }
-
-                return {
-                    constraints: {
-                        locations: {
-                            city_fias_id: fiasId
-                        }
-                    },
-                    restrict_value: true
-                };
-            }
+            addressInput.suggestions({
+				token: token,
+				type: 'ADDRESS',
+				onSelect: addressSelectHandler
+			});
         }
 
         /** @this HTMLInputElement */
@@ -513,18 +502,15 @@ Basket = (function () {
         }
 
         function onChangeAddress() {
-            const
-                address = addressInput.val(),
-                dadata = inputDadata(addressInput),
-
-                params = addressParams(address, dadata);
-
-            Basket.set_delivery_cdek_courier_address(params, this);
+			$('.js-button-address-save-disabled').removeAttr('disabled');
+			loadDelivery(inputDadata(addressInput));
         }
 
-        function addressParams(address, dadata) {
+        function addressParams(address, dadata, cdek_id) {
             return {
-                address: address,
+				code: cdek_id,
+				city: resolveCity(dadata),
+                address: addressInput.val(),
                 street: resolveStreet(dadata),
                 house: resolveHouse(dadata),
                 hull: resolveHull(dadata),
@@ -532,6 +518,40 @@ Basket = (function () {
                 dadata: JSON.stringify(dadata)
             };
         }
+		function loadDelivery(dadata) {
+			var kladr_id = dadata.data.kladr_id;
+			if (kladr_id.length > 13) {
+				// план. структура
+				kladr_id = kladr_id.substr(0, 11) + "00";
+			}
+			fetchDelivery(kladr_id)
+			.done(function(response) {
+				if (response.suggestions.length == 0) {
+					console.log('Ошибка ошибка получения id города');
+				} else {
+					onChangeCity_cdek(response.suggestions[0].data.cdek_id);
+				}
+			})
+			.fail(function() {
+				console.log('Ошибка запроса к DaData');
+			});
+		}
+
+		function fetchDelivery(kladr_id) {
+			var serviceUrl = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/delivery";
+			var request = {
+				"query": kladr_id
+			};
+			var params = {
+				type: "POST",
+				contentType: "application/json",
+				headers: {
+					"Authorization": "Token " + token
+				},
+				data: JSON.stringify(request)
+			};
+			return $.ajax(serviceUrl, params);
+		}
     }
 
     function postSelect(addressInput, token) {
@@ -552,15 +572,70 @@ Basket = (function () {
         }
 
         function addressChange() {
+			loadDelivery(inputDadata(addressInput));
+		}
+        function addressSave(cdek_id) {
             const dadata = inputDadata(addressInput);
             const index = resolvePostIndex(dadata);
-
+			const city = resolveCity(dadata);
+			const street = resolveStreet(dadata);
+			full_addr = index + "@" + city + "@" + street + "@" + cdek_id;
             Basket.set_delivery_post_address({
                 address: addressInput.val(),
                 index: index,
                 dadata: JSON.stringify(dadata)
             }, addressInput);
+			$('.js-button-address-save-disabled').removeAttr('disabled');
+			$.ajax({
+				type: 'post',
+				url: '/cabinet/add_address',
+				data: {
+					_element : 'data',
+					_action : '/cabinet/add_address',
+					_is_simple_names : '1',
+					full_addr : full_addr,
+					dadata : JSON.stringify(dadata),
+					address : addressInput.val()
+				},
+				dataType: 'json',
+				success: function (data) {
+				}
+			});
         }
+		function loadDelivery(dadata) {
+			var kladr_id = dadata.data.kladr_id;
+			if (kladr_id.length > 13) {
+				// план. структура
+				kladr_id = kladr_id.substr(0, 11) + "00";
+			}
+			fetchDelivery(kladr_id)
+			.done(function(response) {
+				if (response.suggestions.length == 0) {
+					console.log('Ошибка ошибка получения id города');
+				} else {
+					addressSave(response.suggestions[0].data.cdek_id);
+				}
+			})
+			.fail(function() {
+				console.log('Ошибка запроса к DaData');
+			});
+		}
+
+		function fetchDelivery(kladr_id) {
+			var serviceUrl = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/delivery";
+			var request = {
+				"query": kladr_id
+			};
+			var params = {
+				type: "POST",
+				contentType: "application/json",
+				headers: {
+					"Authorization": "Token " + token
+				},
+				data: JSON.stringify(request)
+			};
+			return $.ajax(serviceUrl, params);
+		}
     }
 
     function cdekCityTypeahead(cityInput, codeInput, fiasInput) {
@@ -664,6 +739,38 @@ Basket = (function () {
         }
         return dadata.data.postal_code;
     }
+	function resolveCity(dadata) {
+		if (!dadata || !dadata.data || !dadata.data.city_with_type) {
+			return '';
+		}
+		return dadata.data.city_with_type;
+	}
+	function resolveStreet(dadata) {
+		if (!dadata || !dadata.data || !dadata.data.street_with_type) {
+			street_with_type = '';
+		}else{
+			street_with_type = dadata.data.street_with_type;
+		}
+		if (!dadata || !dadata.data || !dadata.data.house) {
+			house =  '';
+		}else{
+			house = dadata.data.house_type + " " + dadata.data.house;
+		}
+		if (!dadata || !dadata.data || !dadata.data.flat) {
+			flat = '';
+		}else{
+			flat = dadata.data.flat_type + " " + dadata.data.flat;
+		}
+		if (street_with_type != ""){
+			if (house != ""){
+				street_with_type = street_with_type + ", " + house;
+				if (flat != ""){
+					street_with_type = street_with_type + ", " + flat;
+				}
+			}
+		}
+		return street_with_type;
+	}
 }());
 
 $(function () {

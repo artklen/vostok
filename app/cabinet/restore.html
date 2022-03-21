@@ -1,0 +1,30 @@
+<div class="form-container">
+	<div class="container">
+		<div class="wrapper-position">
+			<div class="form-wrapper">
+				<div class="form-content">	
+					{{simple_ajax_form ~url_path}}
+						<div class="form-title">Восстановление паролля</div>
+						<p>Для восстановления пароля, пожалуйста введите адресс электроной почты.</p>
+						<p>Мы отправим вам письмо с инструкцие по восстановлению.</p>
+						<div class="notice js-notice">
+						</div>
+						<div class="js-clear-on-success">
+							<div class="field-item">
+								<div class="field-title-container">
+									<div class="field-title">Электронная почта</div>
+								</div>
+								<input class="field-container field-form-container" placeholder="Введите адрес электронной почты" type="text" name="email">
+							</div>
+							<div class="form-button-container">
+								<button class="button form-button">Отправить письмо</button>
+							</div>
+						</div>
+						<div class="js-success">
+						</div>
+					{{/form}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

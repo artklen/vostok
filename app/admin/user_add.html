@@ -1,0 +1,28 @@
+<h1>Добавление нового пользователя</h1>
+
+{{simple_ajax_form ~url_path, 'class'=>"admin_edit_form form-horizontal"}}
+<fieldset class="input_elements">
+
+<div class="js-notice"></div>
+<div class="control-group">
+  <label class="control-label"  >Имя</label>
+  <div class="controls">
+	<input type="text"  name="data[name]" value="" class="input-xlarge"  >
+	<span class="help-inline"></span>
+  </div>
+</div>
+
+ <div class="control-group">
+  <label class="control-label"  >E-mail</label>
+  <div class="controls">
+	<input type="text"  name="data[email]" value="" class="input-xlarge"  >
+	<span class="help-inline"></span>
+  </div>
+</div>
+
+<div class="form-actions">
+    <input type="submit" value="Сохранить" class="btn btn-primary"> 
+    <a href="#" onclick="window_cancel();return false;" class="btn">Отмена</a>
+</div>
+</fieldset>
+</form>

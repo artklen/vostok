@@ -1,0 +1,41 @@
+<div class="cabinet-menu">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-lg-10 col-lg-offset-1">
+				<ul class="cabinet-menu-content">
+					<li><a href="/cabinet/profile">Профиль</a></li>
+					<li><a href="/cabinet/orders" class="active">Мои заказы</a></li>
+					<li><a href="/cabinet/address">Мои адреса</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cabinet-container">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-lg-10 col-lg-offset-1">
+				<div class="cabinet-content">
+					<div class="cabinet-title">Мои заказы</div>
+					<div class="cabinet-orders-container">
+						<div class="cabinet-orders-head">
+							<div class="cabinet-orders-head-item">Дата оформления</div>
+							<div class="cabinet-orders-head-item">Номер заказа</div>
+							<div class="cabinet-orders-head-item">Статус заказа</div>
+							<div class="cabinet-orders-head-item">Сумма заказа</div>
+						</div>
+						<foreach orders>
+							<div class="cabinet-orders-list">
+								<div class="cabinet-orders-date-item">{.ordered_at}</div>
+								<div class="cabinet-orders-number-item"><a href="/cabinet/orders/{.id}">{.id}</a></div>
+								<div class="cabinet-orders-status-item">{.show_status_id}</div>
+								<div class="cabinet-orders-price-item">{.order_price} р.</div>
+								<div class="cabinet-orders-link-item"><a href="/cabinet/orders/{.id}">Смотреть</a></div>
+							</div>
+						</foreach>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

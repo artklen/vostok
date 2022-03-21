@@ -1,0 +1,37 @@
+<div class="form-container">
+	<div class="container">
+		<div class="wrapper-position">
+			<div class="form-wrapper">
+				<div class="form-tabs">
+					<a href="#" class="form-tabs-item active">Вход</a>
+					<a href="/cabinet/registration" class="form-tabs-item ">Регистрация</a>
+				</div>
+				<div class="form-content">	
+					{{simple_ajax_form ~url_path}}
+						<div class="form-title">Добро пожаловать!</div>
+						<p>Пожалуйста, введите адрес электронной почты и пароль для входа в личный кабинет.</p>
+						<div class="form-link-container">Нет аккаунта? <a href="/cabinet/registration" class="form-link">Зарегистрироваться</a></div>				
+						<div class="notice js-notice">
+						</div>
+						<div class="field-item">
+							<div class="field-title-container">
+								<div class="field-title">Электронная почта</div>
+							</div>
+							<input class="field-container field-form-container" placeholder="Введите адрес электронной почты" type="text" name="email">					
+						</div>	
+						<div class="field-item">
+							<div class="field-title-container">
+								<div class="field-title">Пароль</div>
+							</div>
+							<input class="field-container field-form-container" placeholder="Введите пароль" type="password" name="password">
+						</div>					
+						<div class="form-link-container left-position"><a href="/cabinet/restore" class="form-link">Забыли пароль?</a></div>
+						<div class="form-button-container">
+							<button class="button form-button">Войти</button>
+						</div>
+					{{/form}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

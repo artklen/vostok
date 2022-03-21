@@ -1,0 +1,13 @@
+<div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#252829">Восстановление пароля</div>
+<br>
+<div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#252829">
+@ if (isset(~user['name']) && ~user['name'] !== '') {
+	Здравствуйте, {user.name|h}!
+@ }
+	Вы получили это письмо, потому что кто-то (возможно, Вы) запросил на сайте <?= h($_ENV['SITE_MAIN_DOMAIN']) ?> восстановление пароля для пользователя, зарегистрированного с вашим адресом электронной почты.
+	<br><br>
+	Чтобы восстановить пароль, перейдите по этой ссылке:<br>
+	<a href="{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/cabinet/restore/{user.restore_password_key|h}" target="_blank" rel="nofollow">{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/cabinet/restore/{user.restore_password_key|h}</a>
+	<br><br>
+	Если ссылка не открывается, скопируйте её и вставьте в адресную строку браузера.<br>
+	Если вы не запрашивали изменение пароля или вспомнили свой пароль, просто проигнорируйте это письмо и продолжайте пользоваться своим текущим паролем.<br>

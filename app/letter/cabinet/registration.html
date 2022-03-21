@@ -1,0 +1,12 @@
+<div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#252829">Подтверждение регистрации</div>
+<br>
+<div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#252829">
+@ if (isset(~user['name']) && ~user['name'] !== '') {
+	Здравствуйте, {user.name|h}!
+@ }
+	Поздравляем Вас с успешной регистрацией на сайте <?= h($_ENV['SITE_MAIN_DOMAIN']) ?>!
+	<br><br>
+	Для подтверждения почты и завершения регистрации перейдите по этой ссылке:<br>
+	<a href="{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/cabinet/registration/{user.secret|h}" target="_blank" rel="nofollow">{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/cabinet/registration/{user.secret|h}</a>
+	<br><br>
+	Если ссылка не открывается, скопируйте её и вставьте в адресную строку браузера.<br>

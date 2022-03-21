@@ -29,17 +29,17 @@ class Notification {
 		);
 		d()->order = $order;
 		if ($order->email !== '') {
-			$message = d()->letter->order_created('user');
+			$message = d()->letter->render('order/client');
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
 			d()->mail->setTo($order->email);
 			d()->mail->setSubject(t('Новый заказ на сайте'));
 			d()->mail->setBody($message, 'text/html');
 			d()->mail->send();
 		}
-		
-		foreach(explode(',', $email) as $one_email){
+		$emails = explode(',', d()->Option->feedback_email);
+		foreach($emails as $one_email){
 			$one_email = trim($one_email);
-			$message = d()->letter->feedback_order;
+			$message = d()->letter->render('order/new');
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
 			d()->mail->setTo($one_email);
 			d()->mail->setSubject(t('Новый заказ на сайте'));
@@ -82,8 +82,9 @@ class Notification {
 			'order' => d()->order,
 		);
 		d()->order = $order;
+		d()->user = d()->User($order->user_id);
 		if ($order->email !== '') {
-			$message = d()->letter->orders_status_change('user');
+			$message = d()->letter->render('cabinet/notice_user_order_status_change');
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
 			d()->mail->setTo($order->email);
 			d()->mail->setSubject(t('Смена статуса заказа на сайте'));
@@ -93,6 +94,51 @@ class Notification {
 		
 		foreach ($old_context as $key => $value) {
 			d()->$key = $value;
+		}
+	}
+	function registration($user){
+		d()->user = $user;
+		if ($user->email !== '') {
+			$message = d()->letter->render('cabinet/registration');
+			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
+			d()->mail->setTo($user->email);
+			d()->mail->setSubject(t('Регистрация на сайте'));
+			d()->mail->setBody($message, 'text/html');
+			d()->mail->send();
+		}
+	}
+	function user_restore($user){
+		d()->user = $user;
+		if ($user->email !== '') {
+			$message = d()->letter->render('cabinet/user_restore');
+			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
+			d()->mail->setTo($user->email);
+			d()->mail->setSubject(t('Восстановление пароля на сайте'));
+			d()->mail->setBody($message, 'text/html');
+			d()->mail->send();
+		}
+	}
+	function user_restore_finish($user){
+		d()->user = $user;
+		if ($user->email !== '') {
+			$message = d()->letter->render('cabinet/user_restore_finish');
+			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
+			d()->mail->setTo($user->email);
+			d()->mail->setSubject(t('Смена пароля на сайте'));
+			d()->mail->setBody($message, 'text/html');
+			d()->mail->send();
+		}
+	}
+	function registration_by_admin($user, $password){
+		d()->user = $user;
+		d()->password = $password;
+		if ($user->email !== '') {
+			$message = d()->letter->render('cabinet/registration_by_admin');
+			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
+			d()->mail->setTo($user->email);
+			d()->mail->setSubject(t('Создан аккаунт на сайте'));
+			d()->mail->setBody($message, 'text/html');
+			d()->mail->send();
 		}
 	}
 

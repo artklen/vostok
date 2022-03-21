@@ -3,6 +3,51 @@ var mobileDetect = new MobileDetect(window.navigator.userAgent);
 $(document).on('click', '.js-close_popup', function() {
 	$.fancybox.close();
 });
+$(function() {
+	$(document).on('keyup input click', '.registration input[name="email"]', function () {
+		email_reg = /^((([0-9A-Za-z]{1}[-0-9A-z\.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я\.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/u ;
+		email = $(this).val();
+		if(email_reg.test(email) == false) {
+			$(this).removeClass('verified').addClass('error');
+			$(this).parent().find('.field-description').addClass('error');
+		}else{
+			$(this).removeClass('error').addClass('verified');
+			$(this).parent().find('.field-description').removeClass('error');
+		}
+	 });
+	 $(document).on('keyup input click', '.registration input[name="name"]', function () {
+		name_reg = /^([A-Za-zА-Яа-я\s]+)$/u ;
+		name = $(this).val();
+		if(name_reg.test(name) == false) {
+			$(this).removeClass('verified').addClass('error');
+			$(this).parent().find('.field-description').addClass('error');
+		}else{
+			$(this).removeClass('error').addClass('verified');
+			$(this).parent().find('.field-description').removeClass('error');
+		}
+	 });
+	 $(document).on('keyup input click', '.registration input[name="password"]', function () {
+		name_reg = /^([A-Za-z0-9\p{P}\$\^+=<>\\]{6,})$/u ;
+		name = $(this).val();
+		if(name_reg.test(name) == false) {
+			$(this).removeClass('verified').addClass('error');
+			$(this).parent().find('.field-description').addClass('error');
+		}else{
+			$(this).removeClass('error').addClass('verified');
+			$(this).parent().find('.field-description').removeClass('error');
+		}
+	 });
+	 $(document).on('click', 'a.as-submit', function () {
+		$(this).closest('form').submit();
+		return false;
+	 });
+	 $(document).on('click', '.js-input-address-save-disabled', function () {
+		$('.js-button-address-save-disabled').attr('disabled',true)
+		return false;
+	 });
+	 
+});
+
 
 $(function(){
 	$('.js-pseudo-filter').hide();

@@ -1,0 +1,19 @@
+<div class="form-container">
+	<div class="container">
+		<div class="wrapper-position">	
+			<div class="form-wrapper">			
+				<div class="form-content registration">
+					<div class="form-title">Подтверждение почты.</div>					
+					@ if (~user->ne) {
+						<p>Почтовый адрес успешно подтвержден.</p>
+						<div class="form-button-container">
+							<a href="/cabinet/login"><button class="button form-button">Войти</button></a>
+						</div>
+					@ } else {
+						<p>Ссылка для подтверждения почты устарела или содержит ошибку.<br>Попробуйте <a href="/cabinet/restore" style="text-decoration: underline;">восстановить пароль</a>.</p>
+					@ }
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

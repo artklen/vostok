@@ -35,7 +35,7 @@
 	<link href="/css/select.css" rel="stylesheet">
 	<link href="/css/color-fixes.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/catalog-search.css" rel="stylesheet">
-	{{stylesheets '/css/style.scss', '/css/media.scss'}}
+	{{stylesheets '/css/style.scss', '/css/media.scss', '/css/cabinet.scss'}}
 	
 	<meta name="google-site-verification" content="o-3naehIraQNqmrJFA-rYKrbhUKm_QuqdCcWdst2cdQ" />
 	
@@ -105,16 +105,20 @@
 		</div>
 	</div>
 </div>
+
+<?/*
 <div class="header-bottom">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-10 col-sm-2 col-md-3 col-lg-3" style="padding-right:0">
-				<a href="{langlink}/" class="logo">
-					<img src="/images/logo.png" alt=""/>
-				</a>
+				<div class="logo-container">
+					<a href="{langlink}/" class="logo">
+						<img src="/images/logo.png" alt=""/>
+					</a>
+				</div>	
 				<span class="slogan hidden-sm hidden-md">
 					{"Оптовая и розничная продажа часов"|t}
-				</span>
+				</span>				
 			</div>
 			<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7 hidden-xs" style="padding-left:7px; padding-right:7px;">
 				<div class="main-menu-wrapper">{{/inc/menu.html}}</div>
@@ -123,6 +127,51 @@
 				<div class="js-basket-widget" data-basket-widget-type="header">
 					{{/basket/widgets/header.html}}
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+*/?>
+
+<div class="header-bottom">
+	<div class="container">
+		<div class="header-menu-container">
+			<div class="header-item left-container">
+				<a href="{langlink}/" class="logo"><img src="/images/logo.png" alt=""/></a>				
+			</div>
+			<div class="header-item center-container hidden-xs hidden-sm">{{/inc/menu.html}}</div>
+			<div class="header-item right-container">
+				@ if (~Auth->is_guest) {
+					<div class="personal-link-container">
+						<div class="personal-link-item">
+							<img src="/images/cabinet/personal-icon.svg" class="personal-link-image" alt="">
+						</div>
+						<div class="personal-link-item">
+							<a href="/cabinet/login"><button class="button login-button">Войти</button></a>
+						</div>
+					</div>
+				 @ } if (~Auth->is_authorised) {
+					<div class="personal-link-container">
+						<a href="#" class="personal-link-item active">
+							<img src="/images/cabinet/personal-icon.svg" class="personal-link-image" alt="">
+						</a>
+						<div class="personal-link-menu">
+							<ul>
+								<li><a href="/cabinet/profile">Профиль</a></li>
+								<li><a href="/cabinet/orders">Мои заказы</a></li>
+								<li><a href="/cabinet/address">Мои адреса</a></li>
+								<li>
+									{{simple_ajax_form '/cabinet/logout', 'class' => 'form-inline'}}
+                                           <a href="#" OnClick="$(this).closest('form').submit();">Выйти</a>
+                                    {{/form}}
+								</li>
+							</ul>
+						</div>
+					</div>
+				@ }
+				@ //var_dump($_SESSION);exit;
+				
+				<div class="js-basket-widget" data-basket-widget-type="header">{{/basket/widgets/header.html}}</div>
 			</div>
 		</div>
 	</div>
@@ -142,40 +191,43 @@
 	</div>
 @ }
 
-<div class="advantages">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-				<div class="item">
-					<div class="picture"><img src="/images/icon-01.svg" class="icon-1" alt=""/></div>
-					<div class="title">{"Широкий ассортимент"|t}</div>
-					<div class="text">{"Большой выбор качественных наручных часов"|t}</div>
+@ if (!(~url_path === '/orders' || ~url_path === '/profile' || ~url_path === '/address' || ~url_path === '/order-single-page')) {
+	<div class="advantages">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+					<div class="item">
+						<div class="picture"><img src="/images/icon-01.svg" class="icon-1" alt=""/></div>
+						<div class="title">{"Широкий ассортимент"|t}</div>
+						<div class="text">{"Большой выбор качественных наручных часов"|t}</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-				<div class="item">
-					<div class="picture"><img src="/images/icon-02.svg" class="icon-2" alt=""/></div>
-					<div class="title">{"Бесплатная доставка"|t}</div>
-					<div class="text">{"При заказе от 4 000 руб"|t}</div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+					<div class="item">
+						<div class="picture"><img src="/images/icon-02.svg" class="icon-2" alt=""/></div>
+						<div class="title">{"Бесплатная доставка"|t}</div>
+						<div class="text">{"При заказе от 4 000 руб"|t}</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-				<div class="item">
-					<div class="picture"><img src="/images/icon-09.svg" class="icon-3" alt=""/></div>
-					<div class="title">{"Гарантия на все"|t}</div>
-					<div class="text">{"Поддерживаем заводскую гарантию на часы"|t}</div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+					<div class="item">
+						<div class="picture"><img src="/images/icon-09.svg" class="icon-3" alt=""/></div>
+						<div class="title">{"Гарантия на все"|t}</div>
+						<div class="text">{"Поддерживаем заводскую гарантию на часы"|t}</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-				<div class="item">
-					<div class="picture"><img src="/images/icon-10.svg" class="icon-4" alt=""/></div>
-					<div class="title">{"Знаем о часах \"Восток\" все"|t}</div>
-					<div class="text">{"Находимся на площадке завода, имеем многолетний опыт продажи часов"|t}</div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+					<div class="item">
+						<div class="picture"><img src="/images/icon-10.svg" class="icon-4" alt=""/></div>
+						<div class="title">{"Знаем о часах \"Восток\" все"|t}</div>
+						<div class="text">{"Находимся на площадке завода, имеем многолетний опыт продажи часов"|t}</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+@ }
+
 <!--<div class="action-2">
 	<div class="container">
 		<div class="row">
@@ -195,6 +247,7 @@
 		</div>
 	</div>
 </div>-->
+
 <div class="footer-1">
 	<div class="container">
 		<div class="row">
@@ -296,7 +349,7 @@
 <script src="/js/slick/slick.min.js"></script>
 <script src="/js/jquery.sumoselect.min.js"></script>
 
-@ if (~url_path === '/basket') {
+@ if (~url_path === '/basket' || ~url_path === '/cabinet/address') {
     {{/dadata/_suggestions_plugin.html}}
 @ }
 
@@ -327,7 +380,7 @@ window.langlink = "<?= d()->langlink ?>"
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/51316909" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-
+<?/*
 <!-- BEGIN JIVOSITE CODE {literal} -->
 <script type='text/javascript'>
 (function(){ var widget_id = 'ZV25T4wQhz';var d=document;var w=window;function l(){
@@ -338,6 +391,6 @@ window.langlink = "<?= d()->langlink ?>"
   else{w.addEventListener('load',l,false);}}})();
 </script>
 <!-- {/literal} END JIVOSITE CODE -->
-
+*/?>
 </body>
 </html>

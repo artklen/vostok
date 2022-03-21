@@ -97,7 +97,9 @@ d()->post(d()->langlink . '/basket/finish', function() {
     $order->email = d()->params['email'];
     $order->comment = d()->params['comment'];
     $order->delivery_type = d()->params['delivery_type'];
-
+    if (d()->Auth->is_authorised){
+        $order->user_id = d()->Auth->user->id;
+    }
     $order->delivery_price = $basket->calculate_delivery_price();
     $basket->lock_delivery_data();
     $basket->clear_irrelevant_delivery_data();
@@ -113,7 +115,8 @@ d()->post(d()->langlink . '/basket/finish', function() {
 
     $order = d()->Order->find_by('id', $order->id);
 
-    d()->notification->new_order($order);
+    //d()->notification->new_order($order);
+	d()->notification->order_created($order);
     if ($order->pay_type === PaymentType::ONLINE) {
         print 'document.location.href="/aquiring/sber/payfororder/' . $order->secret . '";';
     } else {
@@ -316,6 +319,8 @@ d()->post(d()->langlink . '/basket/set_delivery_cdek_point', function () {
 });
 
 d()->get(d()->langlink . '/basket/change_cdek_delivery_courier', function () {
+	
+	d()->address = d()->Addres->find_by('user_id', d()->Auth->user->id)->order_by('created_at desc')->limit(10);
     print d()->view->render('/basket/modals/change_cdek_delivery_courier.html');
     exit;
 });
@@ -333,6 +338,7 @@ d()->post(d()->langlink . '/basket/set_delivery_cdek_courier_address', function 
 });
 
 d()->get(d()->langlink . '/basket/change_post_delivery', function () {
+	d()->address = d()->Addres->find_by('user_id', d()->Auth->user->id)->order_by('created_at desc')->limit(10);
     print d()->view->render('/basket/modals/change_post_delivery.html');
     exit;
 });

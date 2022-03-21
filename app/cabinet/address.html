@@ -1,0 +1,44 @@
+<div class="cabinet-menu">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-lg-10 col-lg-offset-1">
+				<ul class="cabinet-menu-content">
+					<li><a href="/cabinet/profile">Профиль</a></li>
+					<li><a href="/cabinet/orders">Мои заказы</a></li>
+					<li><a href="address" class="active">Мои адреса</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cabinet-container">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-lg-10 col-lg-offset-1">
+				<div class="cabinet-content">
+					<div class="cabinet-title">Мои адреса</div>
+					<div class="cabinet-address-container">
+						<foreach address>
+							<div class="cabinet-address-list">
+								<div class="cabinet-address-item">
+									<div class="cabinet-address-city">{.city}</div>
+									<div class="cabinet-address-street">{.street}</div>
+								</div>
+								<div class="cabinet-address-item right-container">
+									<div class="cabinet-address-link">
+										<a class="change-link js-fancybox-modal" href="javascript:void(0);" data-fancybox-href="/cabinet/edit_address/{.id}">Изменить</a>
+										<span class="cabinet-address-link-line"></span>
+										<a href="/cabinet/delete_address/{.id}" class="change-link delete-link">Удалить</a>
+									</div>
+								</div>
+							</div>
+						</foreach>
+						<div class="cabinet-address-list">
+							<a href="javascript:void(0);" class="js-fancybox-modal" data-fancybox-href="/cabinet/add_address">Добавить адрес</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

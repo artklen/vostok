@@ -1,16 +1,32 @@
 <div class="popup-wrapper">
     <div class="js-basket-post-select-container">
         @ ~input_id = ~unique_input_id();
-        <label for="{input_id|h}">{"Укажите адрес"|t}</label>
-        <input
+		<div class="popup-label-container">
+			<label for="{input_id|h}">{"Укажите адрес"|t}</label>
+        </div>
+		
+		<div>
+			<foreach address>
+				<label class="radio-button-container">
+					<div class="radio-button-icon">
+						<input type="radio" class="radio-button js-select-address" name="radio" value="{.id}" data-title="{.title}" data-post="{.post}" data-mdadata="{.dadata}" data-cdek="{.cdek_id}" <?php if (d()->basket->delivery_post_address == d()->this->title){print 'checked';}?>><span></span>
+					</div>
+					<div class="radio-button-description">{.title}</div>
+				</label>
+			</foreach>
+		</div>
+		
+		<input
             type="text"
             name="address"
             value="{basket.delivery_post_address|h}"
             id="{input_id|h}"
             data-dadata="{basket.delivery_post_address_dadata|h}"
+			placeholder="Новый адрес"			
+			class="js-input-address-save-disabled"
         />
 
-        <button type="button" class="send-10" onclick="$.fancybox.close();">{"Сохранить"|t}</button>
+        <button type="button" class="send-12 js-button-address-save-disabled" onclick="$.fancybox.close();" <?php if (d()->basket->delivery_post_address == ""){ print "disabled";} ?>>{"Сохранить"|t}</button>
     </div>
 </div>
 
@@ -21,5 +37,14 @@
             $(':input[name="address"]', container),
             <?= json_encode($_ENV['DADATA_TOKEN']) ?>
         );
+		$('.js-select-address').click(function(){
+			$(".js-input-address-save-disabled").val($(this).data('title'));
+			$('.js-button-address-save-disabled').removeAttr('disabled');
+			Basket.set_delivery_post_address({
+                address: $(this).data('title'),
+                index: $(this).data('post'),
+                dadata: $(this).data('mdadata')
+            }, $(':input[name="address"]', container));
+		});
     })();
 </script>
