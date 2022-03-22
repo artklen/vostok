@@ -152,19 +152,19 @@
 								<div class="fosv-2">
 									<div>
 										<div>
-											<input name="name" type="text" placeholder="{"Фамилия Имя Отчество (полностью)"|t}" value="{Auth.user.name}" />
+											<input name="name" type="text" placeholder="{"Фамилия Имя Отчество (полностью)"|t}" value="<? if (d()->Auth->is_authorised){ ?>{Auth.user.name}<? } ?>" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-											<input name="phone" type="text" placeholder="{"Ваш телефон"|t}" value="{Auth.user.phone}" />
+											<input name="phone" type="text" placeholder="{"Ваш телефон"|t}" value="<? if (d()->Auth->is_authorised){ ?>{Auth.user.phone}<? } ?>" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-											<input name="email" type="text" placeholder="{"Ваш email"|t}" value="{Auth.user.email}" />
+											<input name="email" type="text" placeholder="{"Ваш email"|t}" value="<? if (d()->Auth->is_authorised){ ?>{Auth.user.email}<? } ?>" />
 										</div>
 									</div>
 
