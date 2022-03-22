@@ -1,38 +1,38 @@
-<p>{"Вы оплатили заказ"|t}</p>
+<p>{"Вы оформили заказ"|t}</p>
 <table border="1">
 	<tr><th align="left">№</th>
-		<td>{order_t.id}</td></tr>
+		<td>{order.id}</td></tr>
 	<tr><th align="left">{"Дата"|t}</th>
-		<td>{order_t.ordered_at|userdate}</td></tr>
+		<td>{order.ordered_at|userdate}</td></tr>
 	<tr><th align="left">{"Статус"|t}</th>
-		<td>{order_t.show_status_id}</td></tr>
+		<td>{order.show_status_id}</td></tr>
 		
 	<tr><th align="left">{"Статус оплаты"|t}</th>
-		<td>{order_t.show_is_payed}</td></tr>
+		<td>{order.show_is_payed}</td></tr>
 	
 	<tr><th align="left">{"Способ получения"|t}</th>
-		<td>{order_t.show_delivery}</td></tr>
+		<td>{order.show_delivery}</td></tr>
  	<tr><th align="left">{"Способ оплаты"|t}</th>
-		<td>{order_t.show_pay_type}</td></tr>
+		<td>{order.show_pay_type}</td></tr>
 </table>
 <p>&nbsp;</p>
 <p>{"Информация"|t}:</p>
 <table border="1" width="100%">
 	<tr><th align="left">{"Имя"|t}</th>
-		<td>{order_t.name|h}</td></tr>
+		<td>{order.name|h}</td></tr>
 	<tr><th align="left">E-mail</th>
-		<td>{order_t.email|h}</td></tr>
+		<td>{order.email|h}</td></tr>
 		
 		
 	<tr><th align="left">{"Телефон"|t}</th>
-		<td>{order_t.phone|h}</td></tr>
+		<td>{order.phone|h}</td></tr>
 		
-	@ if (d()->order_t->address != "") {
+	@ if (d()->order->address != "") {
 	<tr><th align="left">{"Адрес"|t}</th>
-		<td>{order_t.address|h}</td></tr>
+		<td>{order.address|h}</td></tr>
 	@ }
 	<tr><th align="left">{"Комментарий"|t}</th>
-		<td>{order_t.comment|hnl2br}</td></tr>
+		<td>{order.comment|hnl2br}</td></tr>
 		
 </table>
 <p>&nbsp;</p>
@@ -47,7 +47,7 @@
 		<th align="left">{"Цена"|t}</th>
 		<th align="left">{"Стоимость"|t}</th>
 	</tr><?php $i=0;?>
-<foreach order_t->orders_items->all>
+<foreach order->orders_items->all>
 	<tr>
 		<td><?=$i++;?></td>
 		<td><a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>{this|h_url_for}" target="_blank">{.title|h}</a></td>
@@ -61,10 +61,10 @@
 </foreach>
 </table>
 
-<p>{"letter_client#Всего товаров"|t}: <b>{order_t.number|h} шт.</b>, {"letter_client#оплачено"|t}: <b>{order_t.order_price|price_format} руб.</b>
+<p>{"letter_client#Всего товаров"|t}: <b>{order.number|h} шт.</b>, {"letter_client#оплачено"|t}: <b>{order.order_price|price_format} руб.</b>
 <?php
-if (1 * d()->order_t->delivery_price > 1e-7) {
-    print t("В том числе доставка") . ": <b>" . d()->price_format(d()->order_t->delivery_price) . " руб.</b>";
+if (1 * d()->order->delivery_price > 1e-7) {
+    print t("В том числе доставка") . ": <b>" . d()->price_format(d()->order->delivery_price) . " руб.</b>";
 }
 ?>
 </p>

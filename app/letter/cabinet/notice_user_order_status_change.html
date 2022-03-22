@@ -4,6 +4,6 @@
 @ if (isset(~user['name']) && ~user['name'] !== '') {
 	Здравствуйте, {user.name|h}!
 @ }
-	Статус вашего заказа №{Oreder.id} на сайте <a href="{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/" target="_blank" rel="nofollow">{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/</a>
+	Статус вашего заказа №{order.id} на сайте <a href="{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/" target="_blank" rel="nofollow">{protocol}://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>/</a>
 	<br>
 	изменент на: {order.show_status_id}
