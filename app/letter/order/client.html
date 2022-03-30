@@ -61,7 +61,8 @@
 </foreach>
 </table>
 
-<p>{"letter_client#Всего товаров"|t}: <b>{order.number|h} шт.</b>, {"letter_client#оплачено"|t}: <b>{order.order_price|price_format} руб.</b>
+<p>{"letter_client#Всего товаров"|t}: <b>{order.number|h} шт.</b>, {"letter_client#К оплате"|t}: <b>{order.order_price|price_format} руб.</b>
+<?php if (d()->order->payment_type_commission_coefficient > 1) { ?><div><i>(С учетом комиссии способа оплаты.)</i></div><?php } ?>
 <?php
 if (1 * d()->order->delivery_price > 1e-7) {
     print t("В том числе доставка") . ": <b>" . d()->price_format(d()->order->delivery_price) . " руб.</b>";

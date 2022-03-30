@@ -114,6 +114,7 @@ if (d()->order->is_free_delivery) { ?>
 </table>
 
 <p>Всего товаров: <b>{order.number|h} шт.</b>, к оплате: <b>{order.order_price|price_format} руб.</b>
+<?php if (d()->order->payment_type_commission_coefficient > 1) { ?><div><i>(С учетом комиссии способа оплаты.)</i></div><?php } ?>
 <?php $delivery = d()->Delivery_variant->find_by_id(d()->order->delivery_type);
 if ($delivery->ne){
 	if ($delivery->price != "" && $delivery->price*1 >0){
