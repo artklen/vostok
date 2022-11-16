@@ -319,8 +319,11 @@ d()->post(d()->langlink . '/basket/set_delivery_cdek_point', function () {
 });
 
 d()->get(d()->langlink . '/basket/change_cdek_delivery_courier', function () {
-	
-	d()->address = d()->Addres->find_by('user_id', d()->Auth->user->id)->order_by('created_at desc')->limit(10);
+    if (d()->Auth->is_authorized) {
+        d()->address = d()->Addres->find_by('user_id', d()->Auth->user->id)->order_by('created_at desc')->limit(10);
+    } else {
+        d()->address = d()->Addres->where('false');
+    }
     print d()->view->render('/basket/modals/change_cdek_delivery_courier.html');
     exit;
 });
@@ -338,7 +341,11 @@ d()->post(d()->langlink . '/basket/set_delivery_cdek_courier_address', function 
 });
 
 d()->get(d()->langlink . '/basket/change_post_delivery', function () {
-	d()->address = d()->Addres->find_by('user_id', d()->Auth->user->id)->order_by('created_at desc')->limit(10);
+    if (d()->Auth->is_authorized) {
+        d()->address = d()->Addres->find_by('user_id', d()->Auth->user->id)->order_by('created_at desc')->limit(10);
+    } else {
+        d()->address = d()->Addres->where('false');
+    }
     print d()->view->render('/basket/modals/change_post_delivery.html');
     exit;
 });
