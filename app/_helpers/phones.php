@@ -5,7 +5,7 @@ d()->clean_phone = function($phone) {
 		$args = $phone;
 		$phone = array_shift($args);
 	}
-	return preg_replace('/[^0-9]/', '', $phone);
+	return preg_replace('/\D/', '', $phone);
 };
 
 d()->convert_phone = function($phone) {

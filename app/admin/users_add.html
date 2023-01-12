@@ -1,0 +1,35 @@
+{{simple_ajax_form ~url_path, 'class'=>"admin_edit_form form-horizontal"}}
+<fieldset class="input_elements">
+    <legend>Добавление нового пользователя</legend>
+
+    <div class="js-notice"></div>
+    <div class="control-group">
+        <label class="control-label">Имя</label>
+        <div class="controls">
+            <input type="text" name="data[name]" value="" class="input-xlarge">
+            <span class="help-inline"></span>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">E-mail</label>
+        <div class="controls">
+            <input type="text" name="data[email]" value="" class="input-xlarge">
+            <span class="help-inline"></span>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Телефон</label>
+        <div class="controls">
+            <input type="text" name="data[phone]" value="" class="input-xlarge">
+            <span class="help-inline"></span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input type="submit" value="Сохранить" class="btn btn-primary">
+        <a href="javascript:void(0);" onclick="window_cancel();" class="btn">Отмена</a>
+    </div>
+</fieldset>
+{{/form}}

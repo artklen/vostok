@@ -93,6 +93,7 @@ Basket = (function () {
                 $('.js-basket-total-weight').text(data.total_weight);
                 $('.js-basket-order-price').text(data.order_price);
                 $('.js-basket-products-price').text(data.products_price);
+                $('.js-basket-products-discount').text(data.products_discount);
                 $('.js-basket-delivery-price').text(data.delivery_price);
                 $('.js-basket-delivery-price-container').toggle(data.delivery_price !== '0');
                 $('.js-basket-delivery-working-days').text(data.delivery_working_days);
@@ -447,7 +448,7 @@ Basket = (function () {
         initAddressSuggestions();
 		$('.js-select-address').click(function(){
 			$(".js-input-address-save-disabled").val($(this).data('title'));
-			$('.js-button-address-save-disabled').removeAttr('disabled');
+			// $('.js-button-address-save-disabled').removeAttr('disabled');
 			Basket.set_delivery_cdek_courier_city({
                 address: $(this).data('title'),
                 code: $(this).data('code'),
@@ -462,12 +463,15 @@ Basket = (function () {
                 address = addressInput.val(),
                 dadata = inputDadata(addressInput),
 
-                params = addressParams(address, dadata, cdek_id);			
+                params = addressParams(address, dadata, cdek_id);
             Basket.set_delivery_cdek_courier_city(params, this);
             const index = resolvePostIndex(dadata);
+			const region = resolveRegion(dadata);
 			const city = resolveCity(dadata);
 			const street = resolveStreet(dadata);
-			full_addr = index + "@" + city + "@" + street + "@" + cdek_id;
+
+			$('.js-button-address-save-disabled').removeAttr('disabled');
+			full_addr = index + "@" + region + "@" + city + "@" + street + "@" + cdek_id;
 			$.ajax({
 				type: 'post',
 				url: '/cabinet/add_address',
@@ -489,6 +493,8 @@ Basket = (function () {
             addressInput.suggestions({
 				token: token,
 				type: 'ADDRESS',
+                formatResult: dadataFormatResult,
+                formatSelected: dadataFormatSelected,
 				onSelect: addressSelectHandler
 			});
         }
@@ -502,13 +508,13 @@ Basket = (function () {
         }
 
         function onChangeAddress() {
-			$('.js-button-address-save-disabled').removeAttr('disabled');
 			loadDelivery(inputDadata(addressInput));
         }
 
         function addressParams(address, dadata, cdek_id) {
             return {
 				code: cdek_id,
+				region: resolveRegion(dadata),
 				city: resolveCity(dadata),
                 address: addressInput.val(),
                 street: resolveStreet(dadata),
@@ -527,7 +533,7 @@ Basket = (function () {
 			fetchDelivery(kladr_id)
 			.done(function(response) {
 				if (response.suggestions.length == 0) {
-					console.log('Ошибка ошибка получения id города');
+					console.log('Ошибка ошибка получения id города.');
 				} else {
 					onChangeCity_cdek(response.suggestions[0].data.cdek_id);
 				}
@@ -558,6 +564,8 @@ Basket = (function () {
         addressInput.suggestions({
             token: token,
             type: 'ADDRESS',
+            formatResult: dadataFormatResult,
+            formatSelected: dadataFormatSelected,
             onSelect: addressSelectHandler
         });
 
@@ -577,9 +585,10 @@ Basket = (function () {
         function addressSave(cdek_id) {
             const dadata = inputDadata(addressInput);
             const index = resolvePostIndex(dadata);
+			const region = resolveRegion(dadata);
 			const city = resolveCity(dadata);
 			const street = resolveStreet(dadata);
-			full_addr = index + "@" + city + "@" + street + "@" + cdek_id;
+			full_addr = index + "@" + region + "@" + city + "@" + street + "@" + cdek_id;
             Basket.set_delivery_post_address({
                 address: addressInput.val(),
                 index: index,
@@ -604,14 +613,16 @@ Basket = (function () {
         }
 		function loadDelivery(dadata) {
 			var kladr_id = dadata.data.kladr_id;
-			if (kladr_id.length > 13) {
+			console.log(kladr_id);
+			if (kladr_id.length != 13) {
 				// план. структура
 				kladr_id = kladr_id.substr(0, 11) + "00";
 			}
 			fetchDelivery(kladr_id)
 			.done(function(response) {
 				if (response.suggestions.length == 0) {
-					console.log('Ошибка ошибка получения id города');
+					addressSave("");
+					console.log('Ошибка ошибка получения id города!');
 				} else {
 					addressSave(response.suggestions[0].data.cdek_id);
 				}
@@ -739,6 +750,14 @@ Basket = (function () {
         }
         return dadata.data.postal_code;
     }
+
+	function resolveRegion(dadata) {
+		if (!dadata || !dadata.data || !dadata.data.region_with_type) {
+			return '';
+		}
+		return dadata.data.region_with_type;
+	}
+
 	function resolveCity(dadata) {
 		if (!dadata || !dadata.data || !dadata.data.city_with_type) {
 			return '';

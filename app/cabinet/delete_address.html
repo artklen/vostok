@@ -1,0 +1,17 @@
+<div class="modal-container">
+    {{simple_ajax_form ~url_path}}
+    @ ~input_id = ~unique_input_id();
+
+    <label class="title-container" for="{input_id|h}">{"Удаление адреса"|t}</label>
+
+    <div class="field-content">
+        <p>{address.title_as_h_address_word_wrap}</p>
+        <p>Вы уверены, что хотите удалить адрес?</p>
+    </div>
+
+    <div class="buttons-container">
+        <a href="javascript:void(0);" onclick="$.fancybox.close();" class="button transparent-button">{"Отмена"|t}</a>
+        <button type="submit" class="button red-button">{"Удалить"|t}</button>
+    </div>
+    {{/form}}
+</div>

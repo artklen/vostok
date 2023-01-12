@@ -1,0 +1,130 @@
+<div class="inner">
+    <div class="container">
+        <div class="head-container">
+            <h1>{seo.h1|h}</h1>
+        </div>
+        <div class="personal-container">
+            <div class="personal-item">
+                <div class="field-item">
+                    <div class="title-container">Скидка постоянного покупателя</div>
+
+                    <?php
+                    if (d()->user->is_regular_customer_products_discount()) { ?>
+                        <div class="customer-discount small-discount">
+                            <a href="javascript:void(0);" class="info-icon js-popover-open"><img src="/images/icon_circle_info.svg" alt=""></a>
+                            <div class="discount-container">
+                                <span class="discount-percent">5%</span>
+                                <div>
+                                    <p>Ваша скидка на следующий заказ</p>
+                                    <div class="discount-popover js-discount-popover">
+                                        <p>Для всего, кроме доставки. Применяется к акционным товарам.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    } elseif (d()->orders->ne()) { ?>
+                        <div class="customer-discount">
+                            <a href="javascript:void(0);" class="info-icon js-popover-open"><img src="/images/icon_circle_info.svg" alt=""></a>
+                            <p>Скидка в <span>5%</span> начислится после получения заказа</p>
+                            <div class="discount-popover js-discount-popover">
+                                <p>Для всего, кроме доставки. Применяется к акционным товарам.</p>
+                            </div>
+                        </div>
+                        <?php
+                    } else { ?>
+                        <div class="customer-discount">
+                            <a href="javascript:void(0);" class="info-icon js-popover-open"><img src="/images/icon_circle_info.svg" alt=""></a>
+                            <p>Совершите покупку и получите скидку постоянного покупателя в <span>5%</span></p>
+                            <div class="discount-popover js-discount-popover">
+                                <p>Для всего, кроме доставки. Применяется к акционным товарам.</p>
+                            </div>
+                        </div>
+                        <?php
+                    } ?>
+                </div>
+
+                <div class="field-item">
+                    <div class="title-container">Мои адреса</div>
+
+                    <div class="js-addresses-container">
+                        {{/cabinet/_addresses.html}}
+                    </div>
+
+                    <a href="javascript:void(0);"
+                       data-fancybox-href="/cabinet/add_address"
+                       class="field-link js-fancybox-personal">Добавить новый адрес</a>
+                </div>
+            </div>
+            <div class="personal-item">
+                {{simple_ajax_form '/cabinet/profile', 'class' => 'js-cabinet-personal-edit-form'}}
+                <div class="field-item">
+                    <div class="title-container">Персональные данные</div>
+                    <div class="field-content normal-margin">
+                        <div class="title-field">ФИО</div>
+                        <input type="text" class="general-field js-input" name="name" value="{user.name|h}" readonly>
+                    </div>
+                </div>
+                <div class="field-item">
+                    <div class="title-container">Контактные данные</div>
+                    <div class="field-content">
+                        <div class="title-field">Адрес электронной почты</div>
+                        <input type="text" class="general-field js-input" name="email" value="{user.email|h}" readonly>
+                    </div>
+                    <div class="field-content normal-margin">
+                        <div class="title-field">Номер телефона</div>
+                        <input type="text" class="general-field js-input" name="phone" value="{user.phone|h}" readonly>
+                    </div>
+                </div>
+                <div class="js-notice"></div>
+                <div class="buttons-container">
+                    <button type="button" class="button black-button js-edit-button">Изменить</button>
+                    <button type="submit" class="button js-save-button" disabled>Сохранить изменения</button>
+                </div>
+                {{/form}}
+            </div>
+        </div>
+
+        <div class="personal-order-container">
+            <div class="title-container">Мои заказы</div>
+            <div class="personal-order-content">
+                <div class="personal-order-item head-container">
+                    <div class="title-order">Дата оформления</div>
+                    <div class="title-order">Номер заказа</div>
+                    <div class="title-order">Статус заказа</div>
+                    <div class="title-order">Трек-номер</div>
+                    <div class="title-order">Сумма заказа</div>
+                    <div class="title-order">Действия</div>
+                </div>
+                <foreach orders>
+                    <div class="personal-order-item">
+                        <div class="order-item">
+                            <div class="title-order">Дата оформления</div>
+                            <div class="">{.ordered_at|time_format "d.m.Y"}</div>
+                        </div>
+                        <div class="order-item">
+                            <div class="title-order">Номер заказа</div>
+                            <div class=""><a href="/cabinet/orders/{.id|h}" class="order-link">{.id|h}</a></div>
+                        </div>
+                        <div class="order-item">
+                            <div class="title-order">Статус заказа</div>
+                            <div class=""><span class="order-status {.show_status_class}">{.show_status_id}</span></div>
+                        </div>
+                        <div class="order-item">
+                            <div class="title-order">Трек-номер</div>
+                            <div class="">{.track|h}</div>
+                        </div>
+                        <div class="order-item">
+                            <div class="title-order">Сумма заказа</div>
+                            <div class="">{.order_price|price_format} <span>₽</span></div>
+                        </div>
+                        <div class="order-item">
+                            <div class="title-order">Действия</div>
+                            <div class=""><a href="/cabinet/orders/{.id|h}" class="order-link">Посмотреть состав</a></div>
+                        </div>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+    </div>
+</div>

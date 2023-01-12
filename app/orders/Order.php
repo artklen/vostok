@@ -40,27 +40,14 @@
  */
 class Order extends ActiveRecord
 {
-	const STARTED    = 0;
-	const CREATED    = 1;
-	const PROCESSED  = 2;
-	const PACKAGED   = 3;
-	const WAITING_TC = 4;
-	const WAITING_DS = 5;
-	const CANCELED   = 6;
-	const SENT       = 7;
-	const COMPLETE   = 8;
-	
-	// public static $status_titles = array(
-		// 0 => 'Новый',
-		// 1 => 'Принята заявка',
-		// 2 => 'В работе',
-		// 3 => 'Скомплектован',
-		// 4 => 'Ожидается забор ТК',
-		// 5 => 'Ожидается забор службы доставки',
-		// 6 => 'Отменен',
-		// 7 => 'Отправлен',
-		// 8 => 'Выполнен',
-	// );	
+    public const STARTED = 0;
+    public const CREATED = 1;
+    public const PROCESSED = 2;
+    public const SENT = 3;
+    public const RECEIVED = 4;
+    public const COMPLETE = 5;
+    public const CANCELED = 6;
+
 	public static $status_titles = array(
 		0 => 'Новый',
 		1 => 'Новый',
@@ -69,10 +56,18 @@ class Order extends ActiveRecord
 		4 => 'Получен',
 		5 => 'Закрыт',
 		6 => 'Отменен',
-		7 => 'Отправлен',
-		8 => 'Выполнен',
 	);
-	
+
+	public static $status_classes = [
+		0 => '',
+		1 => '',
+		2 => '',
+		3 => '',
+		4 => '',
+		5 => 'completed',
+		6 => 'canceled',
+    ];
+
 	public static $users_types_titles = array(
 		'natural_person' => 'ФизЛицо',
 		'legal_person' => 'ЮрЛицо',
@@ -143,30 +138,54 @@ class Order extends ActiveRecord
 		}
 		return '';
 	}
+
+    public function show_status_class(): string
+    {
+        return self::$status_classes[$this->status_id] ?? '';
+    }
 	
-	function products_price() {
-		$result = 1. * $this->get(__FUNCTION__);
-		if ($result > 1e-7) {
-            return $result;
+	public function products_price(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return 1. * $stored;
         }
 
-        $result = 0;
+        $result = 0.;
         /** @var Orders_item $item */
         foreach ($this->orders_items as $item) {
             $result += $item->total_price();
         }
         return $result;
     }
-	
-	function order_price() {
-		$result = 1 * $this->get(__FUNCTION__);
-		if ($result > 1e-7) {
-            return $result;
+
+    public function products_price_with_discount(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return 1. * $stored;
         }
 
-        return ($this->products_price() + (float) $this->delivery_price) * $this->payment_type_commission_coefficient();
+        $result = 0.;
+        /** @var Orders_item $item */
+        foreach ($this->orders_items as $item) {
+            $result += $item->total_price_with_discount();
+        }
+        return $result;
     }
 	
+	public function order_price(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return 1. * $stored;
+        }
+
+        $sum = $this->products_price_with_discount() + (float) $this->delivery_price;
+
+        return $sum * $this->payment_type_commission_coefficient();
+    }
+
 	function total_price() {
 		return $this->products_price();
 	}
@@ -249,12 +268,16 @@ class Order extends ActiveRecord
             $order_product->weight = $order_product->weight();
             $order_product->image = $order_product->image();
             $order_product->price = $order_product->price();
+            $order_product->price_with_discount = $order_product->price_with_discount();
             $order_product->total_price = $order_product->total_price();
+            $order_product->total_price_with_discount = $order_product->total_price_with_discount();
             $order_product->save();
         }
         $this->products_price = $this->products_price();
+        $this->products_price_with_discount = $this->products_price_with_discount();
         $this->order_price = $this->order_price();
         $this->payment_type_commission_coefficient = $this->payment_type_commission_coefficient();
+        $this->regular_customer_products_discount_percent = $this->regular_customer_products_discount_percent();
         $this->save();
     }
 
@@ -314,9 +337,9 @@ class Order extends ActiveRecord
 
     public function payment_type_commission_coefficient(): float
     {
-        $storedValue = $this->get(__FUNCTION__);
-        if ($storedValue !== '') {
-            return (float) $storedValue;
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return (float) $stored;
         }
 
         if ($this->pay_type === PaymentType::COD) {
@@ -335,5 +358,19 @@ class Order extends ActiveRecord
         }
 
         return 1.;
+    }
+
+    public function regular_customer_products_discount_percent(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return (float) $stored;
+        }
+
+        if (d()->Auth->is_guest()) {
+            return 0;
+        }
+
+        return d()->Auth->user()->is_regular_customer_products_discount() ? 5. : 0;
     }
 }

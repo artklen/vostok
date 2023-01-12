@@ -1,0 +1,83 @@
+<div class="hidden-xs catalog-button-container">
+    <a href="javascript:void(0);" class="catalog-button js-catalog-open">{"Каталог"|t}</a>
+    <div class="catalog-wrapper">
+        <div class="catalog-menu">
+            <div class="left-container">
+                <div class="left-content">
+                    <ul class="left-menu">
+                        @ if (iam()) {
+                        <li>
+                            {{add 'menu_main_elements'}}{{sort_icon}}
+                        </li>
+                        @ }
+
+                        <?php
+                        foreach (d()->catalog_menu as $item) {
+                            $showSubmenu = ! empty($item->submenu) || (iam() && $item->submenuAdminControls !== '');
+                            ?>
+                            <li>
+                                <?php
+                                if (iam()) {
+                                    print $item->adminControls;
+                                }
+                                ?>
+                                <a
+                                    href="{langlink}<?= h($item->link) ?>"
+                                    class="<?= $showSubmenu ? 'arrow' : '' ?>"
+                                ><?= h($item->title) ?></a>
+
+                                <?php
+                                if ($showSubmenu) { ?>
+                                    <div class="right-container">
+                                        <div class="title-container">
+                                            <?php
+                                            print h($item->title);
+                                            if (iam()) {
+                                                print '<br>' . $item->submenuAdminControls;
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="right-content">
+                                            <ul class="right-menu">
+                                                <?php
+                                                $col = 1;
+                                                foreach ($item->submenu as $i => $subitem) {
+                                                if ($i / count($item->submenu) - $col / 3 > -1e-7) {
+                                                    $col++; ?>
+                                            </ul>
+                                            <ul class="right-menu">
+                                                    <?php
+                                                } ?>
+                                                <li>
+                                                    <?php
+                                                    if (iam()) {
+                                                        print $subitem->adminControls;
+                                                    }
+                                                    ?>
+                                                    <a href="{langlink}<?= h($subitem->link) ?>">
+                                                        <?= h($subitem->title) ?>
+                                                        <?php
+                                                        if (isset($subitem->number)) { ?>
+                                                            <span><?= h($subitem->number) ?></span>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </a>
+                                                </li>
+                                                <?php
+                                                } ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <?php
+                                } ?>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

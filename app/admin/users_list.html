@@ -1,0 +1,112 @@
+<h1>{curr_title}</h1>
+{curr_content}
+
+<form class="form-inline">
+    <div class="control-group">
+        <div class="controls input-append">
+            <input type="text" name="class" value="<?= h($_GET['class'] ?? '') ?>" class="input-xxlarge" placeholder="Поиск по имени, e-mail, телефону" required />
+            <input type="submit" value="Найти" class="btn" />
+        </div>
+        @ if (isset($_GET['class'])) {
+        <a href="<?= h(d()->url_path) ?>" class="btn" style="margin-left: 6px;">Сбросить</a>
+        @ }
+    </div>
+</form>
+
+<table class="table table-striped table-bordered table-condensed"  width=100%>
+    <thead style="color:#555">
+    <tr>
+        <th width=50>
+            <?php
+            if (! isset($_GET['class'])) { ?>
+            <a href="?sort_field=id<?php
+            if(!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+                print '&sort_direction=desc';
+            }
+            ?>">ID </a><?php
+
+                if(isset($_GET['sort_field']) && $_GET['sort_field'] == 'id'){
+                    if (!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+                        print ' ▲';
+                    }else{
+                        print ' ▼';
+                    }
+
+                }
+            } else {
+                print 'ID';
+            }
+            ?></th>
+        <?php foreach(d()->datapool['admin']['columns'] as $col_name => $col_title){
+
+            print '<th>';
+
+            $as_substr= strpos($col_name,'_as_');
+            if($as_substr!==false) {
+                $col_name = substr($col_name,0,$as_substr);
+
+            }
+            if(! isset($_GET['class']) && in_array($col_name,d()->available_columns)){
+                print  '<a href="?sort_field=' . h($col_name);
+                if(!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+                    print '&sort_direction=desc';
+                }
+                print '">';
+
+                print $col_title;
+
+                print '</a>';
+
+                if(isset($_GET['sort_field']) && $_GET['sort_field'] == $col_name){
+                    if (!isset($_GET['sort_direction']) || $_GET['sort_direction']=='asc'){
+                        print ' ▲';
+                    }else{
+                        print ' ▼';
+                    }
+
+                }
+            }else{
+                print $col_title;
+            }
+            print  '</th>';
+        } ?>
+
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <foreach objectrow>
+        <tr>
+            <td>{.id}</td>
+
+            <?php foreach(d()->datapool['admin']['columns'] as $col_name => $col_title){
+                $value = d()->this[$col_name];
+
+                if (d()->_list_safe_data) {
+                    $value = h($value);
+                }
+
+                print '<td>' . $value . '</td>';
+            } ?>
+
+            <td style="white-space: nowrap;">
+                <a href="/admin/edit/{curr_table}/{.id}" class="btn btn-mini">Править</a>
+                {.addbuttons}
+                <a href="/admin/delete/{curr_table}/{.id}" target="_blank" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></a>
+            </td>
+        </tr>
+    </foreach>
+
+
+
+
+</table>
+
+<?php if(! isset($_GET['class']) && d()->paginator){ ?>
+    {paginator}
+<?php } ?>
+<div class="form-actions">
+    {list_addbutton}
+
+</div>
+		  
+		  

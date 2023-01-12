@@ -11,10 +11,12 @@ d()->basket_ajax_refresh = function() {
 	$basket = d()->basket;
 	$result = array(
 	    'errors' => $basket->errors(),
-		'total_number' => d()->basket_total_number,
-		'total_price' => d()->basket_total_price,
-		'total_weight' => d()->basket_total_weight,
-		'order_price' => d()->basket_order_price,
+		'total_number' => $basket->total_number(),
+		'total_price' => $basket->total_price(),
+		'total_weight' => $basket->total_weight(),
+		'products_price' => $basket->products_price(),
+		'products_discount' => $basket->products_discount(),
+		'order_price' => $basket->order_price(),
 		'delivery_price' => d()->price_format($basket->delivery_price()),
 		'delivery_working_days' => $basket->delivery_working_days_description(),
 		'is_free_delivery' => $basket->is_free_delivery(),
@@ -97,7 +99,7 @@ d()->post(d()->langlink . '/basket/finish', function() {
     $order->email = d()->params['email'];
     $order->comment = d()->params['comment'];
     $order->delivery_type = d()->params['delivery_type'];
-    if (d()->Auth->is_authorised){
+    if (d()->Auth->is_authorized){
         $order->user_id = d()->Auth->user->id;
     }
     $order->delivery_price = $basket->calculate_delivery_price();

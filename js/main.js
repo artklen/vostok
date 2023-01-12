@@ -472,10 +472,10 @@ if (maps.length) {
 	});
 }
 
-$(document).on('click', '.js-unfolding-button, .js-unfolding-button-menu', function() {
-	var t = $(this);
-	t.parent().toggleClass('arrow');
-	$('.js-unfolding-block, .js-unfolding-block-menu, .js-unfolding-block-faq, .js-unfolding-block-product', t.closest('.js-unfolding-container, .js-unfolding-container-menu')).stop(true, false).slideToggle(300);
+$(document).on('click', '.js-unfolding-button, .js-unfolding-button-menu', function(event) {
+	event.preventDefault();
+	$(this).parent().toggleClass('arrow');
+	$('.js-unfolding-block, .js-unfolding-block-menu, .js-unfolding-block-faq, .js-unfolding-block-product', $(this).closest('.js-unfolding-container, .js-unfolding-container-menu')).stop(true, false).slideToggle(300);
 });
 
 
@@ -539,7 +539,103 @@ $(function () {
 	}
 });
 
+$(document).on('click', '.js-fancybox-personal', function() {
+	$.fancybox.open($(this), {
+		type: 'ajax',
+		padding: 0,
+		helpers: {
+			overlay: {
+				closeClick: false,
+				locked: true,
+				css: {
+					'background': 'rgba(64,63,63,.7)'
+				}
+			}
+		},
+		tpl: {
+			closeBtn: '<a class="modal-close-button" href="javascript:;"></a>',
+			wrap: '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin fancybox-my-radius"><div class="fancybox-outer"><div class="fancybox-inner fancybox-inner-modal"></div></div></div></div>'
+		}
+	});
+});
+
 $(document).on('change input', '.error :input', function() {
 	$(this).closest('.error').removeClass('error');
 	$(this).closest('.has-error').removeClass('has-error');
 });
+
+$(document).on('click', '.js-popover-open', function() {
+	$('.js-discount-popover').toggleClass('popover-open').stop(true, false);		
+});
+//
+// $(document).on('click', '.js-catalog-open', function() {
+// 	$('.catalog-button').toggleClass('catalog-open-menu').stop(true, false);
+// 	$('.js-catalog-menu').toggleClass('catalog-open-container').stop(true, false);
+// });
+
+
+
+
+(function (formSelector) {
+	const inputSelector = '.js-input';
+	const editButtonSelector = '.js-edit-button';
+	const saveButtonSelector = '.js-save-button';
+
+	$(document).on('click', `${formSelector} ${editButtonSelector}`, function() {
+		enableForm($(this).closest(formSelector));
+	});
+
+	$(document).on('submit', formSelector, function() {
+		if (this.disableForm === undefined) {
+			const form = $(this);
+			this.disableForm = function() {
+				disableForm(form)
+			}
+		}
+	});
+
+	$(document).on('change input', `${formSelector} ${inputSelector}`, function() {
+		makeAvailableForSaving($(this).closest(formSelector));
+	});
+
+	function enableForm(form) {
+		$(inputSelector, form).removeAttr('readonly');
+		$(editButtonSelector, form).removeClass('black-button').attr('disabled', 'disabled');
+	}
+
+	function makeAvailableForSaving(form) {
+		$(saveButtonSelector, form).addClass('black-button').removeAttr('disabled');
+	}
+
+	function disableForm(form) {
+		$(inputSelector, form).attr('readonly', 'readonly');
+		$(editButtonSelector, form).addClass('black-button').removeAttr('disabled');
+		$(saveButtonSelector, form).removeClass('black-button').attr('disabled', 'disabled');
+	}
+}('.js-cabinet-personal-edit-form'));
+
+function dadataFormatResult(value, currentValue, suggestion) {
+	return dadataMakeAddressString(suggestion.data);
+}
+
+function dadataFormatSelected(suggestion){
+	const addressValue = dadataMakeAddressString(suggestion.data);
+	suggestion.value = addressValue;
+	return addressValue;
+}
+
+function dadataMakeAddressString(address){
+	return join([
+		join([address.region_type, address.region], " "),
+		join([address.area_type, address.area], " "),
+		(address.city !== address.region && join([address.city_type, address.city], " ") || ""),
+		join([address.settlement_type, address.settlement], " "),
+		join([address.street_type, address.street], " "),
+		join([address.house_type, address.house, address.block_type, address.block], " "),
+		join([address.flat_type, address.flat], " ")
+	]);
+
+	function join(a, s) {
+		return a.filter(function(v) {return v}).join(s || ", ");
+	}
+}

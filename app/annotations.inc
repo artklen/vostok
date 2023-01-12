@@ -12,6 +12,12 @@
  * @property-read Option Option
  * @property-read RussianPost RussianPost
  * @property-read Order Order
+ * @property-read Auth Auth
+ * @property-read User User
+ * @property-read Addres Addres
+ * @property-read Menu_main_element Menu_main_element
+ * @property-read Menu_element Menu_element
+ * @property-read Product Product
  *
  * @property string langlink
  * @property View view
@@ -23,6 +29,11 @@
  * @property Notification notification
  * @property string form_type
  * @property Order order
+ * @property User user
+ * @property Address address
+ * @property Order orders
+ * @property Menu_element menu_elemenents
+ * @property-read list<CatalogMenuItem> catalog_menu
  *
  * @property callable basket_ajax_refresh
  * @method string basket_ajax_refresh()
@@ -46,6 +57,8 @@
  *
  * @property callable price_format
  * @method string price_format($price, $otherwise = null)
+ *
+ * @method set_page_title(string $title): void
  */
 class doitClass
 {
@@ -60,7 +73,7 @@ class doitClass
  * @property string text
  * @property string title
  * @property string type
- * @property-read ActiveRecord new
+ * @property-read static new
  * @property-read bool ne
  * @property-read bool is_empty
  * @property-read array all
@@ -71,6 +84,7 @@ class doitClass
  * @property array _data
  *
  * @method __construct(array $options = [])
+ * @method $this new()
  */
 class ActiveRecord {
 }
@@ -99,5 +113,29 @@ class Cdek_city extends ActiveRecord
  * @property string delivery_from_post_index
  */
 class Option extends ActiveRecord
+{
+}
+
+/**
+ * @property string user_id
+ * @property string post
+ * @property string city
+ * @property string street
+ * @property string dadata
+ * @property string cdek_id
+ */
+class Addres extends ActiveRecord
+{
+}
+
+/**
+ * @property string page_url
+ * @property string is_duplicate_horizontally
+ */
+class Menu_main_element extends ActiveRecord
+{
+}
+
+class Category extends ActiveRecord
 {
 }

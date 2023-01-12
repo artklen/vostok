@@ -84,22 +84,55 @@ class Orders_item extends ActiveRecord {
 	function category() {
 		return d()->Category->find_by('id', $this->category_id);
 	}
-	
-	function price() {
-        $result = 1 * $this->get(__FUNCTION__);
-        if ($result > 1e-7) {
-            return $result;
+
+    public function price(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return 1. * $stored;
         }
 
-		return 1 * $this->product->price + 1 * $this->products_variant->price;
+		return 1. * $this->product->price + 1. * $this->products_variant->price;
 	}
 
-	function total_price() {
-		$result = 1 * $this->get(__FUNCTION__);
-		if ($result < 1e-7) {
-			$result = $this->price * $this->number;
-		}
-		return $result;
+    public function price_with_discount(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return 1. * $stored;
+        }
+
+        $result = $this->price();
+
+        /** @var Order $order */
+        $order = $this->get('order');
+        if ($order->ne()) {
+            $discount_percent = $order->regular_customer_products_discount_percent();
+            if ($discount_percent > 1e-7) {
+                $result = $result * (100. - $discount_percent) / 100.;
+            }
+        }
+
+        return round($result);
+    }
+
+	public function total_price(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return 1. * $stored;
+        }
+
+        return $this->price() * $this->number;
 	}
-	
+
+    public function total_price_with_discount(): float
+    {
+        $stored = $this->get(__FUNCTION__);
+        if ($stored !== '') {
+            return 1. * $stored;
+        }
+
+        return $this->price_with_discount() * $this->number;
+    }
 }

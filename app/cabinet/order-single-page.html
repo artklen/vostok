@@ -1,40 +1,33 @@
-<div class="cabinet-menu">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-lg-10 col-lg-offset-1">
-				<ul class="cabinet-menu-content">
-					<li><a href="/cabinet/profile">Профиль</a></li>
-					<li><a href="/cabinet/orders" class="active">Мои заказы</a></li>
-					<li><a href="/cabinet/address">Мои адреса</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="cabinet-container">
 	<div class="container">
 			<div class="cabinet-content cabinet-single-page-content">
-			<div class="row">
+                <div class="row">
+                    <div class="col-xs-12 col-md-5 col-lg-4 col-lg-offset-1">
+                        <a href="/cabinet/" class="cabinet-back-link">Назад</a>
+                    </div>
+                </div>
+
+                <div class="row">
 				<div class="col-xs-12 col-md-5 col-lg-4 col-lg-offset-1">
 					<div class="cabinet-content-item">
 						<div class="order-list-wrapper">
-							<div class="cabinet-title">Заказ №{order.id}</div>
+							<div class="cabinet-title">Заказ №{order.id|h}</div>
 							<div class="order-list-container">
 								<div class="order-list-item">
 									<div class="order-list-title">Дата оформления:</div>
-									<div class="order-list-notice"><? print date("d.m.Y", strtotime(d()->order->created_at)); ?></div>
+									<div class="order-list-notice">{order.ordered_at|time_format "d.m.Y"}</div>
 								</div>
 								<div class="order-list-item">
 									<div class="order-list-title">Статус:</div>
-									<div class="order-list-notice"><span>{order.show_status_id}</span></div>
+									<div class="order-list-notice"><span class="order-list-status {order.show_status_class}">{order.show_status_id}</span></div>
 								</div>
 								<div class="order-list-item">
 									<div class="order-list-title">Имя получателя:</div>
-									<div class="order-list-notice">{order.name}</div>
+									<div class="order-list-notice">{order.name|h}</div>
 								</div>
 								<div class="order-list-item">
 									<div class="order-list-title">Адрес получателя:</div>
-									<div class="order-list-notice">{order.show_address}</div>
+									<div class="order-list-notice">{order.show_address_as_h_address_word_wrap}</div>
 								</div>
 								<div class="order-list-item">
 									<div class="order-list-title">Способ доставки:</div>
@@ -43,7 +36,13 @@
 								<div class="order-list-item">
 									<div class="order-list-title">Способ оплаты:</div>
 									<div class="order-list-notice">{order.show_pay_type}</div>
-								</div>			
+								</div>
+                                @ if (~order->track !== '') {
+								<div class="order-list-item">
+									<div class="order-list-title">Трек-номер:</div>
+									<div class="order-list-notice">{order.track|h}</div>
+								</div>
+                                @ }
 							</div>
 						</div>
 					</div>
@@ -61,18 +60,18 @@
 											</div>
 										</div>
 										<div class="product-list-column">
-											<div class="product-list-title">{.title}</div>
-											<div class="product-list-quantity">Количество: {.number}</div>
+											<div class="product-list-title">{.title|h}</div>
+											<div class="product-list-quantity">Количество: {.number|h}</div>
 										</div>
 										<div class="product-list-column">
-											<div class="product-list-price">{.price} ₽</div>
+											<div class="product-list-price">{.price|price_format} ₽</div>
 											<div class="cabinet-orders-link-item">
-												<a href="{.link}">Смотреть</a>
+												<a href="{.link|h}">Смотреть</a>
 											</div>
 										</div>
 									</div>
 								</foreach>
-								@ if (!is_null(d()->order->delivery_price) && d()->order->delivery_price > 0){
+								@ if ((float) d()->order->delivery_price > 1e-7){
 									<div class="product-list-item delivery">
 										<div class="product-list-column">
 										</div>
@@ -80,13 +79,17 @@
 											<div class="product-list-title">Доставка</div>
 										</div>
 										<div class="product-list-column">
-											<div class="product-list-price">{order.delivery_price} ₽</div>
+											<div class="product-list-price">{order.delivery_price|price_format} ₽</div>
 										</div>
 									</div>
 								@ }
 							</div>
-							<div class="total-amount">Общая сумма заказа: <span>{order.order_price} р.</span>
-								<?php if (d()->order->payment_type_commission_coefficient > 1) { ?><div class="payment_type_commission">(С учетом комиссии способа оплаты.)</div><?php } ?>
+							<div class="total-amount">Общая сумма заказа: <span>{order.order_price|price_format} р.</span>
+                                <?php
+                                if (d()->order->payment_type_commission_coefficient > 1. + 1e-7) { ?>
+                                    <div class="payment_type_commission">(С учетом комиссии способа оплаты.)</div>
+                                    <?php
+                                } ?>
 							</div>
 						</div>
 					</div>

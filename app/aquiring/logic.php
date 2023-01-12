@@ -43,7 +43,12 @@ d()->on('aquiring.successfull_paid',function($param){
 			d()->mail->send();
 		}
 		//=====================================================
-		$url = "https://kkt.chekonline.ru/fr/api/v2/Complex";
+        if (time() >= strtotime('2022-04-05 2:00')) {
+            $url = "https://kkt4.chekonline.ru/fr/api/v2/Complex";
+        } else {
+            $url = "https://kkt.chekonline.ru/fr/api/v2/Complex";
+        }
+        //$url = "https://kkt.chekonline.ru/fr/api/v2/Complex";
 		$datas = array(
 			"Device" => "auto",
 			'RequestId' => uniqid(),
@@ -52,10 +57,11 @@ d()->on('aquiring.successfull_paid',function($param){
 			"TaxMode" => 0,
 			"PhoneOrEmail" => (d()->order_t->email != "")?d()->order_t->email:d()->order_t->phone,
 		);
-		foreach (d()->order_t->orders_items->all as $order_item){
+        /** @var Orders_item $order_item */
+        foreach (d()->order_t->orders_items->all as $order_item){
 			$datas['Lines'][]=array(
 				"Qty" => $order_item->number * 1000,
-				"Price" => $order_item->price * 100,
+				"Price" => $order_item->price_with_discount() * 100,
 				"PayAttribute" => 1,
                 "LineAttribute" => 1,
 				"TaxId" => 4,
@@ -121,6 +127,8 @@ d()->on('aquiring.successfull_paid',function($param){
             // Закрытый ключ
             curl_setopt($curl, CURLOPT_SSLKEY, getcwd() . '/app/aquiring/privateKey.pem');
         }
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
 		$json_response = curl_exec($curl);
 		d()->order_ch->chek_response = $json_response;

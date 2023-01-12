@@ -1,106 +1,53 @@
 <ul class="menu-3 hidden-lg">
-	<li>
-		<form method="get" action="{langlink}/catalog">
-			<div class="search small">
-				<input class="search-input" name="search" type="text" placeholder="{"Поиск по каталогу"|t}"/>
-				<button type="submit"></button>
-			</div>
-		</form>
-	</li>
-	<li>
-		<div class="city-mobile-block">
-			<a href="{langlink}/cities/select?url=%2F" class="city-selection js-feedback">{current_city.title|h}</a>
-		</div>
-	</li>
-	<li>
-		<a href="{langlink}/catalog/chasy">{"Каталог часов"|t}</a>
-	</li>
-	<foreach Menu_main_element>
-		<li class="js-unfolding-container-menu">
-			<a href="javascript:void(0);" class="arrow js-unfolding-button-menu">
-				{.title}
-			</a>
-			<ul class="last-1 js-unfolding-block-menu">
-				<foreach d()->Menu_element->where('menu_main_element_id = ?', d()->this->id )>
+    <li>
+        <form method="get" action="{langlink}/catalog">
+            <div class="search small">
+                <input class="search-input" name="search" type="text" placeholder="{"Поиск по каталогу"|t}"/>
+                <button type="submit"></button>
+            </div>
+        </form>
+    </li>
+    <li>
+        <div class="city-mobile-block">
+            <a href="{langlink}/cities/select?url=%2F" class="city-selection js-feedback">{current_city.title|h}</a>
+        </div>
+    </li>
 
-					<?php
-					$params = [];
-					$params_names =
-					[
-					'category_id' => 'category_id',
-					'series_name' => 'series',
-					'carcas_name' => 'carcas',
-					'collection_id' => 'collection_id',
-					'is_auto' => 'auto',
-					'genders' => 'genders',
-					];
+    <?php
+    foreach (d()->catalog_menu as $item) {
+        $showSubmenu = ! empty($item->submenu);
+        ?>
+        <li class="<?= $showSubmenu ? 'js-unfolding-container-menu' : '' ?>">
+            <a
+                href="{langlink}<?= h($item->link) ?>"
+                class="<?= $showSubmenu ? 'arrow js-unfolding-button-menu' : '' ?>"
+            ><?= h($item->title) ?></a>
 
-					foreach ($params_names as $field => $param_name)
-					{
-					if (trim(d()->this->$field))
-					{
-					$params[$param_name.'[]'] = d()->this->$field;
-					}
-					}
-
-					$query = http_build_query($params);
-
-					// считаем кол-во
-					$existsParams = [];
-					foreach ($params as $p => $v)
-					{
-					if (!trim($v)) continue;
-					$val =  mb_substr($p, 0, -2);
-					$existsParams[] = $val;
-					}
-
-					$existsParamsSql = implode(',', $existsParams);
-
-					$placeholders = [];
-					foreach ($existsParams as $pp){
-					$placeholders[] = et($pp) . " = ". e($params[$pp.'[]'])." ";
-					}
-
-					$placeholders = implode(' and ', $placeholders);
-
-					if ($placeholders)
-					{
-					#var_dump($placeholders);die;
-					$count = d()->Product->select('count(id) cnt '.($existsParamsSql ? ' , '.$existsParamsSql : ''));
-
-					if ($placeholders)
-					$count->where($placeholders)->group_by($existsParamsSql)->order('');
-
-					$count = $count->cnt;
-					$count = $count ? $count : 0;
-					#var_dump($count);die;
-					}
-					else
-					{
-					$count = 0;
-					}
-					?>
-
-					<li>
-						@ if (d()->this->url != ""){ 
-							<a href="{langlink}/{.url}">
-								<span class="sub-1">
-									<!--<img src="{this.required_image|preview '33', '33'}" alt=""/>-->
-								</span>
-								<span class="sub-2">{.title}</span>
-							</a>
-						@ } else {
-						<a href="{langlink}/catalog<?=($cn = d()->this->category->url) ? '/'.$cn : ''?><?=$query ? '?'.$query : ''?>">
-							<span class="sub-1"><!--<img src="/images/mini-2.jpg" alt=""/>--></span>
-							<span class="sub-2">{.title} <span class="sub-3"><?=$count?></span></span>
-						</a>
-						@ }
-					</li>
-				</foreach>
-			</ul>
-		</li>
-	</foreach>
-	<li>
-		<a href="{langlink}/symbols">{"С символикой"|t}</a>
-	</li>
+            <?php
+            if ($showSubmenu) { ?>
+                <ul class="last-1 js-unfolding-block-menu">
+                    <?php
+                    foreach ($item->submenu as $i => $subitem) { ?>
+                        <li>
+                            <a href="{langlink}<?= h($subitem->link) ?>">
+                                <span class="sub-1"></span>
+                                <span class="sub-2">
+                                    <?= h($subitem->title) ?>
+                                    <?php
+                                    if (isset($subitem->number)) { ?>
+                                        <span class="sub-3"><?= h($subitem->number) ?></span>
+                                        <?php
+                                    }
+                                    ?>
+                                </span>
+                            </a>
+                        </li>
+                        <?php
+                    } ?>
+                </ul>
+                <?php
+            } ?>
+        </li>
+        <?php
+    } ?>
 </ul>

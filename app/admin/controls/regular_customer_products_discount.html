@@ -1,0 +1,49 @@
+<?php
+if (url(4) === 'add') {
+    return;
+}
+
+if (empty(d()->row_data['is_regular_customer_products_discount_manual'])) {
+    $type = 'auto';
+} elseif (! empty(d()->row_data['is_regular_customer_products_discount_manual_value'])) {
+    $type = 'on';
+} else {
+    $type = 'off';
+}
+
+?>
+<div class="control-group">
+    <label class="control-label">Скидка постоянного покупателя&nbsp;5%</label>
+    <div class="controls">
+        <label class="radio">
+            <input type="radio" name="regular_customer_products_discount_type" value="auto" <?= checked_if($type === 'auto') ?>>
+            Автоматически
+            <?php
+            $user = d()->User->f(d()->row_data['id']);
+            $auto_value = $user->is_regular_customer_products_discount_auto_value();
+
+            if ($auto_value) { ?>
+                <br>
+                <small>Скидка активна, у пользователя есть заказ со статусом «<?= h(Order::$status_titles[Order::COMPLETE]) ?>».</small>
+                <?php
+            } else { ?>
+                <br>
+                <small>Скидка не применяется, у пользователя нет заказа со статусом «<?= h(Order::$status_titles[Order::COMPLETE]) ?>».</small>
+                <?php
+            }
+            ?>
+        </label>
+
+        <label class="radio">
+            <input type="radio" name="regular_customer_products_discount_type" value="on" <?= checked_if($type === 'on') ?>>
+            Включить
+        </label>
+
+        <label class="radio">
+            <input type="radio" name="regular_customer_products_discount_type" value="off" <?= checked_if($type === 'off') ?>>
+            Отключить
+        </label>
+
+        <span class="help-inline"></span>
+    </div>
+</div>

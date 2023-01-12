@@ -31,7 +31,7 @@ class Basket extends UniversalSingletoneHelper
         /** @var Order $order */
         $order = d()->Order->new;
         $order->session_key = session_id();
-        if (d()->Auth->is_authorised){
+        if (d()->Auth->is_authorized){
             $order->user_id = d()->Auth->user->id;
         }
         $order->save();
@@ -193,7 +193,7 @@ class Basket extends UniversalSingletoneHelper
 	        return 0.;
         }
 
-        return ($this->products_price() + $this->delivery_price()) * $this->order->payment_type_commission_coefficient();
+        return $this->order->order_price();
 	}
 
 	function total_weight($item_key = null)
@@ -562,9 +562,9 @@ class Basket extends UniversalSingletoneHelper
     {
         $this->create_order_if_not_exists();
 
-        if ($this->order->delivery_cdek_courier_city_code === $params['code']) {
-            return;
-        }
+        // if ($this->order->delivery_cdek_courier_city_code === $params['code']) {
+            // return;
+        // }
 
         $this->order->delivery_cdek_courier_city_code = $params['code'];
 
@@ -855,5 +855,23 @@ class Basket extends UniversalSingletoneHelper
     public function pay_type(): string
     {
         return $this->order->pay_type ?? '';
+    }
+
+    public function regular_customer_products_discount_percent(): float
+    {
+        if (! isset($this->order)) {
+            return 0.;
+        }
+
+        return $this->order->regular_customer_products_discount_percent();
+    }
+
+    public function products_discount(): float
+    {
+        if (! isset($this->order)) {
+            return 0.;
+        }
+
+        return $this->order->products_price() - $this->order->products_price_with_discount();
     }
 }

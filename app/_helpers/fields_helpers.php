@@ -60,3 +60,22 @@ d()->as_object_extended_title = function($value, $field, $object) {
 	}
 	return '';
 };
+
+
+function as_h_address_word_wrap(string $value): string
+{
+    $parts = explode(',', $value);
+
+    $count = count($parts);
+    if ($count === 1) {
+        return h($value);
+    }
+
+    foreach ($parts as $i => &$part) {
+        $comma = ($i !== $count - 1) ? ',' : '';
+        $part = '<span style="white-space: nowrap;">' . h(trim($part)) . $comma . '</span>';
+    }
+    unset($part);
+
+    return implode(' ', $parts);
+}

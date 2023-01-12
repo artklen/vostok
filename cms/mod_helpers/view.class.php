@@ -30,7 +30,7 @@ class View
 			$shortfile = $this->chosen;
 			
 			$trys[]  = $shortfile ;
-			if(is_file($shortfile))
+			if (realpath($shortfile) !== false && is_file($shortfile))
 			{
 				return  $this->from_file($shortfile);
 			}
@@ -56,7 +56,7 @@ class View
 		//Если не указан явно заданный файл, то проводим автопоиск в соответствии с url-ом
 		
 		//Вариант первый - файл существует
-		if($old_chosen!==false && $old_chosen{0} != "/" ){
+		if($old_chosen!==false && $old_chosen[0] != "/" ){
 			$shortfile = $url.'.html';
 			$tryfile = ROOT . '/app'.$shortfile;
 			
@@ -84,7 +84,7 @@ class View
 		}
 		
 		
-		if($old_chosen!==false && $old_chosen{0} != "/" ){
+		if($old_chosen!==false && $old_chosen[0] != "/" ){
 			//Вариант третий - show.html
 			$try_url = substr($url, 0, strrpos($url, '/') );
 			$shortfile = $try_url.'/show.html';
@@ -140,54 +140,32 @@ class View
 		
 		
 		
-		return  print_error_message(' ','',$errfile ,'','Не удалось найти файл шаблона (проверялись: '.implode(', ',$trys).')'  );
+		return  print_error_message('','', '','','Не удалось найти файл шаблона (проверялись: '.implode(', ',$trys).')'  );
 	}
 	
 	function from_file($file, $global=false){
-
-		$name = str_replace(array('/','.','-','\\'),array('_','_','_','_'),substr($file,1)).'_tpl';
-	
-	
-
-
+		$name = str_replace(array('/','.','-','\\','+'),array('_','_','_','_','_'),substr($file,1)).'_tpl';
 		if(!function_exists($name)){
-			
 			ob_start(); //Подавление стандартного вывода ошибок Parse Error
 			if($global){
 				$code = d()->shablonize(file_get_contents(ROOT . $file));
 			}else{
 				$code = d()->shablonize(file_get_contents(ROOT . '/app'.$file));	
 			}
-			
 			$result=eval('function '.$name.'(){ $doit=d(); ?'.'>'.$code.'<'.'?php ;} ');
 			ob_end_clean();
 			if ( $result === false && ( $error = error_get_last() ) ) {
  				$lines = explode("\n",'function '.$name.'(){ $doit=d(); ?'.'>'.$code.'<'.'?php ;} ');
-				$file = $this->fragmentslist[$name];
 				return print_error_message( $lines [$error['line']-1],$error['line'],$file,$error['message'],'Ошибка при обработке шаблона',true);
-			} else {
-				ob_start();
-				$result =  call_user_func($name);
-				$_end = ob_get_contents();
-				ob_end_clean();
-				if (!is_null($result)) {
-					$_end = $result;
-				}
-				return $_end;
 			}
-
-
-		}else{
-			ob_start();
-			$result =  call_user_func($name);
-			$_end = ob_get_contents();
-			ob_end_clean();
-			if (!is_null($result)) {
-				$_end = $result;
-			}
-			return $_end;
 		}
-
-	
+		ob_start();
+		$result =  call_user_func($name);
+		$_end = ob_get_contents();
+		ob_end_clean();
+		if (!is_null($result)) {
+			$_end = $result;
+		}
+		return (string) $_end;
 	}
 }

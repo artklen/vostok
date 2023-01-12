@@ -1,16 +1,14 @@
 <div class="basket-1">
 	<ul class="menu-2">
 		<li class="arrow">
-			<div class="js-basket-not-empty" {{if_basket_not_empty}}>
-				<a href="/basket">
-					<span class="left">
+			<div class="basket-link-container js-basket-not-empty" {{if_basket_not_empty}}>
+				<div class="basket-link-item">
+					<div class="basket-icon">
 						<span class="num js-basket-total-number"><?= h(d()->basket_total_number) ?></span>
-					</span>
-					<span class="right hidden-xs hidden-sm hidden-md">
-						<span class="title">{"Сумма"|t}</span>
-						<span class="sum js-basket-total-price"><?= d()->price_format(d()->basket->order_price) ?></span> <span class="sum">{"р_"|t}</span>
-					</span>
-				</a>
+						<img src="/images/icon_basket.svg" alt="">
+					</div>
+					<a href="/basket" class="head-link">Корзина</a>
+				</div>
 				<div class="last-1">
 					<ul class="last-2 js-basket-not-empty" {{if_basket_not_empty}}>
 						<li>
@@ -64,12 +62,14 @@
 				</div>
 			</div>
 
-			<div class="js-basket-empty basket-empty" {{if_basket_empty}}>
-				<span class="left empty"></span>
-				<span class="right empty hidden-xs hidden-sm hidden-md">
-					<span class="title">{"Корзина"|t}</span>
-					<span class="sum">{"Товаров__нет"|t}</span>
-				</span>
+			<div class="basket-link-container js-basket-empty basket-empty" {{if_basket_empty}}>
+				<div class="basket-link-item empty-container">
+					<div class="basket-icon">
+						<span class="num js-basket-total-number"><?= h(d()->basket_total_number) ?></span>	
+						<img src="/images/icon_basket.svg" alt="">
+					</div>
+					<a href="/basket" class="head-link">Корзина</a>
+				</div>
 			</div>
 		</li>
 	</ul>

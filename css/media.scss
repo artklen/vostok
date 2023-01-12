@@ -25,11 +25,10 @@
 			a {
 				font-size: 13px;		
 			}
-			&.arrow {
-				/*background: url(/images/arrow-10.svg) no-repeat top 7px right 4px;*/
+			/*&.arrow {
 				background: url(/images/arrow-10.svg) no-repeat center right 4px;
 				background-size: 7px 4px;
-			}
+			}*/
 		}
 	}
 	.menu-2-xs {
@@ -40,11 +39,6 @@
 	.main-menu-wrapper {
 		text-align: center;
 	}
-	.header-bottom {
-		/*.logo {	
-			margin: 9px 10px 0 0;		
-		}*/
-	}
 	.basket-1 {
 		.left {
 			&.empty {
@@ -54,7 +48,6 @@
 		}
 	}
 	.basket-2 {
-		
 		.right {
 			margin: 30px 0 0 0;
 		}
@@ -65,7 +58,6 @@
 		}
 	}
 	.slider-2 {
-		
 		.button-bg-1, .button-bg-2 {
 			display: none !important;
 		}
@@ -140,8 +132,7 @@
 
 @media (min-width: 768px) and (max-width: 991px) {
 	input[type='submit'].send-4, .send-4, a.send-4 {
-		margin: 20px 0 0 0;
-		
+		margin: 20px 0 0 0;	
 	}
 	input[type='submit'].send-10, .send-10, a.send-10 {	
 		width: 100%;
@@ -154,27 +145,14 @@
 		margin: 0;
 
 		> li {
+			margin: 0 4px 0 0;
 			a {
 				font-size: 11px;
 			}
-			&.arrow {
+			/*&.arrow {
 				background: url(/images/arrow-10.svg) no-repeat top 5px right 4px;
 				background-size: 7px 4px;
-				.last-1 {
-					.last-2 {
-						/*min-width: 569px;
-						margin: -2px 0 0 0;*/
-					}
-				}
-				&:last-child {
-					.last-1 {
-						.last-2 {
-							/*margin: -2px 0 0 0;*/
-						}
-					}
-				}
-			}
-			margin: 0 4px 0 0;
+			}*/	
 			&:last-child {
 				margin: 0 0 0 4px;
 			}
@@ -185,13 +163,39 @@
 			top: 20px;
 		}
 	}
-	
+	.catalog-menu {
+		padding: 16px;
+		column-gap: 22px;
+		.left-container {
+			.left-content {
+				padding-right: 16px;
+			}
+		}
+		.right-container {
+			right: 0;
+			padding: 16px 16px 16px 40px;
+			.title-container {
+				margin: 0 0 16px;
+			}
+			.right-content {
+				column-gap: 15px;
+				.right-menu {
+					li {
+						margin: 0 0 4px;
+					}
+				}
+			}
+			&:before {
+				top: 16px;
+				left: 15px;
+				bottom: 16px;
+			}
+		}
+	}
 	.header-bottom {
-		padding: 10px 0 10px 0;
 		.logo {
 			width: 106px;
 			height: 23px;
-			/*margin: 10px 10px 0 0;*/
 			img {
 				width: 106px;
 				height: 23px;
@@ -274,8 +278,7 @@
 		.banner-1 {
 			background-size: 100%;
 		}
-		.banner-2 {
-			
+		.banner-2 {	
 			min-height: 88px;
 			padding: 0 0 0 38px;
 			margin: 0 0 25px 0;
@@ -517,19 +520,15 @@
 		margin: 30px 0 50px 0;
 	}
 	.header-top {
-		/*padding: 9px 0 9px 0;*/
 		.phone-position {
 			float: none;
-			margin: 10px 0 0 0;
 		}
 	}
 	.header-bottom {
-		padding: 10px 0 10px 0;
 		.logo {
 			width: 106px;
 			height: 23px;
 			display: inline-block;
-			/*margin: 10px 10px 0 0;*/
 			img {
 				width: 106px;
 				height: 23px;
@@ -568,8 +567,7 @@
 				.title-3,
 				.center-4 {
 					display: block;
-				}
-				
+				}		
 				> .row {
 					display: block;
 					div[class*='col-'] {
@@ -619,7 +617,6 @@
 					}
 					
 				}
-				
 			}
 			&.basket-popup-wrapper {
 				.item {
@@ -641,7 +638,6 @@
 		}
 		.slide {
 			background: url(/images/main-3.jpg) no-repeat right -160px top;
-			/*background-size: 100%;*/
 			z-index: 100;
 			height: auto;
 			padding: 35px 0 35px 0;
@@ -698,7 +694,6 @@
 	}
 	.slick-dots {
 		text-align: center;
-		/*margin: 0 0 0 5px;*/
 	}
 	.catalog-1 {
 		.product-middle {
@@ -748,11 +743,6 @@
 	}
 	.action-1 {
 		padding: 50px 0 60px 0;
-		.watch-1 {
-			img {
-				/*width: 100%;*/
-			}
-		}
 		.watch-2 {
 			margin: 35px 0 15px 0;
 			.title-2 {
@@ -898,9 +888,6 @@
 			.content-tab-2, .content-tab-3 {
 				padding: 40px 0 0 0;
 			}
-			/*.workshops {
-				padding: 0 0 40px 0;
-			}*/
 		}
 	}
 	.footer-1 {
@@ -961,8 +948,7 @@
 			padding: 45px 35px;
 		}
 		.city-bottom {
-			padding: 0 35px 0 35px;
-			
+			padding: 0 35px 0 35px;		
 		}
 	}
 	.crumbs {
@@ -979,6 +965,7 @@
 		}
 	}
 }
+
 @media (min-width: 360px) and (max-width: 767px) {
 	.catalog-1 {
 		.product-middle {

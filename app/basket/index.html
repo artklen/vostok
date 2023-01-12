@@ -113,6 +113,28 @@
                             <div class="quantity"><span class="js-basket-total-number">{basket.total_number}</span> шт.</div>
                         </div>
                     </div>
+
+                    <?php
+                    $products_discount = d()->basket->products_discount();
+                    if ($products_discount > 1e-7) { ?>
+                        <div class="row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <div class="basket-summary-line-title">{"Скидка на товары"|t}</div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div class="basket-summary-line-price">
+                                    <span class="js-basket-products-discount"><?= d()->price_format($products_discount) ?></span>{"р_"|t}
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        $regular_customer_products_discount_percent = d()->basket->regular_customer_products_discount_percent();
+                        if ($regular_customer_products_discount_percent > 1e-7) { ?>
+                            <div class="title-2">{"Скидка постоянного покупателя"|t} <?= $regular_customer_products_discount_percent ?>%</div>
+                            <?php
+                        }
+                    } ?>
+
                     <div class="row js-basket-delivery-price-container" {{show_if ~basket->delivery_price > 1e-7}}>
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <div class="basket-summary-line-title">{"Доставка"|t}</div>
@@ -152,19 +174,19 @@
 								<div class="fosv-2">
 									<div>
 										<div>
-											<input name="name" type="text" placeholder="{"Фамилия Имя Отчество (полностью)"|t}" value="<? if (d()->Auth->is_authorised){ ?>{Auth.user.name}<? } ?>" />
+											<input name="name" type="text" placeholder="{"Фамилия Имя Отчество (полностью)"|t}" value="<? if (d()->Auth->is_authorized){ ?>{Auth.user.name}<? } ?>" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-											<input name="phone" type="text" placeholder="{"Ваш телефон"|t}" value="<? if (d()->Auth->is_authorised){ ?>{Auth.user.phone}<? } ?>" />
+											<input name="phone" type="text" placeholder="{"Ваш телефон"|t}" value="<? if (d()->Auth->is_authorized){ ?>{Auth.user.phone}<? } ?>" />
 										</div>
 									</div>
 
 									<div>
 										<div>
-											<input name="email" type="text" placeholder="{"Ваш email"|t}" value="<? if (d()->Auth->is_authorised){ ?>{Auth.user.email}<? } ?>" />
+											<input name="email" type="text" placeholder="{"Ваш email"|t}" value="<? if (d()->Auth->is_authorized){ ?>{Auth.user.email}<? } ?>" />
 										</div>
 									</div>
 

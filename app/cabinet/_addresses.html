@@ -1,0 +1,18 @@
+<foreach address>
+    <div class="general-field-container">
+        <input type="text" class="general-field normal-field" value="{.title|h}" readonly>
+
+        <div class="field-icon-container">
+            <a href="javascript:;"
+               data-fancybox-href="/cabinet/edit_address/{.id|h}"
+               class="js-fancybox-personal">
+                <img src="/images/icon_edit.svg" class="field-icon" alt="">
+            </a>
+            <a href="javascript:;"
+               data-fancybox-href="/cabinet/delete_address/{.id|h}"
+               class="js-fancybox-personal">
+                <img src="/images/icon_delete.svg" class="field-icon" alt="">
+            </a>
+        </div>
+    </div>
+</foreach>

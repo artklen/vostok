@@ -66,111 +66,86 @@
 
 <div class="header-top">
 	<div class="container">
-		<div class="row">
-			<div class="col-xs-10 col-sm-7 col-md-6 col-lg-5">
-				<a href="{langlink}/cities/select?url=%2F" class="city-selection hidden-xs js-feedback">{current_city.title|h}</a>
+		<div class="header-container">
+			<div class="header-item city-selection-container">
+				<a href="{langlink}/cities/select?url=%2F" class="city-selection hidden-xs js-feedback"><span>{current_city.title|h}</span></a>
 				<div class="phone-position">
 					<div class="phone">
-						<a href="tel:{Option.number}">{Option.number}</a>
+						<a href="{Option.number_as_phone_href|h}">{Option.number|h}</a>
 					</div>
 					<a href="{langlink}/feedback/call" class="call js-feedback">{"Заказать звонок"|t}</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 visible-lg">
+			<div class="header-item submenu-container">
 				<ul class="menu-1">
 					<li><a href="{langlink}/payment" {{if ~url_path === '/payment', 'class="active"'}}>{"Оплата и доставка"|t}</a></li>
-					<?/*<li><a href="{langlink}/news" {{if ~url_path === '/news', 'class="active"'}}>{"Новости"|t}</a></li>
-					<li><a href="{langlink}/about" {{if ~url_path === '/about', 'class="active"'}}>{"О нас"|t}</a></li>*/?>
 					<li><a href="{langlink}/faq" {{if ~url_path === '/faq', 'class="active"'}}>{"Вопрос-ответ"|t}</a></li>
 					<li><a href="{langlink}/contacts" {{if ~url_path === '/contacts', 'class="active"'}}>{"Контакты"|t}</a></li>
 				</ul>
 			</div>
-			<div class="col-xs-11 col-sm-3 col-md-4 col-lg-2 hidden-xs">
+			<div class="header-item search-container">
 				<form method="get" action="{langlink}/catalog">
 					<div class="search">
-						<input class="search-input" name="search" type="text" placeholder="{"Поиск по каталогу"|t}"/>
+						<input class="search-input" name="search" type="text" placeholder='{"Поиск по каталогу"|t}'/>
 						<button type="submit"></button>
 					</div>
 				</form>
 			</div>
-			
-			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-1">
+			<div class="header-item language-selection-container">
 				<div class="language hidden-xs">
 					<a href="<?= substr($_SERVER['REQUEST_URI'], strlen(d()->langlink)) ?>" class="option {{active_if in_array(d()->lang, ['', 'ru'])}}">RUS</a>
 					<a href="/en<?= substr($_SERVER['REQUEST_URI'], strlen(d()->langlink)) ?>" class="option {{active_if d()->lang === 'en'}}">ENG</a>
 				</div>
-			
 				<a href="javascript:void(0);" class="menu-1-xs js-menu-1-xs hidden-lg"></a>
 			</div>
 		</div>
 	</div>
 </div>
 
-<?/*
-<div class="header-bottom">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-10 col-sm-2 col-md-3 col-lg-3" style="padding-right:0">
-				<div class="logo-container">
-					<a href="{langlink}/" class="logo">
-						<img src="/images/logo.png" alt=""/>
-					</a>
-				</div>	
-				<span class="slogan hidden-sm hidden-md">
-					{"Оптовая и розничная продажа часов"|t}
-				</span>				
-			</div>
-			<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7 hidden-xs" style="padding-left:7px; padding-right:7px;">
-				<div class="main-menu-wrapper">{{/inc/menu.html}}</div>
-			</div>
-			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-2" style="padding-left:0">
-				<div class="js-basket-widget" data-basket-widget-type="header">
-					{{/basket/widgets/header.html}}
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-*/?>
-
 <div class="header-bottom">
 	<div class="container">
 		<div class="header-menu-container">
 			<div class="header-item left-container">
-				<a href="{langlink}/" class="logo"><img src="/images/logo.png" alt=""/></a>				
+				<a href="{langlink}/" class="logo"><img src="/images/logo.svg" alt=""/></a>				
 			</div>
-			<div class="header-item center-container hidden-xs hidden-sm">{{/inc/menu.html}}</div>
+            {{/inc/menu_catalog.html}}
+			<div class="header-item center-container visible-lg">
+				{{/inc/menu_desktop.html}}
+			</div>
 			<div class="header-item right-container">
 				@ if (~Auth->is_guest) {
 					<div class="personal-link-container">
-						<div class="personal-link-item">
-							<img src="/images/cabinet/personal-icon.svg" class="personal-link-image" alt="">
+						<div class="personal-link-item login-container">
+							<div class="personal-icon">
+								<img src="/images/icon_personal.svg" class="personal-link-image" alt="">
+							</div>
+							<a href="/cabinet/login" class="head-link">Войти</a>				
 						</div>
+						<!--
 						<div class="personal-link-item">
 							<a href="/cabinet/login"><button class="button login-button">Войти</button></a>
 						</div>
+						-->
 					</div>
-				 @ } if (~Auth->is_authorised) {
+				 @ } if (~Auth->is_authorized) {
 					<div class="personal-link-container">
-						<a href="#" class="personal-link-item active">
-							<img src="/images/cabinet/personal-icon.svg" class="personal-link-image" alt="">
-						</a>
+						<div class="personal-link-item active">
+							<div class="personal-icon personal-arrow-icon">
+								<img src="/images/icon_personal.svg" class="personal-link-image" alt="">
+							</div>			
+						</div>
 						<div class="personal-link-menu">
 							<ul>
-								<li><a href="/cabinet/profile">Профиль</a></li>
-								<li><a href="/cabinet/orders">Мои заказы</a></li>
-								<li><a href="/cabinet/address">Мои адреса</a></li>
+								<li><a href="/cabinet/">Личный кабинет</a></li>
 								<li>
 									{{simple_ajax_form '/cabinet/logout', 'class' => 'form-inline'}}
-                                           <a href="#" OnClick="$(this).closest('form').submit();">Выйти</a>
+                                       <a href="javascript:void(0);" OnClick="$(this).closest('form').submit();" class="exit-link">Выйти</a>
                                     {{/form}}
 								</li>
 							</ul>
 						</div>
 					</div>
 				@ }
-				@ //var_dump($_SESSION);exit;
-				
 				<div class="js-basket-widget" data-basket-widget-type="header">{{/basket/widgets/header.html}}</div>
 			</div>
 		</div>
@@ -292,28 +267,25 @@
 				<div class="item last">
 					<div class="title">{"Контакты"|t}</div>
 					<ul class="right">
-						<li>{Option.address}</li>
-						<li><a href="tel:{Option.number}">{Option.number}</a></li>
-						<li><a href="https://wa.me/+79173967133" target="blank">{Option.whatsapp}</a></li>
+						<li>{Option.address_as_h_address_word_wrap}</li>
+						<li><a href="{Option.number_as_phone_href|h}">{Option.number|h}</a></li>
+						<li><a href="https://wa.me/{Option.whatsapp|convert_phone}" target="blank">{Option.whatsapp|h}</a></li>
 						<li><a href="mailto:{Option.contact_email|h}">{Option.contact_email|h}</a></li>
 					</ul>
 					<ul class="social">
-
 						<li <?=!d()->Option->link_vk ? 'style="display:none;"' : ''?>>
 							@ if (d()->Option->link_vk) {
-							<a href="{Option.link_vk}" target="_blank" rel="nofollow"></a>
+							<a href="{Option.link_vk|h}" target="_blank" rel="nofollow"></a>
 							@ }
 						</li>
-
 						<li <?=!d()->Option->link_facebook ? 'style="display:none;"' : ''?>>
 							@ if (d()->Option->link_facebook) {
-							<a href="{Option.link_facebook}" target="_blank" rel="nofollow"></a>
+							<a href="{Option.link_facebook|h}" target="_blank" rel="nofollow"></a>
 							@ }
 						</li>
-
 						<li <?=!d()->Option->link_instagramm ? 'style="display:none;"' : ''?>>
 							@ if (d()->Option->link_instagramm) {
-							<a href="{Option.link_instagramm}" target="_blank" rel="nofollow"></a>
+							<a href="{Option.link_instagramm|h}" target="_blank" rel="nofollow"></a>
 							@ }
 						</li>
 					</ul>
@@ -349,7 +321,7 @@
 <script src="/js/slick/slick.min.js"></script>
 <script src="/js/jquery.sumoselect.min.js"></script>
 
-@ if (~url_path === '/basket' || ~url_path === '/cabinet/address') {
+@ if (~url_path === '/basket' || ~url_path === '/cabinet/address' || ~url_path === '/cabinet/') {
     {{/dadata/_suggestions_plugin.html}}
 @ }
 

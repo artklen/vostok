@@ -1,0 +1,50 @@
+<div class="menu-container">
+	<ul class="desktop-menu">
+        <?php
+        foreach (d()->catalog_menu as $item) {
+            if (! $item->duplicateHorizontally) {
+                continue;
+            }
+
+            $showSubmenu = ! empty($item->submenu);
+            ?>
+            <li>
+                <a href="{langlink}<?= h($item->link) ?>" class="<?= $showSubmenu ? 'arrow' : '' ?>"><?= h($item->title) ?></a>
+                <?php
+                if ($showSubmenu) { ?>
+                    <div class="desktop-submenu">
+                        <div class="title-container"><?= h($item->title) ?></div>
+                        <div class="desktop-submenu-container">
+                            <ul class="desktop-submenu-item">
+                            <?php
+                            $col = 1;
+                            foreach ($item->submenu as $i => $subitem) {
+                                if ($i / count($item->submenu) - $col / 3 > -1e-7) {
+                                    $col++; ?>
+                            </ul>
+                            <ul class="desktop-submenu-item">
+                                    <?php
+                                } ?>
+                                <li>
+                                    <a href="{langlink}<?= h($subitem->link) ?>">
+                                        <?= h($subitem->title) ?>
+                                        <?php
+                                        if (isset($subitem->number)) { ?>
+                                            <span><?= h($subitem->number) ?></span>
+                                            <?php
+                                        }
+                                        ?>
+                                    </a>
+                                </li>
+                                <?php
+                                } ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php
+                } ?>
+            </li>
+        <?php
+        } ?>
+	</ul>
+</div>
