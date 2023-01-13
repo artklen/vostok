@@ -7,9 +7,11 @@
 </div>
 
 <?php
+d()->is_collection_banner = false;
 if (count($_GET['collection_id']) === 1 && count($_GET) === 1) {
     d()->this_collection = d()->Collection->f(reset($_GET['collection_id']));
     if (d()->this_collection->image_banner !== '') {
+        d()->is_collection_banner = true;
         ?>
 <div class="inside-3">
 	<div class="container">
@@ -38,7 +40,7 @@ if (count($_GET['collection_id']) === 1 && count($_GET) === 1) {
 <div class="catalog-3">
 	<div class="container">
 		<div class="row">
-			@ if (count($_GET['collection_id']) != 1 || count($_GET) != 1) {
+			@ if (! d()->is_collection_banner) {
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h1 class="title">
 						{{edit d()->this_category}}{seo.h1|h}
