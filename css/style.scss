@@ -4956,6 +4956,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 		right: 0;
 		bottom: 0;
 		left: 0;
+		z-index: 2;
 	}
 	&:hover {
 		color: #D39A6E;
