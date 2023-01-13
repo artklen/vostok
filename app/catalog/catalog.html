@@ -6,7 +6,11 @@
 	</div>
 </div>
 
-@ if (count($_GET['collection_id']) === 1 && count($_GET) === 1) { d()->this_collection = d()->Collection->where('id = ?', $_GET['collection_id']);
+<?php
+if (count($_GET['collection_id']) === 1 && count($_GET) === 1) {
+    d()->this_collection = d()->Collection->f(reset($_GET['collection_id']));
+    if (d()->this_collection->image_banner !== '') {
+        ?>
 <div class="inside-3">
 	<div class="container">
 		<div class="row">
@@ -26,7 +30,10 @@
 		</div>
 	</div>
 </div>
-@ }
+        <?php
+    }
+}
+?>
 
 <div class="catalog-3">
 	<div class="container">
