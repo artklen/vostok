@@ -44,7 +44,7 @@ d()->singleton('catalog_menu', static function () {
         }
     }
 
-    $result[] = new CatalogMenuItem(t('С символикой'), '/symbols');
+    $result[] = new CatalogMenuItem(t('Часы с символикой'), '/symbols');
 
     return $result;
 });
