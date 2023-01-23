@@ -282,14 +282,26 @@ d()->get(d()->langlink . '/basket/load_cdek_delivery_cities', function () {
     $cities = (d()->Cdek_city
         ->search('title', $q)
         ->limit($max)
-        ->select('`title`, `subtitle`, `id`, `fias`')
+        ->select('`region`,`subregion`,`title`, `subtitle`, `id`, `fias`')
         ->order('`title` not like ' . e($q . '%') . ', `title`')
     );
 
     $result = array_map(
         static function ($item) {
+            $parts = [];
+            if (! empty($item['region'])) {
+                $parts[] = $item['region'];
+            }
+            if (! empty($item['subregion'])) {
+                $parts[] = $item['subregion'];
+            }
+            if (! empty($item['title'])) {
+                $parts[] = $item['title'];
+            }
+            $title = implode(', ', $parts);
+
             return [
-                'title' => $item['title'],
+                'title' => $title,
                 'subtitle' => $item['subtitle'],
                 'code' => $item['id'],
                 'fias' => $item['fias'],
