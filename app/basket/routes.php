@@ -302,7 +302,7 @@ d()->get(d()->langlink . '/basket/load_cdek_delivery_cities', function () {
 
             return [
                 'title' => $title,
-                'subtitle' => $item['subtitle'],
+                'subtitle' => '',
                 'code' => $item['id'],
                 'fias' => $item['fias'],
             ];
