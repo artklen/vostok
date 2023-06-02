@@ -19,6 +19,7 @@
 				<input type="submit" class="send-10" value="{"Отправить заявку"|t}" />
 			</div>
 			<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
+            {{smart_antispam_javascript}}
 		{{/form}}
 	</div>
 </div>

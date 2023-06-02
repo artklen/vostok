@@ -25,6 +25,7 @@
 			</div>
 			<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
 			<!-- <input type="hidden" name="шв" value="<?= h($_GET['id']) ?>" /> -->
+            {{smart_antispam_javascript}}
 		{{/form}}
 	</div>
 </div>
