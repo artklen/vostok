@@ -2,6 +2,7 @@
 	<div class="line-1"></div>
 	<div class="line-2">
 		{{simple_ajax_form d()->langlink . '/feedback/' . d()->form_type}}
+			{{smart_antispam_javascript}}
 			<div class="title-1">{"Заказать"|t}</div>
 			<div class="title-1"><?=d()->Product->find_by_id(h($_GET['id']))->title; ?></div>
 			<div class="title-2">{"Оставьте свои данные и мы свяжемся с вами в ближайшее время"|t}</div>
@@ -25,7 +26,6 @@
 			</div>
 			<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
 			<!-- <input type="hidden" name="шв" value="<?= h($_GET['id']) ?>" /> -->
-            {{smart_antispam_javascript}}
 		{{/form}}
 	</div>
 </div>

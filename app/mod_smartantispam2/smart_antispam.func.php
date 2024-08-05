@@ -30,7 +30,7 @@ function smart_antispam_seed(){
 	}
 	$seed1 = md5($seed1) ;
 	
-	$seed2 = substr( md5($_SERVER['DOCUMENT_ROOT']. $_SERVER["SERVER_SOFTWARE"]) ,0,9);
+	$seed2 = substr( md5($_SERVER['DOCUMENT_ROOT']. $_SERVER["SERVER_SOFTWARE"]. $_SERVER["HTTP_X_REAL_IP"]) ,0,9);
 	return array($seed1,$seed2);
 }
 function smart_antispam_javascript(){

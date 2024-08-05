@@ -2,6 +2,7 @@
 	<div class="line-1"></div>
 	<div class="line-2">
 		{{simple_ajax_form d()->langlink . '/feedback/' . d()->form_type}}
+			{{smart_antispam_javascript}}
 			<div class="title-1">{"Заказать звонок"|t}</div>
 			<div class="title-2">{"Оставьте свои данные и мы свяжемся с вами в ближайшее время"|t}</div>
 			<div>
@@ -18,8 +19,7 @@
 			<div class="center">
 				<input type="submit" class="send-10" value="{"Отправить заявку"|t}" />
 			</div>
-			<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />
-            {{smart_antispam_javascript}}
+			<input type="hidden" name="url" value="<?= h(AJAX ? $_GET['url'] : $_SERVER['REQUEST_URI']) ?>" />           
 		{{/form}}
 	</div>
 </div>
