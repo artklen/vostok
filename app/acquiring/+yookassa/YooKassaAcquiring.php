@@ -143,7 +143,7 @@ class YooKassaAcquiring implements Acquiring
 
         $purpose = null;
         try {
-            $remoteIP = $_ENV['REMOTE_ADDR']; // TODO
+            $remoteIP = $_SERVER['HTTP_X_REAL_IP'];
             if (! $this->client->isNotificationIPTrusted($remoteIP)) {
                 $this->logger->error('Запрос с не доверенного IP.', ['ip' => $remoteIP]);
                 return false;

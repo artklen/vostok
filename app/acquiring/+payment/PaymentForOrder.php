@@ -92,7 +92,7 @@ class PaymentForOrder extends PaymentPurpose
         $this->order = $this->order->save_and_load();
 
         if (! $_ENV['YOOKASSA_TEST']) {
-            d()->emit('aquiring.successfull_paid', ['order_id' => $this->order->id]);
+            d()->emit('aquiring.successfull_paid', [$this->order]);
         }
     }
 

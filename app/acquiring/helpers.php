@@ -14,7 +14,7 @@ function acquiring_link_for($order) {
 		$order_copy->secret = $secret;
 		$order_copy->save();
 	}
-    if (iam('developer')) {
+    if (iam()) {
         $type = Payment::YOOKASSA_TYPE;
         return '/acquiring/' . $type . '/payfororder/' . $secret;
     }

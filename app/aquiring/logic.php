@@ -59,6 +59,11 @@ d()->on('aquiring.successfull_paid',function($param){
 		);
         /** @var Orders_item $order_item */
         foreach (d()->order_t->orders_items->all as $order_item){
+            $price = (float) $order_item->price_with_discount();
+            if ($price < 1e-7) {
+                continue;
+            }
+
 			$datas['Lines'][]=array(
 				"Qty" => $order_item->number * 1000,
 				"Price" => $order_item->price_with_discount() * 100,

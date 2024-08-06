@@ -1,38 +1,38 @@
 <p>{"Вы оформили заказ"|t}</p>
 <table border="1">
 	<tr><th align="left">№</th>
-		<td>{order.id}</td></tr>
+		<td>{order_t.id}</td></tr>
 	<tr><th align="left">{"Дата"|t}</th>
-		<td>{order.ordered_at|userdate}</td></tr>
+		<td>{order_t.ordered_at|userdate}</td></tr>
 	<tr><th align="left">{"Статус"|t}</th>
-		<td>{order.show_status_id}</td></tr>
+		<td>{order_t.show_status_id}</td></tr>
 		
 	<tr><th align="left">{"Статус оплаты"|t}</th>
-		<td>{order.show_is_payed}</td></tr>
+		<td>{order_t.show_is_payed}</td></tr>
 	
 	<tr><th align="left">{"Способ получения"|t}</th>
-		<td>{order.show_delivery}</td></tr>
+		<td>{order_t.show_delivery}</td></tr>
  	<tr><th align="left">{"Способ оплаты"|t}</th>
-		<td>{order.show_pay_type}</td></tr>
+		<td>{order_t.show_pay_type}</td></tr>
 </table>
 <p>&nbsp;</p>
 <p>{"Информация"|t}:</p>
 <table border="1" width="100%">
 	<tr><th align="left">{"Имя"|t}</th>
-		<td>{order.name|h}</td></tr>
+		<td>{order_t.name|h}</td></tr>
 	<tr><th align="left">E-mail</th>
-		<td>{order.email|h}</td></tr>
+		<td>{order_t.email|h}</td></tr>
 		
 		
 	<tr><th align="left">{"Телефон"|t}</th>
-		<td>{order.phone|h}</td></tr>
+		<td>{order_t.phone|h}</td></tr>
 		
-	@ if (d()->order->address != "") {
+	@ if (d()->order_t->address != "") {
 	<tr><th align="left">{"Адрес"|t}</th>
-		<td>{order.address|h}</td></tr>
+		<td>{order_t.address|h}</td></tr>
 	@ }
 	<tr><th align="left">{"Комментарий"|t}</th>
-		<td>{order.comment|hnl2br}</td></tr>
+		<td>{order_t.comment|hnl2br}</td></tr>
 		
 </table>
 <p>&nbsp;</p>
@@ -41,18 +41,18 @@
 	<tr>
 		<th align="left">#</th>
 		<th align="left">{"Название"|t}</th>
-		<th align="left">{"Нетто"|t}</th>
-		<th align="left">{"Код поставщика"|t}</th>
+		<?php /* <th align="left">{"Нетто"|t}</th>
+		<th align="left">{"Код поставщика"|t}</th> */ ?>
 		<th align="left">{"Всего"|t}</th>
 		<th align="left">{"Цена"|t}</th>
 		<th align="left">{"Стоимость"|t}</th>
 	</tr><?php $i=0;?>
-<foreach order->orders_items->all>
+<foreach order_t->orders_items->all>
 	<tr>
 		<td><?=$i++;?></td>
 		<td><a href="http://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>{this|h_url_for}" target="_blank">{.title|h}</a></td>
-		<td>{.netto|h}</td>
-		<td>{.sku_dealer|h}</td>
+		<?php /* <td>{.netto|h}</td>
+		<td>{.sku_dealer|h}</td> */ ?>
 		<td>{.number|h} шт.</td>
 		<td>{this.price|price_format|h} руб.</td>
 		<td>{this.total_price|price_format} руб.</td>
@@ -61,11 +61,11 @@
 </foreach>
 </table>
 
-<p>{"letter_client#Всего товаров"|t}: <b>{order.number|h} шт.</b>, {"letter_client#К оплате"|t}: <b>{order.order_price|price_format} руб.</b>
-<?php if (d()->order->payment_type_commission_coefficient > 1) { ?><div><i>(С учетом комиссии способа оплаты.)</i></div><?php } ?>
+<p>{"letter_client#Всего товаров"|t}: <b>{order_t.number|h} шт.</b>, {"letter_client#К оплате"|t}: <b>{order_t.order_price|price_format} руб.</b>
+<?php if (d()->order_t->payment_type_commission_coefficient > 1) { ?><div><i>(С учетом комиссии способа оплаты.)</i></div><?php } ?>
 <?php
-if (1 * d()->order->delivery_price > 1e-7) {
-    print t("В том числе доставка") . ": <b>" . d()->price_format(d()->order->delivery_price) . " руб.</b>";
+if (1 * d()->order_t->delivery_price > 1e-7) {
+    print t("В том числе доставка") . ": <b>" . d()->price_format(d()->order_t->delivery_price) . " руб.</b>";
 }
 ?>
 </p>
