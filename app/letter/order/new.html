@@ -93,18 +93,18 @@ if (d()->order->is_free_delivery) { ?>
 	<tr>
 		<th align="left">№</th>
 		<th align="left">Название</th>
-		<th align="left">Нетто</th>
-		<th align="left">Код поставщика</th>
+		<?php /* <th align="left">Нетто</th>
+		<th align="left">Код поставщика</th> */ ?>
 		<th align="left">Всего</th>
 		<th align="left">Цена</th>
 		<th align="left">Стоимость</th> 
-	</tr><?php $i=0;?>
+	</tr><?php $i=1;?>
 <foreach order->orders_items->all>
 	<tr>
 		<td><?=$i++;?></td>
 		<td><a href="https://<?= h($_ENV['SITE_MAIN_DOMAIN']) ?>{this|h_url_for}" target="_blank">{.title|h}</a></td>
-		<td>{.netto|h}</td>
-		<td>{.sku_dealer|h}</td>
+		<?php /* <td>{.netto|h}</td>
+		<td>{.sku_dealer|h}</td> */ ?>
 		<td>{.number|h} шт.</td>
 		<td>{this.price|price_format|h} руб.</td>
 		<td>{this.total_price|price_format} руб.</td>
@@ -124,7 +124,8 @@ if ($delivery->ne){
 			print "В том числе доставка: <b>".$delivery->price." руб.</b>";
 		}
 	}
-}?></p>
+} ?>
+</p>
 
 <?php
 if (d()->order->errors !== '') {

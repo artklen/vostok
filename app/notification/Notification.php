@@ -28,6 +28,7 @@ class Notification {
 			'order' => d()->order,
 		);
 		d()->order = $order;
+		d()->order_t = $order;
 		if ($order->email !== '') {
 			$message = d()->letter->render('order/client');
 			d()->mail->setFrom(array($_ENV['EMAIL_FROM_ADDRESS'] => $_ENV['EMAIL_FROM_NAME']));
