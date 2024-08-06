@@ -22,12 +22,12 @@ d()->route('/aquiring/sber/payfororder/:order_id', function($order_id) {
 	}
 	
 	try {
-		$payment = d()->Payment->new;
-		$payment->type      = 'sber';
+		$payment = (new Payment())->new();
+		$payment->type      = Payment::SBER_TYPE;
 		$payment->order_id  = $order->id;
 		$payment->sum       = $order->order_price;
 		$payment->save();
-		$payment = d()->Payment->find_by('id', $payment->insert_id);
+		$payment = (new Payment())->find_by('id', $payment->insert_id);
 		
 		$client = new Client([
 			'userName' => $_ENV['SBER_LOGIN'],
@@ -64,7 +64,7 @@ d()->route('/aquiring/sber/finish', function() {
 6 Авторизация отклонена                                                // отмена оплаты
 	*/
 	
-	$payment = d()->Payment->find_by('sber_order_code', $_GET['orderId']);
+	$payment = (new Payment())->find_by('sber_order_code', $_GET['orderId']);
 	if ($payment->is_empty) {
 		print 'Заказ не найден';
 		exit;
@@ -99,7 +99,11 @@ d()->route('/aquiring/sber/finish', function() {
 			$payment->save();
 
 			d()->emit('aquiring.successfull_paid', [$order]);
-			
+
+            $purpose = PaymentForOrder::create($order);
+            if ($purpose !== null) {
+                header('Location: ' . $purpose->statusUrl());
+            }
 			exit;
 		} else {
 			if ($result['errorMessage'] == 'Успешно') {

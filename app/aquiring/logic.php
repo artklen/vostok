@@ -152,8 +152,8 @@ d()->on('aquiring.successfull_paid',function($param){
 			}
 		}
 		//=================================
-		header('Location: /thankyou');
-		exit;
+		//header('Location: /thankyou');
+		//exit;
 	}	
-	exit;
+	//exit;
 });

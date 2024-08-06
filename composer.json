@@ -12,6 +12,8 @@
         "guzzlehttp/guzzle": "^7.0",
         "ext-json": "*",
         "ext-pdo": "*",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "yoomoney/yookassa-sdk-php": "^2.11",
+        "elveneek/log": "^1.0"
     }
 }

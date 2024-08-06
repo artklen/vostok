@@ -37,6 +37,10 @@
  * @property string secret
  * @property string errors
  * @property string session_key
+ * @property string orders_payment_id
+ * @property string payment_id Псевдоним для orders_payment_id
+ * @property string is_paid
+ * @property string payed_amount
  */
 class Order extends ActiveRecord
 {
@@ -239,6 +243,7 @@ class Order extends ActiveRecord
             case DeliveryType::EMS:
                 return $this->get('address');
         }
+        return '';
     }
 	
 	function show_products_price() {
@@ -372,5 +377,10 @@ class Order extends ActiveRecord
         }
 
         return d()->Auth->user()->is_regular_customer_products_discount() ? 5. : 0;
+    }
+
+    public function payment_id()
+    {
+        return $this->get('orders_payment_id');
     }
 }

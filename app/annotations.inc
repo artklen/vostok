@@ -34,6 +34,8 @@
  * @property Order orders
  * @property Menu_element menu_elemenents
  * @property-read list<CatalogMenuItem> catalog_menu
+ * @property string acquiring_yookassa_order_pay_url_base
+ * @property string acquiring_yookassa_order_process_url
  *
  * @property callable basket_ajax_refresh
  * @method string basket_ajax_refresh()

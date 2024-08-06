@@ -6,13 +6,24 @@
 	</div>
 </div>
 <div class="inside-1">
-	<h1>{{edit}}{seo.h1|h}</h1>
+    <?php
+    if (d()->this) { ?>
+	    <h1>{{edit}}{seo.h1|h}</h1>
+        <?php
+    } else { ?>
+        <h1>{seo.h1|h}</h1>
+        <?php
+    }
+    ?>
 </div>
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1">
 			<div class="content">
 				{seo.text}
+                <?php
+                d()->seo->text = '';
+                ?>
 			</div>
 		</div>
 	</div>

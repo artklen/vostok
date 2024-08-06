@@ -120,9 +120,10 @@ d()->post(d()->langlink . '/basket/finish', function() {
     //d()->notification->new_order($order);
 	d()->notification->order_created($order);
     if ($order->pay_type === PaymentType::ONLINE) {
-        print 'document.location.href="/aquiring/sber/payfororder/' . $order->secret . '";';
+        //print 'document.location.href="/aquiring/sber/payfororder/' . $order->secret . '";';
+        print 'document.location.href=' . json_encode(acquiring_link_for($order)) . ';';
     } else {
-        print 'document.location.href="' . d()->langlink . '/thankyou"';
+        print 'document.location.href="' . d()->langlink . '/thankyou";';
     }
     exit;
 });

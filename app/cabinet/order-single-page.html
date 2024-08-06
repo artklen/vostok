@@ -90,6 +90,18 @@
                                     <div class="payment_type_commission">(С учетом комиссии способа оплаты.)</div>
                                     <?php
                                 } ?>
+
+                                <?php
+                                /* для отладки */
+                                /* if (d()->order->pay_type == PaymentType::ONLINE) {
+                                    $purpose = PaymentForOrder::create(d()->order);
+                                    if ($purpose !== null && ! $purpose->isPaid() && ! $purpose->isCanceled()) { ?>
+                                        <a href="<?= h(acquiring_link_for(d()->order)) ?>" class="send-12" style="float:right;width:120px;">Оплатить</a>
+                                        <br clear="both">
+                                        <?php
+                                    }
+                                } */
+                                ?>
 							</div>
 						</div>
 					</div>
