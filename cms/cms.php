@@ -43,6 +43,15 @@ mb_internal_encoding("UTF-8");
  */
 function doit_ob_error_handler($output)
 {
+	
+	
+	if (2 == connection_status()){
+		http_response_code(429);
+		//header("429 Too Many Requests");
+		return '';
+	}
+	
+	
 	$error = error_get_last();
 	
 	if($error['type']==1){

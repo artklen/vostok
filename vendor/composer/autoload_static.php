@@ -8,16 +8,24 @@ class ComposerStaticInit0ebd8540d4ee113cd80d35df986e1706
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Y' => 
+        array (
+            'YooKassa\\' => 9,
+        ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
         ),
         'G' => 
         array (
@@ -25,16 +33,33 @@ class ComposerStaticInit0ebd8540d4ee113cd80d35df986e1706
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
+        'E' => 
+        array (
+            'Elveneek\\' => 9,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'YooKassa\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yoomoney/yookassa-sdk-php/lib',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -47,6 +72,10 @@ class ComposerStaticInit0ebd8540d4ee113cd80d35df986e1706
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Elveneek\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/elveneek/log/Elveneek',
         ),
     );
 

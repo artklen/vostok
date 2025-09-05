@@ -76,6 +76,14 @@ d()->page_not_found = function() {
 
 function main()
 {
+	 
+	if(!iam() && strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), 'bot')!==false && rand(1, 10) != 1 && sys_getloadavg()[0]>=10){
+		http_response_code(429);
+		//header("429 Too Many Requests");
+		return '';
+	}
+	
+	
 	d()->current_city = d()->city_of_subdomain;
 
 	if (!d()->current_city->ne)
@@ -94,6 +102,12 @@ function main()
 	print d()->render('main_tpl');
 	d()->emit('after_main_render');
 }
+
+d()->route('/pinfo',function(){
+	
+	var_dump(sys_getloadavg()[0]);
+	exit;
+});
 
 d()->seo_default_params = [
 	'title' => function($object) {
