@@ -7,3 +7,7 @@ sitemaps/
 /app/aquiring/privateKey.pem
 /app/aquiring/test/certificate.pem
 /app/aquiring/test/privateKey.pem
+logs/
+vostok/
+/composer.phar
+/app.tgz
