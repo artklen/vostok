@@ -48,6 +48,11 @@ d()->on('aquiring.successfull_paid',function($param){
         } else {
             $url = "https://kkt.chekonline.ru/fr/api/v2/Complex";
         }
+        if (time() >= strtotime('2026-01-01 0:00')) {
+            $TaxId = 7;
+        } else {
+            $TaxId = 4;
+        }
         //$url = "https://kkt.chekonline.ru/fr/api/v2/Complex";
 		$datas = array(
 			"Device" => "auto",
@@ -71,7 +76,7 @@ d()->on('aquiring.successfull_paid',function($param){
 				"Price" => $order_item->price_with_discount() * 100,
 				"PayAttribute" => 1,
                 "LineAttribute" => 1,
-				"TaxId" => 4,
+				"TaxId" => $TaxId,
 				"Description"=> $order_item->title,
 			);
 		}
@@ -84,7 +89,7 @@ d()->on('aquiring.successfull_paid',function($param){
 		//				"Qty" => 1000,
 		//				"Price" => $delivery->price * 100,
 		//				"PayAttribute" => 1,
-		//				"TaxId" => 4,
+		//				"TaxId" => $TaxId,
 		//				"Description"=> "Доставка " . $delivery->title,
 		//			);
 		//		}elseif ($delivery->free_price==""){
@@ -92,7 +97,7 @@ d()->on('aquiring.successfull_paid',function($param){
 		//				"Qty" => 1000,
 		//				"Price" => $delivery->price * 100,
 		//				"PayAttribute" => 1,
-		//				"TaxId" => 4,
+		//				"TaxId" => $TaxId,
 		//				"Description"=> "Доставка " . $delivery->title,
 		//			);
 		//		}
@@ -105,7 +110,7 @@ d()->on('aquiring.successfull_paid',function($param){
 				"Price" => ceil(d()->order_t->delivery_price * 100.),
 				"PayAttribute" => 1,
                 "LineAttribute" => 4,
-				"TaxId" => 4,
+				"TaxId" => $TaxId,
 				"Description"=> "Доставка",
 			);
 		}
