@@ -1,0 +1,56 @@
+<div class="cabinet-menu">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-lg-10 col-lg-offset-1">
+				<ul class="cabinet-menu-content">
+					<li><a href="/cabinet/profile" class="active">Профиль</a></li>
+					<li><a href="/cabinet/orders">Мои заказы</a></li>
+					<li><a href="/cabinet/address">Мои адреса</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cabinet-container">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-lg-10 col-lg-offset-1">
+				<div class="cabinet-content">
+					<div class="cabinet-title">Мой профиль</div>
+					<div class="cabinet-profile-container">
+						{{simple_ajax_form ~url_path}}
+						<div class="js-notice"></div>
+						<div class="field-item">
+							<div class="field-title-container">
+								<div class="field-title">ФИО полностью</div>
+								<a href="#" class="change-link as-submit">Изменить</a>
+							</div>
+							<div>
+								<input class="field-container field-form-container" placeholder="{Auth.user.name}" name="name" type="text">
+							</div>
+						</div>
+						<div class="field-item">
+							<div class="field-title-container">
+								<div class="field-title">Адрес электронной почты</div>
+								<a href="#" class="change-link as-submit">Изменить</a>
+							</div>
+							<div>
+								<input class="field-container field-form-container" placeholder="{Auth.user.email}" name="email" type="text">
+							</div>
+						</div>
+						<div class="field-item">
+							<div class="field-title-container">
+								<div class="field-title">Номер телефона</div>
+								<a href="#" class="change-link as-submit">Изменить</a>
+							</div>
+							<div>
+								<input class="field-container field-form-container" placeholder="{Auth.user.phone}" name="phone" type="text">
+							</div>
+						</div>
+						{{/form}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

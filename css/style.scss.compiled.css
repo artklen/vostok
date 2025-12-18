@@ -4125,3 +4125,36 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
   .menu-1-xs {
     margin: 0; } }
+
+.cookie-notice {
+  width: 100%;
+  max-width: 360px;
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100; }
+  .cookie-notice__content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 4px 8px 1px rgba(0, 0, 0, .1); }
+  .cookie-notice__text {
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0; }
+  .cookie-notice__link {
+    color: #d66a40; }
+  .cookie-notice__link:hover {
+    color: #ae4225; }
+  .cookie-notice__btn {
+    padding: 10px 20px;
+    background: #eec E4;
+    border: none;
+    border-radius: 20px;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: center; }
+  .cookie-notice__btn:hover {
+    background: #ded4c6; }

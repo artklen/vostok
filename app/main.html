@@ -314,6 +314,24 @@
 	</div>
 </div>
 
+<?php if(!isset($_COOKIE['cookie-accept']) || $_COOKIE['cookie-accept'] != 1) { ?>
+	<div id="cookie-notice" class="cookie-notice">
+		<div class="cookie-notice__content">
+			<p class="cookie-notice__text">
+				Используя данный сайт, Вы соглашаетесь с условиями <a href="/privacy-policy" target="_blank" class="cookie-notice__link">пользовательского соглашения</a> и даёте разрешение на использование файлов куки.
+			</p>
+			<button id="cookie-accept" class="cookie-notice__btn">Хорошо</button>
+		</div>
+	</div>
+	<script>
+        var acceptButton = document.getElementById('cookie-accept');
+        acceptButton.addEventListener('click', function() {
+			set_cookie('cookie-accept', 1);
+            document.getElementById('cookie-notice').style.display = 'none';
+        });
+    </script>
+<?php } ?>
+
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/mobile-detect.min.js"></script>
 <script src="/js/typehead.js"></script>

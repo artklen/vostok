@@ -9,6 +9,13 @@
 	#		exit;
 	#	}
 	#}
+	if(!isset($_SERVER["HTTP_IS_HTTPS"]) || $_SERVER['HTTP_IS_HTTPS'] !== "on"){
+		$redirect = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: $redirect");
+		exit;
+	}
+	
 	include_once ('config.php');
 
 	$start_time = microtime(true);
