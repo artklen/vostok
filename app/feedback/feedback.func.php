@@ -1,5 +1,5 @@
 <?php
-$url_base = d()->langlink . '/feedback/';
+$url_base = '/feedback/';
 
 d()->get($url_base . ':name', function($name) {
 	if (strpos($name, '.') !== false || !is_file(__DIR__ . "/$name.html")) {
@@ -15,7 +15,7 @@ d()->get($url_base . ':name', function($name) {
 });
 
 d()->post($url_base . ':name', function($name) {
-	if (isset(d()->feedback_form[$name]) && d()->validate(d()->url_path)) {
+	if (isset(d()->feedback_form[$name]) && d()->validate(d()->url_path) && strpos(d()->params['email'],"example.com") === false) {
 		$stmt = d()->db->query('show tables like "feedbacks"');
 		if (!$stmt || !$stmt->fetchColumn()) {
 			d()->Scaffold->create_table('feedbacks');
